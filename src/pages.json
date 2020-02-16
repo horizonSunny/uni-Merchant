@@ -11,9 +11,14 @@
     {
       "path": "pages/login/login",
       "style": {
-        "navigationBarTitleText": "登录",
-        "navigationBarBackgroundColor": "yellow",
-        "navigationStyle": "customer"
+        "navigationBarTitleText": "",
+        "navigationBarBackgroundColor": "#fff",
+        "app-plus": {
+          "titleNView": {
+            "type": "back",
+            "titleColor": "#000000"
+          }
+        }
       }
     },
     {
