@@ -64,8 +64,7 @@ m-input {
   display: flex;
   flex: 1;
   flex-direction: column;
-  background-color: #efeff4;
-  padding: 10px;
+  background-color: #ffffff;
 }
 
 .input-group {
