@@ -2,7 +2,13 @@
   "pages": [
     //pages数组中第一项表示应用启动页,
     {
-      "path": "pages/smsValidte/smsValidte",
+      "path": "pages/main/main",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/login/login",
       "style": {
         "navigationBarTitleText": "",
         "navigationBarBackgroundColor": "#fff",
@@ -15,14 +21,7 @@
       }
     },
     {
-      "path": "pages/main/main",
-      "style": {
-        "navigationBarTitleText": "登录模板",
-        "navigationBarBackgroundColor": "red"
-      }
-    },
-    {
-      "path": "pages/login/login",
+      "path": "pages/smsValidte/smsValidte",
       "style": {
         "navigationBarTitleText": "",
         "navigationBarBackgroundColor": "#fff",
