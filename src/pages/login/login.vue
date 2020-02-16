@@ -18,7 +18,18 @@
       <button type="primary" @tap="bindLogin">下一步</button>
     </view>
     <view class="action-row protocol-style">
-      <img src="static/icon/login/Checklist.svg" alt="" />
+      <view @click="protocolSelect">
+        <img
+          v-show="protocolSelected"
+          src="static/icon/login/Checklist.svg"
+          alt=""
+        />
+        <img
+          v-show="!protocolSelected"
+          src="static/icon/login/Unchecked.svg"
+          alt=""
+        />
+      </view>
       <text class="protocol-info"
         >登录/注册并视为同意<a href="">《xxxxxx用户服务协议》</a></text
       >
@@ -62,7 +73,8 @@ export default {
       account: "",
       password: "",
       positionTop: 0,
-      isDevtools: false
+      isDevtools: false,
+      protocolSelected: false
     };
   },
   computed: mapState(["forcedLogin"]),
@@ -186,6 +198,9 @@ export default {
       } else {
         uni.navigateBack();
       }
+    },
+    protocolSelect() {
+      this.protocolSelected = !this.protocolSelected;
     }
   },
   onReady() {
