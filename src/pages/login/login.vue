@@ -61,6 +61,7 @@
 import service from "../../service.js";
 import { mapState, mapMutations } from "vuex";
 import mInput from "../../components/m-input.vue";
+import { checkMobile } from "utils/validator";
 
 export default {
   components: {
@@ -114,17 +115,11 @@ export default {
        * 客户端对账号信息进行一些必要的校验。
        * 实际开发中，根据业务需要进行处理，这里仅做示例。
        */
-      if (this.account.length < 5) {
+      const validate = checkMobile(this.account);
+      if (!validate) {
         uni.showToast({
           icon: "none",
-          title: "账号最短为 5 个字符"
-        });
-        return;
-      }
-      if (this.password.length < 6) {
-        uni.showToast({
-          icon: "none",
-          title: "密码最短为 6 个字符"
+          title: "手机号校验失败，请重新输入"
         });
         return;
       }
@@ -142,11 +137,6 @@ export default {
       });
       if (validUser) {
         this.toMain(this.account);
-      } else {
-        uni.showToast({
-          icon: "none",
-          title: "用户账号或密码不正确"
-        });
       }
     },
     oauth(value) {
