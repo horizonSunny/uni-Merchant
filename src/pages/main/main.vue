@@ -40,14 +40,28 @@
         </view>
       </view>
       <view class="medicineClassify">
-        <text class="medicineTitle">
-          快速找药
-        </text>
-        <view class="medicineOperate">
-          <text class="operate">
-            全部药品
+        <view class="classifyTitle">
+          <text class="medicineTitle">
+            快速找药
           </text>
-          <img src="static/icon/main/home_right-2.svg" alt="" />
+          <view class="medicineOperate">
+            <text class="operate">
+              全部药品
+            </text>
+            <img src="static/icon/main/home_right-2.svg" alt="" />
+          </view>
+        </view>
+        <view class="classifyDetails">
+          <view
+            class="classifyItem"
+            v-for="(item, index) in medicineClassify"
+            :key="index"
+          >
+            <img :src="item.url" alt="" />
+            <text>
+              {{ item.name }}
+            </text>
+          </view>
         </view>
       </view>
       <view class="recommend"></view>
@@ -70,7 +84,33 @@ export default {
       indicatorDots: false,
       autoplay: false,
       interval: 2000,
-      duration: 500
+      duration: 500,
+      medicineClassify: [
+        {
+          url: "static/icon/main/home_Cold@2x.png",
+          name: "感冒发烧"
+        },
+        {
+          url: "static/icon/main/home_cough@2x.png",
+          name: "咳嗽用药"
+        },
+        {
+          url: "static/icon/main/home_Cold@2x.png",
+          name: "感冒发烧"
+        },
+        {
+          url: "static/icon/main/home_cough@2x.png",
+          name: "咳嗽用药"
+        },
+        {
+          url: "static/icon/main/home_Cold@2x.png",
+          name: "感冒发烧"
+        },
+        {
+          url: "static/icon/main/home_cough@2x.png",
+          name: "咳嗽用药"
+        }
+      ]
     };
   }
 };
@@ -142,21 +182,48 @@ export default {
   }
   .medicineClassify {
     padding: 12px 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .medicineTitle {
-      font-size: 16px;
-      font-weight: 500;
-    }
-    .medicineOperate {
+    .classifyTitle {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      .operate {
-        font-size: 12px;
+      .medicineTitle {
+        font-size: 16px;
         font-weight: 500;
-        color: rgba(137, 137, 137, 1);
-        margin-right: 5px;
+        color: rgba(27, 27, 27, 1);
+      }
+      .medicineOperate {
+        display: flex;
+        align-items: center;
+        .operate {
+          font-size: 12px;
+          font-weight: 500;
+          color: rgba(137, 137, 137, 1);
+          margin-right: 5px;
+        }
+      }
+    }
+    .classifyDetails {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      .classifyItem {
+        margin-top: 16px;
+        width: 25%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img {
+          width: 44px;
+          height: 44px;
+        }
+        text {
+          margin-top: 7px;
+          font-size: 13px;
+          font-weight: 400;
+          width: 52px;
+          height: 18px;
+          line-height: 18px;
+        }
       }
     }
   }
