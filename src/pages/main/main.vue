@@ -39,7 +39,17 @@
           </swiper>
         </view>
       </view>
-      <view class="medicineClassify"> </view>
+      <view class="medicineClassify">
+        <text class="medicineTitle">
+          快速找药
+        </text>
+        <view class="medicineOperate">
+          <text class="operate">
+            全部药品
+          </text>
+          <img src="static/icon/main/home_right-2.svg" alt="" />
+        </view>
+      </view>
       <view class="recommend"></view>
     </view>
   </view>
@@ -128,6 +138,26 @@ export default {
       border-right: 0px;
       border-color: transparent transparent #fff;
       border-width: 0px 0px 60px 150px;
+    }
+  }
+  .medicineClassify {
+    padding: 12px 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .medicineTitle {
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .medicineOperate {
+      display: flex;
+      align-items: center;
+      .operate {
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(137, 137, 137, 1);
+        margin-right: 5px;
+      }
     }
   }
 }
