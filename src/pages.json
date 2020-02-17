@@ -19,6 +19,7 @@
                 "colorPressed": "#eee",
                 "float": "left",
                 "fontSize": "22px",
+                "width": "22px",
                 "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
                 "text": "\ue601" // 字体图标\u 开头，加上字体图标unicode后面四位
               },
@@ -27,6 +28,7 @@
                 "colorPressed": "#eee",
                 "float": "right",
                 "fontSize": "22px",
+                "width": "22px",
                 "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
                 "text": "\ue602" // 字体图标\u 开头，加上字体图标unicode后面四位
               }

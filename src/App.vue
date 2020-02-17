@@ -12,7 +12,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 /* 头条小程序需要把 iconfont 样式放到组件外 */
 @import "components/m-icon/m-icon.css";
 
@@ -22,7 +22,10 @@ page {
   display: flex;
   font-size: 16px;
 }
-
+.uni-page-head-btn {
+  height: 22px;
+  margin: 0px 15px;
+}
 /* #ifdef MP-BAIDU */
 page {
   width: 100%;
