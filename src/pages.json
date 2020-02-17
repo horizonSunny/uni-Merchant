@@ -4,6 +4,7 @@
     {
       "path": "pages/main/main",
       "style": {
+        "navigationBarBackgroundColor": "#3A74F1",
         "app-plus": {
           "titleNView": {
             "searchInput": {
