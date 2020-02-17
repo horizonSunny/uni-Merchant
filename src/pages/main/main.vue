@@ -39,9 +39,9 @@
           </swiper>
         </view>
       </view>
-      <view class="medicineClassify">
+      <view class="classify">
         <view class="classifyTitle">
-          <text class="medicineTitle">
+          <text class="title">
             快速找药
           </text>
           <view class="medicineOperate">
@@ -58,13 +58,37 @@
             :key="index"
           >
             <img :src="item.url" alt="" />
-            <text>
-              {{ item.name }}
-            </text>
+            <text>{{ item.name }}</text>
           </view>
         </view>
       </view>
-      <view class="recommend"></view>
+      <view class="classify">
+        <view class="classifyTitle">
+          <text class="title">
+            商家推荐
+          </text>
+        </view>
+        <view class="classifyContent">
+          <view
+            class="contentItem"
+            v-for="(item, index) in recommend"
+            :key="index"
+          >
+            <img :src="item.url" alt="" />
+            <view class="productDetails">
+              <img v-if="item.otc" src="static/icon/main/OTC.svg" alt="" />
+              <text>{{ item.brand }}</text>
+              <text>{{ item.commandName }}</text>
+            </view>
+            <view class="specification">
+              {{ item.specification }}
+            </view>
+            <view class="price">
+              {{ item.price }}
+            </view>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
 </template>
@@ -110,6 +134,32 @@ export default {
           url: "static/icon/main/home_cough@2x.png",
           name: "咳嗽用药"
         }
+      ],
+      recommend: [
+        {
+          url: "static/icon/main/Product-Bitmap@2x.png",
+          otc: true,
+          brand: "23312",
+          commandName: "sdsd",
+          specification: "100ml",
+          price: 123
+        },
+        {
+          url: "static/icon/main/Product-Bitmap@2x.png",
+          otc: true,
+          brand: "23312",
+          commandName: "sdsd",
+          specification: "100ml",
+          price: 123
+        },
+        {
+          url: "static/icon/main/Product-Bitmap@2x.png",
+          otc: false,
+          brand: "23312",
+          specification: "100ml",
+          commandName: "sdsd",
+          price: 123
+        }
       ]
     };
   }
@@ -121,6 +171,7 @@ export default {
   display: flex;
   flex: 1;
   flex-direction: column;
+  background: #fafafe;
   .merchantInfo {
     background: #3a74f1;
     display: flex;
@@ -180,13 +231,13 @@ export default {
       border-width: 0px 0px 60px 150px;
     }
   }
-  .medicineClassify {
+  .classify {
     padding: 12px 10px 15px;
     .classifyTitle {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      .medicineTitle {
+      .title {
         font-size: 16px;
         font-weight: 500;
         color: rgba(27, 27, 27, 1);
@@ -223,6 +274,63 @@ export default {
           width: 52px;
           height: 18px;
           line-height: 18px;
+        }
+      }
+    }
+    .classifyContent {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      .contentItem {
+        background: #fff;
+        display: flex;
+        width: 49%;
+        align-items: center;
+        border-radius: 4px;
+        height: 200px;
+        flex-direction: column;
+        img {
+          width: 100px;
+          height: 100px;
+          margin-top: 9px;
+        }
+        .productDetails {
+          margin-top: 7px;
+          width: 130px;
+          padding-right: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 20px;
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(27, 27, 27, 1);
+          line-height: 20px;
+          img {
+            width: 32px;
+            height: 14px;
+          }
+        }
+        .specification {
+          margin-top: 3px;
+          width: 150px;
+          height: 18px;
+          font-size: 13px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(137, 137, 137, 1);
+          line-height: 18px;
+        }
+        .price {
+          margin-top: 3px;
+          width: 150px;
+          height: 22px;
+          font-size: 16px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: rgba(250, 73, 73, 1);
+          line-height: 22px;
         }
       }
     }
