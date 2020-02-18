@@ -111,6 +111,7 @@ export default {
         width: 70%;
         .merchantLocation {
           height: 18px;
+          margin-top: 2px;
           font-size: 13px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
