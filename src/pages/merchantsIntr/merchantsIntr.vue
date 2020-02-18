@@ -5,9 +5,14 @@
       <view class="merchantInfo">
         <view class="merchantMessage">
           <img src="static/img/位图@2x.png" alt="" class="merchantIcon" />
-          <text>瑞康大药店</text>
+          <view class="merchantDetails">
+            <view>瑞康大药店</view>
+            <view class="merchantLocation">
+              <img src="static/icon/merchantsIntr/location.svg" alt="" />
+              长泰广场</view
+            >
+          </view>
         </view>
-        <img src="static/icon/main/home_right-1.svg" alt="" />
       </view>
       <view class="carousel">
         <view class="carouselAngel angelLeft"> </view>
@@ -173,25 +178,35 @@ export default {
   flex-direction: column;
   background: #fafafe;
   .merchantInfo {
-    background: #3a74f1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 22px;
-    padding: 9px 15px 20px;
+    background: #fff;
+    height: 43px;
+    padding: 21px 15px 16px;
     .merchantMessage {
       display: flex;
-      align-items: center;
-      img {
-        margin-right: 5px;
+      display: flex;
+      align-items: flex-start;
+      .merchantIcon {
+        width: 64px;
+        height: 22px;
       }
-      text {
-        color: #fff;
+      .merchantDetails {
+        margin-left: 5px;
+        width: 70%;
+        .merchantLocation {
+          height: 18px;
+          font-size: 13px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(27, 27, 27, 1);
+          line-height: 18px;
+          img {
+            position: relative;
+            top: 3px;
+            width: 15px;
+            height: 15px;
+          }
+        }
       }
-    }
-    .merchantIcon {
-      width: 64px;
-      height: 22px;
     }
   }
   .carousel {
