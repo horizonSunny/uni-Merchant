@@ -282,6 +282,7 @@ export default {
       flex-wrap: wrap;
       justify-content: space-between;
       .contentItem {
+        margin-bottom: 10px;
         background: #fff;
         display: flex;
         width: 49%;

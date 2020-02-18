@@ -14,59 +14,6 @@
           </view>
         </view>
       </view>
-      <view class="carousel">
-        <view class="carouselAngel angelLeft"> </view>
-        <view class="carouselAngel angelRight"> </view>
-        <view class="carouselContain">
-          <swiper
-            :indicator-dots="indicatorDots"
-            :autoplay="autoplay"
-            :interval="interval"
-            :duration="duration"
-          >
-            <swiper-item>
-              <view class="swiper-item uni-bg-red">
-                <img
-                  src="static/img/home_banner@2x.png"
-                  alt=""
-                  class="merchantIcon"
-                />
-              </view>
-            </swiper-item>
-            <swiper-item>
-              <view class="swiper-item uni-bg-green">
-                <img
-                  src="static/img/home_banner@2x.png"
-                  alt=""
-                  class="merchantIcon"
-              /></view>
-            </swiper-item>
-          </swiper>
-        </view>
-      </view>
-      <view class="classify">
-        <view class="classifyTitle">
-          <text class="title">
-            快速找药
-          </text>
-          <view class="medicineOperate">
-            <text class="operate">
-              全部药品
-            </text>
-            <img src="static/icon/main/home_right-2.svg" alt="" />
-          </view>
-        </view>
-        <view class="classifyDetails">
-          <view
-            class="classifyItem"
-            v-for="(item, index) in medicineClassify"
-            :key="index"
-          >
-            <img :src="item.url" alt="" />
-            <text>{{ item.name }}</text>
-          </view>
-        </view>
-      </view>
       <view class="classify">
         <view class="classifyTitle">
           <text class="title">
@@ -80,18 +27,18 @@
             :key="index"
           >
             <img :src="item.url" alt="" />
-            <view class="productDetails">
-              <img v-if="item.otc" src="static/icon/main/OTC.svg" alt="" />
-              <text>{{ item.brand }}</text>
-              <text>{{ item.commandName }}</text>
-            </view>
-            <view class="specification">
-              {{ item.specification }}
-            </view>
-            <view class="price">
-              {{ item.price }}
-            </view>
+            <text>资质名称 </text>
           </view>
+        </view>
+      </view>
+      <view class="classify">
+        <view class="classifyTitle">
+          <text class="title">
+            商家实景
+          </text>
+        </view>
+        <view class="merchantLive">
+          <img src="static/icon/merchantsIntr/shop_bitmap3.svg" alt="" />
         </view>
       </view>
     </view>
@@ -110,36 +57,6 @@ export default {
   },
   data() {
     return {
-      indicatorDots: false,
-      autoplay: false,
-      interval: 2000,
-      duration: 500,
-      medicineClassify: [
-        {
-          url: "static/icon/main/home_Cold@2x.png",
-          name: "感冒发烧"
-        },
-        {
-          url: "static/icon/main/home_cough@2x.png",
-          name: "咳嗽用药"
-        },
-        {
-          url: "static/icon/main/home_Cold@2x.png",
-          name: "感冒发烧"
-        },
-        {
-          url: "static/icon/main/home_cough@2x.png",
-          name: "咳嗽用药"
-        },
-        {
-          url: "static/icon/main/home_Cold@2x.png",
-          name: "感冒发烧"
-        },
-        {
-          url: "static/icon/main/home_cough@2x.png",
-          name: "咳嗽用药"
-        }
-      ],
       recommend: [
         {
           url: "static/icon/main/Product-Bitmap@2x.png",
@@ -209,43 +126,6 @@ export default {
       }
     }
   }
-  .carousel {
-    height: 131px;
-    background: #3a74f1;
-    text-align: center;
-    position: relative;
-    .carouselContain {
-      z-index: 1;
-      display: inline-block;
-      background: yellow;
-      border-radius: 8px;
-      border: 1px dashed #000;
-      width: 355px;
-      height: 130px;
-      img {
-        width: 355px;
-        height: 130px;
-      }
-    }
-    .carouselAngel {
-      position: absolute;
-      width: 0;
-      height: 0;
-      bottom: 0px;
-      border-style: solid;
-    }
-    .angelLeft {
-      border-left: 0px;
-      border-color: transparent transparent #fff;
-      border-width: 0px 150px 60px 0px;
-    }
-    .angelRight {
-      right: 0px;
-      border-right: 0px;
-      border-color: transparent transparent #fff;
-      border-width: 0px 0px 60px 150px;
-    }
-  }
   .classify {
     padding: 12px 10px 15px;
     .classifyTitle {
@@ -268,86 +148,34 @@ export default {
         }
       }
     }
-    .classifyDetails {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      .classifyItem {
-        margin-top: 16px;
-        width: 25%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        img {
-          width: 44px;
-          height: 44px;
-        }
-        text {
-          margin-top: 7px;
-          font-size: 13px;
-          font-weight: 400;
-          width: 52px;
-          height: 18px;
-          line-height: 18px;
-        }
-      }
-    }
     .classifyContent {
       display: flex;
       flex-wrap: wrap;
+      padding: 0px 10px;
       justify-content: space-between;
       .contentItem {
+        margin-bottom: 10px;
         background: #fff;
         display: flex;
-        width: 49%;
-        align-items: center;
+        width: 47%;
         border-radius: 4px;
-        height: 200px;
+        height: 180px;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
         img {
-          width: 100px;
-          height: 100px;
-          margin-top: 9px;
+          width: 80%;
+          height: 115px;
         }
-        .productDetails {
-          margin-top: 7px;
-          width: 130px;
-          padding-right: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          height: 20px;
-          font-size: 14px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: rgba(27, 27, 27, 1);
-          line-height: 20px;
-          img {
-            width: 32px;
-            height: 14px;
-          }
-        }
-        .specification {
-          margin-top: 3px;
-          width: 150px;
-          height: 18px;
-          font-size: 13px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: rgba(137, 137, 137, 1);
-          line-height: 18px;
-        }
-        .price {
-          margin-top: 3px;
-          width: 150px;
-          height: 22px;
-          font-size: 16px;
-          font-family: PingFangSC-Semibold, PingFang SC;
-          font-weight: 600;
-          color: rgba(250, 73, 73, 1);
-          line-height: 22px;
+        text {
+          margin-top: 10px;
         }
       }
+    }
+    .merchantLive {
+      width: 100%;
+      height: 172px;
+      background: #fff;
     }
   }
 }
