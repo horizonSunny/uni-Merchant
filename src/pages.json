@@ -25,10 +25,10 @@
                 "color": "#fff",
                 "colorPressed": "#eee",
                 "float": "right",
-                "fontSize": "18px",
-                "width": "30px",
+                "fontSize": "22px",
+                "width": "29px",
                 "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
-                "text": "搜索"
+                "text": "\ue603" // 字体图标\u 开头，加上字体图标unicode后面四位
               }
             ]
           }
