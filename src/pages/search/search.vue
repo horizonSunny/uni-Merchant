@@ -62,11 +62,11 @@ export default {
       medicineClassify: [
         {
           url: "static/icon/main/home_Cold@2x.png",
-          name: "感冒发烧"
+          name: "感冒发"
         },
         {
           url: "static/icon/main/home_cough@2x.png",
-          name: "咳嗽用药"
+          name: "咳用药"
         },
         {
           url: "static/icon/main/home_Cold@2x.png",
@@ -139,8 +139,14 @@ export default {
       flex-wrap: wrap;
       justify-content: flex-start;
       .classifyItem {
-        margin-top: 16px;
-        width: 25%;
+        margin: 16px 0px 0px 10px;
+        padding: 0 10px;
+        height: 32px;
+        line-height: 32px;
+        background: rgba(240, 242, 247, 1);
+        border-radius: 16px;
+        text-align: center;
+        // width: 25%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -151,64 +157,6 @@ export default {
           width: 52px;
           height: 18px;
           line-height: 18px;
-        }
-      }
-    }
-    .classifyContent {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      .contentItem {
-        margin-bottom: 10px;
-        background: #fff;
-        display: flex;
-        width: 49%;
-        align-items: center;
-        border-radius: 4px;
-        height: 200px;
-        flex-direction: column;
-        img {
-          width: 100px;
-          height: 100px;
-          margin-top: 9px;
-        }
-        .productDetails {
-          margin-top: 7px;
-          width: 130px;
-          padding-right: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          height: 20px;
-          font-size: 14px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: rgba(27, 27, 27, 1);
-          line-height: 20px;
-          img {
-            width: 32px;
-            height: 14px;
-          }
-        }
-        .specification {
-          margin-top: 3px;
-          width: 150px;
-          height: 18px;
-          font-size: 13px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: rgba(137, 137, 137, 1);
-          line-height: 18px;
-        }
-        .price {
-          margin-top: 3px;
-          width: 150px;
-          height: 22px;
-          font-size: 16px;
-          font-family: PingFangSC-Semibold, PingFang SC;
-          font-weight: 600;
-          color: rgba(250, 73, 73, 1);
-          line-height: 22px;
         }
       }
     }
