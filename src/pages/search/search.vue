@@ -16,6 +16,7 @@
             class="classifyItem"
             v-for="(item, index) in medicineClassify"
             :key="index"
+            @click="historySearch(item)"
           >
             <text>{{ item.name }}</text>
           </view>
@@ -27,6 +28,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { debounce, throttle } from "@/utils/debounce";
 
 export default {
   computed: mapState(["forcedLogin", "hasLogin", "userName"]),
@@ -37,12 +39,11 @@ export default {
     uni.hideKeyboard();
   },
   // 监听原生标题栏搜索输入框输入内容变化事件
-  onNavigationBarSearchInputChanged() {
-    let a = getCurrentPages();
-    let page = a[a.length - 1];
-    console.log("this_", page);
-    let currentWebview = page.$getAppWebview();
-    console.log("this_", currentWebview);
+  onNavigationBarSearchInputChanged(item) {
+    let a = function name(params) {
+      console.log(item);
+    };
+    debounce(a, 200)();
   },
   //监听原生标题栏搜索输入框搜索事件，用户点击软键盘上的“搜索”按钮时触发。
 
@@ -55,8 +56,6 @@ export default {
   },
   data() {
     return {
-      indicatorDots: false,
-      autoplay: false,
       interval: 2000,
       duration: 500,
       medicineClassify: [
@@ -112,6 +111,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    historySearch(searchInfo) {
+      console.log("searchInfo_", searchInfo.name);
+    }
   }
 };
 </script>
