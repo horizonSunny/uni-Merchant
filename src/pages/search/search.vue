@@ -2,7 +2,7 @@
   <view class="content">
     <!-- <view v-if="hasLogin" class="hello"> -->
     <view class="main">
-      <view class="classify">
+      <view class="historySearch" v-if="historySearch">
         <view class="classifyTitle">
           <text class="title">
             历史搜索
@@ -16,11 +16,22 @@
             class="classifyItem"
             v-for="(item, index) in medicineClassify"
             :key="index"
-            @click="historySearch(item)"
+            @click="search(item)"
           >
             <text>{{ item.name }}</text>
           </view>
         </view>
+      </view>
+      <view class="debounce">
+        <ul>
+          <li
+            v-for="(item, index) in medicineClassify"
+            :key="index"
+            @click="search(item)"
+          >
+            {{ item.name }}
+          </li>
+        </ul>
       </view>
     </view>
   </view>
@@ -56,8 +67,7 @@ export default {
   },
   data() {
     return {
-      interval: 2000,
-      duration: 500,
+      historySearch: false,
       medicineClassify: [
         {
           url: "static/icon/main/home_Cold@2x.png",
@@ -83,37 +93,11 @@ export default {
           url: "static/icon/main/home_cough@2x.png",
           name: "咳嗽用药"
         }
-      ],
-      recommend: [
-        {
-          url: "static/icon/main/Product-Bitmap@2x.png",
-          otc: true,
-          brand: "23312",
-          commandName: "sdsd",
-          specification: "100ml",
-          price: 123
-        },
-        {
-          url: "static/icon/main/Product-Bitmap@2x.png",
-          otc: true,
-          brand: "23312",
-          commandName: "sdsd",
-          specification: "100ml",
-          price: 123
-        },
-        {
-          url: "static/icon/main/Product-Bitmap@2x.png",
-          otc: false,
-          brand: "23312",
-          specification: "100ml",
-          commandName: "sdsd",
-          price: 123
-        }
       ]
     };
   },
   methods: {
-    historySearch(searchInfo) {
+    search(searchInfo) {
       console.log("searchInfo_", searchInfo.name);
     }
   }
@@ -126,7 +110,7 @@ export default {
   flex: 1;
   flex-direction: column;
   background: #fafafe;
-  .classify {
+  .historySearch {
     padding: 28px 10px 15px;
     .classifyTitle {
       display: flex;
@@ -163,6 +147,24 @@ export default {
           line-height: 18px;
         }
       }
+    }
+  }
+  .debounce {
+    width: 100%;
+    height: 48px;
+    ul {
+      padding: 0px;
+    }
+    li {
+      border-bottom: 1px solid #efefef;
+      padding: 0px 15px;
+      list-style-type: none;
+      line-height: 48px;
+      background: rgba(255, 255, 255, 1);
+      font-size: 14px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgba(27, 27, 27, 1);
     }
   }
 }
