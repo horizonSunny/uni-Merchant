@@ -3,7 +3,7 @@
     <!-- <view v-if="hasLogin" class="hello"> -->
     <view class="main">
       <view class="merchantInfo">
-        <view class="merchantMessage">
+        <view class="merchantMessage" @click="testTologin">
           <img src="static/img/位图@2x.png" alt="" class="merchantIcon" />
           <text>瑞康大药店</text>
         </view>
@@ -102,6 +102,16 @@ export default {
   onNavigationBarButtonTap(item) {
     // 这边绑定是该页面topBar上面的两个button事件
     console.log("index_", item.index);
+  },
+  methods: {
+    testTologin() {
+      console.log("testTologin_");
+      uni.navigateTo({
+        // url: "../login/login"
+        // url: "../merchantsIntr/merchantsIntr"
+        url: "../search/search"
+      });
+    }
   },
   data() {
     return {

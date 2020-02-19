@@ -67,6 +67,11 @@ export default {
   components: {
     mInput
   },
+  onNavigationBarButtonTap(item) {
+    // 这边绑定是该页面topBar上面的两个button事件
+    console.log("index_", item.index);
+    uni.navigateBack();
+  },
   data() {
     return {
       providerList: [],
