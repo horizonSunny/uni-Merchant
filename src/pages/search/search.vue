@@ -33,7 +33,7 @@
           </li>
         </ul>
       </view>
-      <scroll-view id="nav-bar" class="nav-bar">
+      <view id="nav-bar" class="nav-bar">
         <view
           v-for="(item, index) in tabBars"
           :key="item.id"
@@ -43,7 +43,7 @@
           @click="changeTab(index)"
           >{{ item.name }}</view
         >
-      </scroll-view>
+      </view>
       <!-- 下拉刷新组件 -->
       <mix-pulldown-refresh
         ref="mixPulldownRefresh"
@@ -55,7 +55,7 @@
         <!-- 内容部分 -->
         <swiper
           id="swiper"
-          class="swiper-box"
+          class="swiper-box swiperInfo"
           :duration="300"
           :current="tabCurrentIndex"
           @change="changeTab"
@@ -73,7 +73,7 @@
                 {{ test.title }}
               </view>
               <!-- 上滑加载更多组件 -->
-              <!-- <mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more> -->
+              <mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
             </scroll-view>
           </swiper-item>
         </swiper>
@@ -228,7 +228,7 @@ export default {
     //加载list
     loadNewsList(type) {
       let tabItem = this.tabBars[this.tabCurrentIndex];
-      debugger;
+
       console.log("tabItem_", tabItem);
 
       //type add 加载更多 refresh下拉刷新
@@ -406,6 +406,17 @@ export default {
       &:after {
         width: 50%;
       }
+    }
+  }
+  .swiperInfo {
+    flex: 1;
+  }
+  .panel-scroll-box {
+    height: 100%;
+    .panel-item {
+      background: #fff;
+      padding: 30px 0;
+      border-bottom: 2px solid #000;
     }
   }
 }
