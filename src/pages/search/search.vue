@@ -35,7 +35,7 @@
       </view>
       <scroll-view id="nav-bar" class="nav-bar">
         <view
-          v-for="(item, index) in tabList"
+          v-for="(item, index) in tabBars"
           :key="item.id"
           class="nav-item"
           :class="{ current: index === tabCurrentIndex }"
@@ -66,60 +66,14 @@
               :scroll-y="enableScroll"
               @scrolltolower="loadMore"
             >
-              <!-- 
-							* 新闻列表 
-							* 和nvue的区别只是需要把uni标签转为weex标签而已
-							* class 和 style的绑定限制了一些语法，其他并没有不同
-						-->
               <view
-                v-for="(item, index) in tabItem.newsList"
-                :key="index"
-                class="news-item"
-                @click="navToDetails(item)"
+                v-for="(test, indexTest) in tabItem.newsList"
+                :key="indexTest"
               >
-                <text :class="['title', 'title' + item.type]">{{
-                  item.title
-                }}</text>
-                <view
-                  v-if="item.images.length > 0"
-                  :class="[
-                    'img-list',
-                    'img-list' + item.type,
-                    item.images.length === 1 && item.type === 3
-                      ? 'img-list-single'
-                      : ''
-                  ]"
-                >
-                  <view
-                    v-for="(imgItem, imgIndex) in item.images"
-                    :key="imgIndex"
-                    :class="[
-                      'img-wrapper',
-                      'img-wrapper' + item.type,
-                      item.images.length === 1 && item.type === 3
-                        ? 'img-wrapper-single'
-                        : ''
-                    ]"
-                  >
-                    <image class="img" :src="imgItem"></image>
-                    <view class="video-tip" v-if="item.videoSrc">
-                      <image
-                        class="video-tip-icon"
-                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAEC0lEQVRoQ+2ajVEVMRDHdzuwA6ACpQKxArECtQKxAqECoQKhAqECoQKxAqEDrWCdn7Nx8vJy+bp3T4YhM2+O8S7J/rO7//2IKo9k6CPBIU9Acpo0s10ReSkiPA8mtH0tIncicqOqPDcyZmvEhX8rIu8cQI9gtyJyKSIXc0ENA3EAnxxAj/BT356LyEdV/TWyWDcQM3smIgA4mtjwXkQ4aX4Mngj3QkSYy5PfTmb+laoeLg7EzBDga8aEEB4TOVfVAKAoj2sUc+QXQC0PxMzY8Esi3W8ROVbV05FTDHPMDC1AEBzEcqY1AeLMQQxtXANuZvjMa/cb/i6Oqo9kQKCFI1WtLl7bfOq9mUHd3/w9ND1F5f+WKAJxn/gebQiIg1Y/mAEEUsDX8J0zVZ0iljoQZydAYLuMrYCIwXOQrYc2qREzw4E/RAu/X9KcRrUX5mWBODX+jBY/UdXjuZuNznd5PnscepNjtikgODJpRzCp3VFaHBU+MTEOkSDMIJ0hFKyMNSAZbZA2NMUJn7ujqjebABDWyDDnXpqb5YDEvnGvqsHZi7I5CMgBxiHDxRx5bmSYGZlyyADWmCwHBN8IwjdRH5Im3B+En5UIJuYFBeMnjFtV3Y/frwDJmNV+K/1NAGEvIv+pqp7MUU1GthXzSoHE+VSzWRU0EsuOaUDhw+aWmNdKOEiBxOzQlYkWNJIqAiAI0V0dmhkZNvkXYyUkpEDYhFJ17cOaWXQACUtxaPhgc9JpZvFBr+Rg/xNI8B+0w0lXR0LDzUCIoE0bNPpISdC1uJD7uJQVlzTyEIFQgFGhMpo10pVfDfgIwlAiU9s0af4h+gglARkE8WURZ98G/V65Fhal3zgg3qnqXpVK/IMG0/rhAOYExDh9KgZEcqy4DtlEirKpTgutqLjsnk5RnEaLWeaUhiY0srFOS1KxrqVPtTS+2by8xsdsnkONNN5G0pDCQcVmtcaoLYVVV63e0zDo8L+0OVgvrNy84lIXemRiM022CtjynWsabVCwMdpKXQeSOlZXcGwRsPWbJAgyLZvOPOh2UKZWn6xYS0Dibl/IVF+1VoytJ15wbqyCtmkwKdIZGnZZE+9tmbLI4mC8VRuDAG8xpo00sQFDi2iRJrabU2jGBYVVmbMKxJ0/dzfSXeGVzM3ZiRZt2tGsgmDdJiAFMGiHNPxijk+YGV1NsuHgD82aCB82A4lomdohvf8jrQm3s61XbzgzAMJtVXwWOPZhD7F0AXEwnBrqjzv1sRCACnfp/HvIdsNlTbiDn+pgDuVn3UCCxN4wA1Bods+xrr8R26/yuuuULh8p8D0nSzsTE8ldOZcAhttgKsUhAEM+Ujty1xIm1PJfOK7nCh/LM2xaNVDbfv8EZNsnXtvvDyrmF1FIBKIwAAAAAElFTkSuQmCC"
-                      ></image>
-                    </view>
-                  </view>
-                </view>
-                <!-- 空图片占位 -->
-                <view v-else class="img-empty"></view>
-                <view :class="['bot', 'bot' + item.type]">
-                  <text class="author">{{ item.author }}</text>
-                  <text class="time">{{ item.time }}</text>
-                </view>
+                {{ test.title }}
               </view>
-
               <!-- 上滑加载更多组件 -->
-              <mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
+              <!-- <mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more> -->
             </scroll-view>
           </swiper-item>
         </swiper>
@@ -134,12 +88,15 @@ import { debounce, throttle } from "@/utils/debounce";
 import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-refresh/mix-pulldown-refresh";
 import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
 import json from "./json";
+let windowWidth = 0,
+  scrollTimer = false,
+  tabBar;
 export default {
   components: {
     mixPulldownRefresh,
     mixLoadMore
   },
-  onLoad() {
+  async onLoad() {
     this.loadTabbars();
   },
   onNavigationBarButtonTap(item) {
@@ -193,24 +150,6 @@ export default {
         }
       ],
       tabCurrentIndex: 0,
-      tabList: [
-        {
-          name: "默认",
-          id: "1"
-        },
-        {
-          name: "销量",
-          id: "2"
-        },
-        {
-          name: "价格",
-          id: "3"
-        },
-        {
-          name: "筛选",
-          id: "4"
-        }
-      ],
       tabBars: [],
       enableScroll: true
     };
@@ -218,26 +157,78 @@ export default {
   methods: {
     //获取分类
     loadTabbars() {
-      let tabList = this.tabList;
+      let tabList = json.tabList;
       tabList.forEach(item => {
         item.newsList = [];
         item.loadMoreStatus = 0; //加载更多 0加载前，1加载中，2没有更多了
         item.refreshing = 0;
       });
       console.log("loadTabbars_", tabList);
-
       this.tabBars = tabList;
       this.loadNewsList("add");
     },
     search(searchInfo) {
       console.log("searchInfo_", searchInfo.name);
     },
-    changeTab(index) {
-      this.tabCurrentIndex = index;
+    //tab切换
+    async changeTab(e) {
+      if (scrollTimer) {
+        //多次切换只执行最后一次
+        clearTimeout(scrollTimer);
+        scrollTimer = false;
+      }
+      let index = e;
+      //e=number为点击切换，e=object为swiper滑动切换
+      if (typeof e === "object") {
+        index = e.detail.current;
+      }
+      if (typeof tabBar !== "object") {
+        tabBar = await this.getElSize("nav-bar");
+      }
+      //计算宽度相关
+      let tabBarScrollLeft = tabBar.scrollLeft;
+      let width = 0;
+      let nowWidth = 0;
+      //获取可滑动总宽度
+      for (let i = 0; i <= index; i++) {
+        let result = await this.getElSize("tab" + i);
+        width += result.width;
+        if (i === index) {
+          nowWidth = result.width;
+        }
+      }
+      if (typeof e === "number") {
+        //点击切换时先切换再滚动tabbar，避免同时切换视觉错位
+        this.tabCurrentIndex = index;
+      }
+      debugger;
+      //延迟300ms,等待swiper动画结束再修改tabbar
+      scrollTimer = setTimeout(() => {
+        if (width - nowWidth / 2 > windowWidth / 2) {
+          //如果当前项越过中心点，将其放在屏幕中心
+          this.scrollLeft = width - nowWidth / 2 - windowWidth / 2;
+        } else {
+          this.scrollLeft = 0;
+        }
+        if (typeof e === "object") {
+          this.tabCurrentIndex = index;
+        }
+        this.tabCurrentIndex = index;
+
+        //第一次切换tab，动画结束后需要加载数据
+        let tabItem = this.tabBars[this.tabCurrentIndex];
+        if (this.tabCurrentIndex !== 0 && tabItem.loaded !== true) {
+          console.log("in");
+
+          this.loadNewsList("add");
+          tabItem.loaded = true;
+        }
+      }, 300);
     },
     //加载list
     loadNewsList(type) {
       let tabItem = this.tabBars[this.tabCurrentIndex];
+      debugger;
       console.log("tabItem_", tabItem);
 
       //type add 加载更多 refresh下拉刷新
@@ -245,7 +236,7 @@ export default {
         if (tabItem.loadMoreStatus === 2) {
           return;
         }
-        tabItem.loadMoreStatus = 1;
+        tabItem.loadMoreStatus = 0;
       }
       // #ifdef APP-PLUS
       else if (type === "refresh") {
@@ -277,7 +268,8 @@ export default {
         }
         //上滑加载 处理状态
         if (type === "add") {
-          tabItem.loadMoreStatus = tabItem.newsList.length > 40 ? 2 : 0;
+          console.log("上滑加载 处理状态");
+          tabItem.loadMoreStatus = 0;
         }
       }, 600);
     },
@@ -294,6 +286,22 @@ export default {
       if (this.enableScroll !== enable) {
         this.enableScroll = enable;
       }
+    },
+    //获得元素的size
+    getElSize(id) {
+      return new Promise((res, rej) => {
+        let el = uni.createSelectorQuery().select("#" + id);
+        el.fields(
+          {
+            size: true,
+            scrollOffset: true,
+            rect: true
+          },
+          data => {
+            res(data);
+          }
+        ).exec();
+      });
     }
   }
 };

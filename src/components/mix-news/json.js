@@ -1,3 +1,41 @@
+const tabList = [
+  {
+    name: "关注",
+    id: "1"
+  },
+  {
+    name: "推荐",
+    id: "2"
+  },
+  {
+    name: "体育",
+    id: "3"
+  },
+  {
+    name: "热点",
+    id: "4"
+  },
+  {
+    name: "财经",
+    id: "5"
+  },
+  {
+    name: "娱乐",
+    id: "6"
+  },
+  {
+    name: "军事",
+    id: "7"
+  },
+  {
+    name: "历史",
+    id: "8"
+  },
+  {
+    name: "本地",
+    id: "9"
+  }
+];
 const newsList = [
   {
     id: 1,
@@ -89,7 +127,28 @@ const newsList = [
     type: 3
   }
 ];
+const evaList = [
+  {
+    src:
+      "http://gss0.baidu.com/-fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/77c6a7efce1b9d1663174705fbdeb48f8d546486.jpg",
+    nickname: "Ranth Allngal",
+    time: "09-20 12:54",
+    zan: "54",
+    content:
+      "评论不要太苛刻，不管什么产品都会有瑕疵，客服也说了可以退货并且商家承担运费，我觉得至少态度就可以给五星。"
+  },
+  {
+    src:
+      "http://img0.imgtn.bdimg.com/it/u=2396068252,4277062836&fm=26&gp=0.jpg",
+    nickname: "Ranth Allngal",
+    time: "09-20 12:54",
+    zan: "54",
+    content: "楼上说的好有道理。"
+  }
+];
 
 export default {
-  newsList
+  tabList,
+  newsList,
+  evaList
 };

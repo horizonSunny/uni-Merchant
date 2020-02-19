@@ -1,39 +1,19 @@
 const tabList = [
   {
-    name: "关注",
+    name: "默认",
     id: "1"
   },
   {
-    name: "推荐",
+    name: "销量",
     id: "2"
   },
   {
-    name: "体育",
+    name: "价格",
     id: "3"
   },
   {
-    name: "热点",
+    name: "筛选",
     id: "4"
-  },
-  {
-    name: "财经",
-    id: "5"
-  },
-  {
-    name: "娱乐",
-    id: "6"
-  },
-  {
-    name: "军事",
-    id: "7"
-  },
-  {
-    name: "历史",
-    id: "8"
-  },
-  {
-    name: "本地",
-    id: "9"
   }
 ];
 const newsList = [
