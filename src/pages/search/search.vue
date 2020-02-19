@@ -22,7 +22,7 @@
           </view>
         </view>
       </view>
-      <view class="debounce">
+      <view class="debounce" v-if="historySearch">
         <ul>
           <li
             v-for="(item, index) in medicineClassify"
