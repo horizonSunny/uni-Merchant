@@ -1,27 +1,17 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import user from "./userInfo";
+import business from "./businessInfo";
+import getters from "./getters";
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  state: {
-    /**
-     * 是否需要强制登录
-     */
-    forcedLogin: false,
-    hasLogin: true,
-    userName: ""
+  modules: {
+    user,
+    business
   },
-  mutations: {
-    login(state, userName) {
-      state.userName = userName || "新用户";
-      state.hasLogin = true;
-    },
-    logout(state) {
-      state.userName = "";
-      state.hasLogin = false;
-    }
-  }
+  getters
 });
 
 export default store;
