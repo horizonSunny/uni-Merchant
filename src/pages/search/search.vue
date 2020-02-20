@@ -5,7 +5,7 @@
       <view class="historySearch" v-if="historySearch">
         <view class="classifyTitle">
           <text class="title">
-            历史搜索
+            类型
           </text>
           <view class="medicineOperate">
             <img src="static/icon/search/Search_delete.svg" alt="" />
@@ -33,7 +33,7 @@
           </li>
         </ul>
       </view>
-      <view id="nav-bar" class="nav-bar">
+      <view id="nav-bar" class="nav-bar" style="width :100%;">
         <view
           v-for="(item, index) in tabBars"
           :key="item.id"
@@ -43,7 +43,68 @@
           @click="changeTab(index)"
           >{{ item.name }}</view
         >
+        <view
+          class="nav-item"
+          :class="{ current: filtrateSelected }"
+          @click="filtrateClick"
+        >
+          筛选
+          <img
+            class="filtrate "
+            v-show="!filtrateSelected"
+            src="static/icon/search/filtrate.svg"
+            alt=""
+          />
+          <img
+            class="filtrate"
+            src="static/icon/search/filtrateSelected.svg"
+            v-show="filtrateSelected"
+            alt=""
+          />
+        </view>
       </view>
+      <view class="filtrateShow historySearch ">
+        <view>
+          <view class="filtrateCond">
+            <view class="classifyTitle">
+              <text class="title">
+                类型
+              </text>
+            </view>
+            <view class="classifyDetails filtrateDetails">
+              <view
+                class="classifyItem"
+                v-for="(item, index) in medicineClassify"
+                :key="index"
+                @click="search(item)"
+              >
+                <text>{{ item.name }}</text>
+              </view>
+            </view>
+            <view class="classifyTitle">
+              <text class="title">
+                品牌
+              </text>
+            </view>
+            <view class="classifyDetails filtrateDetails">
+              <view
+                class="classifyItem"
+                v-for="(item, index) in medicineClassify"
+                :key="index"
+                @click="search(item)"
+              >
+                <text>{{ item.name }}</text>
+              </view>
+            </view>
+          </view>
+          <view class="filtrateOpearte">
+            <button>重置</button>
+            <button type="primary">确定</button>
+          </view>
+        </view>
+        <view class="filtrateShade"></view>
+      </view>
+      <view class="shade"></view>
       <!-- 下拉刷新组件 -->
       <mix-pulldown-refresh
         ref="mixPulldownRefresh"
@@ -123,6 +184,8 @@ export default {
   data() {
     return {
       historySearch: false,
+      // 是否筛选过
+      filtrateSelected: false,
       medicineClassify: [
         {
           url: "static/icon/main/home_Cold@2x.png",
@@ -201,7 +264,6 @@ export default {
         //点击切换时先切换再滚动tabbar，避免同时切换视觉错位
         this.tabCurrentIndex = index;
       }
-      debugger;
       //延迟300ms,等待swiper动画结束再修改tabbar
       scrollTimer = setTimeout(() => {
         if (width - nowWidth / 2 > windowWidth / 2) {
@@ -302,6 +364,10 @@ export default {
           }
         ).exec();
       });
+    },
+    // filtrateClick 打开筛选界面
+    filtrateClick() {
+      this.filtrateSelected = true;
     }
   }
 };
@@ -313,6 +379,7 @@ export default {
   flex: 1;
   flex-direction: column;
   background: #fafafe;
+  height: 100%;
   .historySearch {
     padding: 28px 10px 15px;
     .classifyTitle {
@@ -351,6 +418,9 @@ export default {
         }
       }
     }
+    .filtrateDetails {
+      margin-bottom: 16px;
+    }
   }
   .debounce {
     width: 100%;
@@ -370,6 +440,42 @@ export default {
       color: rgba(27, 27, 27, 1);
     }
   }
+  .filtrateShow {
+    position: absolute;
+    padding: 0px;
+    // background: #fff;
+    border-top: 1px solid rgb(240, 240, 240);
+    // opacity: 0.7;
+    top: 45px;
+    bottom: 0px;
+    z-index: 99;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    .filtrateCond {
+      padding: 15px 15px;
+      background: #fff;
+    }
+    .filtrateOpearte {
+      button {
+        width: 50%;
+        float: left;
+        border-radius: 0px;
+      }
+    }
+    .filtrateShade {
+      flex: 1;
+      background: #000;
+      opacity: 0.7;
+    }
+  }
+  //   .shade {
+  //     position: absolute;
+  //     background: red;
+  //     z-index: 999;
+  //     height: 100px;
+  //     width: 100%;
+  //   }
   /* 顶部tabbar */
   .nav-bar {
     position: relative;
@@ -389,16 +495,21 @@ export default {
       font-size: 30upx;
       color: #303133;
       position: relative;
-      &:after {
-        content: "";
-        width: 0;
-        height: 0;
-        border-bottom: 4upx solid #007aff;
-        position: absolute;
-        left: 50%;
-        bottom: 0;
-        transform: translateX(-50%);
-        transition: 0.3s;
+      //   &:after {
+      //     content: "";
+      //     width: 0;
+      //     height: 0;
+      //     border-bottom: 4upx solid #007aff;
+      //     position: absolute;
+      //     left: 50%;
+      //     bottom: 0;
+      //     transform: translateX(-50%);
+      //     transition: 0.3s;
+      //   }
+      .filtrate {
+        width: 12px;
+        height: 12px;
+        margin-top: 2px;
       }
     }
     .current {

@@ -10,10 +10,6 @@ const tabList = [
   {
     name: "价格",
     id: "3"
-  },
-  {
-    name: "筛选",
-    id: "4"
   }
 ];
 const newsList = [
