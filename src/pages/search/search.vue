@@ -63,7 +63,7 @@
           />
         </view>
       </view>
-      <view class="filtrateShow historySearch ">
+      <view class="filtrateShow historySearch" v-if="filtrateSelected">
         <view>
           <view class="filtrateCond">
             <view class="classifyTitle">
@@ -104,7 +104,6 @@
         </view>
         <view class="filtrateShade"></view>
       </view>
-      <view class="shade"></view>
       <!-- 下拉刷新组件 -->
       <mix-pulldown-refresh
         ref="mixPulldownRefresh"
@@ -367,7 +366,7 @@ export default {
     },
     // filtrateClick 打开筛选界面
     filtrateClick() {
-      this.filtrateSelected = true;
+      this.filtrateSelected = !this.filtrateSelected;
     }
   }
 };
