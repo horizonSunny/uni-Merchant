@@ -129,8 +129,18 @@
               <view
                 v-for="(test, indexTest) in tabItem.newsList"
                 :key="indexTest"
+                class="drugsDetails"
               >
-                {{ test.title }}
+                <img
+                  src="../../static/icon/main/Product-Bitmap@2x.png"
+                  alt=""
+                />
+                <view class="drugsInfo">
+                  <view class="drugName">商品品牌 通用名...</view>
+                  <view class="drugSpec">100ml/支</view>
+                  <view class="drugSpec">国药准字xxx</view>
+                  <view class="drugPrice">¥ 232.00</view>
+                </view>
               </view>
               <!-- 上滑加载更多组件 -->
               <mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
@@ -520,6 +530,51 @@ export default {
   }
   .swiperInfo {
     flex: 1;
+    .drugsDetails {
+      height: 130px;
+      //   justify-content: center;
+      align-items: center;
+      margin-top: 1px;
+      background: #fff;
+      padding: 15px;
+      display: flex;
+      img {
+        height: 100px;
+        width: 100px;
+      }
+      .drugsInfo {
+        height: 105px;
+        margin-left: 11px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .drugName {
+          height: 20px;
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(27, 27, 27, 1);
+          line-height: 20px;
+        }
+        .drugSpec {
+          height: 18px;
+          font-size: 13px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(137, 137, 137, 1);
+          line-height: 18px;
+        }
+        .drugPrice {
+          margin-top: 20px;
+          height: 25px;
+          font-size: 18px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: rgba(250, 73, 73, 1);
+          line-height: 25px;
+        }
+      }
+    }
   }
   .panel-scroll-box {
     height: 100%;
