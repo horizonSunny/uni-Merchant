@@ -44,7 +44,7 @@
           <text class="title">
             快速找药
           </text>
-          <view class="medicineOperate">
+          <view class="medicineOperate" @click="goClassify">
             <text class="operate">
               全部药品
             </text>
@@ -110,6 +110,14 @@ export default {
         // url: "../login/login"
         // url: "../merchantsIntr/merchantsIntr"
         url: "../search/search"
+      });
+    },
+    goClassify() {
+      console.log("goClassify_");
+      uni.switchTab({
+        // url: "../login/login"
+        // url: "../merchantsIntr/merchantsIntr"
+        url: "../classify/classify"
       });
     }
   },
