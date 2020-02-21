@@ -102,7 +102,10 @@
             <button type="primary">确定</button>
           </view>
         </view>
-        <view class="filtrateShade"></view>
+        <view
+          class="filtrateShade"
+          @click="() => (this.filtrateSelected = false)"
+        ></view>
       </view>
       <!-- 下拉刷新组件 -->
       <mix-pulldown-refresh
