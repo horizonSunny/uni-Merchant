@@ -69,7 +69,6 @@ m-input {
   flex-direction: column;
   background-color: #ffffff;
 }
-
 .input-group {
   background-color: #ffffff;
   margin-top: 20px;

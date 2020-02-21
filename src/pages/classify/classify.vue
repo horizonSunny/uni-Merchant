@@ -16,7 +16,6 @@
         scroll-y
         :scroll-top="tabScrollTop"
         @scroll="scrollCategory"
-        style="height:500px;"
       >
         <!-- <view style=""></view> -->
         <view class="category">
@@ -177,6 +176,9 @@ export default {
 </script>
 
 <style lang="scss">
+uni-page-body {
+  height: 100%;
+}
 .content {
   display: flex;
   flex-direction: column;
