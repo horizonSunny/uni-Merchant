@@ -1,16 +1,18 @@
-import Vue from 'vue'
-import App from './App'
+import Vue from "vue";
+import App from "./App";
 
-import store from './store'
+import store from "./store";
+import http from "./config/axios";
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-Vue.prototype.$store = store
+Vue.prototype.$store = store;
+Vue.prototype.$http = http;
 
-App.mpType = 'app'
+App.mpType = "app";
 
 const app = new Vue({
-	store,
-	...App
-})
-app.$mount()
+  store,
+  ...App
+});
+app.$mount();

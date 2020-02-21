@@ -1,4 +1,4 @@
-import axios from "uni-axios";
+import axios from "../utils/uni-axios/index";
 import { baseUrl, channelNo } from "./global";
 import * as storage from "./storage";
 /**
@@ -22,7 +22,8 @@ function _reslog(res) {
 
 // 创建自定义接口服务实例
 const http = axios.create({
-  baseURL: baseUrl,
+  baseURL:
+    "https://result.eolinker.com/4ZWYSyU62a94784eb7040d5e2e367d77742ba02b442e098?uri=",
   timeout: 6000,
   // #ifdef H5
   withCredentials: true,
@@ -33,52 +34,52 @@ const http = axios.create({
   }
 });
 // 拦截器 在请求之前拦截
-http.interceptors.request.use(config => {
-  // code...
-  let accsess_token = storage.getSync("access_token");
-  if (accsess_token) {
-    config.headers.authorization = accsess_token;
-  }
-  _reqlog(config);
-  uni.showLoading({
-    title: "加载中"
-  });
-  return config;
-});
+// http.interceptors.request.use(config => {
+//   // code...
+//   let accsess_token = storage.getSync("access_token");
+//   if (accsess_token) {
+//     config.headers.authorization = accsess_token;
+//   }
+//   _reqlog(config);
+//   uni.showLoading({
+//     title: "加载中"
+//   });
+//   return config;
+// });
 
 // 拦截器 在请求之后拦截
-http.interceptors.response.use(
-  response => {
-    // response.code代表token失效
-    console.log("response.code_", response.data.code);
-    if (response.data.code === 2) {
-      storage.setSync("access_token", channelNo);
-      uni.reLaunch({
-        url: "/pages/login/index"
-      });
-    } else if (response.data.code !== 1) {
-      uni.hideLoading();
-      setTimeout(() => {
-        uni.showToast({
-          icon: "none",
-          title: response.data.msg
-        });
-      }, 500);
-      return Promise.reject(response.data.msg);
-    }
-    uni.hideLoading();
-    return response.data;
-    // code...
-  },
-  error => {
-    // 如果token值无效，让跳转登陆页面
-    if (error.response.status === 401) {
-      storage.setSync("access_token", channelNo);
-      // uni.reLaunch({
-      //   url: '/pages/login/index'
-      // })
-    }
-  }
-);
+// http.interceptors.response.use(
+//   response => {
+//     // response.code代表token失效
+//     console.log("response.code_", response.data.code);
+//     if (response.data.code === 2) {
+//       storage.setSync("access_token", channelNo);
+//       uni.reLaunch({
+//         url: "/pages/login/index"
+//       });
+//     } else if (response.data.code !== 1) {
+//       uni.hideLoading();
+//       setTimeout(() => {
+//         uni.showToast({
+//           icon: "none",
+//           title: response.data.msg
+//         });
+//       }, 500);
+//       return Promise.reject(response.data.msg);
+//     }
+//     uni.hideLoading();
+//     return response.data;
+//     // code...
+//   },
+//   error => {
+//     // 如果token值无效，让跳转登陆页面
+//     if (error.response.status === 401) {
+//       storage.setSync("access_token", channelNo);
+//       // uni.reLaunch({
+//       //   url: '/pages/login/index'
+//       // })
+//     }
+//   }
+// );
 
 export default http;

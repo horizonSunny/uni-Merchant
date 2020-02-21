@@ -1,182 +1,281 @@
 <template>
   <view class="content">
-    <!-- <view v-if="hasLogin" class="hello"> -->
-    <view class="main">
-      <view class="merchantInfo">
-        <view class="merchantMessage">
-          <img src="static/img/位图@2x.png" alt="" class="merchantIcon" />
-          <view class="merchantDetails">
-            <view>瑞康大药店</view>
-            <view class="merchantLocation">
-              <img src="static/icon/merchantsIntr/location.svg" alt="" />
-              长泰广场</view
-            >
-          </view>
-        </view>
+    <view class="contentInfo">
+      <view class="classifyBar">
+        <view
+          v-for="(item, index) in menuList"
+          :key="index"
+          class="menuItem"
+          :class="activeSelected === item ? 'hasSelected' : ''"
+          @click="menuSelect(item)"
+        >{{ item }}</view>
       </view>
-      <view class="classify">
-        <view class="classifyTitle">
-          <text class="title">
-            商家推荐
-          </text>
-        </view>
-        <view class="classifyContent">
+      <scroll-view
+        scroll-with-animation
+        scroll-y
+        :scroll-top="tabScrollTop"
+        @scroll="scrollCategory"
+      >
+        <!-- <view style=""></view> -->
+        <view class="category">
           <view
-            class="contentItem"
-            v-for="(item, index) in recommend"
+            v-for="(item, index) in categoryList"
             :key="index"
+            class="categoryItem"
+            :id="'main-' + item.id"
           >
-            <img :src="item.url" alt="" />
-            <text>资质名称 </text>
+            <view v-if="item['paraphrase'] !== ''" class="categoryTitle">
+              {{
+              item["classifyName"]
+              }}
+            </view>
+            <view style="margin-bottom:25rpx"></view>
+            <!-- 下面是每一种菜单中的咖啡种类 -->
+            <view
+              v-for="(categoryItem, index) in item['category']"
+              :key="index"
+              class="categoryContent"
+            >
+              <view @click="showModal(categoryItem)">
+                <img :src="categoryItem['img']" alt class="categoryImg" />
+                <view style="float:left;margin-left:22rpx">
+                  <view style="height:44rpx;font-size:30rpx;color:#383838">
+                    {{
+                    categoryItem["name"]
+                    }}
+                  </view>
+                  <view
+                    style="height:52rpx; width:176rpx;font-size:22rpx;margin-bottom:8rpx;color:#a6a6a6"
+                  >
+                    {{ categoryItem["englishName"] }}
+                    <br />
+                    {{ categoryItem["default"] }}
+                  </view>
+                  <view style="height:32rpx;font-size:30rpx;color:#383838">
+                    {{
+                    categoryItem["price"]
+                    }}
+                  </view>
+                </view>
+              </view>
+              <view></view>
+            </view>
           </view>
         </view>
-      </view>
-      <view class="classify">
-        <view class="classifyTitle">
-          <text class="title">
-            商家实景
-          </text>
-        </view>
-        <view class="merchantLive">
-          <img src="static/icon/merchantsIntr/shop_bitmap3.svg" alt="" />
-        </view>
-      </view>
+      </scroll-view>
+    </view>
+    <view
+      v-if="openModal"
+      style="  width: 100%;
+              height: 100%;
+              background-color: #130b0b31;
+              position: absolute;"
+    >
+      <!-- <menuModal
+        :modal-show="openModal"
+        :pitch="pitchDrink"
+        @closeModal="closeModel"
+      ></menuModal>-->
     </view>
   </view>
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+// import menuModal from "./menuModal";
 export default {
-  computed: mapState(["forcedLogin", "hasLogin", "userName"]),
-  onLoad() {},
-  onNavigationBarButtonTap(item) {
-    // 这边绑定是该页面topBar上面的两个button事件
-    console.log("index_", item.index);
+  components: {
+    // menuModal
   },
   data() {
     return {
-      recommend: [
-        {
-          url: "static/icon/main/Product-Bitmap@2x.png",
-          otc: true,
-          brand: "23312",
-          commandName: "sdsd",
-          specification: "100ml",
-          price: 123
-        },
-        {
-          url: "static/icon/main/Product-Bitmap@2x.png",
-          otc: true,
-          brand: "23312",
-          commandName: "sdsd",
-          specification: "100ml",
-          price: 123
-        },
-        {
-          url: "static/icon/main/Product-Bitmap@2x.png",
-          otc: false,
-          brand: "23312",
-          specification: "100ml",
-          commandName: "sdsd",
-          price: 123
-        }
-      ]
+      autoplay: false,
+      interval: 2000,
+      duration: 500,
+      circular: true,
+      bananaList: [],
+      mode: "indexes",
+      current: 0,
+      dotsStyles: {
+        color: "#fff"
+      },
+      isActive: false,
+      listNoBorder: false,
+      categoryList: [],
+      menuList: [],
+      activeSelected: "",
+      // 右侧菜单item style
+      categoryStyle: {
+        height: 19,
+        color: "rgba(56, 56, 56, 1)",
+        fontSize: 13,
+        fontWeight: "bold",
+        lineColor: "rgba(166, 166, 166, 1)",
+        lineLeft: 2
+      },
+      categoryParStyle: {
+        height: 19,
+        color: "rgba(166, 166, 166, 1)",
+        fontSize: 10,
+        fontWeight: "normal",
+        lineColor: "rgba(166, 166, 166, 1)",
+        lineLeft: 2
+      },
+      // 判断是否取到每一个节点的位置高度
+      sizeCalcState: false,
+      tabScrollTop: 0,
+      // 模态是否打开
+      openModal: false,
+      pitchDrink: {}
     };
+  },
+  onLoad() {
+    console.log("this.$http_", this.$http);
+
+    this.$http.get("luckin/getMenuList").then(res => {
+      this.categoryList = res.data;
+      this.menuList = res.data.map(item => {
+        return item.classifyName;
+      });
+      // this.menuList = ['12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '13']
+      this.activeSelected = this.menuList[0];
+    });
+    // getpageList
+    this.$http.get("luckin/menuSlideshow").then(res => {
+      this.bananaList = res.data;
+    });
+  },
+
+  methods: {
+    change(e) {
+      this.current = e.detail.current;
+    },
+    menuSelect(e) {
+      if (!this.sizeCalcState) {
+        this.calcSize(); //
+      }
+      this.$nextTick(function() {
+        console.log("activeSelected_", e);
+        this.activeSelected = e;
+        // 找到对应的左侧菜单类
+        const currentItem = this.categoryList.filter(item => {
+          return item.classifyName === e;
+        });
+        console.log("item__", currentItem[0]["top"]);
+        this.tabScrollTop = currentItem[0]["top"];
+      });
+    },
+
+    // 计算右侧每个tab高度
+    calcSize() {
+      let h = 0;
+      this.categoryList.forEach(item => {
+        let view = uni.createSelectorQuery().select("#main-" + item.id);
+        view
+          .fields(
+            {
+              size: true
+            },
+            data => {
+              item.top = h;
+              h += data.height;
+              item.bottom = h;
+            }
+          )
+          .exec();
+      });
+      this.sizeCalcState = true;
+    },
+    // 滚动时候左侧是否变动
+    scrollCategory(e) {
+      if (!this.sizeCalcState) {
+        this.calcSize(); //
+      }
+      this.$nextTick(function() {
+        console.log("scrollCategory_", e.detail);
+        const currentTop = e.detail.scrollTop;
+        let tabs = this.categoryList
+          .filter(item => item.top <= currentTop)
+          .reverse();
+        let tabTwo = this.categoryList
+          .filter(item => item.top > currentTop)
+          .reverse();
+        this.activeSelected = tabs[0]["classifyName"];
+      });
+    },
+    // 模态弹窗
+    showModal(info) {
+      this.openModal = true;
+      this.pitchDrink = info;
+      console.log("this.pitchDrink_", this.pitchDrink);
+    },
+    closeModel() {
+      this.openModal = false;
+    }
   }
 };
 </script>
 
 <style lang="scss">
-.main {
+.content {
   display: flex;
-  flex: 1;
   flex-direction: column;
-  background: #fafafe;
-  .merchantInfo {
-    background: #fff;
-    height: 43px;
-    padding: 21px 15px 16px;
-    .merchantMessage {
-      display: flex;
-      display: flex;
-      align-items: flex-start;
-      .merchantIcon {
-        width: 64px;
-        height: 22px;
+  height: 100%;
+  width: 100%;
+  .banner {
+    z-index: 0;
+    .bananaList {
+      width: px2rpx(375);
+      height: px2rpx(130);
+    }
+  }
+  .contentInfo {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    .classifyBar {
+      width: px2rpx(90);
+      background: #f8f8f8;
+      overflow: scroll;
+      .menuItem {
+        width: px2rpx(70);
+        height: px2rpx(44);
+        color: rgba(80, 80, 80, 1);
+        font-size: px2rpx(14);
+        line-height: px2rpx(44);
+        text-align: center;
       }
-      .merchantDetails {
-        margin-left: 5px;
-        width: 70%;
-        .merchantLocation {
-          height: 18px;
-          margin-top: 2px;
-          font-size: 13px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: rgba(27, 27, 27, 1);
-          line-height: 18px;
-          img {
-            position: relative;
-            top: 3px;
-            width: 15px;
-            height: 15px;
+      .hasSelected {
+        background: #fff;
+        border-left: 1px solid rgb(135, 172, 235);
+      }
+    }
+    .category {
+      width: px2rpx(285);
+      background: #fff;
+      padding-left: px2rpx(14);
+      padding-top: px2rpx(10);
+      overflow: scroll;
+      .categoryItem {
+        .categoryTitle {
+          width: auto;
+          height: px2rpx(19);
+          color: rgba(56, 56, 56, 1);
+          font-size: px2rpx(13);
+          line-height: 150%;
+          text-align: left;
+          font-weight: bold;
+        }
+        .categoryContent {
+          width: px2rpx(255);
+          height: px2rpx(74);
+          .categoryImg {
+            float: left;
+            width: px2rpx(70);
+            height: px2rpx(70);
+            border-radius: 4px;
           }
         }
       }
-    }
-  }
-  .classify {
-    padding: 12px 10px 15px;
-    .classifyTitle {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .title {
-        font-size: 16px;
-        font-weight: 500;
-        color: rgba(27, 27, 27, 1);
-      }
-      .medicineOperate {
-        display: flex;
-        align-items: center;
-        .operate {
-          font-size: 12px;
-          font-weight: 500;
-          color: rgba(137, 137, 137, 1);
-          margin-right: 5px;
-        }
-      }
-    }
-    .classifyContent {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 0px 10px;
-      justify-content: space-between;
-      .contentItem {
-        margin-bottom: 10px;
-        background: #fff;
-        display: flex;
-        width: 47%;
-        border-radius: 4px;
-        height: 180px;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        img {
-          width: 80%;
-          height: 115px;
-        }
-        text {
-          margin-top: 10px;
-        }
-      }
-    }
-    .merchantLive {
-      width: 100%;
-      height: 172px;
-      background: #fff;
     }
   }
 }

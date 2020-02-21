@@ -4,10 +4,10 @@ const userModule = {
     permissionRouter: []
   },
   getters: {
-    getPermission(state, getters, rootState, rootGetters) {
-      // console.log('rootGetters_', rootGetters)
-      return rootGetters.permissions;
-    }
+    // getPermission(state, getters, rootState, rootGetters) {
+    //   // console.log('rootGetters_', rootGetters)
+    //   return rootGetters.permissions;
+    // }
   },
   mutations: {
     // SET_ROUTERS: (state, routers) => {
