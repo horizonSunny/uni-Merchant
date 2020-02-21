@@ -34,52 +34,52 @@ const http = axios.create({
   }
 });
 // 拦截器 在请求之前拦截
-// http.interceptors.request.use(config => {
-//   // code...
-//   let accsess_token = storage.getSync("access_token");
-//   if (accsess_token) {
-//     config.headers.authorization = accsess_token;
-//   }
-//   _reqlog(config);
-//   uni.showLoading({
-//     title: "加载中"
-//   });
-//   return config;
-// });
+http.interceptors.request.use(config => {
+  // code...
+  let accsess_token = storage.getSync("access_token");
+  if (accsess_token) {
+    config.headers.authorization = accsess_token;
+  }
+  _reqlog(config);
+  uni.showLoading({
+    title: "加载中"
+  });
+  return config;
+});
 
 // 拦截器 在请求之后拦截
-// http.interceptors.response.use(
-//   response => {
-//     // response.code代表token失效
-//     console.log("response.code_", response.data.code);
-//     if (response.data.code === 2) {
-//       storage.setSync("access_token", channelNo);
-//       uni.reLaunch({
-//         url: "/pages/login/index"
-//       });
-//     } else if (response.data.code !== 1) {
-//       uni.hideLoading();
-//       setTimeout(() => {
-//         uni.showToast({
-//           icon: "none",
-//           title: response.data.msg
-//         });
-//       }, 500);
-//       return Promise.reject(response.data.msg);
-//     }
-//     uni.hideLoading();
-//     return response.data;
-//     // code...
-//   },
-//   error => {
-//     // 如果token值无效，让跳转登陆页面
-//     if (error.response.status === 401) {
-//       storage.setSync("access_token", channelNo);
-//       // uni.reLaunch({
-//       //   url: '/pages/login/index'
-//       // })
-//     }
-//   }
-// );
+http.interceptors.response.use(
+  response => {
+    // response.code代表token失效
+    // console.log("response.code_", response.data.code);
+    // if (response.data.code === 2) {
+    //   storage.setSync("access_token", channelNo);
+    //   uni.reLaunch({
+    //     url: "/pages/login/index"
+    //   });
+    // } else if (response.data.code !== 1) {
+    //   uni.hideLoading();
+    //   setTimeout(() => {
+    //     uni.showToast({
+    //       icon: "none",
+    //       title: response.data.msg
+    //     });
+    //   }, 500);
+    //   return Promise.reject(response.data.msg);
+    // }
+    uni.hideLoading();
+    return response.data;
+    // code...
+  },
+  error => {
+    // 如果token值无效，让跳转登陆页面
+    if (error.response.status === 401) {
+      storage.setSync("access_token", channelNo);
+      // uni.reLaunch({
+      //   url: '/pages/login/index'
+      // })
+    }
+  }
+);
 
 export default http;

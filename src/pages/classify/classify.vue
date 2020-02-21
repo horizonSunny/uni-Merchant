@@ -8,13 +8,15 @@
           class="menuItem"
           :class="activeSelected === item ? 'hasSelected' : ''"
           @click="menuSelect(item)"
-        >{{ item }}</view>
+          >{{ item }}</view
+        >
       </view>
       <scroll-view
         scroll-with-animation
         scroll-y
         :scroll-top="tabScrollTop"
         @scroll="scrollCategory"
+        style="height:500px;"
       >
         <!-- <view style=""></view> -->
         <view class="category">
@@ -24,10 +26,8 @@
             class="categoryItem"
             :id="'main-' + item.id"
           >
-            <view v-if="item['paraphrase'] !== ''" class="categoryTitle">
-              {{
-              item["classifyName"]
-              }}
+            <view class="categoryTitle">
+              {{ item["classifyName"] }}
             </view>
             <view style="margin-bottom:25rpx"></view>
             <!-- 下面是每一种菜单中的咖啡种类 -->
@@ -36,13 +36,11 @@
               :key="index"
               class="categoryContent"
             >
-              <view @click="showModal(categoryItem)">
+              <view>
                 <img :src="categoryItem['img']" alt class="categoryImg" />
                 <view style="float:left;margin-left:22rpx">
                   <view style="height:44rpx;font-size:30rpx;color:#383838">
-                    {{
-                    categoryItem["name"]
-                    }}
+                    {{ categoryItem["name"] }}
                   </view>
                   <view
                     style="height:52rpx; width:176rpx;font-size:22rpx;margin-bottom:8rpx;color:#a6a6a6"
@@ -52,9 +50,7 @@
                     {{ categoryItem["default"] }}
                   </view>
                   <view style="height:32rpx;font-size:30rpx;color:#383838">
-                    {{
-                    categoryItem["price"]
-                    }}
+                    {{ categoryItem["price"] }}
                   </view>
                 </view>
               </view>
@@ -88,38 +84,9 @@ export default {
   },
   data() {
     return {
-      autoplay: false,
-      interval: 2000,
-      duration: 500,
-      circular: true,
-      bananaList: [],
-      mode: "indexes",
-      current: 0,
-      dotsStyles: {
-        color: "#fff"
-      },
-      isActive: false,
-      listNoBorder: false,
       categoryList: [],
       menuList: [],
       activeSelected: "",
-      // 右侧菜单item style
-      categoryStyle: {
-        height: 19,
-        color: "rgba(56, 56, 56, 1)",
-        fontSize: 13,
-        fontWeight: "bold",
-        lineColor: "rgba(166, 166, 166, 1)",
-        lineLeft: 2
-      },
-      categoryParStyle: {
-        height: 19,
-        color: "rgba(166, 166, 166, 1)",
-        fontSize: 10,
-        fontWeight: "normal",
-        lineColor: "rgba(166, 166, 166, 1)",
-        lineLeft: 2
-      },
       // 判断是否取到每一个节点的位置高度
       sizeCalcState: false,
       tabScrollTop: 0,
@@ -129,20 +96,14 @@ export default {
     };
   },
   onLoad() {
-    console.log("this.$http_", this.$http);
-
     this.$http.get("luckin/getMenuList").then(res => {
       this.categoryList = res.data;
       this.menuList = res.data.map(item => {
         return item.classifyName;
       });
-      // this.menuList = ['12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '13']
       this.activeSelected = this.menuList[0];
     });
-    // getpageList
-    this.$http.get("luckin/menuSlideshow").then(res => {
-      this.bananaList = res.data;
-    });
+    console.log("this.categoryList _", this.categoryList);
   },
 
   methods: {
@@ -221,57 +182,51 @@ export default {
   flex-direction: column;
   height: 100%;
   width: 100%;
-  .banner {
-    z-index: 0;
-    .bananaList {
-      width: px2rpx(375);
-      height: px2rpx(130);
-    }
-  }
+  border-top: 1px solid #d4d4d4;
   .contentInfo {
     display: flex;
     flex: 1;
     overflow: hidden;
     .classifyBar {
-      width: px2rpx(90);
+      width: 90px;
       background: #f8f8f8;
       overflow: scroll;
       .menuItem {
-        width: px2rpx(70);
-        height: px2rpx(44);
+        width: 70px;
+        height: 44px;
         color: rgba(80, 80, 80, 1);
-        font-size: px2rpx(14);
-        line-height: px2rpx(44);
+        font-size: 14px;
+        line-height: 44px;
         text-align: center;
       }
       .hasSelected {
-        background: #fff;
+        background: #3a74f1;
         border-left: 1px solid rgb(135, 172, 235);
       }
     }
     .category {
-      width: px2rpx(285);
+      width: 285px;
       background: #fff;
-      padding-left: px2rpx(14);
-      padding-top: px2rpx(10);
+      padding-left: 14px;
+      padding-top: 10px;
       overflow: scroll;
       .categoryItem {
         .categoryTitle {
           width: auto;
-          height: px2rpx(19);
+          height: 19px;
           color: rgba(56, 56, 56, 1);
-          font-size: px2rpx(13);
+          font-size: 13px;
           line-height: 150%;
           text-align: left;
           font-weight: bold;
         }
         .categoryContent {
-          width: px2rpx(255);
-          height: px2rpx(74);
+          width: 255px;
+          height: 74px;
           .categoryImg {
             float: left;
-            width: px2rpx(70);
-            height: px2rpx(70);
+            width: 70px;
+            height: 70px;
             border-radius: 4px;
           }
         }
