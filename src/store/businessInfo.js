@@ -1,8 +1,7 @@
-import { getClassify } from "@service/index";
+import { getClassify } from "@/service/index";
 const businessModule = {
   state: {
     classifyInfo: []
-    // permissionRouter: []
   },
   getters: {
     // getPermission(state, getters, rootState, rootGetters) {
@@ -17,12 +16,9 @@ const businessModule = {
   },
   actions: {
     GetClassify({ commit, getters }) {
-      // this.$http.get
-      // const addRouter = filterAsyncRouter(asyncRouters, getters.getPermission);
-      // 这边添加main，放入mainchildren,不能深拷贝，会形成两个mainComponent
-      addMainRouter[0].children = addRouter;
-      console.log("addRouter_", addMainRouter);
-      commit("SET_ROUTERS", addMainRouter);
+      getClassify().then(res => {
+        commit("SET_ClASSIFY", res.data);
+      });
     }
   }
 };

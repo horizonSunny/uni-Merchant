@@ -13,14 +13,8 @@ export default {
     };
   },
   onLoad() {
-    this.$http.get("luckin/getMenuList").then(res => {
-      this.categoryList = res.data;
-      this.menuList = res.data.map(item => {
-        return item.classifyName;
-      });
-      this.activeSelected = this.menuList[0];
-    });
-    console.log("this.categoryList _", this.categoryList);
+    this.$store.getters.filteredList;
+    console.log("this.$store.getters.classify_", this.$store.getters.classify);
   },
 
   methods: {
