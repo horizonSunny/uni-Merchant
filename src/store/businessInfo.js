@@ -16,8 +16,9 @@ const businessModule = {
   },
   actions: {
     GetClassify({ commit, getters }) {
-      getClassify().then(res => {
+      return getClassify().then(res => {
         commit("SET_ClASSIFY", res.data);
+        return res.data;
       });
     }
   }

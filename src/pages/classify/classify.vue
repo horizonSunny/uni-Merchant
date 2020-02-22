@@ -7,18 +7,32 @@
           v-for="(item, index) in classify"
           :class="{ active: index === tabCurrentIndex }"
           :key="index"
-          @click="selectBar(index)"
+          @click="selectBar(item, index)"
           >{{ item.cateName }}</view
         >
       </scroll-view>
     </view>
     <view class="classifyContent">
       <scroll-view class="scroll-view" scroll-y>
-        <view style="height:200px;background:green">1级分类</view>
-        <view style="height:200px;background:green">1级分了</view>
-        <view style="height:200px;background:green">1级分了</view>
-        <view style="height:200px;background:green">1级分了</view>
-        <view style="height:200px;background:green">1级分了</view>
+        <view
+          class="sencondWrap"
+          v-for="(secItem, secIndex) in currentClassify"
+          :key="secIndex"
+        >
+          <view class="sencondTitle">
+            {{ secItem.cateName }}
+          </view>
+          <view class="threeWrap">
+            <view
+              v-for="(thrItem, thrIndex) in secItem.children"
+              :key="thrIndex"
+              class="threeClassify"
+            >
+              <img :src="thrItem.pic" alt="" />
+              {{ thrItem.cateName }}
+            </view>
+          </view>
+        </view>
       </scroll-view>
     </view>
   </view>
@@ -31,14 +45,16 @@ export default {
   },
   data() {
     return {
-      tabCurrentIndex: 0
+      tabCurrentIndex: 0,
+      currentClassify: []
     };
   },
   onLoad() {
     // this.getClassify();
     console.log("this.$store_", this.$store);
-    this.getClassify().then(() => {
-      console.log("this.$store.getters");
+    this.getClassify().then(res => {
+      console.log("this.$store.getters", res);
+      this.currentClassify = res[0]["children"];
     });
   },
   computed: {
@@ -51,8 +67,9 @@ export default {
     change(e) {
       this.current = e.detail.current;
     },
-    selectBar(index) {
+    selectBar(item, index) {
       this.tabCurrentIndex = index;
+      this.currentClassify = item.children;
     }
   }
 };
@@ -89,7 +106,42 @@ uni-page-body {
     }
   }
   .classifyContent {
+    width: 75%;
     flex: 1;
+    border-left: 1px solid #e3e3e3;
+    .sencondWrap {
+      padding: 5px 14px;
+      border-bottom: 1px solid #e3e3e3;
+      .sencondTitle {
+        height: 20px;
+        font-size: 14px;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: rgba(27, 27, 27, 1);
+        line-height: 20px;
+        margin-top: 17px;
+        margin-bottom: 7px;
+      }
+      .threeWrap {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        // justify-content: space-around;
+        .threeClassify {
+          width: 33%;
+          font-size: 12px;
+          text-align: center;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(27, 27, 27, 1);
+          margin-bottom: 18px;
+          img {
+            width: 75px;
+            height: 75px;
+          }
+        }
+      }
+    }
   }
   .scroll-view {
     height: 100%;
