@@ -1,5 +1,25 @@
 <template>
-  <view class="content"> </view>
+  <view class="content">
+    <view class="siderBar">
+      <scroll-view class="scroll-view" scroll-y>
+        <view style="height:300px;background:yellow">1级分了</view>
+        <view style="height:300px;background:yellow">1级分了</view>
+        <view style="height:300px;background:yellow">1级分了</view>
+        <view style="height:300px;background:yellow">1级分了</view>
+        <view style="height:300px;background:yellow">1级分了</view>
+        <view style="height:300px;background:yellow">1级分了</view>
+      </scroll-view>
+    </view>
+    <view class="classifyContent">
+      <scroll-view class="scroll-view" scroll-y>
+        <view style="height:200px;background:green">1级分了</view>
+        <view style="height:200px;background:green">1级分了</view>
+        <view style="height:200px;background:green">1级分了</view>
+        <view style="height:200px;background:green">1级分了</view>
+        <view style="height:200px;background:green">1级分了</view>
+      </scroll-view>
+    </view>
+  </view>
 </template>
 <script>
 import { mapActions } from "vuex";
@@ -35,4 +55,28 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss">
+uni-page-body {
+  height: 100%;
+}
+.content {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid #d4d4d4;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  .siderBar {
+    width: 20%;
+    .scroll-view {
+      height: 100%;
+    }
+  }
+  .classifyContent {
+    flex: 1;
+    .scroll-view {
+      height: 100%;
+    }
+  }
+}
+</style>

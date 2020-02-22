@@ -4,12 +4,13 @@
       "path": "pages/classify/classify",
       "style": {
         "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "全部分类",
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "全部药品",
         "app-plus": {
           "titleNView": {
             "buttons": [
               {
-                "color": "#fff",
+                "color": "#1B1B1B",
                 "colorPressed": "#eee",
                 "float": "right",
                 "fontSize": "22px",

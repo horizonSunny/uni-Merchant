@@ -32,7 +32,9 @@ page {
   height: 100%;
   display: block;
 }
-
+uni-page-body {
+  height: 100%;
+}
 swan-template {
   width: 100%;
   min-height: 100%;
