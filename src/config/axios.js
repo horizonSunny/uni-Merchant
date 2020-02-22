@@ -22,8 +22,7 @@ function _reslog(res) {
 
 // 创建自定义接口服务实例
 const http = axios.create({
-  baseURL:
-    "https://result.eolinker.com/4ZWYSyU62a94784eb7040d5e2e367d77742ba02b442e098?uri=",
+  baseURL: baseUrl,
   timeout: 6000,
   // #ifdef H5
   withCredentials: true,
