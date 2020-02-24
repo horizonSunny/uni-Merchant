@@ -58,6 +58,41 @@
           <text>剩余有效期至>180</text>
         </view>
       </view>
+      <view class="separate logisticsInfo parameters">
+        <view class="parameter">参数</view>
+        <view class="logistics">
+          <view class="logistics">
+            批准文号
+            <text>国药准字329348344303400</text>
+          </view>
+          <view class="logistics">
+            包装规格
+            <text>10gX9袋/盒</text>
+          </view>
+          <view class="logistics">
+            剂型/型号
+            <text>颗粒剂</text>
+          </view>
+          <view class="logistics">
+            生产企业
+            <text>xxxxxxx</text>
+          </view>
+          <view class="logistics">
+            有效期
+            <text>24个月</text>
+          </view>
+          <view class="warning">
+            <view class="logistics">
+              <img src="static/icon/commodityDetails/remind.svg" alt />
+              处方药需凭处方在执业医师指导下购买和使用
+            </view>
+            <view class="logistics">
+              <img src="static/icon/commodityDetails/remind.svg" alt />
+              请仔细阅读药品使用说明书并按说明使用或在
+            </view>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
 </template>
@@ -224,6 +259,29 @@ export default {
           color: rgba(247, 109, 32, 1);
           margin-right: 21px;
         }
+      }
+    }
+  }
+  // 参数
+  .parameters {
+    height: 170px;
+    display: flex;
+    .parameter {
+      font-size: 13px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(137, 137, 137, 1);
+      width: 27px;
+      margin-right: 8px;
+    }
+    .warning {
+      margin-top: 11px;
+      img {
+        width: 14px;
+        height: 14px;
+        position: relative;
+        top: 2px;
+        margin-right: 3px;
       }
     }
   }
