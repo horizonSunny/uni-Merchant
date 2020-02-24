@@ -93,6 +93,45 @@
           </view>
         </view>
       </view>
+      <view class="separate logisticsInfo parameters sku">
+        <view class="parameter skuText">
+          选择
+          <text class="skuInfo">选择单品</text>
+        </view>
+        <view class="parameter">
+          <img src="static/icon/main/home_right-2.svg" alt />
+        </view>
+      </view>
+      <view class="separate logisticsInfo parameters sku">
+        <view class="parameter skuText">
+          <text class="skuInfo questionTitle">常见问题（126）</text>
+        </view>
+        <view class="parameter question">
+          <text>查看全部</text>
+          <img src="static/icon/main/home_right-2.svg" alt />
+        </view>
+      </view>
+      <view class="comment">
+        <view class="separate logisticsInfo parameters sku" style="margin-bottom:0px;">
+          <view class="parameter skuText">
+            <text class="skuInfo questionTitle">顾客评论（126）</text>
+          </view>
+          <view class="parameter question">
+            <text>查看全部</text>
+            <img src="static/icon/main/home_right-2.svg" alt />
+          </view>
+        </view>
+        <view class="commentInfo">
+          <view class="commentTitle">
+            <view class="userInfo">
+              <img src="static/img/home.png" alt />
+              <text>张三</text>
+            </view>
+            <view class="commentTime">2019-12-13 12:00:12</view>
+          </view>
+          <view class="commentContent">评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</view>
+        </view>
+      </view>
     </view>
   </view>
 </template>
@@ -281,7 +320,88 @@ export default {
         height: 14px;
         position: relative;
         top: 2px;
-        margin-right: 3px;
+        right: 3px;
+      }
+    }
+  }
+  // 选择单品
+  .sku {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    height: auto;
+    .skuText {
+      width: 80%;
+      .skuInfo {
+        margin-left: 9px;
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(27, 27, 27, 1);
+      }
+      .questionTitle {
+        margin-left: 0px;
+      }
+    }
+    .question {
+      width: 22%;
+      text {
+        font-size: 13px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(58, 116, 241, 1);
+        margin-right: 9px;
+      }
+    }
+    img {
+      position: relative;
+      top: 2px;
+      // right: 1px;
+      float: right;
+    }
+  }
+  // 评论
+  .comment {
+    background: #fff;
+    .commentInfo {
+      padding: 10px 10px;
+      .commentTitle {
+        height: 32px;
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(137, 137, 137, 1);
+        line-height: 32px;
+        display: flex;
+        align-items: center;
+        .userInfo {
+          width: 50%;
+          height: 32px;
+          line-height: 32px;
+          img {
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            border-radius: 16px;
+            background: rgba(216, 216, 216, 1);
+          }
+          text {
+            position: relative;
+            left: 5px;
+            top: -10px;
+          }
+        }
+        .commentTime {
+          width: 50%;
+          text-align: right;
+        }
+      }
+      .commentContent {
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(27, 27, 27, 1);
+        line-height: 17px;
       }
     }
   }
