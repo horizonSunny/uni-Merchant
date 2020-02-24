@@ -8,27 +8,20 @@
           :class="{ active: index === tabCurrentIndex }"
           :key="index"
           @click="selectBar(item, index)"
-          >{{ item.cateName }}</view
-        >
+        >{{ item.cateName }}</view>
       </scroll-view>
     </view>
     <view class="classifyContent">
       <scroll-view class="scroll-view" scroll-y>
-        <view
-          class="sencondWrap"
-          v-for="(secItem, secIndex) in currentClassify"
-          :key="secIndex"
-        >
-          <view class="sencondTitle">
-            {{ secItem.cateName }}
-          </view>
+        <view class="sencondWrap" v-for="(secItem, secIndex) in currentClassify" :key="secIndex">
+          <view class="sencondTitle">{{ secItem.cateName }}</view>
           <view class="threeWrap">
             <view
               v-for="(thrItem, thrIndex) in secItem.children"
               :key="thrIndex"
               class="threeClassify"
             >
-              <img :src="thrItem.pic" alt="" />
+              <img :src="thrItem.pic" alt />
               {{ thrItem.cateName }}
             </view>
           </view>

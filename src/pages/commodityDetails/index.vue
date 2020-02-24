@@ -1,139 +1,148 @@
 <template>
-  <view class="content">
+  <scroll-view
+    class="main"
+    scroll-y
+    :upper-threshold="50"
+    @scrolltoupper="scrolltoupper"
+    @scroll="scroll"
+  >
     <!-- <view v-if="hasLogin" class="hello"> -->
-    <view class="main">
-      <view class="carousel">
-        <view class="carouselContain">
-          <swiper
-            :indicator-dots="indicatorDots"
-            :autoplay="autoplay"
-            :interval="interval"
-            :duration="duration"
-          >
-            <swiper-item>
-              <view class="swiper-item uni-bg-red">
-                <img src="static/img/home_banner@2x.png" alt class="merchantIcon" />
-              </view>
-            </swiper-item>
-            <swiper-item>
-              <view class="swiper-item uni-bg-green">
-                <img src="static/img/home_banner@2x.png" alt class="merchantIcon" />
-              </view>
-            </swiper-item>
-          </swiper>
-        </view>
-      </view>
-      <view class="serviceInfo">
-        <text>
-          <img src="@/static/icon/commodityDetails/selected.svg" alt />24小时发货
-        </text>
-        <text>
-          <img src="@/static/icon/commodityDetails/selected.svg" alt />品质保障
-        </text>
-        <text>
-          <img src="@/static/icon/commodityDetails/selected.svg" alt />提供发票
-        </text>
-      </view>
-      <view class="separate productIntr">
-        <view class="productPrice">¥ 232.00</view>
-        <view class="productName">商品品牌 通用名</view>
-        <view class="productIntro">药品简介药品简介药品简介药品简介药品简介</view>
-      </view>
-      <view class="separate logisticsInfo">
-        <view class="logistics">
-          配送
-          <text>福建厦门</text>至
-          <text>上海浦东新区</text>
-        </view>
-        <view class="logistics">
-          运费
-          <text>8.00元起</text>
-        </view>
-        <view class="logistics">
-          库存
-          <text>
-            1212
-            <text class="limitation">(限购3件)</text>
-          </text>有效期至
-          <text>剩余有效期至>180</text>
-        </view>
-      </view>
-      <view class="separate logisticsInfo parameters">
-        <view class="parameter">参数</view>
-        <view class="logistics">
-          <view class="logistics">
-            批准文号
-            <text>国药准字329348344303400</text>
-          </view>
-          <view class="logistics">
-            包装规格
-            <text>10gX9袋/盒</text>
-          </view>
-          <view class="logistics">
-            剂型/型号
-            <text>颗粒剂</text>
-          </view>
-          <view class="logistics">
-            生产企业
-            <text>xxxxxxx</text>
-          </view>
-          <view class="logistics">
-            有效期
-            <text>24个月</text>
-          </view>
-          <view class="warning">
-            <view class="logistics">
-              <img src="static/icon/commodityDetails/remind.svg" alt />
-              处方药需凭处方在执业医师指导下购买和使用
+    <view class="customBar" :style="{'background': (topBar ? '#fff':'')}">
+      <img src="static/icon/commodityDetails/reback.svg" alt class="reback" />
+      <img src="static/icon/commodityDetails/more.svg" alt class="more" />
+      <img src="static/icon/commodityDetails/shopCar.svg" alt class="shopCar" />
+    </view>
+    <view class="carousel">
+      <view class="carouselContain">
+        <swiper
+          :indicator-dots="indicatorDots"
+          :autoplay="autoplay"
+          :interval="interval"
+          :duration="duration"
+        >
+          <swiper-item>
+            <view class="swiper-item uni-bg-red">
+              <img src="static/img/home_banner@2x.png" alt class="merchantIcon" />
             </view>
-            <view class="logistics">
-              <img src="static/icon/commodityDetails/remind.svg" alt />
-              请仔细阅读药品使用说明书并按说明使用或在
+          </swiper-item>
+          <swiper-item>
+            <view class="swiper-item uni-bg-green">
+              <img src="static/img/home_banner@2x.png" alt class="merchantIcon" />
             </view>
+          </swiper-item>
+        </swiper>
+      </view>
+    </view>
+    <view class="serviceInfo">
+      <text>
+        <img src="@/static/icon/commodityDetails/selected.svg" alt />24小时发货
+      </text>
+      <text>
+        <img src="@/static/icon/commodityDetails/selected.svg" alt />品质保障
+      </text>
+      <text>
+        <img src="@/static/icon/commodityDetails/selected.svg" alt />提供发票
+      </text>
+    </view>
+    <view class="separate productIntr">
+      <view class="productPrice">¥ 232.00</view>
+      <view class="productName">商品品牌 通用名</view>
+      <view class="productIntro">药品简介药品简介药品简介药品简介药品简介</view>
+    </view>
+    <view class="separate logisticsInfo">
+      <view class="logistics">
+        配送
+        <text>福建厦门</text>至
+        <text>上海浦东新区</text>
+      </view>
+      <view class="logistics">
+        运费
+        <text>8.00元起</text>
+      </view>
+      <view class="logistics">
+        库存
+        <text>
+          1212
+          <text class="limitation">(限购3件)</text>
+        </text>有效期至
+        <text>剩余有效期至>180</text>
+      </view>
+    </view>
+    <view class="separate logisticsInfo parameters">
+      <view class="parameter">参数</view>
+      <view class="logistics">
+        <view class="logistics">
+          批准文号
+          <text>国药准字329348344303400</text>
+        </view>
+        <view class="logistics">
+          包装规格
+          <text>10gX9袋/盒</text>
+        </view>
+        <view class="logistics">
+          剂型/型号
+          <text>颗粒剂</text>
+        </view>
+        <view class="logistics">
+          生产企业
+          <text>xxxxxxx</text>
+        </view>
+        <view class="logistics">
+          有效期
+          <text>24个月</text>
+        </view>
+        <view class="warning">
+          <view class="logistics">
+            <img src="static/icon/commodityDetails/remind.svg" alt />
+            处方药需凭处方在执业医师指导下购买和使用
+          </view>
+          <view class="logistics">
+            <img src="static/icon/commodityDetails/remind.svg" alt />
+            请仔细阅读药品使用说明书并按说明使用或在
           </view>
         </view>
       </view>
-      <view class="separate logisticsInfo parameters sku">
-        <view class="parameter skuText">
-          选择
-          <text class="skuInfo">选择单品</text>
-        </view>
-        <view class="parameter">
-          <img src="static/icon/main/home_right-2.svg" alt />
-        </view>
+    </view>
+    <view class="separate logisticsInfo parameters sku">
+      <view class="parameter skuText">
+        选择
+        <text class="skuInfo">选择单品</text>
       </view>
-      <view class="separate logisticsInfo parameters sku">
+      <view class="parameter">
+        <img src="static/icon/main/home_right-2.svg" alt />
+      </view>
+    </view>
+    <view class="separate logisticsInfo parameters sku">
+      <view class="parameter skuText">
+        <text class="skuInfo questionTitle">常见问题（126）</text>
+      </view>
+      <view class="parameter question">
+        <text>查看全部</text>
+        <img src="static/icon/main/home_right-2.svg" alt />
+      </view>
+    </view>
+    <view class="comment">
+      <view class="separate logisticsInfo parameters sku" style="margin-bottom:0px;">
         <view class="parameter skuText">
-          <text class="skuInfo questionTitle">常见问题（126）</text>
+          <text class="skuInfo questionTitle">顾客评论（126）</text>
         </view>
         <view class="parameter question">
           <text>查看全部</text>
           <img src="static/icon/main/home_right-2.svg" alt />
         </view>
       </view>
-      <view class="comment">
-        <view class="separate logisticsInfo parameters sku" style="margin-bottom:0px;">
-          <view class="parameter skuText">
-            <text class="skuInfo questionTitle">顾客评论（126）</text>
+      <view class="commentInfo">
+        <view class="commentTitle">
+          <view class="userInfo">
+            <img src="static/img/home.png" alt />
+            <text>张三</text>
           </view>
-          <view class="parameter question">
-            <text>查看全部</text>
-            <img src="static/icon/main/home_right-2.svg" alt />
-          </view>
+          <view class="commentTime">2019-12-13 12:00:12</view>
         </view>
-        <view class="commentInfo">
-          <view class="commentTitle">
-            <view class="userInfo">
-              <img src="static/img/home.png" alt />
-              <text>张三</text>
-            </view>
-            <view class="commentTime">2019-12-13 12:00:12</view>
-          </view>
-          <view class="commentContent">评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</view>
-        </view>
+        <view class="commentContent">评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</view>
       </view>
     </view>
-  </view>
+  </scroll-view>
 </template>
 
 <script>
@@ -162,23 +171,71 @@ export default {
         // url: "../merchantsIntr/merchantsIntr"
         url: "../classify/classify"
       });
+    },
+    scrolltoupper() {
+      console.log("aaa");
+    },
+    scroll(e) {
+      console.log("scrollCategory_", e.detail);
+      if (e.detail.scrollTop > 200) {
+        this.topBar = true;
+      } else {
+        this.topBar = false;
+      }
     }
   },
   data() {
     return {
       indicatorDots: false,
-      autoplay: false
+      autoplay: false,
+      // 滚动到200到位置topbar背景色变白
+      topBar: false
     };
   }
 };
 </script>
 
 <style lang="scss">
-.main {
+uni-page-body {
+  min-height: 100%;
+  display: -webkit-box;
+  height: 100%;
+  display: -webkit-flex;
   display: flex;
-  flex: 1;
+  font-size: 16px;
+}
+.main {
+  height: 100%;
+  width: 100%;
+  display: flex;
   flex-direction: column;
   background: #fafafe;
+  // 自定义头部
+  .customBar {
+    height: 30px;
+    line-height: 30px;
+    padding: 7px 3px;
+    position: fixed;
+    z-index: 999;
+    opacity: 1;
+    width: 100%;
+    img {
+      height: 22px;
+      width: 22px;
+    }
+    .reback {
+      float: left;
+      margin-left: 8px;
+    }
+    .shopCar {
+      margin-right: 21px;
+      float: right;
+    }
+    .more {
+      margin-right: 18px;
+      float: right;
+    }
+  }
   .merchantInfo {
     background: #3a74f1;
     display: flex;

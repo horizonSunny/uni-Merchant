@@ -3,6 +3,7 @@
     {
       "path": "pages/commodityDetails/index",
       "style": {
+        "navigationStyle": false,
         "navigationBarBackgroundColor": "#fff",
         "app-plus": {
           "titleNView": {
