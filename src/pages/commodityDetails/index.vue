@@ -178,6 +178,11 @@
         >
       </view>
     </view>
+    <view class="productImg">
+      <view v-for="(item, index) in imgArr" :key="index">
+        <img src="static/img/home_banner@2x.png" alt />
+      </view>
+    </view>
   </scroll-view>
 </template>
 
@@ -225,7 +230,8 @@ export default {
       indicatorDots: false,
       autoplay: false,
       // 滚动到200到位置topbar背景色变白
-      topBar: false
+      topBar: false,
+      imgArr: [1, 2, 3]
     };
   }
 };
@@ -490,6 +496,8 @@ uni-page-body {
         }
       }
       .commentContent {
+        margin-top: 5px;
+        padding: 0px 5px;
         font-size: 12px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
@@ -557,6 +565,16 @@ uni-page-body {
         color: #898989;
         padding: 6px 10px;
       }
+    }
+  }
+  //  详情图片
+  .productImg {
+    margin-bottom: 10px;
+    background: #fff;
+    padding: 10px;
+    img {
+      height: 300px;
+      width: 100%;
     }
   }
   uni-swiper {
