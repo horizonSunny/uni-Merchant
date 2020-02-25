@@ -1,8 +1,17 @@
-import http from "@/config/axios";
+import http from '@/config/axios'
 // 获取药品分类信息
-async function getClassify() {
-  console.log("in getClassify");
-  return http.get("/admin/v1/category/getCategorys?status=");
+async function getClassify(params) {
+  console.log('in getClassify')
+  // return http.get('/admin/v1/category/getCategorys', {
+  //   params: params
+  // })
+  return http.get('/admin/v1/category/getCategorys?status=')
 }
 
-export { getClassify };
+// 获取主页的各类信息
+async function getMainInfo(params) {
+  console.log('in getMainInfo')
+  return http.get('/admin/v1/initPage?tenantId=')
+}
+
+export { getClassify, getMainInfo }

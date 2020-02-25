@@ -8,12 +8,17 @@
           :class="{ active: index === tabCurrentIndex }"
           :key="index"
           @click="selectBar(item, index)"
-        >{{ item.cateName }}</view>
+          >{{ item.cateName }}</view
+        >
       </scroll-view>
     </view>
     <view class="classifyContent">
       <scroll-view class="scroll-view" scroll-y>
-        <view class="sencondWrap" v-for="(secItem, secIndex) in currentClassify" :key="secIndex">
+        <view
+          class="sencondWrap"
+          v-for="(secItem, secIndex) in currentClassify"
+          :key="secIndex"
+        >
           <view class="sencondTitle">{{ secItem.cateName }}</view>
           <view class="threeWrap">
             <view
@@ -36,17 +41,15 @@ export default {
   components: {
     // menuModal
   },
-  data() {
+  data () {
     return {
       tabCurrentIndex: 0,
       currentClassify: []
     };
   },
-  onLoad() {
-    // this.getClassify();
-    console.log("this.$store_", this.$store);
+  onLoad () {
+    // console.log("this.$store_", this.$store);
     this.getClassify().then(res => {
-      console.log("this.$store.getters", res);
       this.currentClassify = res[0]["children"];
     });
   },
@@ -57,10 +60,10 @@ export default {
     ...mapActions({
       getClassify: "GetClassify" // 将 `this.add()` 映射为 `this.$store.dispatch('increment')`
     }),
-    change(e) {
+    change (e) {
       this.current = e.detail.current;
     },
-    selectBar(item, index) {
+    selectBar (item, index) {
       this.tabCurrentIndex = index;
       this.currentClassify = item.children;
     }

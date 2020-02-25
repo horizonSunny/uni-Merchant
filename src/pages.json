@@ -1,5 +1,62 @@
 {
-  "pages": [
+  "pages": [{
+      "path": "pages/classify/classify",
+      "style": {
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "全部药品",
+        "app-plus": {
+          "titleNView": {
+            "buttons": [{
+              "color": "#1B1B1B",
+              "colorPressed": "#eee",
+              "float": "right",
+              "fontSize": "22px",
+              "width": "29px",
+              "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
+              "text": "\ue60b" // 字体图标\u 开头，加上字体图标unicode后面四位
+            }]
+          }
+        }
+      }
+    },
+    //pages数组中第一项表示应用启动页,
+    {
+      "path": "pages/main/main",
+      "style": {
+        "navigationBarBackgroundColor": "#3A74F1",
+        "app-plus": {
+          "titleNView": {
+            "searchInput": {
+              "align": "center",
+              "backgroundColor": "#89AEFF",
+              "borderRadius": "17px", // 只能用px作单位
+              "placeholder": "输入商品名，通用名，批准文号",
+              "width": "200px"
+            },
+            "buttons": [{
+                "color": "#fff",
+                "colorPressed": "#eee",
+                "float": "left",
+                "fontSize": "22px",
+                "width": "22px",
+                "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
+                "text": "\ue601" // 字体图标\u 开头，加上字体图标unicode后面四位
+              },
+              {
+                "color": "#fff",
+                "colorPressed": "#eee",
+                "float": "right",
+                "fontSize": "22px",
+                "width": "22px",
+                "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
+                "text": "\ue602" // 字体图标\u 开头，加上字体图标unicode后面四位
+              }
+            ]
+          }
+        }
+      }
+    },
     {
       "path": "pages/commodityDetails/index",
       "style": {
@@ -7,8 +64,7 @@
         "navigationBarBackgroundColor": "#fff",
         "app-plus": {
           "titleNView": {
-            "buttons": [
-              {
+            "buttons": [{
                 "color": "#000",
                 "colorPressed": "#eee",
                 "float": "right",
@@ -37,78 +93,15 @@
         "navigationBarBackgroundColor": "#3A74F1",
         "app-plus": {
           "titleNView": {
-            "buttons": [
-              {
-                "color": "#fff",
-                "colorPressed": "#eee",
-                "float": "right",
-                "fontSize": "22px",
-                "width": "29px",
-                "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
-                "text": "\ue60b" // 字体图标\u 开头，加上字体图标unicode后面四位
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "path": "pages/classify/classify",
-      "style": {
-        "navigationBarBackgroundColor": "#fff",
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "全部药品",
-        "app-plus": {
-          "titleNView": {
-            "buttons": [
-              {
-                "color": "#1B1B1B",
-                "colorPressed": "#eee",
-                "float": "right",
-                "fontSize": "22px",
-                "width": "29px",
-                "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
-                "text": "\ue60b" // 字体图标\u 开头，加上字体图标unicode后面四位
-              }
-            ]
-          }
-        }
-      }
-    },
-    //pages数组中第一项表示应用启动页,
-    {
-      "path": "pages/main/main",
-      "style": {
-        "navigationBarBackgroundColor": "#3A74F1",
-        "app-plus": {
-          "titleNView": {
-            "searchInput": {
-              "align": "center",
-              "backgroundColor": "#89AEFF",
-              "borderRadius": "17px", // 只能用px作单位
-              "placeholder": "输入商品名，通用名，批准文号",
-              "width": "200px"
-            },
-            "buttons": [
-              {
-                "color": "#fff",
-                "colorPressed": "#eee",
-                "float": "left",
-                "fontSize": "22px",
-                "width": "22px",
-                "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
-                "text": "\ue601" // 字体图标\u 开头，加上字体图标unicode后面四位
-              },
-              {
-                "color": "#fff",
-                "colorPressed": "#eee",
-                "float": "right",
-                "fontSize": "22px",
-                "width": "22px",
-                "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
-                "text": "\ue602" // 字体图标\u 开头，加上字体图标unicode后面四位
-              }
-            ]
+            "buttons": [{
+              "color": "#fff",
+              "colorPressed": "#eee",
+              "float": "right",
+              "fontSize": "22px",
+              "width": "29px",
+              "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
+              "text": "\ue60b" // 字体图标\u 开头，加上字体图标unicode后面四位
+            }]
           }
         }
       }
@@ -128,17 +121,15 @@
               "fontSize": "22px",
               "placeholderColor": "#C4C4C4"
             },
-            "buttons": [
-              {
-                "color": "#fff",
-                "colorPressed": "#eee",
-                "float": "right",
-                "fontSize": "22px",
-                "width": "29px",
-                "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
-                "text": "\ue603" // 字体图标\u 开头，加上字体图标unicode后面四位
-              }
-            ]
+            "buttons": [{
+              "color": "#fff",
+              "colorPressed": "#eee",
+              "float": "right",
+              "fontSize": "22px",
+              "width": "29px",
+              "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
+              "text": "\ue603" // 字体图标\u 开头，加上字体图标unicode后面四位
+            }]
           }
         }
       }
@@ -157,17 +148,15 @@
         "navigationBarTitleText": "店铺简介",
         "app-plus": {
           "titleNView": {
-            "buttons": [
-              {
-                "color": "#fff",
-                "colorPressed": "#eee",
-                "float": "right",
-                "fontSize": "22px",
-                "width": "29px",
-                "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
-                "text": "\ue603" // 字体图标\u 开头，加上字体图标unicode后面四位
-              }
-            ]
+            "buttons": [{
+              "color": "#fff",
+              "colorPressed": "#eee",
+              "float": "right",
+              "fontSize": "22px",
+              "width": "29px",
+              "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
+              "text": "\ue603" // 字体图标\u 开头，加上字体图标unicode后面四位
+            }]
           }
         }
       }
@@ -196,8 +185,7 @@
     "color": "#7a7e83",
     "selectedColor": "#0faeff",
     "backgroundColor": "#ffffff",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/main/main",
         "text": "首页",
         "iconPath": "static/img/home.png",
