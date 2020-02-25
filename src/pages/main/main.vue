@@ -4,8 +4,8 @@
     <view class="main">
       <view class="merchantInfo">
         <view class="merchantMessage" @click="testTologin">
-          <img src="static/img/位图@2x.png" alt="" class="merchantIcon" />
-          <text>瑞康大药店</text>
+          <img :src="tenant.tenantLogo" alt="" class="merchantIcon" />
+          <text>{{ tenant.tenantName }}</text>
         </view>
         <img src="static/icon/main/home_right-1.svg" alt="" />
       </view>
@@ -42,11 +42,11 @@
         <view class="classifyDetails">
           <view
             class="classifyItem"
-            v-for="(item, index) in medicineClassify"
+            v-for="(item, index) in quickCategorys"
             :key="index"
           >
-            <img :src="item.url" alt="" />
-            <text>{{ item.name }}</text>
+            <img :src="item.image" alt="" />
+            <text>{{ item.categoryName }}</text>
           </view>
         </view>
       </view>
@@ -59,17 +59,16 @@
         <view class="classifyContent">
           <view
             class="contentItem"
-            v-for="(item, index) in recommend"
+            v-for="(item, index) in products"
             :key="index"
           >
-            <img :src="item.url" alt="" />
+            <img :src="item.productImage[0]" alt="" />
             <view class="productDetails">
-              <img v-if="item.otc" src="static/icon/main/OTC.svg" alt="" />
-              <text>{{ item.brand }}</text>
-              <text>{{ item.commandName }}</text>
+              <text class="mark">OTC</text>
+              <text>{{ item.productName }}</text>
             </view>
             <view class="specification">
-              {{ item.specification }}
+              {{ item.productSpecif }}
             </view>
             <view class="price">
               {{ item.price }}
@@ -89,9 +88,7 @@ export default {
     ...mapGetters(["tenant", "banners", "quickCategorys", "products"])
   },
   onLoad () {
-    this.getMainInfo().then(res => {
-      // this.currentClassify = res[0]["children"];
-    });
+    this.getMainInfo()
   },
   onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
@@ -104,8 +101,6 @@ export default {
     testTologin () {
       console.log("testTologin_");
       uni.navigateTo({
-        // url: "../login/login"
-        // url: "../merchantsIntr/merchantsIntr"
         url: "../search/search"
       });
     },
@@ -123,59 +118,7 @@ export default {
       indicatorDots: false,
       autoplay: false,
       interval: 2000,
-      duration: 500,
-      medicineClassify: [
-        {
-          url: "static/icon/main/home_Cold@2x.png",
-          name: "感冒发烧"
-        },
-        {
-          url: "static/icon/main/home_cough@2x.png",
-          name: "咳嗽用药"
-        },
-        {
-          url: "static/icon/main/home_Cold@2x.png",
-          name: "感冒发烧"
-        },
-        {
-          url: "static/icon/main/home_cough@2x.png",
-          name: "咳嗽用药"
-        },
-        {
-          url: "static/icon/main/home_Cold@2x.png",
-          name: "感冒发烧"
-        },
-        {
-          url: "static/icon/main/home_cough@2x.png",
-          name: "咳嗽用药"
-        }
-      ],
-      recommend: [
-        {
-          url: "static/icon/main/Product-Bitmap@2x.png",
-          otc: true,
-          brand: "23312",
-          commandName: "sdsd",
-          specification: "100ml",
-          price: 123
-        },
-        {
-          url: "static/icon/main/Product-Bitmap@2x.png",
-          otc: true,
-          brand: "23312",
-          commandName: "sdsd",
-          specification: "100ml",
-          price: 123
-        },
-        {
-          url: "static/icon/main/Product-Bitmap@2x.png",
-          otc: false,
-          brand: "23312",
-          specification: "100ml",
-          commandName: "sdsd",
-          price: 123
-        }
-      ]
+      duration: 500
     };
   }
 };
@@ -207,6 +150,7 @@ export default {
     .merchantIcon {
       width: 64px;
       height: 22px;
+      border-radius: 4px;
     }
   }
   .carousel {
@@ -313,10 +257,10 @@ export default {
         }
         .productDetails {
           margin-top: 7px;
-          width: 130px;
-          padding-right: 20px;
+          // width: 130px;
+          padding: 0xp 10px;
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           justify-content: space-between;
           height: 20px;
           font-size: 14px;
@@ -324,9 +268,26 @@ export default {
           font-weight: 400;
           color: rgba(27, 27, 27, 1);
           line-height: 20px;
-          img {
-            width: 32px;
+          text {
+            width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .mark {
+            position: relative;
+            top: 2px;
+            left: 10px;
+            width: 38px;
             height: 14px;
+            margin-right: 10px;
+            line-height: 14px;
+            border: 1px solid #d7242c;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 5px;
+            color: #d7242c;
+            font-weight: 800;
           }
         }
         .specification {
