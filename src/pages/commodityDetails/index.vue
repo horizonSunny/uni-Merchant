@@ -12,6 +12,31 @@
       <img src="static/icon/commodityDetails/more.svg" alt class="more" />
       <img src="static/icon/commodityDetails/shopCar.svg" alt class="shopCar" />
     </view>
+    <!-- bottomBar -->
+    <view class="bottomBar">
+      <view class="operate">
+        <view class="viewInfo">
+          <img src="static/icon/commodityDetails/PDJ_home.svg" alt="" />
+          <view>首页</view>
+        </view>
+        <view class="viewInfo">
+          <img src="static/icon/commodityDetails/PDJ_Consultation.svg" alt="" />
+          <view>咨询</view>
+        </view>
+        <view class="viewInfo">
+          <img
+            src="static/icon/commodityDetails/PDJ_nl_Collection.svg"
+            alt=""
+          />
+          <view>收藏</view>
+        </view>
+      </view>
+      <view class="button">
+        <button type="primary">加入购物车</button>
+        <button type="warn">立即购买</button>
+      </view>
+    </view>
+    <!-- 轮播图 -->
     <view class="carousel">
       <view class="carouselContain">
         <swiper
@@ -276,6 +301,47 @@ uni-page-body {
     .more {
       margin-right: 18px;
       float: right;
+    }
+  }
+  // 购物车bottomBar
+  .bottomBar {
+    height: 50px;
+    background: rgba(255, 255, 255, 1);
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    bottom: -1px;
+    display: flex;
+
+    .operate {
+      width: 40%;
+      display: flex;
+      justify-content: space-around;
+      font-size: 10px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(27, 27, 27, 1);
+      align-items: center;
+      .viewInfo {
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      img {
+        height: 18px;
+        width: 18px;
+      }
+    }
+    .button {
+      width: 60%;
+      height: 50px;
+      line-height: 50px;
+      display: flex;
+      button {
+        width: 50%;
+        border-radius: 0px;
+      }
     }
   }
   .merchantInfo {
