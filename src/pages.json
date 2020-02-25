@@ -1,25 +1,5 @@
 {
-  "pages": [{
-      "path": "pages/classify/classify",
-      "style": {
-        "navigationBarBackgroundColor": "#fff",
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "全部药品",
-        "app-plus": {
-          "titleNView": {
-            "buttons": [{
-              "color": "#1B1B1B",
-              "colorPressed": "#eee",
-              "float": "right",
-              "fontSize": "22px",
-              "width": "29px",
-              "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
-              "text": "\ue60b" // 字体图标\u 开头，加上字体图标unicode后面四位
-            }]
-          }
-        }
-      }
-    },
+  "pages": [
     //pages数组中第一项表示应用启动页,
     {
       "path": "pages/main/main",
@@ -53,6 +33,27 @@
                 "text": "\ue602" // 字体图标\u 开头，加上字体图标unicode后面四位
               }
             ]
+          }
+        }
+      }
+    },
+    {
+      "path": "pages/classify/classify",
+      "style": {
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "全部药品",
+        "app-plus": {
+          "titleNView": {
+            "buttons": [{
+              "color": "#1B1B1B",
+              "colorPressed": "#eee",
+              "float": "right",
+              "fontSize": "22px",
+              "width": "29px",
+              "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
+              "text": "\ue60b" // 字体图标\u 开头，加上字体图标unicode后面四位
+            }]
           }
         }
       }

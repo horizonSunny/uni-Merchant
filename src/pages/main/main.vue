@@ -19,21 +19,9 @@
             :interval="interval"
             :duration="duration"
           >
-            <swiper-item>
-              <view class="swiper-item uni-bg-red">
-                <img
-                  src="static/img/home_banner@2x.png"
-                  alt=""
-                  class="merchantIcon"
-                />
-              </view>
-            </swiper-item>
-            <swiper-item>
+            <swiper-item v-for="(item, index) in banners" :key="index">
               <view class="swiper-item uni-bg-green">
-                <img
-                  src="static/img/home_banner@2x.png"
-                  alt=""
-                  class="merchantIcon"
+                <img :src="item" alt="" class="merchantIcon"
               /></view>
             </swiper-item>
           </swiper>
@@ -94,17 +82,26 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import { mapState, mapActions, mapGetters } from "vuex";
 export default {
-  computed: mapState(["forcedLogin", "hasLogin", "userName"]),
-  onLoad() {},
-  onNavigationBarButtonTap(item) {
+  // computed: mapState(["forcedLogin", "hasLogin", "userName"]),
+  computed: {
+    ...mapGetters(["tenant", "banners", "quickCategorys", "products"])
+  },
+  onLoad () {
+    this.getMainInfo().then(res => {
+      // this.currentClassify = res[0]["children"];
+    });
+  },
+  onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
     console.log("index_", item.index);
   },
   methods: {
-    testTologin() {
+    ...mapActions({
+      getMainInfo: "GetMainInfo" // 将 `this.add()` 映射为 `this.$store.dispatch('increment')`
+    }),
+    testTologin () {
       console.log("testTologin_");
       uni.navigateTo({
         // url: "../login/login"
@@ -112,7 +109,7 @@ export default {
         url: "../search/search"
       });
     },
-    goClassify() {
+    goClassify () {
       console.log("goClassify_");
       uni.switchTab({
         // url: "../login/login"
@@ -121,7 +118,7 @@ export default {
       });
     }
   },
-  data() {
+  data () {
     return {
       indicatorDots: false,
       autoplay: false,
@@ -220,7 +217,7 @@ export default {
     .carouselContain {
       z-index: 1;
       display: inline-block;
-      background: yellow;
+      background: #fff;
       border-radius: 8px;
       border: 1px dashed #000;
       width: 355px;
@@ -228,6 +225,7 @@ export default {
       img {
         width: 355px;
         height: 130px;
+        border-radius: 8px;
       }
     }
     .carouselAngel {
