@@ -3,11 +3,13 @@
     <!-- <view v-if="hasLogin" class="hello"> -->
     <view class="main">
       <view class="merchantInfo">
-        <view class="merchantMessage" @click="toDrugIntr">
+        <view class="merchantMessage">
           <img :src="tenant.tenantLogo" alt="" class="merchantIcon" />
           <text>{{ tenant.tenantName }}</text>
         </view>
-        <img src="static/icon/main/home_right-1.svg" alt="" />
+        <view class="merchantSkip" @click="toDrugIntr">
+          <img src="static/icon/main/home_right-1.svg" alt="" />
+        </view>
       </view>
       <view class="carousel">
         <view class="carouselAngel angelLeft"> </view>
@@ -152,6 +154,12 @@ export default {
       width: 64px;
       height: 22px;
       border-radius: 4px;
+    }
+    .merchantSkip {
+      width: 15%;
+      img {
+        float: right;
+      }
     }
   }
   .carousel {

@@ -4,12 +4,12 @@
     <view class="main">
       <view class="merchantInfo">
         <view class="merchantMessage">
-          <img src="static/img/位图@2x.png" alt="" class="merchantIcon" />
+          <img :src="tenant.tenantLogo" alt="" class="merchantIcon" />
           <view class="merchantDetails">
-            <view>瑞康大药店</view>
+            <view>{{ tenant.tenantName }}</view>
             <view class="merchantLocation">
               <img src="static/icon/merchantsIntr/location.svg" alt="" />
-              长泰广场</view
+              {{ tenant.address }}</view
             >
           </view>
         </view>
@@ -17,17 +17,17 @@
       <view class="classify">
         <view class="classifyTitle">
           <text class="title">
-            商家推荐
+            商家资质
           </text>
         </view>
         <view class="classifyContent">
           <view
             class="contentItem"
-            v-for="(item, index) in recommend"
+            v-for="(item, index) in tenant.enterpriseQualification"
             :key="index"
           >
             <img :src="item.url" alt="" />
-            <text>资质名称 </text>
+            <text>{{ item.name }} </text>
           </view>
         </view>
       </view>
@@ -38,7 +38,13 @@
           </text>
         </view>
         <view class="merchantLive">
-          <img src="static/icon/merchantsIntr/shop_bitmap3.svg" alt="" />
+          <swiper>
+            <swiper-item v-for="(item, index) in tenant.storeLive" :key="index">
+              <view class="swiper-item uni-bg-green">
+                <img :src="item" alt="" class="merchantIcon"
+              /></view>
+            </swiper-item>
+          </swiper>
         </view>
       </view>
     </view>
@@ -46,16 +52,17 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import { mapState, mapActions, mapGetters } from "vuex";
 export default {
-  computed: mapState(["forcedLogin", "hasLogin", "userName"]),
-  onLoad() {},
-  onNavigationBarButtonTap(item) {
+  computed: {
+    ...mapGetters(["tenant", "banners", "quickCategorys", "products"])
+  },
+  onLoad () { },
+  onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
     console.log("index_", item.index);
   },
-  data() {
+  data () {
     return {
       recommend: [
         {
@@ -99,7 +106,6 @@ export default {
     height: 43px;
     padding: 21px 15px 16px;
     .merchantMessage {
-      display: flex;
       display: flex;
       align-items: flex-start;
       .merchantIcon {
@@ -177,6 +183,9 @@ export default {
       width: 100%;
       height: 172px;
       background: #fff;
+      img {
+        width: 100%;
+      }
     }
   }
 }
