@@ -3,7 +3,7 @@
     <!-- <view v-if="hasLogin" class="hello"> -->
     <view class="main">
       <view class="merchantInfo">
-        <view class="merchantMessage" @click="testTologin">
+        <view class="merchantMessage" @click="toDrugIntr">
           <img :src="tenant.tenantLogo" alt="" class="merchantIcon" />
           <text>{{ tenant.tenantName }}</text>
         </view>
@@ -98,10 +98,11 @@ export default {
     ...mapActions({
       getMainInfo: "GetMainInfo" // 将 `this.add()` 映射为 `this.$store.dispatch('increment')`
     }),
-    testTologin () {
-      console.log("testTologin_");
+    // 跳转药品简介页面
+    toDrugIntr () {
+      console.log("toDrugIntr_");
       uni.navigateTo({
-        url: "../search/search"
+        url: "../merchantsIntr/merchantsIntr"
       });
     },
     goClassify () {
