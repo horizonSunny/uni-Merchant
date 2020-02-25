@@ -277,7 +277,7 @@ export default {
           .mark {
             position: relative;
             top: 2px;
-            left: 10px;
+            left: 8px;
             width: 38px;
             height: 14px;
             margin-right: 10px;
