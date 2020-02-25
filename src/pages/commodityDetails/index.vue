@@ -7,7 +7,7 @@
     @scroll="scroll"
   >
     <!-- <view v-if="hasLogin" class="hello"> -->
-    <view class="customBar" :style="{'background': (topBar ? '#fff':'')}">
+    <view class="customBar" :style="{ background: topBar ? '#fff' : '' }">
       <img src="static/icon/commodityDetails/reback.svg" alt class="reback" />
       <img src="static/icon/commodityDetails/more.svg" alt class="more" />
       <img src="static/icon/commodityDetails/shopCar.svg" alt class="shopCar" />
@@ -22,12 +22,20 @@
         >
           <swiper-item>
             <view class="swiper-item uni-bg-red">
-              <img src="static/img/home_banner@2x.png" alt class="merchantIcon" />
+              <img
+                src="static/img/home_banner@2x.png"
+                alt
+                class="merchantIcon"
+              />
             </view>
           </swiper-item>
           <swiper-item>
             <view class="swiper-item uni-bg-green">
-              <img src="static/img/home_banner@2x.png" alt class="merchantIcon" />
+              <img
+                src="static/img/home_banner@2x.png"
+                alt
+                class="merchantIcon"
+              />
             </view>
           </swiper-item>
         </swiper>
@@ -63,8 +71,8 @@
         库存
         <text>
           1212
-          <text class="limitation">(限购3件)</text>
-        </text>有效期至
+          <text class="limitation">(限购3件)</text> </text
+        >有效期至
         <text>剩余有效期至>180</text>
       </view>
     </view>
@@ -122,7 +130,10 @@
       </view>
     </view>
     <view class="comment">
-      <view class="separate logisticsInfo parameters sku" style="margin-bottom:0px;">
+      <view
+        class="separate logisticsInfo parameters sku"
+        style="margin-bottom:0px;"
+      >
         <view class="parameter skuText">
           <text class="skuInfo questionTitle">顾客评论（126）</text>
         </view>
@@ -139,7 +150,32 @@
           </view>
           <view class="commentTime">2019-12-13 12:00:12</view>
         </view>
-        <view class="commentContent">评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</view>
+        <view class="commentContent"
+          >评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</view
+        >
+      </view>
+    </view>
+    <!-- 基本信息 说明书 服务保障 -->
+    <view class="details">
+      <text>基本信息</text>
+      <text>说明书</text>
+      <text style="border-right:0px"> 服务保障</text>
+    </view>
+    <view class="remind">
+      温馨提示：商品包装因厂家更换频繁，如有不符请以实物为准
+    </view>
+    <!-- <view class="detailsInfo">
+      <view class="basicInfo">
+        <text class="label">通用名</text>
+        <text>xxxxxx</text>
+      </view>
+    </view> -->
+    <view class="detailsInfo">
+      <view class="specification">
+        <view class="label">【产品名称】</view>
+        <view class="content"
+          >说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说</view
+        >
       </view>
     </view>
   </scroll-view>
@@ -150,13 +186,13 @@ import { mapState } from "vuex";
 
 export default {
   computed: mapState(["forcedLogin", "hasLogin", "userName"]),
-  onLoad() {},
-  onNavigationBarButtonTap(item) {
+  onLoad () { },
+  onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
     console.log("index_", item.index);
   },
   methods: {
-    testTologin() {
+    testTologin () {
       console.log("testTologin_");
       uni.navigateTo({
         // url: "../login/login"
@@ -164,7 +200,7 @@ export default {
         url: "../search/search"
       });
     },
-    goClassify() {
+    goClassify () {
       console.log("goClassify_");
       uni.switchTab({
         // url: "../login/login"
@@ -172,10 +208,10 @@ export default {
         url: "../classify/classify"
       });
     },
-    scrolltoupper() {
+    scrolltoupper () {
       console.log("aaa");
     },
-    scroll(e) {
+    scroll (e) {
       console.log("scrollCategory_", e.detail);
       if (e.detail.scrollTop > 200) {
         this.topBar = true;
@@ -184,7 +220,7 @@ export default {
       }
     }
   },
-  data() {
+  data () {
     return {
       indicatorDots: false,
       autoplay: false,
@@ -459,6 +495,67 @@ uni-page-body {
         font-weight: 400;
         color: rgba(27, 27, 27, 1);
         line-height: 17px;
+      }
+    }
+  }
+  // 基本信息详情
+  .details {
+    padding: 13px 10px;
+    margin-top: 10px;
+    background: #fff;
+    display: flex;
+    justify-content: space-around;
+    text {
+      height: 18px;
+      font-size: 13px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(94, 94, 94, 1);
+      line-height: 18px;
+      width: 33%;
+      border-right: 1px solid #eeeeee;
+      text-align: center;
+    }
+  }
+  // 温馨提示
+  .remind {
+    background: #fff7e8;
+    text-align: center;
+    height: 17px;
+    font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(247, 109, 32, 1);
+    line-height: 17px;
+  }
+  // 详情信息
+  .detailsInfo {
+    margin: 5px;
+    border-radius: 6px;
+    background: #fff;
+    padding: 18px 22px;
+    .basicInfo {
+      height: 40px;
+      line-height: 40px;
+      font-size: 13px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #1b1b1b;
+      border-bottom: 1px solid #f7f7f7;
+      .label {
+        color: #aeaeae;
+        margin-right: 36px;
+      }
+    }
+    .specification {
+      font-size: 13px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(27, 27, 27, 1);
+      line-height: 18px;
+      .content {
+        color: #898989;
+        padding: 6px 10px;
       }
     }
   }
