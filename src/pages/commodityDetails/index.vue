@@ -39,12 +39,7 @@
     <!-- 轮播图 -->
     <view class="carousel">
       <view class="carouselContain">
-        <swiper
-          :indicator-dots="indicatorDots"
-          :autoplay="autoplay"
-          :interval="interval"
-          :duration="duration"
-        >
+        <swiper>
           <swiper-item>
             <view class="swiper-item uni-bg-red">
               <img
