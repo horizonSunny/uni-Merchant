@@ -22,7 +22,7 @@
           </view>
         </view>
       </view>
-      <!-- <view class="debounce" v-if="historySearch">
+      <view class="debounce" v-if="historySearch">
         <ul>
           <li
             v-for="(item, index) in medicineClassify"
@@ -108,14 +108,14 @@
         ></view>
       </view>
       <!-- 下拉刷新组件 -->
-      <!-- <mix-pulldown-refresh
+      <mix-pulldown-refresh
         ref="mixPulldownRefresh"
         class="panel-content"
         :top="90"
         @refresh="onPulldownReresh"
         @setEnableScroll="setEnableScroll"
       >
-      
+        <!-- 内容部分 -->
         <swiper
           id="swiper"
           class="swiper-box swiperInfo"
@@ -150,7 +150,7 @@
             </scroll-view>
           </swiper-item>
         </swiper>
-      </mix-pulldown-refresh>  -->
+      </mix-pulldown-refresh>
     </view>
   </view>
 </template>
@@ -201,7 +201,7 @@ export default {
   },
   data () {
     return {
-      historySearch: true,
+      historySearch: false,
       // 是否筛选过
       filtrateSelected: false,
       medicineClassify: [
