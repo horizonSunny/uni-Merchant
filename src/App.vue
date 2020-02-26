@@ -3,6 +3,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 export default {
   onLaunch: function () {
     this.getKeyWord()
+    this.getMainInfo()
     console.log("App Launch");
   },
   onShow: function () {
@@ -13,6 +14,7 @@ export default {
   },
   methods: {
     ...mapActions({
+      getMainInfo: "GetMainInfo",
       getKeyWord: "GetKeyWord",
     })
   }

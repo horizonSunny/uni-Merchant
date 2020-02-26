@@ -5,12 +5,12 @@
       <!-- 清除搜索框 -->
       <view
         class="historySearch"
-        style="background-color:#fff"
+        style="background-color:#fff;width:100%"
         v-if="historySearch"
       >
         <view class="classifyTitle">
           <text class="title">
-            类型
+            历史记录
           </text>
           <view class="medicineOperate">
             <img src="static/icon/search/Search_delete.svg" alt="" />
@@ -21,7 +21,6 @@
             class="classifyItem"
             v-for="(item, index) in medicineClassify"
             :key="index"
-            @click="search(item.keyword)"
           >
             <text>{{ item.name }}</text>
           </view>
@@ -32,7 +31,12 @@
           <li
             v-for="(item, index) in keyLibrary"
             :key="index"
-            @click="search(item)"
+            @click="
+              () => {
+                this.searchInfo = item.keyword;
+                this.loadNewsList();
+              }
+            "
           >
             {{ item.keyword }}
           </li>
@@ -87,9 +91,10 @@
             <view class="classifyDetails filtrateDetails">
               <view
                 class="classifyItem"
+                :class="medicineType === item.type ? 'selected' : ''"
                 v-for="(item, index) in medicineClassify"
                 :key="index"
-                @click="search(item)"
+                @click="medicineType = item.type"
               >
                 <text>{{ item.name }}</text>
               </view>
@@ -102,11 +107,12 @@
             <view class="classifyDetails filtrateDetails">
               <view
                 class="classifyItem"
-                v-for="(item, index) in medicineClassify"
+                :class="selectBrands.indexOf(item) > -1 ? 'selected' : ''"
+                v-for="(item, index) in productBrands"
                 :key="index"
-                @click="search(item)"
+                @click="selectedInfo(selectBrands, item)"
               >
-                <text>{{ item.name }}</text>
+                <text>{{ item }}</text>
               </view>
             </view>
           </view>
@@ -144,8 +150,8 @@
               @scrolltolower="loadMore"
             >
               <view
-                v-for="(test, indexTest) in tabItem.newsList"
-                :key="indexTest"
+                v-for="(itemInfo, indexInfo) in tabItem.newsList"
+                :key="indexInfo"
                 class="drugsDetails"
               >
                 <img
@@ -153,10 +159,10 @@
                   alt=""
                 />
                 <view class="drugsInfo">
-                  <view class="drugName">商品品牌 通用名...</view>
-                  <view class="drugSpec">100ml/支</view>
-                  <view class="drugSpec">国药准字xxx</view>
-                  <view class="drugPrice">¥ 232.00</view>
+                  <view class="drugName">{{ itemInfo.productName }}</view>
+                  <view class="drugSpec">{{ itemInfo.productSpecif }}</view>
+                  <view class="drugSpec">{{ itemInfo.approvalNumber }}</view>
+                  <view class="drugPrice">¥ {{ itemInfo.price }}</view>
                 </view>
               </view>
               <!-- 上滑加载更多组件 -->
@@ -201,7 +207,7 @@ export default {
   onNavigationBarSearchInputChanged (item) {
     if (item.text === "") {
       this.historySearch = true
-      his.filtrateSelected = false
+      this.filtrateSelected = false
     } else {
       this.filtrateSelected = false
       this.productListShow = false
@@ -221,7 +227,8 @@ export default {
   //监听原生标题栏搜索输入框搜索事件，用户点击软键盘上的“搜索”按钮时触发。
 
   onNavigationBarSearchInputConfirmed (item) {
-    this.search(item.text)
+    this.searchInfo = item.text
+    this.loadNewsList();
   },
   data () {
     return {
@@ -230,45 +237,33 @@ export default {
       productListShow: false,
       keyLibrary: [],
       // 查询筛选条件及分页数据
+      searchInfo: '',
       sale: -1,
       price: -1,
       productType: -1,
-      productBrand: '',
-      pageNumber: 0,
+      productBrands: [],
       pageSize: 10,
+      selectBrands: [],
+      medicineType: -1,
       // 是否筛选过
       medicineClassify: [
         {
-          url: "static/icon/main/home_Cold@2x.png",
-          name: "感冒发"
+          type: -1,
+          name: "全部"
         },
         {
-          url: "static/icon/main/home_cough@2x.png",
-          name: "咳用药"
+          type: 0,
+          name: "处方药"
         },
         {
-          url: "static/icon/main/home_Cold@2x.png",
-          name: "感冒发烧"
-        },
-        {
-          url: "static/icon/main/home_cough@2x.png",
-          name: "咳嗽用药"
-        },
-        {
-          url: "static/icon/main/home_Cold@2x.png",
-          name: "感冒发烧"
-        },
-        {
-          url: "static/icon/main/home_cough@2x.png",
-          name: "咳嗽用药"
+          type: 1,
+          name: "非处方药"
         }
       ],
       filtrateSelected: false,
       tabCurrentIndex: 0,
       tabBars: [],
       enableScroll: true,
-      // 搜索结果数组
-      productList: []
     };
   },
   methods: {
@@ -279,31 +274,11 @@ export default {
         item.newsList = [];
         item.loadMoreStatus = 0; //加载更多 0加载前，1加载中，2没有更多了
         item.refreshing = 0;
+        item.currentNumber = 0;
       });
       console.log("loadTabbars_", tabList);
       this.tabBars = tabList;
-      this.loadNewsList("add");
-    },
-    search (searchInfo) {
-      console.log("searchInfo_", searchInfo);
-      const params = {
-        tenantId: this.$store.getters.tenant.tenantId,
-        keyword: searchInfo,
-        sale: this.sale,
-        price: this.price,
-        productType: this.productType,
-        productBrand: this.productBrand,
-        pageNumber: this.pageNumber
-      }
-      searchProductList().then(res => {
-        console.log('searchProductList_', res);
-        this.productList.concat(res.data.products)
-        this.productBrand = res.data.productBrands
-        // 关闭莫泰框
-        this.historySearch = false
-        this.searchKeyWord = false
-        this.productListShow = true
-      })
+      // this.loadNewsList("add");
     },
     //tab切换
     async changeTab (e) {
@@ -316,6 +291,23 @@ export default {
       //e=number为点击切换，e=object为swiper滑动切换
       if (typeof e === "object") {
         index = e.detail.current;
+      }
+      // 依据index,设置当前筛选条件为销量，价格还是默认
+      switch (index) {
+        case 0:
+          this.sale = -1
+          this.price = -1
+          break;
+        case 1:
+          this.sale = 1
+          this.price = -1
+          break;
+        case 2:
+          this.sale = -1
+          this.price = 1
+          break;
+        default:
+          break;
       }
       if (typeof tabBar !== "object") {
         tabBar = await this.getElSize("nav-bar");
@@ -359,12 +351,9 @@ export default {
         }
       }, 300);
     },
-    //加载list
+    //加载数据
     loadNewsList (type) {
       let tabItem = this.tabBars[this.tabCurrentIndex];
-
-      console.log("tabItem_", tabItem);
-
       //type add 加载更多 refresh下拉刷新
       if (type === "add") {
         if (tabItem.loadMoreStatus === 2) {
@@ -378,12 +367,26 @@ export default {
       }
       // #endif
 
-      //setTimeout模拟异步请求数据
-      setTimeout(() => {
-        let list = json.newsList;
-        list.sort((a, b) => {
-          return Math.random() > 0.5 ? -1 : 1; //静态数据打乱顺序
-        });
+      //异步请求数据
+      const params = {
+        tenantId: this.$store.getters.tenant.tenantId,
+        keyword: this.searchInfo,
+        sale: this.sale,
+        price: this.price,
+        productType: this.productType,
+        productBrands: '',
+        // 只有当前页这一个是分开的
+        pageNumber: tabItem.currentNumber,
+        pageSize: this.pageSize
+      }
+      searchProductList(params).then(res => {
+        console.log('searchProductList_', res);
+        this.productBrands = res.data.productBrands
+        this.historySearch = false
+        this.searchKeyWord = false
+        this.productListShow = true
+        // settimeout
+        let list = res.data.products
         if (type === "refresh") {
           tabItem.newsList = []; //刷新前清空数组
         }
@@ -405,7 +408,13 @@ export default {
           console.log("上滑加载 处理状态");
           tabItem.loadMoreStatus = 0;
         }
-      }, 600);
+        // 假如不满十条，则显示加载完成
+        if (list.length < 10) {
+          console.log("上滑加载 处理状态");
+          tabItem.loadMoreStatus = 2;
+        }
+        tabItem.currentNumber++;
+      })
     },
     //下拉刷新
     onPulldownReresh () {
@@ -440,6 +449,15 @@ export default {
     // filtrateClick 打开筛选界面
     filtrateClick () {
       this.filtrateSelected = !this.filtrateSelected;
+    },
+    // 选择品牌和类型，如果选中，再次点击就取消掉
+    selectedInfo (arr, item) {
+      const index = arr.indexOf(item)
+      if (index > -1) {
+        arr.splice(index, 1)
+      } else {
+        arr.push(item)
+      }
     }
   }
 };
@@ -477,6 +495,12 @@ export default {
         font-weight: 600;
         color: #1b1b1b;
       }
+      .medicineOperate {
+        img {
+          position: relative;
+          right: 20px;
+        }
+      }
     }
     .classifyDetails {
       display: flex;
@@ -488,12 +512,16 @@ export default {
         height: 32px;
         line-height: 32px;
         background: rgba(240, 242, 247, 1);
+        border: 1px solid #fff;
         border-radius: 16px;
         text-align: center;
         // width: 25%;
         display: flex;
         flex-direction: column;
         align-items: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         text {
           margin-top: 7px;
           font-size: 13px;
@@ -502,6 +530,11 @@ export default {
           height: 18px;
           line-height: 18px;
         }
+      }
+      .selected {
+        background: #fff;
+        border: 1px solid #3c73f2;
+        color: #3c73f2;
       }
     }
     .filtrateDetails {

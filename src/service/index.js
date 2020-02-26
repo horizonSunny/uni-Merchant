@@ -11,7 +11,7 @@ async function getClassify(params) {
 // 获取主页的各类信息
 async function getMainInfo(params) {
   console.log('in getMainInfo')
-  return http.get('/admin/v1/initPage?tenantId=')
+  return http.get('/admin/v1/initPage?tenantId=1')
 }
 
 // 获取词库信息
@@ -23,8 +23,8 @@ async function searchKeyword(params) {
 // 搜索获取药品信息
 async function searchProductList(params) {
   console.log('in getMainInfo')
-  return http.get(
-    '/admin/v1/tenantProduct/searchProductList?tenantId=&keyword=&sale=&price=&productType=&pageNumber=&pageSize='
-  )
+  return http.get('/admin/v1/tenantProduct/searchProductList', {
+    params: params
+  })
 }
 export { getClassify, getMainInfo, searchKeyword, searchProductList }
