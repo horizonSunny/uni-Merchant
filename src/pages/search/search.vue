@@ -117,8 +117,10 @@
             </view>
           </view>
           <view class="filtrateOpearte">
-            <button>重置</button>
-            <button type="primary">确定</button>
+            <button @click="reset">
+              重置
+            </button>
+            <button @click="confirm" type="primary">确定</button>
           </view>
         </view>
         <view
@@ -245,6 +247,10 @@ export default {
       pageSize: 10,
       selectBrands: [],
       medicineType: -1,
+      confirmSelected: {
+        selectBrands: [],
+        medicineType: -1
+      },
       // 是否筛选过
       medicineClassify: [
         {
@@ -360,9 +366,8 @@ export default {
           return;
         }
         tabItem.loadMoreStatus = 0;
-      }
-      // #ifdef APP-PLUS
-      else if (type === "refresh") {
+      } else if (type === "refresh") {
+        tabItem.currentNumber = 0
         tabItem.refreshing = true;
       }
       // #endif
@@ -373,8 +378,8 @@ export default {
         keyword: this.searchInfo,
         sale: this.sale,
         price: this.price,
-        productType: this.productType,
-        productBrands: '',
+        productType: this.confirmSelected.medicineType,
+        productBrands: this.confirmSelected.selectBrands.toString(),
         // 只有当前页这一个是分开的
         pageNumber: tabItem.currentNumber,
         pageSize: this.pageSize
@@ -458,6 +463,17 @@ export default {
       } else {
         arr.push(item)
       }
+    },
+    // 筛选重置
+    reset () {
+      this.selectBrands = [];
+      this.medicineType = -1;
+    },
+    // confirm
+    confirm () {
+      this.confirmSelected = { selectBrands: this.selectBrands, medicineType: this.medicineType }
+      this.onPulldownReresh()
+      this.filtrateSelected = false
     }
   }
 };
