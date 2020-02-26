@@ -473,7 +473,7 @@ export default {
     confirm () {
       this.confirmSelected = { selectBrands: this.selectBrands, medicineType: this.medicineType }
       this.onPulldownReresh()
-      this.filtrateSelected = false
+      this.filtrateSelected = false;
     }
   }
 };
