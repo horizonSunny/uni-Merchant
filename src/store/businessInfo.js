@@ -1,4 +1,9 @@
-import { getClassify, getMainInfo, searchKeyword } from '@/service/index'
+import {
+  getClassify,
+  getMainInfo,
+  searchKeyword,
+  searchProductList
+} from '@/service/index'
 const businessModule = {
   state: {
     // 找药/分类数据

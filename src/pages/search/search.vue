@@ -3,10 +3,11 @@
     <!-- <view v-if="hasLogin" class="hello"> -->
     <view class="main">
       <!-- 清除搜索框 -->
-      <!-- <view class="clearSearch">
-        <img src="/static/icon/login/Checklist.svg" alt="" />
-      </view> -->
-      <view class="historySearch" v-if="historySearch">
+      <view
+        class="historySearch"
+        style="background-color:#fff"
+        v-if="historySearch"
+      >
         <view class="classifyTitle">
           <text class="title">
             类型
@@ -37,7 +38,12 @@
           </li>
         </ul>
       </view>
-      <view id="nav-bar" class="nav-bar" style="width :100%;" v-if="false">
+      <view
+        id="nav-bar"
+        class="nav-bar"
+        style="width :100%;"
+        v-if="productListShow"
+      >
         <view
           v-for="(item, index) in tabBars"
           :key="item.id"
@@ -67,7 +73,10 @@
           />
         </view>
       </view>
-      <view class="filtrateShow historySearch" v-if="filtrateSelected">
+      <view
+        class="filtrateShow historySearch"
+        v-if="filtrateSelected && productListShow"
+      >
         <view>
           <view class="filtrateCond">
             <view class="classifyTitle">
@@ -118,7 +127,7 @@
         :top="90"
         @refresh="onPulldownReresh"
         @setEnableScroll="setEnableScroll"
-        v-if="false"
+        v-if="productListShow"
       >
         <!-- 内容部分 -->
         <swiper
@@ -166,6 +175,9 @@ import { debounce, throttle } from "@/utils/debounce";
 import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-refresh/mix-pulldown-refresh";
 import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
 import json from "./json";
+import {
+  searchProductList
+} from '@/service/index'
 let windowWidth = 0,
   scrollTimer = false,
   tabBar;
@@ -177,7 +189,9 @@ export default {
   computed: {
     ...mapGetters(["searchLibrary"])
   },
-  async onLoad () { },
+  async onLoad () {
+    this.loadTabbars();
+  },
   onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
     console.log("index_search_", item.index);
@@ -187,7 +201,10 @@ export default {
   onNavigationBarSearchInputChanged (item) {
     if (item.text === "") {
       this.historySearch = true
+      his.filtrateSelected = false
     } else {
+      this.filtrateSelected = false
+      this.productListShow = false
       this.historySearch = false
       this.searchKeyWord = true
       console.log('this.searchLibrary_', this.searchLibrary);
@@ -210,9 +227,16 @@ export default {
     return {
       historySearch: true,
       searchKeyWord: false,
+      productListShow: false,
       keyLibrary: [],
+      // 查询筛选条件及分页数据
+      sale: -1,
+      price: -1,
+      productType: -1,
+      productBrand: '',
+      pageNumber: 0,
+      pageSize: 10,
       // 是否筛选过
-      filtrateSelected: false,
       medicineClassify: [
         {
           url: "static/icon/main/home_Cold@2x.png",
@@ -239,14 +263,47 @@ export default {
           name: "咳嗽用药"
         }
       ],
+      filtrateSelected: false,
       tabCurrentIndex: 0,
       tabBars: [],
-      enableScroll: true
+      enableScroll: true,
+      // 搜索结果数组
+      productList: []
     };
   },
   methods: {
+    //获取分类
+    loadTabbars () {
+      let tabList = json.tabList;
+      tabList.forEach(item => {
+        item.newsList = [];
+        item.loadMoreStatus = 0; //加载更多 0加载前，1加载中，2没有更多了
+        item.refreshing = 0;
+      });
+      console.log("loadTabbars_", tabList);
+      this.tabBars = tabList;
+      this.loadNewsList("add");
+    },
     search (searchInfo) {
       console.log("searchInfo_", searchInfo);
+      const params = {
+        tenantId: this.$store.getters.tenant.tenantId,
+        keyword: searchInfo,
+        sale: this.sale,
+        price: this.price,
+        productType: this.productType,
+        productBrand: this.productBrand,
+        pageNumber: this.pageNumber
+      }
+      searchProductList().then(res => {
+        console.log('searchProductList_', res);
+        this.productList.concat(res.data.products)
+        this.productBrand = res.data.productBrands
+        // 关闭莫泰框
+        this.historySearch = false
+        this.searchKeyWord = false
+        this.productListShow = true
+      })
     },
     //tab切换
     async changeTab (e) {
@@ -411,7 +468,6 @@ export default {
     position: fixed;
     z-index: 999;
     height: 100%;
-    background: #fff;
     .classifyTitle {
       display: flex;
       justify-content: space-between;
@@ -456,6 +512,7 @@ export default {
     width: 100%;
     height: 100%;
     background: #fff;
+    position: fixed;
     ul {
       padding: 0px;
     }

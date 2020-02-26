@@ -19,4 +19,12 @@ async function searchKeyword(params) {
   console.log('in getMainInfo')
   return http.get('/admin/v1/searchKeyword')
 }
-export { getClassify, getMainInfo, searchKeyword }
+
+// 搜索获取药品信息
+async function searchProductList(params) {
+  console.log('in getMainInfo')
+  return http.get(
+    '/admin/v1/tenantProduct/searchProductList?tenantId=&keyword=&sale=&price=&productType=&pageNumber=&pageSize='
+  )
+}
+export { getClassify, getMainInfo, searchKeyword, searchProductList }
