@@ -2,37 +2,6 @@
   <view class="content">
     <!-- <view v-if="hasLogin" class="hello"> -->
     <view class="main">
-      <view class="historySearch" v-if="historySearch">
-        <view class="classifyTitle">
-          <text class="title">
-            类型
-          </text>
-          <view class="medicineOperate">
-            <img src="static/icon/search/Search_delete.svg" alt="" />
-          </view>
-        </view>
-        <view class="classifyDetails">
-          <view
-            class="classifyItem"
-            v-for="(item, index) in medicineClassify"
-            :key="index"
-            @click="search(item)"
-          >
-            <text>{{ item.name }}</text>
-          </view>
-        </view>
-      </view>
-      <view class="debounce" v-if="historySearch">
-        <ul>
-          <li
-            v-for="(item, index) in medicineClassify"
-            :key="index"
-            @click="search(item)"
-          >
-            {{ item.name }}
-          </li>
-        </ul>
-      </view>
       <view id="nav-bar" class="nav-bar" style="width :100%;">
         <view
           v-for="(item, index) in tabBars"
@@ -74,9 +43,10 @@
             <view class="classifyDetails filtrateDetails">
               <view
                 class="classifyItem"
+                :class="medicineType === item.type ? 'selected' : ''"
                 v-for="(item, index) in medicineClassify"
                 :key="index"
-                @click="search(item)"
+                @click="medicineType = item.type"
               >
                 <text>{{ item.name }}</text>
               </view>
@@ -89,17 +59,20 @@
             <view class="classifyDetails filtrateDetails">
               <view
                 class="classifyItem"
-                v-for="(item, index) in medicineClassify"
+                :class="selectBrands.indexOf(item) > -1 ? 'selected' : ''"
+                v-for="(item, index) in productBrands"
                 :key="index"
-                @click="search(item)"
+                @click="selectedInfo(selectBrands, item)"
               >
-                <text>{{ item.name }}</text>
+                <text>{{ item }}</text>
               </view>
             </view>
           </view>
           <view class="filtrateOpearte">
-            <button>重置</button>
-            <button type="primary">确定</button>
+            <button @click="reset">
+              重置
+            </button>
+            <button @click="confirm" type="primary">确定</button>
           </view>
         </view>
         <view
@@ -131,8 +104,8 @@
             >
               <view class="scrollInfo">
                 <view
-                  v-for="(test, indexTest) in tabItem.newsList"
-                  :key="indexTest"
+                  v-for="(item, itemIndex) in tabItem.newsList"
+                  :key="itemIndex"
                   class="drugsDetails"
                 >
                   <img
@@ -140,10 +113,9 @@
                     alt=""
                   />
                   <view class="drugsInfo">
-                    <view class="drugName">商品品牌 通用名...</view>
-                    <view class="drugSpec">100ml/支</view>
-                    <view class="drugSpec">国药准字xxx</view>
-                    <view class="drugPrice">¥ 232.00</view>
+                    <view class="drugName">{{ item.productName }}</view>
+                    <view class="drugSpec">{{ item.productSpecif }}</view>
+                    <view class="drugPrice">¥ {{ item.price }}</view>
                   </view>
                 </view>
               </view>
@@ -158,11 +130,15 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import { debounce, throttle } from "@/utils/debounce";
 import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-refresh/mix-pulldown-refresh";
 import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
 import json from "../search/json";
+import {
+  searchProductList,
+  getCategoryProducts
+} from '@/service/index'
 let windowWidth = 0,
   scrollTimer = false,
   tabBar;
@@ -171,84 +147,74 @@ export default {
     mixPulldownRefresh,
     mixLoadMore
   },
-  async onLoad() {
+  computed: {
+    ...mapGetters(["searchLibrary"])
+  },
+  onLoad (option) {
+    console.log("option.id_", option.categoryId); //打印出上个页面传递的参数。
+    this.categoryId = option.categoryId
     this.loadTabbars();
   },
-  onNavigationBarButtonTap(item) {
+  onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
     console.log("index_search_", item.index);
-    uni.hideKeyboard();
-  },
-  // 监听原生标题栏搜索输入框输入内容变化事件
-  onNavigationBarSearchInputChanged(item) {
-    let a = function name(params) {
-      console.log(item);
-    };
-    debounce(a, 200)();
-  },
-  //监听原生标题栏搜索输入框搜索事件，用户点击软键盘上的“搜索”按钮时触发。
-
-  onNavigationBarSearchInputConfirmed(item) {
-    console.log("item_Search", item);
-    uni.showToast({
-      icon: "none",
-      title: item.text
+    uni.navigateTo({
+      url: "../search/search"
     });
   },
-  data() {
+  data () {
     return {
-      historySearch: false,
+      keyLibrary: [],
+      // 查询筛选条件及分页数据
+      categoryId: '',
+      sale: -1,
+      price: -1,
+      productType: -1,
+      productBrands: [],
+      pageSize: 10,
+      selectBrands: [],
+      medicineType: -1,
+      confirmSelected: {
+        selectBrands: [],
+        medicineType: -1
+      },
       // 是否筛选过
-      filtrateSelected: false,
       medicineClassify: [
         {
-          url: "static/icon/main/home_Cold@2x.png",
-          name: "感冒发"
+          type: -1,
+          name: "全部"
         },
         {
-          url: "static/icon/main/home_cough@2x.png",
-          name: "咳用药"
+          type: 0,
+          name: "处方药"
         },
         {
-          url: "static/icon/main/home_Cold@2x.png",
-          name: "感冒发烧"
-        },
-        {
-          url: "static/icon/main/home_cough@2x.png",
-          name: "咳嗽用药"
-        },
-        {
-          url: "static/icon/main/home_Cold@2x.png",
-          name: "感冒发烧"
-        },
-        {
-          url: "static/icon/main/home_cough@2x.png",
-          name: "咳嗽用药"
+          type: 1,
+          name: "非处方药"
         }
       ],
+      filtrateSelected: false,
       tabCurrentIndex: 0,
       tabBars: [],
-      enableScroll: true
+      enableScroll: true,
     };
   },
   methods: {
     //获取分类
-    loadTabbars() {
+    loadTabbars () {
       let tabList = json.tabList;
       tabList.forEach(item => {
         item.newsList = [];
         item.loadMoreStatus = 0; //加载更多 0加载前，1加载中，2没有更多了
         item.refreshing = 0;
+        item.currentNumber = 0;
       });
       console.log("loadTabbars_", tabList);
       this.tabBars = tabList;
       this.loadNewsList("add");
     },
-    search(searchInfo) {
-      console.log("searchInfo_", searchInfo.name);
-    },
     //tab切换
-    async changeTab(e) {
+    async changeTab (e) {
       if (scrollTimer) {
         //多次切换只执行最后一次
         clearTimeout(scrollTimer);
@@ -258,6 +224,23 @@ export default {
       //e=number为点击切换，e=object为swiper滑动切换
       if (typeof e === "object") {
         index = e.detail.current;
+      }
+      // 依据index,设置当前筛选条件为销量，价格还是默认
+      switch (index) {
+        case 0:
+          this.sale = -1
+          this.price = -1
+          break;
+        case 1:
+          this.sale = 1
+          this.price = -1
+          break;
+        case 2:
+          this.sale = -1
+          this.price = 1
+          break;
+        default:
+          break;
       }
       if (typeof tabBar !== "object") {
         tabBar = await this.getElSize("nav-bar");
@@ -301,31 +284,38 @@ export default {
         }
       }, 300);
     },
-    //加载list
-    loadNewsList(type) {
+    //加载数据
+    loadNewsList (type) {
       let tabItem = this.tabBars[this.tabCurrentIndex];
-
-      console.log("tabItem_", tabItem);
-
       //type add 加载更多 refresh下拉刷新
       if (type === "add") {
         if (tabItem.loadMoreStatus === 2) {
           return;
         }
         tabItem.loadMoreStatus = 0;
-      }
-      // #ifdef APP-PLUS
-      else if (type === "refresh") {
+      } else if (type === "refresh") {
+        tabItem.currentNumber = 0
         tabItem.refreshing = true;
       }
       // #endif
 
-      //setTimeout模拟异步请求数据
-      setTimeout(() => {
-        let list = json.newsList;
-        list.sort((a, b) => {
-          return Math.random() > 0.5 ? -1 : 1; //静态数据打乱顺序
-        });
+      //异步请求数据
+      const params = {
+        tenantId: this.$store.getters.tenant.tenantId,
+        categoryId: this.categoryId,
+        sale: this.sale,
+        price: this.price,
+        productType: this.confirmSelected.medicineType,
+        productBrands: this.confirmSelected.selectBrands.toString(),
+        // 只有当前页这一个是分开的
+        pageNumber: tabItem.currentNumber,
+        pageSize: this.pageSize
+      }
+      getCategoryProducts(params).then(res => {
+        console.log('searchProductList_', res);
+        this.productBrands = res.data.productBrands
+        // settimeout
+        let list = res.data.products
         if (type === "refresh") {
           tabItem.newsList = []; //刷新前清空数组
         }
@@ -347,24 +337,30 @@ export default {
           console.log("上滑加载 处理状态");
           tabItem.loadMoreStatus = 0;
         }
-      }, 600);
+        // 假如不满十条，则显示加载完成
+        if (list.length < 10) {
+          console.log("上滑加载 处理状态");
+          tabItem.loadMoreStatus = 2;
+        }
+        tabItem.currentNumber++;
+      })
     },
     //下拉刷新
-    onPulldownReresh() {
+    onPulldownReresh () {
       this.loadNewsList("refresh");
     },
     //上滑加载
-    loadMore() {
+    loadMore () {
       this.loadNewsList("add");
     },
     //设置scroll-view是否允许滚动，在小程序里下拉刷新时避免列表可以滑动
-    setEnableScroll(enable) {
+    setEnableScroll (enable) {
       if (this.enableScroll !== enable) {
         this.enableScroll = enable;
       }
     },
     //获得元素的size
-    getElSize(id) {
+    getElSize (id) {
       return new Promise((res, rej) => {
         let el = uni.createSelectorQuery().select("#" + id);
         el.fields(
@@ -380,8 +376,28 @@ export default {
       });
     },
     // filtrateClick 打开筛选界面
-    filtrateClick() {
+    filtrateClick () {
       this.filtrateSelected = !this.filtrateSelected;
+    },
+    // 选择品牌和类型，如果选中，再次点击就取消掉
+    selectedInfo (arr, item) {
+      const index = arr.indexOf(item)
+      if (index > -1) {
+        arr.splice(index, 1)
+      } else {
+        arr.push(item)
+      }
+    },
+    // 筛选重置
+    reset () {
+      this.selectBrands = [];
+      this.medicineType = -1;
+    },
+    // confirm
+    confirm () {
+      this.confirmSelected = { selectBrands: this.selectBrands, medicineType: this.medicineType }
+      this.onPulldownReresh()
+      this.filtrateSelected = false;
     }
   }
 };
@@ -415,6 +431,7 @@ export default {
         padding: 0 10px;
         height: 32px;
         line-height: 32px;
+        border: 1px solid #fff;
         background: rgba(240, 242, 247, 1);
         border-radius: 16px;
         text-align: center;
@@ -430,6 +447,11 @@ export default {
           height: 18px;
           line-height: 18px;
         }
+      }
+      .selected {
+        background: #fff;
+        border: 1px solid #3c73f2;
+        color: #3c73f2;
       }
     }
     .filtrateDetails {
@@ -457,9 +479,8 @@ export default {
   .filtrateShow {
     position: absolute;
     padding: 0px;
-    // background: #fff;
+    width: 100%;
     border-top: 1px solid rgb(240, 240, 240);
-    // opacity: 0.7;
     top: 45px;
     bottom: 0px;
     z-index: 99;
@@ -538,7 +559,8 @@ export default {
     .scrollInfo {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-around;
+      justify-content: space-between;
+      padding: 0px 13px;
       .drugsDetails {
         display: flex;
         flex-direction: column;
@@ -561,7 +583,7 @@ export default {
           flex-direction: column;
           justify-content: space-between;
           .drugName {
-            height: 20px;
+            height: 40px;
             font-size: 14px;
             font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;

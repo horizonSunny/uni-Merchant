@@ -79,7 +79,7 @@ export default {
     toClassify (item) {
       console.log('item_', item);
       uni.navigateTo({
-        url: "../classify/classifyDetails"
+        url: "../classify/classifyDetails?categoryId=" + item.id
       });
     }
   }

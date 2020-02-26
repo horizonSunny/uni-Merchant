@@ -580,9 +580,8 @@ export default {
   .filtrateShow {
     position: absolute;
     padding: 0px;
-    // background: #fff;
+    width: 100%;
     border-top: 1px solid rgb(240, 240, 240);
-    // opacity: 0.7;
     top: 45px;
     bottom: 0px;
     z-index: 99;
