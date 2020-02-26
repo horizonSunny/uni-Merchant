@@ -25,6 +25,7 @@
               v-for="(thrItem, thrIndex) in secItem.children"
               :key="thrIndex"
               class="threeClassify"
+              @click="toClassify(thrItem)"
             >
               <img :src="thrItem.pic" alt />
               {{ thrItem.cateName }}
@@ -40,6 +41,13 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     // menuModal
+  },
+  onNavigationBarButtonTap (item) {
+    // 这边绑定是该页面topBar上面的两个button事件
+    console.log("index_search_", item.index);
+    uni.navigateTo({
+      url: "../search/search"
+    });
   },
   data () {
     return {
@@ -66,6 +74,13 @@ export default {
     selectBar (item, index) {
       this.tabCurrentIndex = index;
       this.currentClassify = item.children;
+    },
+    // 跳转三级分类页面
+    toClassify (item) {
+      console.log('item_', item);
+      uni.navigateTo({
+        url: "../classify/classifyDetails"
+      });
     }
   }
 };

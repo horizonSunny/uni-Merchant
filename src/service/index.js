@@ -5,7 +5,7 @@ async function getClassify(params) {
   // return http.get('/admin/v1/category/getCategorys', {
   //   params: params
   // })
-  return http.get('/admin/v1/category/getCategorys?status=')
+  return http.get('/admin/v1/category/getCategorys?status=1')
 }
 
 // 获取主页的各类信息
@@ -27,4 +27,17 @@ async function searchProductList(params) {
     params: params
   })
 }
-export { getClassify, getMainInfo, searchKeyword, searchProductList }
+// 根据分类信息获取产品数据
+async function getCategoryProducts(params) {
+  console.log('in getCategoryProducts')
+  return http.get('/admin/v1/tenantProduct/getCategoryProducts', {
+    params: params
+  })
+}
+export {
+  getClassify,
+  getMainInfo,
+  searchKeyword,
+  searchProductList,
+  getCategoryProducts
+}
