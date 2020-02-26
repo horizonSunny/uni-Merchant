@@ -20,7 +20,7 @@
             class="classifyItem"
             v-for="(item, index) in medicineClassify"
             :key="index"
-            @click="search(item)"
+            @click="search(item.keyword)"
           >
             <text>{{ item.name }}</text>
           </view>
@@ -246,7 +246,7 @@ export default {
   },
   methods: {
     search (searchInfo) {
-      console.log("searchInfo_", searchInfo.name);
+      console.log("searchInfo_", searchInfo);
     },
     //tab切换
     async changeTab (e) {
