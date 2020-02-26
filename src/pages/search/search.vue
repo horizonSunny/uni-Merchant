@@ -2,6 +2,10 @@
   <view class="content">
     <!-- <view v-if="hasLogin" class="hello"> -->
     <view class="main">
+      <!-- 清除搜索框 -->
+      <!-- <view class="clearSearch">
+        <img src="/static/icon/login/Checklist.svg" alt="" />
+      </view> -->
       <view class="historySearch" v-if="historySearch">
         <view class="classifyTitle">
           <text class="title">
@@ -22,18 +26,18 @@
           </view>
         </view>
       </view>
-      <view class="debounce" v-if="historySearch">
+      <view class="debounce" v-if="searchKeyWord">
         <ul>
           <li
-            v-for="(item, index) in medicineClassify"
+            v-for="(item, index) in keyLibrary"
             :key="index"
             @click="search(item)"
           >
-            {{ item.name }}
+            {{ item.keyword }}
           </li>
         </ul>
       </view>
-      <view id="nav-bar" class="nav-bar" style="width :100%;">
+      <view id="nav-bar" class="nav-bar" style="width :100%;" v-if="false">
         <view
           v-for="(item, index) in tabBars"
           :key="item.id"
@@ -114,6 +118,7 @@
         :top="90"
         @refresh="onPulldownReresh"
         @setEnableScroll="setEnableScroll"
+        v-if="false"
       >
         <!-- 内容部分 -->
         <swiper
@@ -156,7 +161,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import { debounce, throttle } from "@/utils/debounce";
 import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-refresh/mix-pulldown-refresh";
 import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
@@ -169,6 +174,9 @@ export default {
     mixPulldownRefresh,
     mixLoadMore
   },
+  computed: {
+    ...mapGetters(["searchLibrary"])
+  },
   async onLoad () {
     this.loadTabbars();
   },
@@ -179,16 +187,21 @@ export default {
   },
   // 监听原生标题栏搜索输入框输入内容变化事件
   onNavigationBarSearchInputChanged (item) {
+    if (item.text === "") {
+      this.historySearch = true
+    } else {
+      this.historySearch = false
+      this.searchKeyWord = true
+      console.log('this.searchLibrary_', this.searchLibrary);
+
+      this.keyLibrary = this.searchLibrary(item.text)
+      console.log('this.keyLibrary_', this.keyLibrary);
+
+    }
     let a = function name (params) {
       console.log(item);
     };
     debounce(a, 200)();
-  },
-  onNavigationBarSearchInputClicked (e) {
-    // this.$api.msg('点击了搜索框');
-    uni.navigateTo({
-      url: "../main/main"
-    });
   },
   //监听原生标题栏搜索输入框搜索事件，用户点击软键盘上的“搜索”按钮时触发。
 
@@ -201,7 +214,9 @@ export default {
   },
   data () {
     return {
-      historySearch: false,
+      historySearch: true,
+      searchKeyWord: false,
+      keyLibrary: [],
       // 是否筛选过
       filtrateSelected: false,
       medicineClassify: [
@@ -398,8 +413,23 @@ export default {
   flex-direction: column;
   background: #fafafe;
   height: 100%;
+  // 清除搜索框
+  .clearSearch {
+    position: relative;
+    top: -33px;
+    z-index: 999;
+    left: 75%;
+    img {
+      height: 15px;
+      width: 15px;
+    }
+  }
   .historySearch {
     padding: 28px 10px 15px;
+    position: fixed;
+    z-index: 999;
+    height: 100%;
+    background: #fff;
     .classifyTitle {
       display: flex;
       justify-content: space-between;
@@ -442,7 +472,8 @@ export default {
   }
   .debounce {
     width: 100%;
-    height: 48px;
+    height: 100%;
+    background: #fff;
     ul {
       padding: 0px;
     }
