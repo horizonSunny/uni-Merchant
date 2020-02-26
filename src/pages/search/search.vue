@@ -22,7 +22,7 @@
           </view>
         </view>
       </view>
-      <view class="debounce" v-if="historySearch">
+      <!-- <view class="debounce" v-if="historySearch">
         <ul>
           <li
             v-for="(item, index) in medicineClassify"
@@ -108,14 +108,14 @@
         ></view>
       </view>
       <!-- 下拉刷新组件 -->
-      <mix-pulldown-refresh
+      <!-- <mix-pulldown-refresh
         ref="mixPulldownRefresh"
         class="panel-content"
         :top="90"
         @refresh="onPulldownReresh"
         @setEnableScroll="setEnableScroll"
       >
-        <!-- 内容部分 -->
+      
         <swiper
           id="swiper"
           class="swiper-box swiperInfo"
@@ -150,7 +150,7 @@
             </scroll-view>
           </swiper-item>
         </swiper>
-      </mix-pulldown-refresh>
+      </mix-pulldown-refresh>  -->
     </view>
   </view>
 </template>
@@ -169,33 +169,39 @@ export default {
     mixPulldownRefresh,
     mixLoadMore
   },
-  async onLoad() {
+  async onLoad () {
     this.loadTabbars();
   },
-  onNavigationBarButtonTap(item) {
+  onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
     console.log("index_search_", item.index);
     uni.hideKeyboard();
   },
   // 监听原生标题栏搜索输入框输入内容变化事件
-  onNavigationBarSearchInputChanged(item) {
-    let a = function name(params) {
+  onNavigationBarSearchInputChanged (item) {
+    let a = function name (params) {
       console.log(item);
     };
     debounce(a, 200)();
   },
+  onNavigationBarSearchInputClicked (e) {
+    // this.$api.msg('点击了搜索框');
+    uni.navigateTo({
+      url: "../main/main"
+    });
+  },
   //监听原生标题栏搜索输入框搜索事件，用户点击软键盘上的“搜索”按钮时触发。
 
-  onNavigationBarSearchInputConfirmed(item) {
+  onNavigationBarSearchInputConfirmed (item) {
     console.log("item_Search", item);
     uni.showToast({
       icon: "none",
       title: item.text
     });
   },
-  data() {
+  data () {
     return {
-      historySearch: false,
+      historySearch: true,
       // 是否筛选过
       filtrateSelected: false,
       medicineClassify: [
@@ -231,7 +237,7 @@ export default {
   },
   methods: {
     //获取分类
-    loadTabbars() {
+    loadTabbars () {
       let tabList = json.tabList;
       tabList.forEach(item => {
         item.newsList = [];
@@ -242,11 +248,11 @@ export default {
       this.tabBars = tabList;
       this.loadNewsList("add");
     },
-    search(searchInfo) {
+    search (searchInfo) {
       console.log("searchInfo_", searchInfo.name);
     },
     //tab切换
-    async changeTab(e) {
+    async changeTab (e) {
       if (scrollTimer) {
         //多次切换只执行最后一次
         clearTimeout(scrollTimer);
@@ -300,7 +306,7 @@ export default {
       }, 300);
     },
     //加载list
-    loadNewsList(type) {
+    loadNewsList (type) {
       let tabItem = this.tabBars[this.tabCurrentIndex];
 
       console.log("tabItem_", tabItem);
@@ -348,21 +354,21 @@ export default {
       }, 600);
     },
     //下拉刷新
-    onPulldownReresh() {
+    onPulldownReresh () {
       this.loadNewsList("refresh");
     },
     //上滑加载
-    loadMore() {
+    loadMore () {
       this.loadNewsList("add");
     },
     //设置scroll-view是否允许滚动，在小程序里下拉刷新时避免列表可以滑动
-    setEnableScroll(enable) {
+    setEnableScroll (enable) {
       if (this.enableScroll !== enable) {
         this.enableScroll = enable;
       }
     },
     //获得元素的size
-    getElSize(id) {
+    getElSize (id) {
       return new Promise((res, rej) => {
         let el = uni.createSelectorQuery().select("#" + id);
         el.fields(
@@ -378,7 +384,7 @@ export default {
       });
     },
     // filtrateClick 打开筛选界面
-    filtrateClick() {
+    filtrateClick () {
       this.filtrateSelected = !this.filtrateSelected;
     }
   }

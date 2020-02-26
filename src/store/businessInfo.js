@@ -1,4 +1,4 @@
-import { getClassify, getMainInfo } from '@/service/index'
+import { getClassify, getMainInfo, searchKeyword } from '@/service/index'
 const businessModule = {
   state: {
     // 找药/分类数据
@@ -7,7 +7,9 @@ const businessModule = {
     tenant: {},
     banners: [],
     quickCategorys: [],
-    products: []
+    products: [],
+    // 获取搜索词库
+    searchKeyword: []
   },
   getters: {
     // getPermission(state, getters, rootState, rootGetters) {
@@ -25,6 +27,9 @@ const businessModule = {
       state.banners = mainInfo.banners
       state.quickCategorys = mainInfo.quickCategorys
       state.products = mainInfo.products
+    },
+    SET_SEARCH_KEY: (state, keyword) => {
+      state.searchKeyword = keyword
     }
   },
   actions: {
@@ -40,6 +45,12 @@ const businessModule = {
         // commit('SET_ClASSIFY', res.data)
         commit('SET_MAIN', res.data)
         return res.data
+      })
+    },
+    // 获取搜索词库
+    GetKeyWord({ commit }) {
+      searchKeyword().then(res => {
+        commit('SET_SEARCH_KEY', res.data)
       })
     }
   }

@@ -66,7 +66,9 @@
           >
             <img :src="item.productImage[0]" alt="" />
             <view class="productDetails">
-              <text class="mark">OTC</text>
+              <text class="mark" v-show="item.isMp === 1">OTC</text>
+              <text class="mark" v-show="item.isMp === 2">双规</text>
+              <text class="mark" v-show="item.isMp === 3">RX</text>
               <text>{{ item.productName }}</text>
             </view>
             <view class="specification">
@@ -91,14 +93,24 @@ export default {
   },
   onLoad () {
     this.getMainInfo()
+    this.getKeyWord()
   },
   onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
     console.log("index_", item.index);
   },
+  // 输入框点击事件
+  onNavigationBarSearchInputClicked (e) {
+    // this.$api.msg('点击了搜索框');
+    uni.navigateTo({
+      url: "../search/search"
+    });
+  },
   methods: {
     ...mapActions({
-      getMainInfo: "GetMainInfo" // 将 `this.add()` 映射为 `this.$store.dispatch('increment')`
+      getMainInfo: "GetMainInfo",
+      getKeyWord: "GetKeyWord",
+      // 将 `this.add()` 映射为 `this.$store.dispatch('increment')`
     }),
     // 跳转药品简介页面
     toDrugIntr () {
@@ -110,8 +122,6 @@ export default {
     goClassify () {
       console.log("goClassify_");
       uni.switchTab({
-        // url: "../login/login"
-        // url: "../merchantsIntr/merchantsIntr"
         url: "../classify/classify"
       });
     }

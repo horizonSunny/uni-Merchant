@@ -6,6 +6,8 @@ const getters = {
   tenant: state => state.business.tenant,
   banners: state => state.business.banners,
   quickCategorys: state => state.business.quickCategorys,
-  products: state => state.business.products
+  products: state => state.business.products,
+  // 获取搜索词库信息
+  searchLibrary: state => state.business.searchKeyword
 }
 export default getters

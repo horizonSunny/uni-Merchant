@@ -14,4 +14,9 @@ async function getMainInfo(params) {
   return http.get('/admin/v1/initPage?tenantId=')
 }
 
-export { getClassify, getMainInfo }
+// 获取词库信息
+async function searchKeyword(params) {
+  console.log('in getMainInfo')
+  return http.get('/admin/v1/searchKeyword')
+}
+export { getClassify, getMainInfo, searchKeyword }
