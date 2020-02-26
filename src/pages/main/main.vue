@@ -93,7 +93,7 @@ export default {
   },
   onLoad () {
     this.getMainInfo()
-    this.getKeyWord()
+    // this.getKeyWord()
   },
   onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件

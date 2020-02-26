@@ -177,9 +177,7 @@ export default {
   computed: {
     ...mapGetters(["searchLibrary"])
   },
-  async onLoad () {
-    this.loadTabbars();
-  },
+  async onLoad () { },
   onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
     console.log("index_search_", item.index);
@@ -206,11 +204,7 @@ export default {
   //监听原生标题栏搜索输入框搜索事件，用户点击软键盘上的“搜索”按钮时触发。
 
   onNavigationBarSearchInputConfirmed (item) {
-    console.log("item_Search", item);
-    uni.showToast({
-      icon: "none",
-      title: item.text
-    });
+    this.search(item.text)
   },
   data () {
     return {
@@ -251,18 +245,6 @@ export default {
     };
   },
   methods: {
-    //获取分类
-    loadTabbars () {
-      let tabList = json.tabList;
-      tabList.forEach(item => {
-        item.newsList = [];
-        item.loadMoreStatus = 0; //加载更多 0加载前，1加载中，2没有更多了
-        item.refreshing = 0;
-      });
-      console.log("loadTabbars_", tabList);
-      this.tabBars = tabList;
-      this.loadNewsList("add");
-    },
     search (searchInfo) {
       console.log("searchInfo_", searchInfo.name);
     },

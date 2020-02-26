@@ -1,13 +1,20 @@
 <script>
+import { mapState, mapActions, mapGetters } from "vuex";
 export default {
-  onLaunch: function() {
+  onLaunch: function () {
+    this.getKeyWord()
     console.log("App Launch");
   },
-  onShow: function() {
+  onShow: function () {
     console.log("App Show");
   },
-  onHide: function() {
+  onHide: function () {
     console.log("App Hide");
+  },
+  methods: {
+    ...mapActions({
+      getKeyWord: "GetKeyWord",
+    })
   }
 };
 </script>
