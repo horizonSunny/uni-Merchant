@@ -161,7 +161,13 @@
                   alt=""
                 />
                 <view class="drugsInfo">
-                  <view class="drugName">{{ itemInfo.productName }}</view>
+                  <view class="drugName">
+                    <text class="mark" v-show="itemInfo.isMp === 0">OTC</text>
+                    <text class="mark" v-show="itemInfo.isMp === 1">双规</text>
+                    <text class="mark" v-show="itemInfo.isMp === 2">RX</text>
+                    <text class="mark" v-show="itemInfo.isMp === 3">其他</text>
+                    <text>{{ itemInfo.productName }}</text>
+                  </view>
                   <view class="drugSpec">{{ itemInfo.productSpecif }}</view>
                   <view class="drugSpec">{{ itemInfo.approvalNumber }}</view>
                   <view class="drugPrice">¥ {{ itemInfo.price }}</view>
@@ -682,6 +688,23 @@ export default {
           font-weight: 400;
           color: rgba(27, 27, 27, 1);
           line-height: 20px;
+          .mark {
+            position: relative;
+            display: inline-block;
+            height: 12px;
+            line-height: 12px;
+            top: -1px;
+            width: 30px;
+            height: 12px;
+            margin-right: 10px;
+            line-height: 12px;
+            border: 1px solid #d7242c;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 5px;
+            color: #d7242c;
+            font-weight: 800;
+          }
         }
         .drugSpec {
           height: 18px;

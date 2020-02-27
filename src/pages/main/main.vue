@@ -67,9 +67,10 @@
           >
             <img :src="item.productImage[0]" alt="" />
             <view class="productDetails">
-              <text class="mark" v-show="item.isMp === 1">OTC</text>
-              <text class="mark" v-show="item.isMp === 2">双规</text>
-              <text class="mark" v-show="item.isMp === 3">RX</text>
+              <text class="mark" v-show="item.isMp === 0">OTC</text>
+              <text class="mark" v-show="item.isMp === 1">双规</text>
+              <text class="mark" v-show="item.isMp === 2">RX</text>
+              <text class="mark" v-show="item.isMp === 3">其他</text>
               <text>{{ item.productName }}</text>
             </view>
             <view class="specification">
