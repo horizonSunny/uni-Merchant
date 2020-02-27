@@ -1,13 +1,13 @@
-import axios from "../utils/uni-axios/index";
-import { baseUrl, channelNo } from "./global";
-import * as storage from "./storage";
+import axios from '../utils/uni-axios/index'
+import { baseUrl, channelNo } from './global'
+import * as storage from './storage'
 /**
  * 请求接口日志记录
  */
 function _reqlog(req) {
-  if (process.env.NODE_ENV === "development") {
-    console.log("请求地址：" + req.url, req.data || req.params);
-    console.log("请求信息：" + req);
+  if (process.env.NODE_ENV === 'development') {
+    console.log('请求地址：' + req.url, req.data || req.params)
+    console.log('请求信息：' + req)
   }
   //TODO 调接口异步写入日志数据库
 }
@@ -15,8 +15,8 @@ function _reqlog(req) {
  * 响应接口日志记录
  */
 function _reslog(res) {
-  if (process.env.NODE_ENV === "development") {
-    console.log(`${res.config.url}响应结果：`, res);
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`${res.config.url}响应结果：`, res)
   }
 }
 
@@ -28,23 +28,23 @@ const http = axios.create({
   withCredentials: true,
   // #endif
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
     authorization: channelNo
   }
-});
+})
 // 拦截器 在请求之前拦截
 http.interceptors.request.use(config => {
   // code...
-  let accsess_token = storage.getSync("access_token");
+  let accsess_token = storage.getSync('access_token')
   if (accsess_token) {
-    config.headers.authorization = accsess_token;
+    config.headers.authorization = accsess_token
   }
-  _reqlog(config);
-  uni.showLoading({
-    title: "加载中"
-  });
-  return config;
-});
+  _reqlog(config)
+  // uni.showLoading({
+  //   title: "加载中"
+  // });
+  return config
+})
 
 // 拦截器 在请求之后拦截
 http.interceptors.response.use(
@@ -66,19 +66,19 @@ http.interceptors.response.use(
     //   }, 500);
     //   return Promise.reject(response.data.msg);
     // }
-    uni.hideLoading();
-    return response.data;
+    // uni.hideLoading();
+    return response.data
     // code...
   },
   error => {
     // 如果token值无效，让跳转登陆页面
     if (error.response.status === 401) {
-      storage.setSync("access_token", channelNo);
+      storage.setSync('access_token', channelNo)
       // uni.reLaunch({
       //   url: '/pages/login/index'
       // })
     }
   }
-);
+)
 
-export default http;
+export default http
