@@ -53,7 +53,7 @@ export default {
     // 4/6
     maxlength: {
       type: Number,
-      default: 6
+      default: 4
     },
     autoFocus: {
       type: Boolean,
@@ -72,7 +72,7 @@ export default {
   watch: {
     maxlength: {
       immediate: true,
-      handler: function(newV) {
+      handler: function (newV) {
         if (newV === 6) {
           this.ranges = [1, 2, 3, 4, 5, 6];
         } else {
@@ -82,7 +82,7 @@ export default {
     },
     value: {
       immediate: true,
-      handler: function(newV) {
+      handler: function (newV) {
         if (newV !== this.inputValue) {
           this.inputValue = newV;
           this.toMakeAndCheck(newV);
@@ -90,7 +90,7 @@ export default {
       }
     }
   },
-  data() {
+  data () {
     return {
       inputValue: "",
       codeIndex: 1,
@@ -99,13 +99,13 @@ export default {
     };
   },
   methods: {
-    getVal(e) {
+    getVal (e) {
       const val = e.detail.value;
       this.inputValue = val;
       this.$emit("input", val);
       this.toMakeAndCheck(val);
     },
-    toMakeAndCheck(val) {
+    toMakeAndCheck (val) {
       const arr = val.split("");
       this.codeIndex = arr.length + 1;
       this.codeArr = arr;
@@ -116,12 +116,12 @@ export default {
     // refs 时不再提供 v-model 支持
     // 支持使用refs来设置value
     // 没有提供数据保护与检测，自己在外面对数据进行检测保护
-    set(val) {
+    set (val) {
       this.inputValue = val;
       this.toMakeAndCheck(val);
     },
     // 支持使用refs来清空
-    clear() {
+    clear () {
       this.inputValue = "";
       this.codeArr = [];
       this.codeIndex = 1;

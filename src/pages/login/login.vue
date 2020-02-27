@@ -143,9 +143,11 @@ export default {
         this.$store.commit('SET_PHONE', {
           phone: this.account
         })
-        uni.navigateTo({
-          url: "../smsValidte/smsValidte"
-        });
+        setTimeout(() => {
+          uni.navigateTo({
+            url: "../smsValidte/smsValidte?phone=" + this.account
+          });
+        }, 0);
       })
 
     },

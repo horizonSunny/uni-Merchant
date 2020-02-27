@@ -56,9 +56,7 @@ async function getSms(params) {
 // 获取用户登陆信息
 async function getUserInfo(params) {
   console.log('in getProductDetails')
-  return http.post('/auth/oauth/token', {
-    params: params
-  })
+  return http.post('/auth/oauth/token', params)
 }
 export {
   getClassify,
@@ -68,5 +66,6 @@ export {
   getCategoryProducts,
   getQuickCategoryProducts,
   getProductDetails,
-  getSms
+  getSms,
+  getUserInfo
 }

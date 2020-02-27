@@ -7,7 +7,7 @@
       <view>
         <text class="sms-between">已发送至</text>
         <text class="sms-between" style="color:#141414">
-          &nbsp;&nbsp; 139 9809 8058</text
+          &nbsp;&nbsp; {{ phone }}</text
         >
       </view>
       <view>
@@ -22,27 +22,48 @@
     <one-input ref="one" type="bottom" @finish="finishedOne"></one-input>
   </view>
 </template>
-
 <script>
+import { mapState, mapActions, mapGetters } from "vuex";
 import oneInput from "@/components/myp-one/components/myp-one/myp-one.vue";
 export default {
   components: {
     oneInput
   },
-  data() {
+  data () {
     return {
       show: true,
       count: 60,
-      timer: null
+      timer: null,
+      // 手机号
+      phone: ''
     };
   },
+  computed: {
+    // ...mapGetters(["getPhone"])
+  },
   methods: {
-    finishedOne(val) {
+    ...mapActions({
+      getUserInfo: "GetUserInfo"
+      // 将 `this.add()` 映射为 `this.$store.dispatch('increment')`
+    }),
+    finishedOne (smsValidate) {
       // 这边获取验证码
-      console.log(val);
+      console.log(smsValidate);
+      const params = {
+        username: this.phone,
+        code: smsValidate,
+        grant_type: 'sms',
+        userType: 2
+      }
+      this.getUserInfo(params).then((res) => {
+        console.log('res_', res)
+        uni.navigateBack({
+          delta: 2
+        });
+      })
     },
     // 计时器
-    getCode() {
+    getCode () {
       console.log("in getCode");
       const TIME_COUNT = 60;
       if (!this.timer) {
@@ -60,15 +81,19 @@ export default {
       }
     },
     // 重新获取验证码
-    getSms() {
+    getSms () {
       this.getCode();
     }
   },
-  created() {
+  created () {
     let _this = this;
     setTimeout(() => {
       _this.getCode();
     }, 1000);
+  },
+  onLoad (option) {
+    console.log('_option_', option);
+    this.phone = option.phone
   }
 };
 </script>
