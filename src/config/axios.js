@@ -50,7 +50,7 @@ http.interceptors.request.use(config => {
 http.interceptors.response.use(
   response => {
     // response.code代表token失效
-    console.log('response.code_', response.data.code)
+    // console.log('response.code_', response.data.code)
     // if (response.data.code === 2) {
     //   storage.setSync("access_token", channelNo);
     //   uni.reLaunch({
