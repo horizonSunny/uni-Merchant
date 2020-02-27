@@ -46,6 +46,7 @@
             class="classifyItem"
             v-for="(item, index) in quickCategorys"
             :key="index"
+            @click="toClassify(item)"
           >
             <img :src="item.image" alt="" />
             <text>{{ item.categoryName }}</text>
@@ -123,6 +124,13 @@ export default {
       console.log("goClassify_");
       uni.switchTab({
         url: "../classify/classify"
+      });
+    },
+    // 跳转快速分类页面
+    toClassify (item) {
+      console.log('item_', item);
+      uni.navigateTo({
+        url: "../classify/classifyDetails?quickCategoryId=" + item.quickCategoryId
       });
     }
   },

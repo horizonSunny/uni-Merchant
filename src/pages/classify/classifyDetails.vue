@@ -137,7 +137,8 @@ import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load
 import json from "../search/json";
 import {
   searchProductList,
-  getCategoryProducts
+  getCategoryProducts,
+  getQuickCategoryProducts
 } from '@/service/index'
 let windowWidth = 0,
   scrollTimer = false,
@@ -152,7 +153,11 @@ export default {
   },
   onLoad (option) {
     console.log("option.id_", option.categoryId); //打印出上个页面传递的参数。
-    this.categoryId = option.categoryId
+    if (option.categoryId) {
+      this.categoryId = option.categoryId
+    } else if (option.quickCategoryId) {
+      this.quickCategoryId = option.quickCategoryId
+    }
     this.loadTabbars();
   },
   onNavigationBarButtonTap (item) {
@@ -165,8 +170,9 @@ export default {
   data () {
     return {
       keyLibrary: [],
-      // 查询筛选条件及分页数据
+      // 查询筛选条件及分页数据,由categoryId判断是否是三级跳转还是快速找药跳转
       categoryId: '',
+      quickCategoryId: '',
       sale: -1,
       price: -1,
       productType: -1,
@@ -299,10 +305,10 @@ export default {
       }
       // #endif
 
-      //异步请求数据
+      //异步请求数据,根据三级分类找到到
       const params = {
         tenantId: this.$store.getters.tenant.tenantId,
-        categoryId: this.categoryId,
+        // categoryId: this.categoryId,
         sale: this.sale,
         price: this.price,
         productType: this.confirmSelected.medicineType,
@@ -311,7 +317,15 @@ export default {
         pageNumber: tabItem.currentNumber,
         pageSize: this.pageSize
       }
-      getCategoryProducts(params).then(res => {
+      let func;
+      if (this.categoryId !== '') {
+        params.categoryId = this.categoryId
+        func = getCategoryProducts(params)
+      } else {
+        params.quickCategoryId = this.quickCategoryId
+        func = getQuickCategoryProducts(params)
+      }
+      func.then(res => {
         console.log('searchProductList_', res);
         this.productBrands = res.data.productBrands
         // settimeout

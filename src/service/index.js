@@ -34,10 +34,18 @@ async function getCategoryProducts(params) {
     params: params
   })
 }
+// 根据快速分类找药
+async function getQuickCategoryProducts(params) {
+  console.log('in getQuickCategoryProducts')
+  return http.get('/admin/v1/tenantProduct/getQuickCategoryProducts', {
+    params: params
+  })
+}
 export {
   getClassify,
   getMainInfo,
   searchKeyword,
   searchProductList,
-  getCategoryProducts
+  getCategoryProducts,
+  getQuickCategoryProducts
 }
