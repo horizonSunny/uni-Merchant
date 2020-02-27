@@ -47,7 +47,7 @@
       </view>
       <view class="button">
         <button type="primary">加入购物车</button>
-        <button type="warn">立即购买</button>
+        <button type="warn" @click="buyImmd()">立即购买</button>
       </view>
     </view>
     <!-- 轮播图 -->
@@ -326,6 +326,12 @@ export default {
           break;
       }
       console.log(index);
+    },
+    // 立即购买
+    buyImmd () {
+      uni.navigateTo({
+        url: "../login/login"
+      });
     }
   },
   data () {

@@ -48,6 +48,18 @@ async function getProductDetails(params) {
     params: params
   })
 }
+// 获取手机验证码
+async function getSms(params) {
+  console.log('in getSms')
+  return http.get('/patient/sms/' + params.phone)
+}
+// 获取用户登陆信息
+async function getUserInfo(params) {
+  console.log('in getProductDetails')
+  return http.post('/auth/oauth/token', {
+    params: params
+  })
+}
 export {
   getClassify,
   getMainInfo,
@@ -55,5 +67,6 @@ export {
   searchProductList,
   getCategoryProducts,
   getQuickCategoryProducts,
-  getProductDetails
+  getProductDetails,
+  getSms
 }

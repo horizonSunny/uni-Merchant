@@ -1,32 +1,27 @@
+import { getUserInfo } from '@/service/index'
 const userModule = {
   state: {
-    addRouters: [],
-    permissionRouter: []
+    phone: '',
+    userInfo: {}
   },
-  getters: {
-    // getPermission(state, getters, rootState, rootGetters) {
-    //   // console.log('rootGetters_', rootGetters)
-    //   return rootGetters.permissions;
-    // }
-  },
+  getters: {},
   mutations: {
-    // SET_ROUTERS: (state, routers) => {
-    //   state.addRouters = routers;
-    // },
-    // SET_PERMISSION_ROUTER: (state, siderbar) => {
-    //   state.permissionRouter = siderbar;
-    // }
+    SET_USER: (state, userInfo) => {
+      state.userInfo = userInfo
+    },
+    SET_PHONE: (state, payload) => {
+      console.log('SET_PHONE_', payload)
+      state.phone = payload.phone
+    }
   },
   actions: {
-    // AddRouter({ commit, getters }) {
-    //   console.log("getters.getPermission_", getters.getPermission);
-    //   const asyncRouters = deepCopy(asyncRouter);
-    //   const addRouter = filterAsyncRouter(asyncRouters, getters.getPermission);
-    //   // 这边添加main，放入mainchildren,不能深拷贝，会形成两个mainComponent
-    //   addMainRouter[0].children = addRouter;
-    //   console.log("addRouter_", addMainRouter);
-    //   commit("SET_ROUTERS", addMainRouter);
-    // }
+    GetUserInfo({ commit }) {
+      return getUserInfo().then(res => {
+        // commit('SET_ClASSIFY', res.data)
+        commit('SET_USER', res.data)
+        return res.data
+      })
+    }
   }
-};
-export default userModule;
+}
+export default userModule

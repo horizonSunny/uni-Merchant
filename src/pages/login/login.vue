@@ -58,6 +58,9 @@
 </template>
 
 <script>
+import {
+  getSms
+} from '@/service/index'
 import service from "../../service.js";
 import { mapState, mapMutations } from "vuex";
 import mInput from "../../components/m-input.vue";
@@ -67,12 +70,12 @@ export default {
   components: {
     mInput
   },
-  onNavigationBarButtonTap(item) {
+  onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
     console.log("index_", item.index);
     uni.navigateBack();
   },
-  data() {
+  data () {
     return {
       providerList: [],
       hasProvider: false,
@@ -86,7 +89,7 @@ export default {
   computed: mapState(["forcedLogin"]),
   methods: {
     ...mapMutations(["login"]),
-    initProvider() {
+    initProvider () {
       const filters = ["weixin", "qq", "sinaweibo"];
       uni.getProvider({
         service: "oauth",
@@ -108,14 +111,14 @@ export default {
         }
       });
     },
-    initPosition() {
+    initPosition () {
       /**
        * 使用 absolute 定位，并且设置 bottom 值进行定位。软键盘弹出时，底部会因为窗口变化而被顶上来。
        * 反向使用 top 进行定位，可以避免此问题。
        */
       this.positionTop = uni.getSystemInfoSync().windowHeight - 100;
     },
-    bindLogin() {
+    bindLogin () {
       /**
        * 客户端对账号信息进行一些必要的校验。
        * 实际开发中，根据业务需要进行处理，这里仅做示例。
@@ -128,23 +131,25 @@ export default {
         });
         return;
       }
-      /**
-       * 下面简单模拟下服务端的处理
-       * 检测用户账号密码是否在已注册的用户列表中
-       * 实际开发中，使用 uni.request 将账号信息发送至服务端，客户端在回调函数中获取结果信息。
-       */
-      const data = {
-        account: this.account,
-        password: this.password
-      };
-      const validUser = service.getUsers().some(function(user) {
-        return data.account === user.account && data.password === user.password;
-      });
-      if (validUser) {
-        this.toMain(this.account);
+      if (!this.protocolSelected) {
+        uni.showToast({
+          icon: "none",
+          title: "请点击同意用户协议"
+        });
+        return;
       }
+      getSms({ phone: this.account }).then(() => {
+        console.log('in sms');
+        this.$store.commit('SET_PHONE', {
+          phone: this.account
+        })
+        uni.navigateTo({
+          url: "../smsValidte/smsValidte"
+        });
+      })
+
     },
-    oauth(value) {
+    oauth (value) {
       uni.login({
         provider: value,
         success: res => {
@@ -157,7 +162,7 @@ export default {
                */
               this.toMain(infoRes.userInfo.nickName);
             },
-            fail() {
+            fail () {
               uni.showToast({
                 icon: "none",
                 title: "登陆失败"
@@ -170,7 +175,7 @@ export default {
         }
       });
     },
-    getUserInfo({ detail }) {
+    getUserInfo ({ detail }) {
       if (detail.userInfo) {
         this.toMain(detail.userInfo.nickName);
       } else {
@@ -180,7 +185,7 @@ export default {
         });
       }
     },
-    toMain(userName) {
+    toMain (userName) {
       this.login(userName);
       /**
        * 强制登录时使用reLaunch方式跳转过来
@@ -194,11 +199,11 @@ export default {
         uni.navigateBack();
       }
     },
-    protocolSelect() {
+    protocolSelect () {
       this.protocolSelected = !this.protocolSelected;
     }
   },
-  onReady() {
+  onReady () {
     this.initPosition();
     this.initProvider();
     // #ifdef MP-WEIXIN
