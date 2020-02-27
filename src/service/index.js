@@ -41,11 +41,19 @@ async function getQuickCategoryProducts(params) {
     params: params
   })
 }
+// 查看商品详情页面
+async function getProductDetails(params) {
+  console.log('in getProductDetails')
+  return http.get('/admin/v1/tenantProduct/getProductDetails', {
+    params: params
+  })
+}
 export {
   getClassify,
   getMainInfo,
   searchKeyword,
   searchProductList,
   getCategoryProducts,
-  getQuickCategoryProducts
+  getQuickCategoryProducts,
+  getProductDetails
 }

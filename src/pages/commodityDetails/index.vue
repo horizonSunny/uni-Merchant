@@ -8,14 +8,19 @@
   >
     <!-- <view v-if="hasLogin" class="hello"> -->
     <view class="customBar" :style="{ background: topBar ? '#fff' : '' }">
-      <img src="static/icon/commodityDetails/reback.svg" alt class="reback" />
+      <img
+        src="static/icon/commodityDetails/reback.svg"
+        alt
+        class="reback"
+        @click="goBack"
+      />
       <img src="static/icon/commodityDetails/more.svg" alt class="more" />
       <img src="static/icon/commodityDetails/shopCar.svg" alt class="shopCar" />
     </view>
     <!-- bottomBar -->
     <view class="bottomBar">
       <view class="operate">
-        <view class="viewInfo">
+        <view class="viewInfo" @click="toMain()">
           <img src="static/icon/commodityDetails/PDJ_home.svg" alt="" />
           <view>首页</view>
         </view>
@@ -40,16 +45,15 @@
     <view class="carousel">
       <view class="carouselContain">
         <swiper>
-          <swiper-item>
+          <swiper-item
+            v-for="(item, index) in product.productImage"
+            :key="index"
+          >
             <view class="swiper-item uni-bg-red">
-              <img
-                src="static/img/home_banner@2x.png"
-                alt
-                class="merchantIcon"
-              />
+              <img :src="item" alt class="merchantIcon" />
             </view>
           </swiper-item>
-          <swiper-item>
+          <!-- <swiper-item>
             <view class="swiper-item uni-bg-green">
               <img
                 src="static/img/home_banner@2x.png"
@@ -57,7 +61,7 @@
                 class="merchantIcon"
               />
             </view>
-          </swiper-item>
+          </swiper-item> -->
         </swiper>
       </view>
     </view>
@@ -73,9 +77,9 @@
       </text>
     </view>
     <view class="separate productIntr">
-      <view class="productPrice">¥ 232.00</view>
-      <view class="productName">商品品牌 通用名</view>
-      <view class="productIntro">药品简介药品简介药品简介药品简介药品简介</view>
+      <view class="productPrice">¥ {{ product.price }}</view>
+      <view class="productName">{{ product.productName }}</view>
+      <view class="productIntro">{{ product.productName }}</view>
     </view>
     <view class="separate logisticsInfo">
       <view class="logistics">
@@ -90,10 +94,14 @@
       <view class="logistics">
         库存
         <text>
-          1212
+          {{ product.stock }}
           <text class="limitation">(限购3件)</text> </text
         >有效期至
-        <text>剩余有效期至>180</text>
+        <text
+          >剩余有效期至>{{
+            product.productExpire ? product.productExpire : "暂无"
+          }}</text
+        >
       </view>
     </view>
     <view class="separate logisticsInfo parameters">
@@ -101,23 +109,25 @@
       <view class="logistics">
         <view class="logistics">
           批准文号
-          <text>国药准字329348344303400</text>
+          <text>{{ product.approvalNumber }}</text>
         </view>
         <view class="logistics">
           包装规格
-          <text>10gX9袋/盒</text>
+          <text>{{ product.productSpecif }}</text>
         </view>
         <view class="logistics">
           剂型/型号
-          <text>颗粒剂</text>
+          <text>{{ product.productModel }}</text>
         </view>
         <view class="logistics">
           生产企业
-          <text>xxxxxxx</text>
+          <text>{{ product.manufacturer }}</text>
         </view>
         <view class="logistics">
           有效期
-          <text>24个月</text>
+          <text>{{
+            product.productExpire ? product.productExpire : "暂无"
+          }}</text>
         </view>
         <view class="warning">
           <view class="logistics">
@@ -126,7 +136,7 @@
           </view>
           <view class="logistics">
             <img src="static/icon/commodityDetails/remind.svg" alt />
-            请仔细阅读药品使用说明书并按说明使用或在
+            请仔细阅读药品使用说明书并按说明使用或在药师指导下购买和使用
           </view>
         </view>
       </view>
@@ -177,30 +187,38 @@
     </view>
     <!-- 基本信息 说明书 服务保障 -->
     <view class="details">
-      <text>基本信息</text>
-      <text>说明书</text>
-      <text style="border-right:0px"> 服务保障</text>
+      <text
+        v-for="(item, index) in ['基本信息', '说明书', '服务保障']"
+        :key="index"
+        :style="{ 'border-right': index === 2 ? '0px' : '1px solid #eeeeee' }"
+        @click="swiperslc(index)"
+        >{{ item }}</text
+      >
     </view>
     <view class="remind">
       温馨提示：商品包装因厂家更换频繁，如有不符请以实物为准
     </view>
-    <!-- <view class="detailsInfo">
-      <view class="basicInfo">
-        <text class="label">通用名</text>
-        <text>xxxxxx</text>
-      </view>
-    </view> -->
-    <view class="detailsInfo">
-      <view class="specification">
-        <view class="label">【产品名称】</view>
-        <view class="content"
-          >说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说</view
-        >
+    <view class="detailsInfo" v-if="swiperslcInfo === 0">
+      <view class="basicInfo" v-for="(item, index) in basicInfo" :key="index">
+        <text class="label">{{ item.label }}</text>
+        <text>{{ item.info }}</text>
       </view>
     </view>
+    <view class="detailsInfo" v-else-if="swiperslcInfo === 1">
+      <view class="specification">
+        <!-- <view class="label">【产品名称】</view>
+        <view class="content"
+          >说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说</view
+        > -->
+        {{ product.productDesc }}
+      </view>
+    </view>
+    <view class="detailsInfo" v-else>
+      <view class="specification"> </view>
+    </view>
     <view class="productImg">
-      <view v-for="(item, index) in imgArr" :key="index">
-        <img src="static/img/home_banner@2x.png" alt />
+      <view v-for="(item, index) in product.productImage" :key="index">
+        <img :src="item" alt />
       </view>
     </view>
   </scroll-view>
@@ -208,41 +226,73 @@
 
 <script>
 import { mapState } from "vuex";
-
+import {
+  getProductDetails
+} from '@/service/index'
 export default {
   computed: mapState(["forcedLogin", "hasLogin", "userName"]),
-  onLoad () { },
+  onLoad (option) {
+    getProductDetails({ tenantPriceId: option.tenantPriceId }).then((res) => {
+      console.log('commodityDetails_', res.data);
+      this.product = res.data.product
+      this.tenant = res.data.tenant
+      this.comments = res.data.comments
+      this.basicInfo = [{
+        label: '通用名',
+        info: res.data.product.productName
+      }, {
+        label: '商品品牌',
+        info: res.data.product.productBrand
+      }, {
+        label: '批准文号',
+        info: res.data.product.approvalNumber
+      }, {
+        label: '剂型/型号',
+        info: res.data.product.productModel
+      }, {
+        label: '英文名称',
+        info: res.data.product.englishName
+      }, {
+        label: '汉语拼音',
+        info: res.data.product.pinyin
+      }, {
+        label: '有效期',
+        info: res.data.product.productExpire
+      }, {
+        label: '生产企业',
+        info: res.data.product.manufacturer
+      },]
+    })
+  },
   onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
     console.log("index_", item.index);
   },
   methods: {
-    testTologin () {
-      console.log("testTologin_");
-      uni.navigateTo({
-        // url: "../login/login"
-        // url: "../merchantsIntr/merchantsIntr"
-        url: "../search/search"
-      });
-    },
-    goClassify () {
-      console.log("goClassify_");
-      uni.switchTab({
-        // url: "../login/login"
-        // url: "../merchantsIntr/merchantsIntr"
-        url: "../classify/classify"
-      });
-    },
     scrolltoupper () {
       console.log("aaa");
     },
     scroll (e) {
-      console.log("scrollCategory_", e.detail);
       if (e.detail.scrollTop > 200) {
         this.topBar = true;
       } else {
         this.topBar = false;
       }
+    },
+    goBack () {
+      console.log('goback');
+      uni.navigateBack({
+        delta: 1
+      });
+    },
+    swiperslc (index) {
+      console.log('index_', index);
+      this.swiperslcInfo = index
+    },
+    toMain () {
+      uni.switchTab({
+        url: "../main/main"
+      });
     }
   },
   data () {
@@ -251,7 +301,16 @@ export default {
       autoplay: false,
       // 滚动到200到位置topbar背景色变白
       topBar: false,
-      imgArr: [1, 2, 3]
+      imgArr: [1, 2, 3],
+      //  返回到数据
+      product: {},
+      tenant: {},
+      comments: {},
+      // 最下面服务保障切换
+      swiperslcInfo: 0,
+      basicInfo: [
+
+      ]
     };
   }
 };
@@ -612,8 +671,10 @@ uni-page-body {
       color: #1b1b1b;
       border-bottom: 1px solid #f7f7f7;
       .label {
+        display: inline-block;
         color: #aeaeae;
-        margin-right: 36px;
+        margin-right: 10px;
+        width: 20%;
       }
     }
     .specification {

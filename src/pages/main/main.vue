@@ -64,6 +64,7 @@
             class="contentItem"
             v-for="(item, index) in products"
             :key="index"
+            @click="toProductDetails(item)"
           >
             <img :src="item.productImage[0]" alt="" />
             <view class="productDetails">
@@ -132,6 +133,13 @@ export default {
       console.log('item_', item);
       uni.navigateTo({
         url: "../classify/classifyDetails?quickCategoryId=" + item.quickCategoryId
+      });
+    },
+    // 跳转商品详情页面
+    toProductDetails (item) {
+      console.log(item.tenantPriceId);
+      uni.navigateTo({
+        url: "../commodityDetails/index?tenantPriceId=" + item.tenantPriceId
       });
     }
   },
