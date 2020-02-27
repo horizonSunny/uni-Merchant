@@ -3,7 +3,7 @@
     class="main"
     scroll-y
     :upper-threshold="50"
-    @scrolltoupper="scrolltoupper"
+    :scroll-top="tabScrollTop"
     @scroll="scroll"
   >
     <!-- <view v-if="hasLogin" class="hello"> -->
@@ -14,6 +14,15 @@
         class="reback"
         @click="goBack"
       />
+      <view class="scrollLocation" v-show="scrollLocationShow">
+        <text
+          :class="scrollLocation === index ? 'active' : ''"
+          v-for="(item, index) in ['商品', '评价', '详情']"
+          :key="index"
+          @click="srcollLact(index)"
+          >{{ item }}</text
+        >
+      </view>
       <img src="static/icon/commodityDetails/more.svg" alt class="more" />
       <img src="static/icon/commodityDetails/shopCar.svg" alt class="shopCar" />
     </view>
@@ -269,14 +278,21 @@ export default {
     console.log("index_", item.index);
   },
   methods: {
-    scrolltoupper () {
-      console.log("aaa");
-    },
     scroll (e) {
+      // console.log('e.detail.scrollTop_', e.detail.scrollTop);
       if (e.detail.scrollTop > 200) {
         this.topBar = true;
+        this.scrollLocationShow = true;
       } else {
         this.topBar = false;
+        this.scrollLocationShow = false;
+      };
+      if (e.detail.scrollTop < 730) {
+        this.scrollLocation = 0
+      } else if (e.detail.scrollTop >= 730 && e.detail.scrollTop < 895) {
+        this.scrollLocation = 1
+      } else {
+        this.scrollLocation = 2
       }
     },
     goBack () {
@@ -293,15 +309,35 @@ export default {
       uni.switchTab({
         url: "../main/main"
       });
+    },
+    // 点击上面tabar滚动
+    srcollLact (index) {
+      switch (index) {
+        case 0:
+          this.tabScrollTop = 0
+          break;
+        case 1:
+          this.tabScrollTop = 730
+          break;
+        case 2:
+          this.tabScrollTop = 895
+          break;
+        default:
+          break;
+      }
+      console.log(index);
     }
   },
   data () {
     return {
       indicatorDots: false,
       autoplay: false,
+      scrollLocation: 0,
+      scrollLocationShow: false,
+      //滚动条位置
+      tabScrollTop: 0,
       // 滚动到200到位置topbar背景色变白
       topBar: false,
-      imgArr: [1, 2, 3],
       //  返回到数据
       product: {},
       tenant: {},
@@ -340,6 +376,23 @@ uni-page-body {
     z-index: 999;
     opacity: 1;
     width: 100%;
+    .scrollLocation {
+      display: inline-block;
+      width: 45%;
+      position: relative;
+      top: -2px;
+      padding-left: 20%;
+      text {
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(27, 27, 27, 1);
+        margin: 0px 10px;
+      }
+      .active {
+        color: rgba(58, 116, 241, 1);
+      }
+    }
     img {
       height: 22px;
       width: 22px;
@@ -529,8 +582,8 @@ uni-page-body {
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(137, 137, 137, 1);
-      width: 27px;
-      margin-right: 8px;
+      width: 40px;
+      margin-right: 3px;
     }
     .warning {
       margin-top: 11px;

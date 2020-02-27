@@ -287,6 +287,7 @@ export default {
         item.loadMoreStatus = 0; //加载更多 0加载前，1加载中，2没有更多了
         item.refreshing = 0;
         item.currentNumber = 0;
+        item.loaded = false;
       });
       console.log("loadTabbars_", tabList);
       this.tabBars = tabList;

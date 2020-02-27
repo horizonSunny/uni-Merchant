@@ -220,6 +220,7 @@ export default {
         item.loadMoreStatus = 0; //加载更多 0加载前，1加载中，2没有更多了
         item.refreshing = 0;
         item.currentNumber = 0;
+        item.loaded = false
       });
       console.log("loadTabbars_", tabList);
       this.tabBars = tabList;
@@ -269,6 +270,7 @@ export default {
           nowWidth = result.width;
         }
       }
+      // debugger;
       if (typeof e === "number") {
         //点击切换时先切换再滚动tabbar，避免同时切换视觉错位
         this.tabCurrentIndex = index;
