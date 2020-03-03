@@ -165,12 +165,13 @@
     "color": "#7a7e83",
     "selectedColor": "#0faeff",
     "backgroundColor": "#ffffff",
-    "list": [{
-        "pagePath": "pages/main/main",
-        "text": "首页",
-        "iconPath": "static/img/home.png",
-        "selectedIconPath": "static/img/homeHL.png"
-      },
+    "list": [
+      // {
+      //   "pagePath": "pages/main/main",
+      //   "text": "首页",
+      //   "iconPath": "static/img/home.png",
+      //   "selectedIconPath": "static/img/homeHL.png"
+      // },
       {
         "pagePath": "pages/classify/classify",
         "text": "找药",

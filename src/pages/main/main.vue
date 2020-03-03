@@ -84,13 +84,18 @@
         </view>
       </view>
     </view>
+    <tab-bar></tab-bar>
   </view>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
+import tabBar from "@/components/tab-bar";
 export default {
   // computed: mapState(["forcedLogin", "hasLogin", "userName"]),
+  components: {
+    tabBar
+  },
   computed: {
     ...mapGetters(["tenant", "banners", "quickCategorys", "products"])
   },
