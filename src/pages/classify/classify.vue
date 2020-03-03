@@ -28,7 +28,9 @@
               @click="toClassify(thrItem)"
             >
               <img :src="thrItem.pic" alt />
-              {{ thrItem.cateName }}
+              <view>
+                {{ thrItem.cateName }}
+              </view>
             </view>
           </view>
         </view>
