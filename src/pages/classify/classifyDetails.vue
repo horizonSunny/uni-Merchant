@@ -107,6 +107,7 @@
                   v-for="(item, itemIndex) in tabItem.newsList"
                   :key="itemIndex"
                   class="drugsDetails"
+                  @click="toProductDetails(item)"
                 >
                   <img
                     src="../../static/icon/main/Product-Bitmap@2x.png"
@@ -420,6 +421,13 @@ export default {
       this.confirmSelected = { selectBrands: this.selectBrands, medicineType: this.medicineType }
       this.onPulldownReresh()
       this.filtrateSelected = false;
+    },
+    // 跳转商品详情页面
+    toProductDetails (item) {
+      console.log(item.tenantPriceId);
+      uni.navigateTo({
+        url: "../commodityDetails/index?tenantPriceId=" + item.tenantPriceId
+      });
     }
   }
 };
