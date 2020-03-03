@@ -617,7 +617,6 @@ export default {
               height: 12px;
               line-height: 12px;
               top: -1px;
-              left: 8px;
               width: 30px;
               height: 12px;
               margin-right: 10px;
