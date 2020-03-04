@@ -129,9 +129,7 @@ export default {
     },
     goClassify () {
       console.log("goClassify_");
-      uni.switchTab({
-        url: "../classify/classify"
-      });
+      this.$navTo("../classify/classify");
     },
     // 跳转快速分类页面
     toClassify (item) {

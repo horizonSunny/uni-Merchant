@@ -35,21 +35,25 @@
           </view>
         </view>
       </scroll-view>
+      <!-- 为了适应tabBar的遮挡问题 -->
+      <view style="width:100%;height:47px;"></view>
     </view>
+    <tab-bar></tab-bar>
   </view>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+import tabBar from "@/components/tab-bar";
 export default {
   components: {
-    // menuModal
+    tabBar
   },
   onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
     console.log("index_search_", item.index);
-    uni.navigateTo({
-      url: "../search/search"
-    });
+    // uni.navigateTo({
+    //   url: "../search/search"
+    // });
   },
   data () {
     return {
@@ -58,7 +62,7 @@ export default {
     };
   },
   onLoad () {
-    // console.log("this.$store_", this.$store);
+    console.log('this.getCurrentPages()_', getCurrentPages());
     this.getClassify().then(res => {
       this.currentClassify = res[0]["children"];
     });
