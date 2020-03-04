@@ -1,6 +1,8 @@
 <template>
   <view class="main">
-    <tob-bar></tob-bar>
+    <tob-bar>
+      <text slot="title">所打动</text>
+    </tob-bar>
     <view class="content">
       <view class="siderBar">
         <scroll-view class="scroll-view" scroll-y>

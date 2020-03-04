@@ -378,7 +378,6 @@ export default {
         tabItem.currentNumber = 0
         tabItem.refreshing = true;
       }
-      // #endif
 
       //异步请求数据
       const params = {

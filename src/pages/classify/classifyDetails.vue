@@ -312,7 +312,6 @@ export default {
         tabItem.currentNumber = 0
         tabItem.refreshing = true;
       }
-      // #endif
 
       //异步请求数据,根据三级分类找到到
       const params = {

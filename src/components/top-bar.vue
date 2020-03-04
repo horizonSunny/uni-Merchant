@@ -15,7 +15,8 @@
       <view class="uni-page-head-bd">
         <view class="uni-page-head__title" style="font-size: 16px; opacity: 1;">
           <!---->
-          全部药品
+          <!-- 全部药品 -->
+          <slot name="title"></slot>
         </view>
       </view>
       <!---->
