@@ -43,21 +43,12 @@
         <view style="width:100%;height:47px;"></view>
       </view>
     </view>
-    <tabBar slot="tabBar"></tabBar>
+    <tab-bar slot="tabBar"></tab-bar>
   </body-wrap>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-import tabBar from "@/components/tab-bar";
-import tobBar from "@/components/top-bar";
-import bodyWrap from "@/components/body-wrap";
 export default {
-  // computed: mapState(["forcedLogin", "hasLogin", "userName"]),
-  components: {
-    tabBar,
-    tobBar,
-    bodyWrap
-  },
   onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
     console.log("index_search_", item.index);
