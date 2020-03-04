@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view style="width:100%;height:47px;">
     <uni-tabbar style="z-index:999;">
       <view
         class="uni-tabbar"
