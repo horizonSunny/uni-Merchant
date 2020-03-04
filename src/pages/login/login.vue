@@ -1,60 +1,65 @@
 <template>
-  <view class="content loginContent">
-    <view>
-      <view class="input-row">
-        <text class="title-info">请输入手机号</text>
+  <body-wrap>
+    <tob-bar slot="topBar">
+      <text slot="title">所打动</text>
+    </tob-bar>
+    <view slot="content" class="content loginContent">
+      <view>
+        <view class="input-row">
+          <text class="title-info">请输入手机号</text>
+        </view>
+        <view class="input-row">
+          <m-input
+            class="uni-input phone-input"
+            placeholder="请输入手机号码"
+            maxlength="11"
+            clearable
+            v-model="account"
+          />
+        </view>
       </view>
-      <view class="input-row">
-        <m-input
-          class="uni-input phone-input"
-          placeholder="请输入手机号码"
-          maxlength="11"
-          clearable
-          v-model="account"
-        />
+      <view class="btn-row">
+        <button type="primary" @tap="bindLogin">下一步</button>
       </view>
-    </view>
-    <view class="btn-row">
-      <button type="primary" @tap="bindLogin">下一步</button>
-    </view>
-    <view class="action-row protocol-style">
-      <view @click="protocolSelect">
-        <img
-          v-show="protocolSelected"
-          src="static/icon/login/Checklist.svg"
-          alt=""
-        />
-        <img
-          v-show="!protocolSelected"
-          src="static/icon/login/Unchecked.svg"
-          alt=""
-        />
+      <view class="action-row protocol-style">
+        <view @click="protocolSelect">
+          <img
+            v-show="protocolSelected"
+            src="static/icon/login/Checklist.svg"
+            alt=""
+          />
+          <img
+            v-show="!protocolSelected"
+            src="static/icon/login/Unchecked.svg"
+            alt=""
+          />
+        </view>
+        <text class="protocol-info"
+          >登录/注册并视为同意<a href="">《xxxxxx用户服务协议》</a></text
+        >
       </view>
-      <text class="protocol-info"
-        >登录/注册并视为同意<a href="">《xxxxxx用户服务协议》</a></text
-      >
-    </view>
-    <view
-      class="oauth-row"
-      v-if="hasProvider"
-      v-bind:style="{ top: positionTop + 'px' }"
-    >
       <view
-        class="oauth-image"
-        v-for="provider in providerList"
-        :key="provider.value"
+        class="oauth-row"
+        v-if="hasProvider"
+        v-bind:style="{ top: positionTop + 'px' }"
       >
-        <image :src="provider.image" @tap="oauth(provider.value)"></image>
-        <!-- #ifdef MP-WEIXIN -->
-        <button
-          v-if="!isDevtools"
-          open-type="getUserInfo"
-          @getuserinfo="getUserInfo"
-        ></button>
-        <!-- #endif -->
+        <view
+          class="oauth-image"
+          v-for="provider in providerList"
+          :key="provider.value"
+        >
+          <image :src="provider.image" @tap="oauth(provider.value)"></image>
+          <!-- #ifdef MP-WEIXIN -->
+          <button
+            v-if="!isDevtools"
+            open-type="getUserInfo"
+            @getuserinfo="getUserInfo"
+          ></button>
+          <!-- #endif -->
+        </view>
       </view>
     </view>
-  </view>
+  </body-wrap>
 </template>
 
 <script>

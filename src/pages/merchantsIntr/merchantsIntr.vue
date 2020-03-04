@@ -1,54 +1,62 @@
 <template>
-  <view class="content">
-    <!-- <view v-if="hasLogin" class="hello"> -->
-    <view class="main">
-      <view class="merchantInfo">
-        <view class="merchantMessage">
-          <img :src="tenant.tenantLogo" alt="" class="merchantIcon" />
-          <view class="merchantDetails">
-            <view>{{ tenant.tenantName }}</view>
-            <view class="merchantLocation">
-              <img src="static/icon/merchantsIntr/location.svg" alt="" />
-              {{ tenant.address }}</view
+  <body-wrap>
+    <tob-bar slot="topBar">
+      <text slot="title">店铺简介</text>
+    </tob-bar>
+    <view class="content" slot="content">
+      <!-- <view v-if="hasLogin" class="hello"> -->
+      <view class="main">
+        <view class="merchantInfo">
+          <view class="merchantMessage">
+            <img :src="tenant.tenantLogo" alt="" class="merchantIcon" />
+            <view class="merchantDetails">
+              <view>{{ tenant.tenantName }}</view>
+              <view class="merchantLocation">
+                <img src="static/icon/merchantsIntr/location.svg" alt="" />
+                {{ tenant.address }}</view
+              >
+            </view>
+          </view>
+        </view>
+        <view class="classify">
+          <view class="classifyTitle">
+            <text class="title">
+              商家资质
+            </text>
+          </view>
+          <view class="classifyContent">
+            <view
+              class="contentItem"
+              v-for="(item, index) in tenant.enterpriseQualification"
+              :key="index"
             >
+              <img :src="item.url" alt="" />
+              <text>{{ item.name }} </text>
+            </view>
           </view>
         </view>
-      </view>
-      <view class="classify">
-        <view class="classifyTitle">
-          <text class="title">
-            商家资质
-          </text>
-        </view>
-        <view class="classifyContent">
-          <view
-            class="contentItem"
-            v-for="(item, index) in tenant.enterpriseQualification"
-            :key="index"
-          >
-            <img :src="item.url" alt="" />
-            <text>{{ item.name }} </text>
+        <view class="classify">
+          <view class="classifyTitle">
+            <text class="title">
+              商家实景
+            </text>
           </view>
-        </view>
-      </view>
-      <view class="classify">
-        <view class="classifyTitle">
-          <text class="title">
-            商家实景
-          </text>
-        </view>
-        <view class="merchantLive">
-          <swiper>
-            <swiper-item v-for="(item, index) in tenant.storeLive" :key="index">
-              <view class="swiper-item uni-bg-green">
-                <img :src="item" alt="" class="merchantIcon"
-              /></view>
-            </swiper-item>
-          </swiper>
+          <view class="merchantLive">
+            <swiper>
+              <swiper-item
+                v-for="(item, index) in tenant.storeLive"
+                :key="index"
+              >
+                <view class="swiper-item uni-bg-green">
+                  <img :src="item" alt="" class="merchantIcon"
+                /></view>
+              </swiper-item>
+            </swiper>
+          </view>
         </view>
       </view>
     </view>
-  </view>
+  </body-wrap>
 </template>
 
 <script>

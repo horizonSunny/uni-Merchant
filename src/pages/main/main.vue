@@ -1,92 +1,95 @@
 <template>
-  <view class="content">
-    <!-- <view v-if="hasLogin" class="hello"> -->
-    <tob-bar></tob-bar>
-    <view class="main">
-      <view class="merchantInfo">
-        <view class="merchantMessage">
-          <img :src="tenant.tenantLogo" alt="" class="merchantIcon" />
-          <text>{{ tenant.tenantName }}</text>
+  <body-wrap>
+    <tob-bar slot="topBar">
+      <text slot="title">所打动</text>
+    </tob-bar>
+    <view slot="content" class="content">
+      <view class="main">
+        <view class="merchantInfo">
+          <view class="merchantMessage">
+            <img :src="tenant.tenantLogo" alt="" class="merchantIcon" />
+            <text>{{ tenant.tenantName }}</text>
+          </view>
+          <view class="merchantSkip" @click="toDrugIntr">
+            <img src="static/icon/main/home_right-1.svg" alt="" />
+          </view>
         </view>
-        <view class="merchantSkip" @click="toDrugIntr">
-          <img src="static/icon/main/home_right-1.svg" alt="" />
+        <view class="carousel">
+          <view class="carouselAngel angelLeft"> </view>
+          <view class="carouselAngel angelRight"> </view>
+          <view class="carouselContain">
+            <swiper
+              :indicator-dots="indicatorDots"
+              :autoplay="autoplay"
+              :interval="interval"
+              :duration="duration"
+            >
+              <swiper-item v-for="(item, index) in banners" :key="index">
+                <view class="swiper-item uni-bg-green">
+                  <img :src="item" alt="" class="merchantIcon"
+                /></view>
+              </swiper-item>
+            </swiper>
+          </view>
         </view>
-      </view>
-      <view class="carousel">
-        <view class="carouselAngel angelLeft"> </view>
-        <view class="carouselAngel angelRight"> </view>
-        <view class="carouselContain">
-          <swiper
-            :indicator-dots="indicatorDots"
-            :autoplay="autoplay"
-            :interval="interval"
-            :duration="duration"
-          >
-            <swiper-item v-for="(item, index) in banners" :key="index">
-              <view class="swiper-item uni-bg-green">
-                <img :src="item" alt="" class="merchantIcon"
-              /></view>
-            </swiper-item>
-          </swiper>
-        </view>
-      </view>
-      <view class="classify">
-        <view class="classifyTitle">
-          <text class="title">
-            快速找药
-          </text>
-          <view class="medicineOperate" @click="goClassify">
-            <text class="operate">
-              全部药品
+        <view class="classify">
+          <view class="classifyTitle">
+            <text class="title">
+              快速找药
             </text>
-            <img src="static/icon/main/home_right-2.svg" alt="" />
+            <view class="medicineOperate" @click="goClassify">
+              <text class="operate">
+                全部药品
+              </text>
+              <img src="static/icon/main/home_right-2.svg" alt="" />
+            </view>
+          </view>
+          <view class="classifyDetails">
+            <view
+              class="classifyItem"
+              v-for="(item, index) in quickCategorys"
+              :key="index"
+              @click="toClassify(item)"
+            >
+              <img :src="item.image" alt="" />
+              <text>{{ item.categoryName }}</text>
+            </view>
           </view>
         </view>
-        <view class="classifyDetails">
-          <view
-            class="classifyItem"
-            v-for="(item, index) in quickCategorys"
-            :key="index"
-            @click="toClassify(item)"
-          >
-            <img :src="item.image" alt="" />
-            <text>{{ item.categoryName }}</text>
+        <view class="classify">
+          <view class="classifyTitle">
+            <text class="title">
+              商家推荐
+            </text>
           </view>
-        </view>
-      </view>
-      <view class="classify">
-        <view class="classifyTitle">
-          <text class="title">
-            商家推荐
-          </text>
-        </view>
-        <view class="classifyContent">
-          <view
-            class="contentItem"
-            v-for="(item, index) in products"
-            :key="index"
-            @click="toProductDetails(item)"
-          >
-            <img :src="item.productImage[0]" alt="" />
-            <view class="productDetails">
-              <text class="mark" v-show="item.isMp === 0">OTC</text>
-              <text class="mark" v-show="item.isMp === 1">双规</text>
-              <text class="mark" v-show="item.isMp === 2">RX</text>
-              <text class="mark" v-show="item.isMp === 3">其他</text>
-              <text>{{ item.productName }}</text>
-            </view>
-            <view class="specification">
-              {{ item.productSpecif }}
-            </view>
-            <view class="price">
-              {{ item.price }}
+          <view class="classifyContent">
+            <view
+              class="contentItem"
+              v-for="(item, index) in products"
+              :key="index"
+              @click="toProductDetails(item)"
+            >
+              <img :src="item.productImage[0]" alt="" />
+              <view class="productDetails">
+                <text class="mark" v-show="item.isMp === 0">OTC</text>
+                <text class="mark" v-show="item.isMp === 1">双规</text>
+                <text class="mark" v-show="item.isMp === 2">RX</text>
+                <text class="mark" v-show="item.isMp === 3">其他</text>
+                <text>{{ item.productName }}</text>
+              </view>
+              <view class="specification">
+                {{ item.productSpecif }}
+              </view>
+              <view class="price">
+                {{ item.price }}
+              </view>
             </view>
           </view>
         </view>
       </view>
     </view>
-    <tab-bar></tab-bar>
-  </view>
+    <tab-bar slot="tabBar"></tab-bar>
+  </body-wrap>
 </template>
 
 <script>
