@@ -1,6 +1,7 @@
 <template>
   <view class="content">
     <!-- <view v-if="hasLogin" class="hello"> -->
+    <tob-bar></tob-bar>
     <view class="main">
       <view class="merchantInfo">
         <view class="merchantMessage">
@@ -91,10 +92,12 @@
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
 import tabBar from "@/components/tab-bar";
+import tobBar from "@/components/top-bar";
 export default {
   // computed: mapState(["forcedLogin", "hasLogin", "userName"]),
   components: {
-    tabBar
+    tabBar,
+    tobBar
   },
   computed: {
     ...mapGetters(["tenant", "banners", "quickCategorys", "products"])
