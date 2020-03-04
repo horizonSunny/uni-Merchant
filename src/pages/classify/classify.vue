@@ -1,9 +1,9 @@
 <template>
-  <view class="main">
-    <tob-bar>
+  <body-wrap>
+    <tob-bar slot="topBar">
       <text slot="title">所打动</text>
     </tob-bar>
-    <view class="content">
+    <view slot="content" class="content">
       <view class="siderBar">
         <scroll-view class="scroll-view" scroll-y>
           <view
@@ -43,18 +43,20 @@
         <view style="width:100%;height:47px;"></view>
       </view>
     </view>
-    <tabBar></tabBar>
-  </view>
+    <tabBar slot="tabBar"></tabBar>
+  </body-wrap>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
 import tabBar from "@/components/tab-bar";
 import tobBar from "@/components/top-bar";
+import bodyWrap from "@/components/body-wrap";
 export default {
   // computed: mapState(["forcedLogin", "hasLogin", "userName"]),
   components: {
     tabBar,
-    tobBar
+    tobBar,
+    bodyWrap
   },
   onNavigationBarButtonTap (item) {
     // 这边绑定是该页面topBar上面的两个button事件
@@ -100,81 +102,74 @@ export default {
 };
 </script>
 <style lang="scss">
-uni-page-body {
-  height: 100%;
-}
-.main {
+.content {
   display: flex;
-  flex-direction: column;
-  .content {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    border-top: 1px solid #d4d4d4;
-    width: 100%;
-    background: #fff;
-    overflow: hidden;
-    .siderBar {
-      width: 25%;
+  flex-direction: row;
+  flex: 1;
+  border-top: 1px solid #d4d4d4;
+  width: 100%;
+  background: #fff;
+  overflow: hidden;
+  .siderBar {
+    width: 25%;
+    text-align: center;
+    .firstClassify {
+      margin-top: 26px;
+      display: inline-block;
       text-align: center;
-      .firstClassify {
-        margin-top: 26px;
-        display: inline-block;
-        text-align: center;
-        width: 85%;
-        border-radius: 13px;
-        height: 26px;
-        line-height: 26px;
-        font-size: 14px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-      }
-      .active {
-        background: #3a74f1;
-        color: #fff;
-      }
+      width: 85%;
+      border-radius: 13px;
+      height: 26px;
+      line-height: 26px;
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
     }
-    .classifyContent {
-      width: 75%;
-      flex: 1;
-      border-left: 1px solid #e3e3e3;
-      .sencondWrap {
-        padding: 5px 14px;
-        border-bottom: 1px solid #e3e3e3;
-        .sencondTitle {
-          height: 20px;
-          font-size: 14px;
-          font-family: PingFangSC-Semibold, PingFang SC;
-          font-weight: 600;
+    .active {
+      background: #3a74f1;
+      color: #fff;
+    }
+  }
+  .classifyContent {
+    width: 75%;
+    flex: 1;
+    border-left: 1px solid #e3e3e3;
+    .sencondWrap {
+      padding: 5px 14px;
+      border-bottom: 1px solid #e3e3e3;
+      .sencondTitle {
+        height: 20px;
+        font-size: 14px;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: rgba(27, 27, 27, 1);
+        line-height: 20px;
+        margin-top: 17px;
+        margin-bottom: 7px;
+      }
+      .threeWrap {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        // justify-content: space-around;
+        .threeClassify {
+          width: 33%;
+          font-size: 12px;
+          text-align: center;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
           color: rgba(27, 27, 27, 1);
-          line-height: 20px;
-          margin-top: 17px;
-          margin-bottom: 7px;
-        }
-        .threeWrap {
-          width: 100%;
-          display: flex;
-          flex-wrap: wrap;
-          // justify-content: space-around;
-          .threeClassify {
-            width: 33%;
-            font-size: 12px;
-            text-align: center;
-            font-family: PingFangSC-Regular, PingFang SC;
-            font-weight: 400;
-            color: rgba(27, 27, 27, 1);
-            margin-bottom: 18px;
-            img {
-              width: 75px;
-              height: 75px;
-            }
+          margin-bottom: 18px;
+          img {
+            width: 75px;
+            height: 75px;
           }
         }
       }
     }
-    .scroll-view {
-      height: 100%;
-    }
+  }
+  .scroll-view {
+    height: 100%;
   }
 }
 </style>

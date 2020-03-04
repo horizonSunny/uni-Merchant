@@ -31,6 +31,9 @@ page {
   display: flex;
   font-size: 16px;
 }
+uni-page-body {
+  height: 100%;
+}
 .uni-page-head-btn {
   height: 22px;
   margin: 0px 15px;
@@ -40,9 +43,6 @@ page {
   width: 100%;
   height: 100%;
   display: block;
-}
-uni-page-body {
-  height: 100%;
 }
 swan-template {
   width: 100%;

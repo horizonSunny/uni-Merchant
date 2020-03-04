@@ -81,7 +81,7 @@ export default {
   components: {
     // menuModal
   },
-  data() {
+  data () {
     return {
       categoryList: [],
       menuList: [],
@@ -94,7 +94,7 @@ export default {
       pitchDrink: {}
     };
   },
-  onLoad() {
+  onLoad () {
     this.$http.get("luckin/getMenuList").then(res => {
       this.categoryList = res.data;
       this.menuList = res.data.map(item => {
@@ -106,14 +106,14 @@ export default {
   },
 
   methods: {
-    change(e) {
+    change (e) {
       this.current = e.detail.current;
     },
-    menuSelect(e) {
+    menuSelect (e) {
       if (!this.sizeCalcState) {
         this.calcSize(); //
       }
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         console.log("activeSelected_", e);
         this.activeSelected = e;
         // 找到对应的左侧菜单类
@@ -126,7 +126,7 @@ export default {
     },
 
     // 计算右侧每个tab高度
-    calcSize() {
+    calcSize () {
       let h = 0;
       this.categoryList.forEach(item => {
         let view = uni.createSelectorQuery().select("#main-" + item.id);
@@ -146,11 +146,11 @@ export default {
       this.sizeCalcState = true;
     },
     // 滚动时候左侧是否变动
-    scrollCategory(e) {
+    scrollCategory (e) {
       if (!this.sizeCalcState) {
         this.calcSize(); //
       }
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         console.log("scrollCategory_", e.detail);
         const currentTop = e.detail.scrollTop;
         let tabs = this.categoryList
@@ -163,12 +163,12 @@ export default {
       });
     },
     // 模态弹窗
-    showModal(info) {
+    showModal (info) {
       this.openModal = true;
       this.pitchDrink = info;
       console.log("this.pitchDrink_", this.pitchDrink);
     },
-    closeModel() {
+    closeModel () {
       this.openModal = false;
     }
   }
@@ -176,9 +176,6 @@ export default {
 </script>
 
 <style lang="scss">
-uni-page-body {
-  height: 100%;
-}
 .content {
   display: flex;
   flex-direction: column;
