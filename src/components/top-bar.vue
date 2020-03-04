@@ -1,8 +1,8 @@
 <template>
-  <uni-page-head uni-page-head-type="default"
-    ><view
+  <uni-page-head uni-page-head-type="default" class="topBar">
+    <view
       class="uni-page-head"
-      style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"
+      style="background-color: #3a74f1;; color: rgb(0, 0, 0);"
     >
       <view class="uni-page-head-hd">
         <view class="uni-page-head-btn" style="display: none;">
@@ -42,4 +42,7 @@ export default {
 }
 </script>
 <style lang="scss">
+.topBar {
+  background: #3a74f1;
+}
 </style>
