@@ -3,7 +3,7 @@
     <tob-bar slot="topBar">
       <text slot="title">所打动</text>
     </tob-bar>
-    <view slot="content" class="content">
+    <!-- <view slot="content" class="content">
       <view class="classify">
         <view class="classifyTitle">
           <text class="title">
@@ -21,7 +21,7 @@
         </view>
       </view>
     </view>
-    <tab-bar slot="tabBar"></tab-bar>
+    <tab-bar slot="tabBar"></tab-bar> -->
   </body-wrap>
 </template>
 <script>
