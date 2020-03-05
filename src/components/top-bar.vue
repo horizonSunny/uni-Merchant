@@ -1,5 +1,5 @@
 <template>
-  <uni-page-head uni-page-head-type="default">
+  <uni-page-head uni-page-head-type="default" style="position:relative">
     <view
       class="uni-page-head"
       style="background-color: #3a74f1; color: rgb(0, 0, 0);"

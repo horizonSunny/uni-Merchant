@@ -50,14 +50,20 @@ export default {
     return {
       options: [
         {
-          text: '取消',
+          text: '移入收藏',
           style: {
-            backgroundColor: '#007aff'
+            backgroundColor: '#F4AF02',
+            width: '50px',
+            textWidth: "30px",
+            fontSize: '15px'
           }
         }, {
-          text: '确认',
+          text: '删除',
           style: {
-            backgroundColor: '#dd524d'
+            backgroundColor: '#E60B35',
+            width: '50px',
+            textWidth: "30px",
+            fontSize: '15px'
           }
         }
       ]
