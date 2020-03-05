@@ -97,7 +97,6 @@ export default {
   display: flex;
   flex-direction: row;
   flex: 1;
-  border-top: 1px solid #d4d4d4;
   width: 100%;
   background: #fff;
   overflow: hidden;
