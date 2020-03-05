@@ -16,18 +16,7 @@
         </view>
         <view class="classifyDetails">
           <view class="uni-list">
-            <checkbox-group @change="checkboxChange">
-              <label
-                class="uni-list-cell uni-list-cell-pd"
-                v-for="item in items"
-                :key="item.value"
-              >
-                <view>
-                  <checkbox :value="item.value" :checked="item.checked" />
-                </view>
-                <view>{{ item.name }}</view>
-              </label>
-            </checkbox-group>
+            <commidityItem></commidityItem>
           </view>
         </view>
       </view>
@@ -37,36 +26,14 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+import commidityItem from "./commidityItem";
 export default {
+  components: {
+    commidityItem
+  },
   data () {
     return {
-      title: 'checkbox 复选框',
-      items: [{
-        value: 'USA',
-        name: '美国'
-      },
-      {
-        value: 'CHN',
-        name: '中国',
-        checked: 'true'
-      },
-      {
-        value: 'BRA',
-        name: '巴西'
-      },
-      {
-        value: 'JPN',
-        name: '日本'
-      },
-      {
-        value: 'ENG',
-        name: '英国'
-      },
-      {
-        value: 'FRA',
-        name: '法国'
-      }
-      ]
+
     }
   },
   onLoad () {
@@ -78,19 +45,7 @@ export default {
   methods: {
     ...mapActions({
       getClassify: "GetClassify"
-    }),
-    checkboxChange: function (e) {
-      var items = this.items,
-        values = e.detail.value;
-      for (var i = 0, lenI = items.length; i < lenI; ++i) {
-        const item = items[i]
-        if (values.includes(item.value)) {
-          this.$set(item, 'checked', true)
-        } else {
-          this.$set(item, 'checked', false)
-        }
-      }
-    }
+    })
   }
 };
 </script>
@@ -138,9 +93,5 @@ export default {
       }
     }
   }
-}
-// 改变组件样式
-/deep/ .uni-checkbox-input {
-  border-radius: 11px;
 }
 </style>
