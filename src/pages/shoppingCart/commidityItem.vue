@@ -29,10 +29,10 @@
                 <text class="mark" v-show="item.isMp === 1">双规</text>
                 <text class="mark" v-show="item.isMp === 2">RX</text>
                 <text class="mark" v-show="item.isMp === 3">其他</text> -->
-                <text>爱康国宾 疾病 体验卡 体检套餐</text>
+                <text>爱康国宾 疾病 宾 疾病</text>
+                <view class="drugSpec">乳腺癌检测 1次</view>
                 <!-- <text>{{ item.productName }}</text> -->
               </view>
-              <view class="drugSpec">乳腺癌检测 1次</view>
               <!-- <view class="drugSpec">{{ item.productSpecif }}</view> -->
               <view class="drugPrice">
                 <text>
@@ -129,10 +129,11 @@ export default {
   border-radius: 11px;
 }
 .commidityInfo {
-  height: 116px;
+  height: 89px;
   width: 100%;
-  padding: 15px 14px;
+  padding: 12px 14px 15px;
   display: flex;
+  margin-bottom: 15px;
   // justify-content: center;
   align-items: center;
   .productImg {
@@ -157,14 +158,16 @@ export default {
     }
   }
   .drugsInfo {
+    flex: 1;
     height: 75px;
     margin-top: 10px;
     margin-left: 11px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: space-between;
     .drugName {
-      height: 40px;
+      width: 100%;
+      height: 66px;
       font-size: 14px;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
@@ -197,7 +200,7 @@ export default {
       line-height: 18px;
     }
     .drugPrice {
-      margin-top: 20px;
+      margin-top: 11px;
       height: 25px;
       font-size: 18px;
       font-family: PingFangSC-Semibold, PingFang SC;
