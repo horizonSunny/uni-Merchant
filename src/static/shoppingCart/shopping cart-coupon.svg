@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="18px" viewBox="0 0 42 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>shopping cart-coupon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="购物车" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="购物车-状态1" transform="translate(-318.000000, -88.000000)">
+            <g id="shopping-cart-coupon" transform="translate(318.000000, 88.000000)">
+                <rect id="矩形" fill="#FFEFE3" fill-rule="nonzero" x="0" y="0" width="42" height="18" rx="3"></rect>
+                <text id="领劵" font-family="PingFangSC-Regular, PingFang SC" font-size="10" font-weight="normal" fill="#F76600">
+                    <tspan x="11" y="13">领劵</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

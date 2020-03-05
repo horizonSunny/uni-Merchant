@@ -1,48 +1,9 @@
 <template>
   <body-wrap>
     <tob-bar slot="topBar">
-      <text slot="title">23</text>
+      <text slot="title">购物车</text>
     </tob-bar>
-    <view slot="content" class="content">
-      <view class="siderBar">
-        <scroll-view class="scroll-view" scroll-y>
-          <view
-            class="firstClassify"
-            v-for="(item, index) in classify"
-            :class="{ active: index === tabCurrentIndex }"
-            :key="index"
-            @click="selectBar(item, index)"
-            >{{ item.cateName }}</view
-          >
-        </scroll-view>
-      </view>
-      <view class="classifyContent">
-        <scroll-view class="scroll-view" scroll-y>
-          <view
-            class="sencondWrap"
-            v-for="(secItem, secIndex) in currentClassify"
-            :key="secIndex"
-          >
-            <view class="sencondTitle">{{ secItem.cateName }}</view>
-            <view class="threeWrap">
-              <view
-                v-for="(thrItem, thrIndex) in secItem.children"
-                :key="thrIndex"
-                class="threeClassify"
-                @click="toClassify(thrItem)"
-              >
-                <img :src="thrItem.pic" alt />
-                <view>
-                  {{ thrItem.cateName }}
-                </view>
-              </view>
-            </view>
-          </view>
-        </scroll-view>
-        <!-- 为了适应tabBar的遮挡问题 -->
-        <view style="width:100%;height:47px;"></view>
-      </view>
-    </view>
+    <view slot="content" class="content"> </view>
     <tab-bar slot="tabBar"></tab-bar>
   </body-wrap>
 </template>
