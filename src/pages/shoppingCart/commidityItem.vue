@@ -10,13 +10,38 @@
           :options="options"
           @click="onClick"
           @change="change"
+          @click.stop
         >
-          <view class="commidityInfo">
+          <view class="commidityInfo" @click.stop>
             <checkbox
               :value="item.value"
               :checked="item.checked"
               color="#FFCC33"
             />
+            <view class="productImg">
+              <img src="/static/img/home.png" alt="" width="60" height="60" />
+              <view class="model">已下架</view>
+            </view>
+            <view class="drugsInfo">
+              <view class="drugName">
+                <text class="mark">OTC</text>
+                <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
+                <text class="mark" v-show="item.isMp === 1">双规</text>
+                <text class="mark" v-show="item.isMp === 2">RX</text>
+                <text class="mark" v-show="item.isMp === 3">其他</text> -->
+                <text>爱康国宾 疾病 体验卡 体检套餐</text>
+                <!-- <text>{{ item.productName }}</text> -->
+              </view>
+              <view class="drugSpec">乳腺癌检测 1次</view>
+              <!-- <view class="drugSpec">{{ item.productSpecif }}</view> -->
+              <view class="drugPrice">
+                <text>
+                  ¥ 123
+                </text>
+                <yp-number-box :min="0" :max="9"></yp-number-box>
+                <!-- {{ item.price }} -->
+              </view>
+            </view>
           </view>
         </uni-swipe-action-item>
       </uni-swipe-action>
@@ -26,10 +51,12 @@
 <script>
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
 import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
+import ypNumberBox from "@/components/yp-number-box/yp-number-box.vue"
 export default {
   components: {
     uniSwipeAction,
-    uniSwipeActionItem
+    uniSwipeActionItem,
+    ypNumberBox
   },
   created () {
     uni.getSystemInfo({
@@ -104,8 +131,83 @@ export default {
 .commidityInfo {
   height: 116px;
   width: 100%;
-  background: yellow;
   padding: 15px 14px;
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  .productImg {
+    width: 60px;
+    height: 60px;
+    margin-left: 10px;
+    position: relative;
+    .model {
+      text-align: center;
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      position: absolute;
+      z-index: 999;
+      opacity: 0.5;
+      top: 0px;
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      background: #000;
+    }
+  }
+  .drugsInfo {
+    height: 75px;
+    margin-top: 10px;
+    margin-left: 11px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .drugName {
+      height: 40px;
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(27, 27, 27, 1);
+      line-height: 20px;
+      .mark {
+        position: relative;
+        display: inline-block;
+        height: 12px;
+        line-height: 12px;
+        top: -1px;
+        width: 30px;
+        height: 12px;
+        margin-right: 10px;
+        line-height: 12px;
+        border: 1px solid #d7242c;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 5px;
+        color: #d7242c;
+        font-weight: 800;
+      }
+    }
+    .drugSpec {
+      height: 18px;
+      font-size: 13px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(137, 137, 137, 1);
+      line-height: 18px;
+    }
+    .drugPrice {
+      margin-top: 20px;
+      height: 25px;
+      font-size: 18px;
+      font-family: PingFangSC-Semibold, PingFang SC;
+      font-weight: 600;
+      color: rgba(250, 73, 73, 1);
+      line-height: 25px;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 }
 .cont {
   height: 100px;
