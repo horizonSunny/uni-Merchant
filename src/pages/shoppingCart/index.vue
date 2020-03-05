@@ -52,16 +52,18 @@ export default {
 <style lang="scss" scoped>
 .content {
   display: flex;
+  padding-top: 10px;
   width: 100%;
   flex-direction: row;
   flex: 1;
   border-top: 1px solid #d4d4d4;
+  background: #f4f1f4;
   overflow: hidden;
   .classify {
     width: 100%;
     background: #f4f1f4;
     .classifyTitle {
-      padding: 12px 14px 15px;
+      padding: 0px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -78,7 +80,7 @@ export default {
         img {
           position: relative;
           top: 2px;
-          margin-right: 2px;
+          margin-right: 5px;
         }
       }
       .medicineOperate {

@@ -5,17 +5,15 @@
       v-for="item in items"
       :key="item.value"
     >
-      <view class="test">
+      <view class="overFlow">
         <scroll-view
           scroll-x="true"
           style="white-space: nowrap;"
           @scroll="scroll"
           :scroll-left="scrollLeft"
         >
-          <!-- <checkbox :value="item.value" :checked="item.checked" />
-        <view>{{ item.name }}</view> -->
-          <view class="test1"></view>
-          <view class="test2"></view>
+          <view class="commidityInfo"></view>
+          <view class="operate"></view>
         </scroll-view>
       </view>
     </view>
@@ -80,21 +78,21 @@ export default {
 /deep/ .uni-checkbox-input {
   border-radius: 11px;
 }
-.test {
+.overFlow {
   width: 100%;
-  height: 97px;
+  height: 113px;
   white-space: nowrap;
   overflow-y: hidden;
-  .test1 {
+  .commidityInfo {
     display: inline-block;
     width: 100%;
-    height: 100px;
+    height: 116px;
     background: yellow;
   }
-  .test2 {
+  .operate {
     display: inline-block;
     width: 20%;
-    height: 100px;
+    height: 116px;
     background: green;
   }
 }
