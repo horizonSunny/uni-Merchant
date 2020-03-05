@@ -1,31 +1,26 @@
 <template>
   <checkbox-group @change="checkboxChange">
-    <!-- <view v-for="item in items" :key="item.value"> -->
-    <uni-swipe-action>
-      <uni-swipe-action-item
-        :options="options"
-        @click="onClick"
-        @change="change"
-      >
-        <view class="cont">SwipeAction 基础使用场景</view>
-      </uni-swipe-action-item>
-    </uni-swipe-action>
-    <!-- <view class="overFlow">
-        <scroll-view scroll-x="true" style="white-space: nowrap;">
-          <view class="commidity">
-            <view class="commidityInfo">
-              <checkbox
-                :value="item.value"
-                :checked="item.checked"
-                color="#FFCC33"
-              />选中
-            </view>
-            <view class="operate"></view>
+    <label
+      class="uni-list-cell uni-list-cell-pd"
+      v-for="item in items"
+      :key="item.value"
+    >
+      <uni-swipe-action>
+        <uni-swipe-action-item
+          :options="options"
+          @click="onClick"
+          @change="change"
+        >
+          <view class="commidityInfo">
+            <checkbox
+              :value="item.value"
+              :checked="item.checked"
+              color="#FFCC33"
+            />
           </view>
-        </scroll-view>
-      </view> -->
-    <!-- </view> -->
-    <!-- <view>{{ item.name }}</view> -->
+        </uni-swipe-action-item>
+      </uni-swipe-action>
+    </label>
   </checkbox-group>
 </template>
 <script>
@@ -48,6 +43,16 @@ export default {
   },
   data () {
     return {
+      items: [{
+        value: 'USA',
+        name: '美国'
+      },
+      {
+        value: 'CHN',
+        name: '中国',
+        checked: 'true'
+      }
+      ],
       options: [
         {
           text: '移入收藏',
@@ -95,6 +100,12 @@ export default {
 // 改变组件样式
 /deep/ .uni-checkbox-input {
   border-radius: 11px;
+}
+.commidityInfo {
+  height: 116px;
+  width: 100%;
+  background: yellow;
+  padding: 15px 14px;
 }
 .cont {
   height: 100px;
