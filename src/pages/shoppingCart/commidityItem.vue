@@ -5,11 +5,17 @@
       v-for="item in items"
       :key="item.value"
     >
-      <scroll-view scroll-x="true" class="test" @scroll="scroll">
+      <scroll-view
+        scroll-x="true"
+        style="white-space: nowrap;"
+        @scroll="scroll"
+      >
         <!-- <checkbox :value="item.value" :checked="item.checked" />
         <view>{{ item.name }}</view> -->
-        <text class="test1"></text>
-        <text class="test2"></text>
+        <view class="test">
+          <view class="test1"></view>
+          <view class="test2"></view>
+        </view>
       </scroll-view>
     </view>
     <!-- <view>{{ item.name }}</view> -->
@@ -17,6 +23,16 @@
 </template>
 <script>
 export default {
+  created () {
+    uni.getSystemInfo({
+      success: function (res) {
+        this.windowWidth = res.windowWidth
+        this.windowHeight = res.windowHeight
+        console.log('this.windowWidth_', this.windowWidth, this.windowHeight);
+
+      }
+    })
+  },
   data () {
     return {
       title: 'checkbox 复选框',
@@ -25,7 +41,9 @@ export default {
         name: '美国'
       }
       ],
-      scrollTop: 0
+      scrollTop: 0,
+      windowWidth: 0,
+      windowHeight: 0
     }
   },
   methods: {
@@ -53,19 +71,23 @@ export default {
 }
 .test {
   width: 100%;
-  background: red;
   height: 100px;
+  white-space: nowrap;
+  overflow-y: hidden;
   .test1 {
     display: inline-block;
-    width: 50%;
+    width: 100%;
     height: 100px;
     background: yellow;
   }
   .test2 {
     display: inline-block;
-    width: 70%;
+    width: 20%;
     height: 100px;
     background: green;
   }
+}
+.test::-webkit-scrollbar {
+  width: 0;
 }
 </style>
