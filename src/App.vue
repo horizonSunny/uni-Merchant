@@ -30,6 +30,7 @@ page {
   min-height: 100%;
   display: flex;
   font-size: 16px;
+  background: #f4f1f4;
 }
 uni-page-body {
   height: 100%;

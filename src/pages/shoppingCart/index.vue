@@ -3,7 +3,7 @@
     <tob-bar slot="topBar">
       <text slot="title">所打动</text>
     </tob-bar>
-    <!-- <view slot="content" class="content">
+    <view slot="content" class="content">
       <view class="classify">
         <view class="classifyTitle">
           <text class="title">
@@ -21,7 +21,7 @@
         </view>
       </view>
     </view>
-    <tab-bar slot="tabBar"></tab-bar> -->
+    <tab-bar slot="tabBar"></tab-bar>
   </body-wrap>
 </template>
 <script>
@@ -56,7 +56,6 @@ export default {
   width: 100%;
   flex-direction: row;
   flex: 1;
-  border-top: 1px solid #d4d4d4;
   background: #f4f1f4;
   overflow: hidden;
   .classify {

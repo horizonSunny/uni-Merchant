@@ -181,7 +181,6 @@ export default {
   flex-direction: column;
   height: 100%;
   width: 100%;
-  border-top: 1px solid #d4d4d4;
   .contentInfo {
     display: flex;
     flex: 1;
