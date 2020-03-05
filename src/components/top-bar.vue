@@ -2,7 +2,7 @@
   <uni-page-head uni-page-head-type="default" class="topBar">
     <view
       class="uni-page-head"
-      style="background-color: #3a74f1;; color: rgb(0, 0, 0);"
+      style="background-color: #3a74f1; color: rgb(0, 0, 0);"
     >
       <view class="uni-page-head-hd">
         <view class="uni-page-head-btn" style="display: none;">

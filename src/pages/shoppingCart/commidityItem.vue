@@ -1,27 +1,41 @@
 <template>
   <checkbox-group @change="checkboxChange">
-    <view
-      class="uni-list-cell uni-list-cell-pd"
-      v-for="item in items"
-      :key="item.value"
-    >
-      <view class="overFlow">
-        <scroll-view
-          scroll-x="true"
-          style="white-space: nowrap;"
-          @scroll="scroll"
-          :scroll-left="scrollLeft"
-        >
-          <view class="commidityInfo"></view>
-          <view class="operate"></view>
+    <!-- <view v-for="item in items" :key="item.value"> -->
+    <uni-swipe-action>
+      <uni-swipe-action-item
+        :options="options"
+        @click="onClick"
+        @change="change"
+      >
+        <view class="cont">SwipeAction 基础使用场景</view>
+      </uni-swipe-action-item>
+    </uni-swipe-action>
+    <!-- <view class="overFlow">
+        <scroll-view scroll-x="true" style="white-space: nowrap;">
+          <view class="commidity">
+            <view class="commidityInfo">
+              <checkbox
+                :value="item.value"
+                :checked="item.checked"
+                color="#FFCC33"
+              />选中
+            </view>
+            <view class="operate"></view>
+          </view>
         </scroll-view>
-      </view>
-    </view>
+      </view> -->
+    <!-- </view> -->
     <!-- <view>{{ item.name }}</view> -->
   </checkbox-group>
 </template>
 <script>
+import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
+import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
 export default {
+  components: {
+    uniSwipeAction,
+    uniSwipeActionItem
+  },
   created () {
     uni.getSystemInfo({
       success: function (res) {
@@ -34,15 +48,19 @@ export default {
   },
   data () {
     return {
-      title: 'checkbox 复选框',
-      items: [{
-        value: 'USA',
-        name: '美国'
-      }
-      ],
-      scrollLeft: 0,
-      windowWidth: 0,
-      windowHeight: 0
+      options: [
+        {
+          text: '取消',
+          style: {
+            backgroundColor: '#007aff'
+          }
+        }, {
+          text: '确认',
+          style: {
+            backgroundColor: '#dd524d'
+          }
+        }
+      ]
     }
   },
   methods: {
@@ -58,18 +76,12 @@ export default {
         }
       }
     },
-    // 设置横向滚动
-    scroll (e) {
-      // console.log('e.detail.scrollLeft_', e.detail);
-      if (e.detail.scrollLeft > 20) {
-        this.scrollLeft = 78
-        console.log(' > 20');
-
-      } else if (e.detail.scrollLeft < 20) {
-        this.scrollLeft = 0
-        console.log(' < 20');
-      };
+    onClick (e) {
+      console.log('当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text)
     },
+    change (open) {
+      console.log('当前开启状态：' + open)
+    }
   }
 }
 </script>
@@ -78,25 +90,8 @@ export default {
 /deep/ .uni-checkbox-input {
   border-radius: 11px;
 }
-.overFlow {
+.cont {
+  height: 100px;
   width: 100%;
-  height: 113px;
-  white-space: nowrap;
-  overflow-y: hidden;
-  .commidityInfo {
-    display: inline-block;
-    width: 100%;
-    height: 116px;
-    background: yellow;
-  }
-  .operate {
-    display: inline-block;
-    width: 20%;
-    height: 116px;
-    background: green;
-  }
-}
-.test::-webkit-scrollbar {
-  width: 0;
 }
 </style>
