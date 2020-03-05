@@ -89,6 +89,14 @@
       "style": {
         "navigationBarTitleText": "我的"
       }
+    },
+    // 二期，购物车，订单模块
+    {
+      "path": "pages/shoppingCart/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarBackgroundColor": "#3A74F1"
+      }
     }
   ],
   "globalStyle": {

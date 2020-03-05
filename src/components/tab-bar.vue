@@ -102,13 +102,14 @@
 export default {
   data () {
     return {
-      currentSelected: 3
+      currentSelected: this.$store.state.currentTabBar
     }
   },
   methods: {
+    // 因为重新渲染这个函数，所以药将this.currentSelected值保存到全局变量
     selectActive (index) {
-      this.currentSelected = index;
-      console.log(window);
+      this.$store.commit('SET_CURRENT_BAR', index)
+      console.log(this.currentSelected);
       switch (index) {
         case 0:
           uni.reLaunch({
@@ -121,7 +122,7 @@ export default {
           });
           break;
         case 2:
-          uni.reLaunch({ url: '../classify/classify' })
+          uni.reLaunch({ url: '../shoppingCart/index' })
           break;
         case 3:
           uni.reLaunch({ url: '../classify/classify' })
