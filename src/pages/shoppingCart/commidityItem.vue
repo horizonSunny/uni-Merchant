@@ -5,18 +5,19 @@
       v-for="item in items"
       :key="item.value"
     >
-      <scroll-view
-        scroll-x="true"
-        style="white-space: nowrap;"
-        @scroll="scroll"
-      >
-        <!-- <checkbox :value="item.value" :checked="item.checked" />
+      <view class="test">
+        <scroll-view
+          scroll-x="true"
+          style="white-space: nowrap;"
+          @scroll="scroll"
+          :scroll-left="scrollLeft"
+        >
+          <!-- <checkbox :value="item.value" :checked="item.checked" />
         <view>{{ item.name }}</view> -->
-        <view class="test">
           <view class="test1"></view>
           <view class="test2"></view>
-        </view>
-      </scroll-view>
+        </scroll-view>
+      </view>
     </view>
     <!-- <view>{{ item.name }}</view> -->
   </checkbox-group>
@@ -41,7 +42,7 @@ export default {
         name: '美国'
       }
       ],
-      scrollTop: 0,
+      scrollLeft: 0,
       windowWidth: 0,
       windowHeight: 0
     }
@@ -60,7 +61,17 @@ export default {
       }
     },
     // 设置横向滚动
-    scroll () { }
+    scroll (e) {
+      // console.log('e.detail.scrollLeft_', e.detail);
+      if (e.detail.scrollLeft > 20) {
+        this.scrollLeft = 78
+        console.log(' > 20');
+
+      } else if (e.detail.scrollLeft < 20) {
+        this.scrollLeft = 0
+        console.log(' < 20');
+      };
+    },
   }
 }
 </script>
@@ -71,7 +82,7 @@ export default {
 }
 .test {
   width: 100%;
-  height: 100px;
+  height: 97px;
   white-space: nowrap;
   overflow-y: hidden;
   .test1 {
