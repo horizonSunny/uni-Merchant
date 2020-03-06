@@ -69,6 +69,7 @@
         plain="true"
         class="button"
         v-show="this.editorStatus"
+        @click="settlement"
       >
         结算(99)
       </button>
@@ -183,6 +184,10 @@ export default {
     },
     change (open) {
       console.log('当前开启状态：' + open)
+    },
+    // 结算
+    settlement () {
+      this.$navTo("../indent/index");
     }
   }
 }
