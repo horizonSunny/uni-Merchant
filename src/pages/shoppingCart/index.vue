@@ -4,7 +4,8 @@
       <text slot="title">所打动</text>
     </tob-bar>
     <view slot="content" class="content">
-      <view class="classify">
+      <!-- 假如购物车有东西 -->
+      <view v-show="false" class="classify">
         <view class="classifyTitle">
           <text class="title">
             <img src="static/shoppingCart/shopping cart-business.svg" alt="" />
@@ -22,6 +23,13 @@
             <commidityItem :editorStatus="editor"></commidityItem>
           </view>
         </view>
+      </view>
+      <!-- 假如购物车没东西 -->
+      <view v-show="true" class="noGoods">
+        <view class="imgInfo">
+          <img src="/static/shoppingCart/shopping cart-bitmap_sc.svg" alt="" />
+        </view>
+        <view class="reminInfo">购物车里空空如也～</view>
       </view>
     </view>
     <tab-bar slot="tabBar"></tab-bar>
@@ -107,6 +115,32 @@ export default {
       background: #fff;
       padding: 0 0 50px 0;
     }
+  }
+}
+.noGoods {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background: #fff;
+  flex-direction: column;
+  align-items: center;
+  padding: 36px 0px;
+  .imgInfo {
+    height: 100px;
+    width: 132px;
+    img {
+      height: 100px;
+      width: 132px;
+    }
+  }
+  .reminInfo {
+    width: 117px;
+    height: 18px;
+    font-size: 13px;
+    font-family: PingFang-SC-Medium, PingFang-SC;
+    font-weight: 500;
+    color: rgba(190, 190, 190, 1);
+    line-height: 18px;
   }
 }
 </style>
