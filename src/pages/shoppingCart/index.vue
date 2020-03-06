@@ -5,7 +5,7 @@
     </tob-bar>
     <view slot="content" class="content">
       <!-- 假如购物车有东西 -->
-      <view v-show="false" class="classify">
+      <view v-show="true" class="classify">
         <view class="classifyTitle">
           <text class="title">
             <img src="static/shoppingCart/shopping cart-business.svg" alt="" />
@@ -25,7 +25,7 @@
         </view>
       </view>
       <!-- 假如购物车没东西 -->
-      <view v-show="true" class="noGoods">
+      <view v-show="false" class="noGoods">
         <view class="imgInfo">
           <img src="/static/shoppingCart/shopping cart-bitmap_sc.svg" alt="" />
         </view>
@@ -67,13 +67,13 @@ export default {
 <style lang="scss" scoped>
 .content {
   display: flex;
-  padding-top: 10px;
   width: 100%;
   flex-direction: row;
   flex: 1;
   background: #f4f1f4;
   overflow: hidden;
   .classify {
+    margin-top: 10px;
     width: 100%;
     background: #f4f1f4;
     .classifyTitle {
