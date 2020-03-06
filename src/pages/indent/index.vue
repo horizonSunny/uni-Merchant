@@ -134,16 +134,15 @@
               <view class="model">已下架</view>
             </view>
             <view class="drugsInfo">
-              <view class="drugName">
-                <view class="failureInfo">
-                  <text class="mark">OTC</text>
-                  <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
+              <view class="failureInfo">
+                <text class="mark">OTC</text>
+                <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
                 <text class="mark" v-show="item.isMp === 1">双规</text>
                 <text class="mark" v-show="item.isMp === 2">RX</text>
                 <text class="mark" v-show="item.isMp === 3">其他</text> -->
-                  <text>爱康国宾 疾病 宾 疾病疾病 宾 疾病疾病 宾 疾病</text>
-                </view>
+                <text>爱康国宾 疾病 宾 疾病疾病 宾 疾病疾病 宾 疾病</text>
               </view>
+
               <view class="drugSpec">
                 <view>
                   已选择：20mlX48支/盒
@@ -151,6 +150,9 @@
                 <view>
                   X1
                 </view>
+              </view>
+              <view class="drugSpec">
+                无法送货到当前收获地址
               </view>
             </view>
           </view>
@@ -328,19 +330,18 @@ export default {
               color: #d7242c;
               font-weight: 800;
             }
-            .failureInfo {
-              // width: 400px;
-              flex: 1;
-              height: 18px;
-              font-size: 13px;
-              font-family: PingFangSC-Regular, PingFang SC;
-              font-weight: 400;
-              color: rgba(137, 137, 137, 1);
-              line-height: 18px;
-              // text-overflow: ellipsis; /*让截断的文字显示为点点。还有一个值是clip意截断不显示点点*/
-              // white-space: nowrap; /*让文字不换行*/
-              // overflow: hidden;
-            }
+          }
+          .failureInfo {
+            width: 200px;
+            height: 18px;
+            font-size: 13px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: rgba(137, 137, 137, 1);
+            line-height: 18px;
+            text-overflow: ellipsis; /*让截断的文字显示为点点。还有一个值是clip意截断不显示点点*/
+            white-space: nowrap; /*让文字不换行*/
+            overflow: hidden;
           }
           .drugSpec {
             margin-top: 10px;
@@ -360,6 +361,8 @@ export default {
             font-weight: 600;
             color: rgba(250, 73, 73, 1);
             margin-left: 23px;
+          }
+          .failureInfo {
           }
         }
         .failure {
