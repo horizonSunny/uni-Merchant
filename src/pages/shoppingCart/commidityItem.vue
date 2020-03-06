@@ -48,16 +48,36 @@
         </uni-swipe-action>
       </label>
     </checkbox-group>
-    <checkbox-group @change="allChoose">
-      <label>
-        <checkbox
-          value="all"
-          :class="{ checked: allChecked }"
-          :checked="allChecked ? true : false"
-        ></checkbox>
-        全选
-      </label>
-    </checkbox-group>
+    <view class="settleAccounts">
+      <checkbox-group @change="allChoose">
+        <label>
+          <checkbox
+            value="all"
+            :class="{ checked: allChecked }"
+            :checked="allChecked ? true : false"
+          ></checkbox>
+          全选
+        </label>
+      </checkbox-group>
+      <!-- this.editorStatus 为编辑显示 -->
+      <view class="price" v-show="this.editorStatus">
+        <view class="priceInfo">¥ 232.00</view>
+        <view class="reminder">不包含运费</view>
+      </view>
+      <button
+        type="primary"
+        plain="true"
+        class="button"
+        v-show="this.editorStatus"
+      >
+        结算(99)
+      </button>
+      <!-- this.editorStatus为完成时候 -->
+      <view v-show="!this.editorStatus" class="allOperate">
+        <button>移入收藏夹</button>
+        <button>删除</button>
+      </view>
+    </view>
   </view>
 </template>
 <script>
@@ -70,6 +90,7 @@ export default {
     uniSwipeActionItem,
     ypNumberBox
   },
+  props: ["editorStatus"],
   created () {
     uni.getSystemInfo({
       success: function (res) {
@@ -137,6 +158,8 @@ export default {
     },
     // 全选事件
     allChoose (e) {
+      console.log('this.props.editorStatus_', this.editorStatus);
+
       let chooseItem = e.detail.value;
       // 全选
       if (chooseItem[0] == 'all') {
@@ -250,6 +273,69 @@ export default {
       line-height: 25px;
       display: flex;
       justify-content: space-between;
+    }
+  }
+}
+.settleAccounts {
+  position: fixed;
+  background: #fff;
+  display: flex;
+  padding-left: 15px;
+  align-items: center;
+  bottom: 48px;
+  width: 100%;
+  height: 50px;
+  .price {
+    margin-left: 9px;
+    .priceInfo {
+      width: 69px;
+      height: 22px;
+      font-size: 16px;
+      font-family: PingFangSC-Semibold, PingFang SC;
+      font-weight: 600;
+      color: rgba(250, 73, 73, 1);
+      line-height: 22px;
+    }
+    .reminder {
+      width: 84px;
+      height: 17px;
+      font-size: 12px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(137, 137, 137, 1);
+      line-height: 17px;
+    }
+  }
+  .button {
+    background: #3a74f1;
+    float: right;
+    width: 120px;
+    height: 50px;
+    border-radius: 0px;
+    margin-right: 15px;
+    color: #fff;
+  }
+  .allOperate {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    button {
+      height: 28px;
+      line-height: 28px;
+      font-size: 13px;
+      border-radius: 4px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      margin: 0px;
+      margin-right: 20px;
+    }
+    button:nth-child(1) {
+      border: 1px solid rgba(255, 180, 0, 1);
+      color: rgba(246, 174, 0, 1);
+    }
+    button:nth-child(2) {
+      border: 1px solid rgba(229, 11, 53, 1);
+      color: #e50b35;
     }
   }
 }

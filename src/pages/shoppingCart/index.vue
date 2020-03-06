@@ -10,13 +10,16 @@
             <img src="static/shoppingCart/shopping cart-business.svg" alt="" />
             商家名称
           </text>
-          <view class="medicineOperate" @click="goClassify">
+          <view class="medicineOperate">
             <img src="static/shoppingCart/shopping cart-coupon.svg" alt="" />
+            <text @click="reverseEditor">
+              {{ editor ? "编辑" : "完成" }}
+            </text>
           </view>
         </view>
         <view class="classifyDetails">
           <view class="uni-list">
-            <commidityItem></commidityItem>
+            <commidityItem :editorStatus="editor"></commidityItem>
           </view>
         </view>
       </view>
@@ -33,7 +36,7 @@ export default {
   },
   data () {
     return {
-
+      editor: true
     }
   },
   onLoad () {
@@ -45,7 +48,11 @@ export default {
   methods: {
     ...mapActions({
       getClassify: "GetClassify"
-    })
+    }),
+    // 改变当前是编辑状态还是完成状态
+    reverseEditor () {
+      this.editor = !this.editor
+    }
   }
 };
 </script>
@@ -85,6 +92,9 @@ export default {
       .medicineOperate {
         display: flex;
         align-items: center;
+        text {
+          margin-left: 15px;
+        }
         .operate {
           font-size: 12px;
           font-weight: 500;
