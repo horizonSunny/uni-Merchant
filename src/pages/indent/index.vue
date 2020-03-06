@@ -15,7 +15,7 @@
             长泰广场E座 长泰广场E座 长泰广场E座
           </view>
         </view>
-        <view class="prescription">
+        <view class="prescription" @click="getlocation">
           <view class="title">
             <img
               src="static/shoppingCart/shopping cart-prescription.svg"
@@ -175,6 +175,7 @@ export default {
     }
   },
   onLoad () {
+    console.log('saSsa');
 
   },
   computed: {
@@ -187,6 +188,19 @@ export default {
     // 改变当前是编辑状态还是完成状态
     reverseEditor () {
       this.editor = !this.editor
+    },
+    // 获取当前页面位置
+    getlocation () {
+      console.log('in getlocation');
+      // alert('123')
+      uni.getLocation({
+        type: 'wgs84',
+        success: function (res) {
+          alert('123')
+          console.log('当前位置的经度：' + res.longitude);
+          console.log('当前位置的纬度：' + res.latitude);
+        }
+      });
     }
   }
 };
