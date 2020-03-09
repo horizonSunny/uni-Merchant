@@ -384,7 +384,7 @@ export default {
     flex: 1;
     button {
       height: 47px;
-      width: 355px;
+      width: 80%;
     }
     .save {
       background: #3a74f1;
