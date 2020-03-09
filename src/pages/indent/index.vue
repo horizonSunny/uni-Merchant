@@ -164,7 +164,8 @@
           去支付
         </view>
       </view>
-      <purchasefailed></purchasefailed>
+      <!-- <purchasefailed></purchasefailed> -->
+      <distribution></distribution>
     </view>
     <!-- <tab-bar slot="tabBar"></tab-bar> -->
   </body-wrap>
@@ -173,10 +174,12 @@
 import { mapActions, mapGetters } from "vuex";
 // import commidityItem from "./commidityItem";
 import purchasefailed from './purchasefailed';
+import distribution from './distribution';
 export default {
   components: {
     // commidityItem
-    purchasefailed
+    purchasefailed,
+    distribution
   },
   data () {
     return {
