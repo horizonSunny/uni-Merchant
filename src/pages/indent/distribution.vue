@@ -1,9 +1,9 @@
 <template>
-  <modal>
+  <modal v-if="modal">
     <view class="distribution">
       <view class="title">
         <view class="titleInfo">配送方式</view>
-        <view class="close">X</view>
+        <view class="close" @click="closeModal">X</view>
       </view>
       <view class="content">
         选择配送方式
@@ -53,21 +53,10 @@ export default {
       {
         value: 'BRA',
         name: '巴西'
-      },
-      {
-        value: 'JPN',
-        name: '日本'
-      },
-      {
-        value: 'ENG',
-        name: '英国'
-      },
-      {
-        value: 'FRA',
-        name: '法国'
-      },
+      }
       ],
-      current: 0
+      current: 0,
+      modal: false
     }
   },
   methods: {
@@ -78,6 +67,12 @@ export default {
           break;
         }
       }
+    },
+    closeModal () {
+      this.modal = false;
+    },
+    openModal () {
+      this.modal = true;
     }
   }
 }

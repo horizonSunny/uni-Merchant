@@ -66,7 +66,7 @@
           </view>
         </view>
         <view class="separate logisticsInfo">
-          <view class="logistics">
+          <view class="logistics" @click="openModal">
             <view>
               运费
               <text class="marginLeft"> 8.00元起</text>
@@ -165,7 +165,7 @@
         </view>
       </view>
       <!-- <purchasefailed></purchasefailed> -->
-      <distribution></distribution>
+      <distribution ref="distribution"></distribution>
     </view>
     <!-- <tab-bar slot="tabBar"></tab-bar> -->
   </body-wrap>
@@ -213,6 +213,10 @@ export default {
           console.log('当前位置的纬度：' + res.latitude);
         }
       });
+    },
+    // 打开快递配送
+    openModal () {
+      this.$refs.distribution.openModal()
     }
   }
 };
