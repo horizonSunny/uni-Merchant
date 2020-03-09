@@ -239,7 +239,8 @@ export default {
     },
     // 去收货地址
     toDeliveryAddr () {
-      this.$navTo("../deliveryAddr/index");
+      // this.$navTo("../deliveryAddr/index");
+      this.$navTo("../deliveryAddr/newAddr");
     }
   }
 };
@@ -259,7 +260,6 @@ export default {
     background: #f4f1f4;
     .userInfo {
       margin-top: 5px;
-      width: 375px;
       height: auto;
       background: rgba(255, 255, 255, 1);
       padding: 18px 16px;
