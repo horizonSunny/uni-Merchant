@@ -13,7 +13,14 @@
             添加
           </text>
         </view>
-        <view class="contentWrap"></view>
+        <view class="contentWrap">
+          <scroll-view scroll-x="true" class="scrollView">
+            <view class="patient active"> </view>
+            <view class="patient active"> </view>
+            <view class="patient active"> </view>
+            <view class="patient active"> </view>
+          </scroll-view>
+        </view>
         <view class="reminder">
           <text>
             根据国家药监局规定，购买处方药需要实名认证
@@ -64,6 +71,27 @@ export default {
     }
     .contentWrap {
       height: 116px;
+      .scrollView {
+        white-space: nowrap;
+        width: 100%;
+        height: 100%;
+        .patient {
+          margin-top: 20px;
+          margin-right: 12px;
+          display: inline-block;
+          width: 116px;
+          height: 78px;
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.08);
+          border-radius: 4px;
+        }
+        .active {
+          color: rgba(250, 73, 73, 1);
+          background: rgba(255, 233, 236, 1);
+        }
+      }
     }
     .reminder {
       height: 17px;
