@@ -6,7 +6,7 @@
     <view slot="content" class="content">
       <view class="indent">
         <view class="userInfo">
-          <view>
+          <view @click="toDeliveryAddr">
             <view class="user">
               <img src="static/icon/merchantsIntr/location.svg" alt="" />
               <view class="userName">王慧</view>
@@ -236,6 +236,10 @@ export default {
     // 打开快递配送
     openModal () {
       this.$refs.distribution.openModal()
+    },
+    // 去收货地址
+    toDeliveryAddr () {
+      this.$navTo("../deliveryAddr/index");
     }
   }
 };

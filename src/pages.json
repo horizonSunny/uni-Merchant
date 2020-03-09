@@ -104,6 +104,14 @@
         "navigationStyle": "custom",
         "navigationBarBackgroundColor": "#3A74F1"
       }
+    },
+    // 收货地址
+    {
+      "path": "pages/deliveryAddr/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarBackgroundColor": "#3A74F1"
+      }
     }
   ],
   "globalStyle": {

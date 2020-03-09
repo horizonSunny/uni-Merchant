@@ -1,7 +1,45 @@
 import { getUserInfo } from '@/service/index'
 const userModule = {
   state: {
-    userInfo: {}
+    userInfo: {},
+    custAddress: [
+      {
+        fullName: '张三',
+        phone: '17717918675',
+        province: '陕西省',
+        city: '西安市',
+        sex: '男士',
+        area: '雁塔区',
+        detailAddress: '高新四路11号'
+      },
+      {
+        fullName: '张三',
+        phone: '17717918675',
+        sex: '男士',
+        province: '陕西省',
+        city: '西安市',
+        area: '雁塔区',
+        detailAddress: '高新四路11号'
+      },
+      {
+        fullName: '张三',
+        phone: '17717918675',
+        sex: '男士',
+        province: '陕西省',
+        city: '西安市',
+        area: '雁塔区',
+        detailAddress: '高新四路11号'
+      },
+      {
+        fullName: '张三',
+        phone: '17717918675',
+        sex: '男士',
+        province: '陕西省',
+        city: '西安市',
+        area: '雁塔区',
+        detailAddress: '高新四路11号'
+      }
+    ]
   },
   getters: {},
   mutations: {
