@@ -8,7 +8,7 @@
         <view class="effectiveGoods">
           <view
             class="commidityInfo"
-            v-for="(item, index) in [1, 2, 3, 4]"
+            v-for="(item, index) in [1, 2]"
             :key="index"
           >
             <view class="failure">失效</view>
@@ -127,6 +127,18 @@ export default {
             font-weight: 400;
             color: rgba(27, 27, 27, 1);
             line-height: 18px;
+          }
+          .failureInfo {
+            width: 200px;
+            height: 18px;
+            font-size: 13px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: rgba(137, 137, 137, 1);
+            line-height: 18px;
+            text-overflow: ellipsis; /*让截断的文字显示为点点。还有一个值是clip意截断不显示点点*/
+            white-space: nowrap; /*让文字不换行*/
+            overflow: hidden;
             .mark {
               position: relative;
               display: inline-block;
@@ -144,18 +156,6 @@ export default {
               color: #d7242c;
               font-weight: 800;
             }
-          }
-          .failureInfo {
-            width: 200px;
-            height: 18px;
-            font-size: 13px;
-            font-family: PingFangSC-Regular, PingFang SC;
-            font-weight: 400;
-            color: rgba(137, 137, 137, 1);
-            line-height: 18px;
-            text-overflow: ellipsis; /*让截断的文字显示为点点。还有一个值是clip意截断不显示点点*/
-            white-space: nowrap; /*让文字不换行*/
-            overflow: hidden;
           }
           .drugSpec {
             margin-top: 10px;
@@ -199,7 +199,7 @@ export default {
     height: 54px;
     /deep/ uni-button {
       margin-top: 15px;
-      width: 30%;
+      width: 100px;
     }
   }
 }
