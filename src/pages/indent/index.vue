@@ -164,6 +164,7 @@
           去支付
         </view>
       </view>
+      <purchasefailed></purchasefailed>
     </view>
     <!-- <tab-bar slot="tabBar"></tab-bar> -->
   </body-wrap>
@@ -171,9 +172,11 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 // import commidityItem from "./commidityItem";
+import purchasefailed from './purchasefailed';
 export default {
   components: {
     // commidityItem
+    purchasefailed
   },
   data () {
     return {
@@ -306,7 +309,7 @@ export default {
             height: 60px;
             line-height: 60px;
             position: absolute;
-            z-index: 999;
+            z-index: 99;
             opacity: 0.5;
             top: 0px;
             font-size: 14px;
@@ -437,7 +440,7 @@ export default {
     position: fixed;
     padding-top: 10px;
     bottom: 0px;
-    z-index: 999;
+    z-index: 99;
     background: #ededed;
     height: 50px;
     width: 100%;
