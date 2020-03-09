@@ -98,14 +98,19 @@ export default {
     color: rgba(27, 27, 27, 1);
     line-height: 40px;
     text-align: center;
+    position: relative;
     .titleInfo {
       display: inline-block;
     }
     .close {
-      float: right;
       font-size: 18px;
       font-weight: 30;
-      margin-right: 15px;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: 50px;
+      padding-right: 15px;
+      text-align: right;
     }
   }
   .content {
