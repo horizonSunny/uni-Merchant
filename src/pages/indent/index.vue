@@ -6,14 +6,31 @@
     <view slot="content" class="content">
       <view class="indent">
         <view class="userInfo">
-          <view class="user">
-            <img src="static/icon/merchantsIntr/location.svg" alt="" />
-            <view class="userName">王慧</view>
-            <view class="phone">13890876778</view>
+          <view>
+            <view class="user">
+              <img src="static/icon/merchantsIntr/location.svg" alt="" />
+              <view class="userName">王慧</view>
+              <view class="phone">13890876778</view>
+            </view>
+            <view class="address">
+              长泰广场E座 长泰广场E座 长泰广场E座
+            </view>
           </view>
-          <view class="address">
-            长泰广场E座 长泰广场E座 长泰广场E座
+          <view class="pickUp" v-show="pickUp">
+            <view class="user">
+              <img
+                src="static/shoppingCart/shopping cart-business.svg"
+                alt=""
+              />
+              <view class="userName">门店自提点：xxx大药房</view>
+            </view>
+            <view class="address">
+              地址：上海市 浦东新区 海科路100号 23号楼
+              </br>
+              营业时间：每个公族日 9:00-22:00
+            </view>
           </view>
+          <!-- <view class="pickUp"> </view> -->
         </view>
         <view class="prescription" @click="getlocation">
           <view class="title">
@@ -183,7 +200,9 @@ export default {
   },
   data () {
     return {
-      editor: true
+      editor: true,
+      // 选择自提时候，改变为true
+      pickUp: false
     }
   },
   onLoad () {
@@ -237,7 +256,7 @@ export default {
     .userInfo {
       margin-top: 5px;
       width: 375px;
-      height: 44px;
+      height: auto;
       background: rgba(255, 255, 255, 1);
       padding: 18px 16px;
       .user {
@@ -261,6 +280,11 @@ export default {
         font-weight: 400;
         color: rgba(137, 137, 137, 1);
         line-height: 20px;
+      }
+      .pickUp {
+        border-top: 1px dashed rgba(219, 219, 219, 1);
+        margin-top: 17px;
+        padding: 13px 0px;
       }
     }
     .prescription {
