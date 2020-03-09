@@ -158,6 +158,12 @@
           </view>
         </view>
       </view>
+      <view class="payment">
+        <view class="amount"> 合记 <text>¥464</text> </view>
+        <view class="operate">
+          去支付
+        </view>
+      </view>
     </view>
     <!-- <tab-bar slot="tabBar"></tab-bar> -->
   </body-wrap>
@@ -216,7 +222,7 @@ export default {
   overflow-y: scroll;
   .indent {
     width: 100%;
-    height: 100%;
+    height: auto;
     background: #f4f1f4;
     .userInfo {
       margin-top: 5px;
@@ -272,6 +278,7 @@ export default {
     }
     .effectiveGoods {
       margin-top: 10px;
+      margin-bottom: 50px;
       padding: 13px 16px;
       background: rgba(255, 255, 255, 1);
       .title {
@@ -423,6 +430,51 @@ export default {
           margin-left: 14px;
         }
       }
+    }
+  }
+  .payment {
+    display: flex;
+    position: fixed;
+    padding-top: 10px;
+    bottom: 0px;
+    z-index: 999;
+    background: #ededed;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+    .amount {
+      height: 50px;
+      line-height: 50px;
+      width: 65%;
+      padding-left: 7%;
+      background: #fff;
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(27, 27, 27, 1);
+      text {
+        margin-left: 5px;
+        width: 77px;
+        height: 25px;
+        font-size: 18px;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: rgba(250, 73, 73, 1);
+        line-height: 25px;
+      }
+    }
+    .operate {
+      flex: 1;
+      height: 50px;
+      line-height: 50px;
+      background: #3a74f1;
+      border: 0px;
+      text-align: center;
+      border-radius: 0px;
+      font-size: 15px;
+      font-family: PingFangSC-Semibold, PingFang SC;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 1);
     }
   }
 }
