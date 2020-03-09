@@ -381,7 +381,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     flex: 1;
-    margin-top: 10px;
+    margin-top: 12px;
     button {
       height: 47px;
       width: 80%;
