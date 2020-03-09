@@ -1,6 +1,14 @@
 <template>
   <modal>
-    <view class="purchasefailed"> </view>
+    <view class="purchasefailed">
+      <view class="title">
+        购买失败
+      </view>
+      <view class="content"></view>
+      <view class="footer">
+        <button type="primary">我知道了</button>
+      </view>
+    </view>
   </modal>
 </template>
 <script>
@@ -24,5 +32,22 @@ export default {
   background: #fff;
   opacity: 1;
   z-index: 999;
+  border-radius: 10px;
+  .title {
+    height: 46px;
+    line-height: 46px;
+    text-align: center;
+    border-bottom: 1px solid #f2f2f2;
+  }
+  .content {
+    height: 264px;
+    line-height: 88px;
+  }
+  .footer {
+    height: 54px;
+    /deep/ uni-button {
+      width: 30%;
+    }
+  }
 }
 </style>
