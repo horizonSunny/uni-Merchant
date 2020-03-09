@@ -94,13 +94,13 @@
           <button type="primary" class="save" @click="submit">
             保存地址
           </button>
-          <!-- <button
+          <button
             type="primary"
             :class="deleteActive ? 'deleteActive' : 'delete'"
             @click="deleteAddress"
           >
             删除地址
-          </button> -->
+          </button>
         </view>
         <w-picker
           mode="region"
@@ -292,11 +292,9 @@ export default {
   flex-direction: column;
   background: #fff;
   .form {
-    height: 380px;
     border: 1px solid #f3f3f3;
     border-style: solid none;
     background: #fff;
-    padding: 0px 10px;
     .labelInfo {
       width: auto;
       height: 57px;
@@ -331,8 +329,9 @@ export default {
       .addrLabel {
         text {
           display: inline-block;
-          border: 1px dashed #000;
+          border: 1px solid rgba(223, 223, 223, 1);
           height: 18px;
+          border-radius: 2px;
           line-height: 18px;
           width: 36px;
           margin-right: 16px;
@@ -340,9 +339,9 @@ export default {
           font-size: 13px;
         }
         .active {
-          border: 1px dashed #3c73f0;
-          background: #3c73f0;
-          color: #fff;
+          border: 1px solid #5d9dff;
+          background: rgba(233, 240, 255, 1);
+          color: #5d9dff;
         }
       }
     }
@@ -382,6 +381,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     flex: 1;
+    margin-top: 10px;
     button {
       height: 47px;
       width: 80%;
