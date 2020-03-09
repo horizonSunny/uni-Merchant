@@ -32,7 +32,7 @@
           </view>
           <!-- <view class="pickUp"> </view> -->
         </view>
-        <view class="prescription" @click="getlocation">
+        <view class="prescription" @click="prescription">
           <view class="title">
             <img
               src="static/shoppingCart/shopping cart-prescription.svg"
@@ -221,17 +221,8 @@ export default {
       this.editor = !this.editor
     },
     // 获取当前页面位置
-    getlocation () {
-      console.log('in getlocation');
-      // alert('123')
-      uni.getLocation({
-        type: 'wgs84',
-        success: function (res) {
-          alert('123')
-          console.log('当前位置的经度：' + res.longitude);
-          console.log('当前位置的纬度：' + res.latitude);
-        }
-      });
+    prescription () {
+      this.$navTo("../prescription/index");
     },
     // 打开快递配送
     openModal () {

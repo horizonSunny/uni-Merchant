@@ -119,6 +119,13 @@
         "navigationStyle": "custom",
         "navigationBarBackgroundColor": "#3A74F1"
       }
+    },
+    {
+      "path": "pages/prescription/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarBackgroundColor": "#3A74F1"
+      }
     }
   ],
   "globalStyle": {
