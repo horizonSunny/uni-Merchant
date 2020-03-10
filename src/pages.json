@@ -133,6 +133,14 @@
         "navigationStyle": "custom",
         "navigationBarBackgroundColor": "#3A74F1"
       }
+    },
+    // 我的页面
+    {
+      "path": "pages/mine/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarBackgroundColor": "#3A74F1"
+      }
     }
   ],
   "globalStyle": {

@@ -125,7 +125,7 @@ export default {
           uni.reLaunch({ url: '../shoppingCart/index' })
           break;
         case 3:
-          uni.reLaunch({ url: '../classify/classify' })
+          uni.reLaunch({ url: '../mine/index' })
           break;
         default:
           break;
