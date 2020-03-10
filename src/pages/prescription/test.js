@@ -4,7 +4,7 @@ let diseasesHistory = [
     id: '0',
     status: 0,
     diseases: [
-      '糖尿病',
+      '糖',
       '恶性肿瘤',
       '心脏病',
       '糖尿病',

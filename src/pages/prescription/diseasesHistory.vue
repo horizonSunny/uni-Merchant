@@ -31,8 +31,13 @@
               class="diseasesItem"
               v-for="(diseasesInfo, diseasesIndex) in item.diseases"
               :key="diseasesIndex"
-              >{{ diseasesInfo }}</view
-            >
+              >{{ diseasesInfo }}
+              <view
+                class="delete"
+                @click.stop="deleteDiseases(item, diseasesInfo)"
+                >x</view
+              >
+            </view>
           </view>
         </view>
       </view>
@@ -77,7 +82,13 @@ export default {
       console.log('item_', item.status);
       item.status = evt.detail.value
       console.log('test_', test);
-
+    },
+    // deleteDiseases删除病下面的疾病
+    deleteDiseases (item, diseases) {
+      console.log(item, '_item_', diseases);
+      item.diseases = item.diseases.filter((diseasesInfo) => {
+        return diseasesInfo !== diseases
+      })
     }
   }
 }
@@ -116,10 +127,10 @@ export default {
   .content {
     flex: 1;
     padding: 0px 20px;
-    height: 350px;
+    height: 330px;
     overflow: scroll;
     .contentWrap {
-      min-height: 59px;
+      height: auto;
       border-top: 1px solid #efefef;
       .contentDis {
         list-style: none;
@@ -143,6 +154,7 @@ export default {
         justify-content: flex-start;
         padding-bottom: 15px;
         .diseasesItem {
+          position: relative;
           width: auto;
           margin-top: 10px;
           height: 30px;
@@ -156,6 +168,13 @@ export default {
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(27, 27, 27, 1);
+          .delete {
+            position: absolute;
+            top: -8px;
+            font-size: 8px;
+            right: 4px;
+            color: #a1a1a1;
+          }
         }
       }
     }
