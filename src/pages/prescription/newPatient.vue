@@ -87,14 +87,14 @@
         </form>
         <view class="confirm">
           <button type="primary" class="save" @click="submit">
-            保存地址
+            保存并使用
           </button>
           <button
             type="primary"
             :class="deleteActive ? 'deleteActive' : 'delete'"
             @click="deleteAddress"
           >
-            删除地址
+            删除用药人
           </button>
         </view>
         <w-picker
