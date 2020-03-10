@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="375px" height="146px" viewBox="0 0 375 146" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>mine_background</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="375" height="146"></rect>
+        <linearGradient x1="50%" y1="13.8814266%" x2="50%" y2="80.2618624%" id="linearGradient-3">
+            <stop stop-color="#4681FF" offset="0%"></stop>
+            <stop stop-color="#3A74F1" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0.631693238%" x2="50%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#5B8FFE" offset="0%"></stop>
+            <stop stop-color="#3A74F1" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0.867548079%" x2="50%" y2="100%" id="linearGradient-5">
+            <stop stop-color="#5B8FFE" offset="0.0791807432%"></stop>
+            <stop stop-color="#3A74F1" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0.316346996%" x2="50%" y2="99.6846538%" id="linearGradient-6">
+            <stop stop-color="#3A74F1" offset="0%"></stop>
+            <stop stop-color="#5B8FFE" offset="99.9208193%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="我的" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="我的home" transform="translate(0.000000, -44.000000)">
+            <g id="mine_background" transform="translate(0.000000, 44.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="蒙版" fill="#3A74F1" fill-rule="nonzero" xlink:href="#path-1"></use>
+                <path d="M187.701951,200.123514 C246.5433,200.123514 375.166415,144.597177 375.166415,76.1019698 C375.166415,7.60676242 283.215067,33.1972194 197.643249,-27.1375857 C112.071431,-87.4723909 3.1473765,-16.7960605 0.2374878,76.1019698 C7.94495047,161 128.860603,200.123514 187.701951,200.123514 Z" id="椭圆形" fill="url(#linearGradient-3)" fill-rule="nonzero" mask="url(#mask-2)" transform="translate(187.701951, 75.290182) rotate(180.000000) translate(-187.701951, -75.290182) "></path>
+                <circle id="椭圆形" fill-opacity="0.8" fill="url(#linearGradient-4)" fill-rule="nonzero" opacity="0.660481771" mask="url(#mask-2)" transform="translate(29.444444, 13.444444) rotate(51.000000) translate(-29.444444, -13.444444) " cx="29.4444444" cy="13.4444444" r="69.4444444"></circle>
+                <circle id="椭圆形-copy-3" fill-opacity="0.8" fill="url(#linearGradient-5)" fill-rule="nonzero" opacity="0.596749442" mask="url(#mask-2)" transform="translate(364.444444, 125.444444) rotate(67.000000) translate(-364.444444, -125.444444) " cx="364.444444" cy="125.444444" r="69.4444444"></circle>
+                <circle id="椭圆形-copy-3" fill-opacity="0.8" fill="url(#linearGradient-6)" fill-rule="nonzero" opacity="0.295200893" mask="url(#mask-2)" cx="258" cy="-21" r="79"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
