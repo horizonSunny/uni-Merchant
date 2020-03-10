@@ -26,6 +26,55 @@
           </view>
         </view>
       </view>
+      <view class="function">
+        <view class="classifyTitle">
+          <text class="title">
+            我的订单
+          </text>
+          <view class="medicineOperate" @click="goClassify">
+            <text class="operate">
+              全部药品
+            </text>
+            <img src="static/icon/main/home_right-2.svg" alt="" />
+          </view>
+        </view>
+        <view class="classifyDetails">
+          <view class="detailsInfo">
+            <img src="/static/mine/mine_pending payment.svg" alt="" />
+            <view>待付款</view>
+          </view>
+          <view class="detailsInfo">
+            <img src="/static/mine/mine_to be shipped.svg" alt="" />
+            <view>待发货</view>
+          </view>
+          <view class="detailsInfo">
+            <img src="/static/mine/mine_goods to be received.svg" alt="" />
+            <view>待收货</view>
+          </view>
+
+          <view class="detailsInfo">
+            <img src="/static/mine/mine_to be evaluated.svg" alt="" />
+            <view>待评价</view>
+          </view>
+        </view>
+      </view>
+      <view class="function">
+        <view class="classifyTitle">
+          <text class="title">
+            我的服务
+          </text>
+        </view>
+        <view class="classifyDetails">
+          <view class="detailsInfo">
+            <img src="/static/mine/mine_address.svg" alt="" />
+            <view>收货地址</view>
+          </view>
+          <view class="detailsInfo">
+            <img src="/static/mine/mine_drug users.svg" alt="" />
+            <view>用药人</view>
+          </view>
+        </view>
+      </view>
     </view>
     <tab-bar slot="tabBar"></tab-bar>
   </body-wrap>
@@ -107,8 +156,9 @@ export default {
   display: flex;
   flex: 1;
   flex-direction: column;
-  background: #fafafe;
+  background: #f4f1f4;
   .content {
+    background: #f4f1f4;
     .head {
       width: 100%;
       height: 138px;
@@ -148,6 +198,50 @@ export default {
           height: 12px;
           background: rgba(255, 255, 255, 1);
           width: 2px;
+        }
+      }
+    }
+    .function {
+      margin: 10px 8px;
+      padding: 10px 8px;
+      width: auto;
+      background: #fff;
+      height: 112px;
+      border-radius: 4px;
+      .classifyTitle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        .title {
+          font-size: 16px;
+          font-weight: 500;
+          color: rgba(27, 27, 27, 1);
+        }
+        .medicineOperate {
+          display: flex;
+          align-items: center;
+          .operate {
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(137, 137, 137, 1);
+            margin-right: 5px;
+          }
+        }
+      }
+      .classifyDetails {
+        height: 89px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        .detailsInfo {
+          width: 25%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          img {
+            margin-bottom: 13px;
+          }
         }
       }
     }
