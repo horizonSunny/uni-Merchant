@@ -38,6 +38,9 @@
                 >x</view
               >
             </view>
+            <view class="diseasesItem diseasesAdd" @click="addDiseases(item)"
+              >+</view
+            >
           </view>
         </view>
       </view>
@@ -45,6 +48,22 @@
         <button type="primary" class="save" @click="submit">
           完成
         </button>
+      </view>
+    </view>
+    <!-- 为病史添加药物 -->
+    <view class="diseasesHistory" v-show="diseasesAdd">
+      <view class="title">
+        <view class="titleInfo">添加疾病</view>
+        <view class="close" @click="closeAdd">X</view>
+      </view>
+      <view class="contentInfo">
+        <input
+          @input="onKeyInput"
+          class="uni-input"
+          confirm-type="search"
+          placeholder="请输入疾病名称"
+          @confirm="confirmInput"
+        />
       </view>
     </view>
   </modal>
@@ -66,7 +85,11 @@ export default {
         { value: '1', name: "有" },
         { value: '0', name: "无" }
       ],
-      test: test
+      test: test,
+      // 当前要添加疾病的病史
+      currentDiseases: '',
+      // diseasesAdd
+      diseasesAdd: false
     }
   },
   methods: {
@@ -89,6 +112,24 @@ export default {
       item.diseases = item.diseases.filter((diseasesInfo) => {
         return diseasesInfo !== diseases
       })
+    },
+    // 为当前病史添加疾病
+    addDiseases (item) {
+      this.currentDiseases = item
+      this.diseasesAdd = true
+      console.log(item.diseases);
+
+    },
+    // 关闭添加疾病
+    closeAdd () {
+      this.diseasesAdd = false
+    },
+    onKeyInput: function (event) {
+      console.log('event.target.value_', event.target.value);
+      // this.inputValue = event.target.value
+    },
+    confirmInput (event) {
+      console.log('event.target.value_', event.target.value);
     }
   }
 }
@@ -176,6 +217,11 @@ export default {
             color: #a1a1a1;
           }
         }
+        .diseasesAdd {
+          font-size: 18px;
+          position: relative;
+          top: 2px;
+        }
       }
     }
   }
@@ -191,6 +237,18 @@ export default {
     }
     .save {
       background: #3a74f1;
+    }
+  }
+  .contentInfo {
+    text-align: center;
+    padding: 0px 15px;
+    input {
+      margin-top: 27px;
+      height: 38px;
+      display: inline-block;
+      width: 90%;
+      background: rgba(245, 245, 245, 1);
+      border-radius: 6px;
     }
   }
 }
