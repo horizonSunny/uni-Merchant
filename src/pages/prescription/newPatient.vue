@@ -45,14 +45,14 @@
             </radio-group>
           </view>
           <view class="labelInfo">
-            <span>所在地区</span>
+            <span>出生年月</span>
             <input
               type="text"
-              name="userAddress"
+              name="userBirthday"
               placeholder="点击选择地区"
               placeholder-class="placeholder-class"
               disabled
-              :value="userInfo['userAddress']"
+              :value="userInfo['userBirthday']"
               @click="selectArea"
             />
           </view>
@@ -104,7 +104,7 @@
         </view>
         <w-picker
           mode="date"
-          startYear="2016"
+          startDate="2017"
           endYear="2030"
           :defaultVal="pickerDefault"
           @confirm="onConfirmDate"
@@ -114,50 +114,10 @@
         </w-picker>
       </view>
     </view>
-    <!-- <view slot="content" class="content">
-        <form @submit="formSubmit" @reset="formReset">
-          <view class="uni-form-item uni-column">
-            <view class="title">switch</view>
-            <view>
-              <switch name="switch" />
-            </view>
-          </view>
-          <view class="uni-form-item uni-column">
-            <view class="title">radio</view>
-            <radio-group name="radio">
-              <label> <radio value="radio1" /><text>选项一</text> </label>
-              <label> <radio value="radio2" /><text>选项二</text> </label>
-            </radio-group>
-          </view>
-          <view class="uni-form-item uni-column">
-            <view class="title">checkbox</view>
-            <checkbox-group name="checkbox">
-              <label> <checkbox value="checkbox1" /><text>选项一</text> </label>
-              <label> <checkbox value="checkbox2" /><text>选项二</text> </label>
-            </checkbox-group>
-          </view>
-          <view class="uni-form-item uni-column">
-            <view class="title">slider</view>
-            <slider value="50" name="slider" show-value></slider>
-          </view>
-          <view class="uni-form-item uni-column">
-            <view class="title">input</view>
-            <input
-              class="uni-input"
-              name="input"
-              placeholder="这是一个输入框"
-            />
-          </view>
-          <view class="uni-btn-v">
-            <button form-type="submit">Submit</button>
-            <button type="default" form-type="reset">Reset</button>
-          </view>
-        </form>
-      </view> -->
   </body-wrap>
 </template>
 <script>
-import wPicker from "@/components/w-picker/components/w-picker/w-picker.vue";
+import wPicker from "@/components/w-picker_1.2.7/components/w-picker/w-picker.vue";
 import validate from '@/utils/validate'
 export default {
   components: {
@@ -168,14 +128,14 @@ export default {
       userInfo: {
         fullName: '',
         phone: '',
-        userAddress: '',
+        userBirthday: '',
         detailAddress: '',
         province: '',
         city: '',
         area: '',
         defaultInfo: false,
       },
-      pickerDefault: ['2017-10-30', '2019-12-31'],
+      pickerDefault: '2017-10-30',
       //是新增还是更新
       operate: 'add',
       deleteActive: false,
@@ -196,7 +156,7 @@ export default {
       let formRules = [
         { name: 'fullName', type: 'required', errmsg: '请填写用户名' },
         { name: 'phone', required: true, type: 'phone', errmsg: '请输入正确的手机号' },
-        { name: 'userAddress', type: 'required', errmsg: '请选择地址' },
+        { name: 'userBirthday', type: 'required', errmsg: '请选择出生年月' },
         { name: 'detailAddress', type: 'required', errmsg: '请填写详细地址信息' }
 
       ]
@@ -246,11 +206,12 @@ export default {
       setTimeout(() => { this.userInfo.detailAddress = event.detail.value }, 0)
     },
     onConfirmDate (val) {
-      this.userInfo.userAddress = val.result
-      this.userInfo.province = val.checkArr[0]
-      this.userInfo.city = val.checkArr[1]
-      this.userInfo.area = val.checkArr[2]
-      console.log('val_', val);
+      // this.userInfo.userBirthday = val.result
+      // this.userInfo.province = val.checkArr[0]
+      // this.userInfo.city = val.checkArr[1]
+      // this.userInfo.area = val.checkArr[2]
+      this.userInfo.userBirthday = val.result
+      console.log('val_', val.result);
     },
     changeDefaultInfo (event) {
       console.log('event.detail.value_', event.detail.value);
@@ -272,14 +233,14 @@ export default {
       //赋值
       this.userInfo['fullName'] = option['fullName']
       this.userInfo['phone'] = option['phone']
-      this.userInfo['userAddress'] = option['province'] + option['city'] + option['area']
+      // this.userInfo['userBirthday'] = option['province'] + option['city'] + option['area']
       this.userInfo['detailAddress'] = option['detailAddress']
       this.userInfo['defaultInfo'] = option['isDefault'] == 0 ? false : true
       this.userInfo['province'] = option['province']
       this.userInfo['city'] = option['city']
       this.userInfo['area'] = option['area']
 
-      this.pickerDefault = [option['province'], option['city'], option['area']]
+      // this.pickerDefault = [option['province'], option['city'], option['area']]
       this.$set(this.userInfo, 'addressId', option['addressId'])
       this.deleteActive = true
     }

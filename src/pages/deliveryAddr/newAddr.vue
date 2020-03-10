@@ -155,7 +155,9 @@
   </body-wrap>
 </template>
 <script>
-import wPicker from "@/components/w-picker/components/w-picker/w-picker.vue";
+// import wPicker from "@/components/w-picker/components/w-picker/w-picker.vue";
+import wPicker from "@/components/w-picker_1.2.7/components/w-picker/w-picker.vue";
+
 import validate from '@/utils/validate'
 export default {
   components: {
