@@ -16,13 +16,24 @@
             />
           </view>
           <view class="labelInfo">
-            <span>手机号码</span>
+            <span>身份证号</span>
             <input
-              name="phone"
+              name="identityCard"
               type="text"
-              placeholder="请填写手机号码"
-              v-model="userInfo['phone']"
-              maxlength="11"
+              placeholder="请输入用药人身份证号码"
+              v-model="userInfo['identityCard']"
+            />
+          </view>
+          <view class="labelInfo">
+            <span>出生年月</span>
+            <input
+              type="text"
+              name="userBirthday"
+              placeholder="点击选择地区"
+              placeholder-class="placeholder-class"
+              disabled
+              :value="userInfo['userBirthday']"
+              @click="selectArea"
             />
           </view>
           <view class="labelInfo">
@@ -45,43 +56,27 @@
             </radio-group>
           </view>
           <view class="labelInfo">
-            <span>出生年月</span>
+            <span>手机号码</span>
             <input
+              name="phone"
               type="text"
-              name="userBirthday"
-              placeholder="点击选择地区"
-              placeholder-class="placeholder-class"
-              disabled
-              :value="userInfo['userBirthday']"
-              @click="selectArea"
-            />
-          </view>
-          <view class="labelInfo textarea">
-            <span class="textarea_span">详细地址</span>
-            <textarea
-              type="text"
-              name="detailAddress"
-              placeholder="如道路、门牌号、小区"
-              rows="3"
-              cols="4"
-              :value="userInfo['detailAddress']"
-              @input="inputAreaDetail"
+              placeholder="请填写手机号码"
+              v-model="userInfo['phone']"
+              maxlength="11"
             />
           </view>
           <view class="labelInfo">
-            <span>标签</span>
-            <view class="addrLabel">
-              <text
-                @click="selectLabel(item)"
-                v-for="(item, index) in labelInfo"
-                :key="index"
-                :class="currentLabel === item ? 'active' : ''"
-                >{{ item }}</text
-              >
-            </view>
+            <span>疾病史</span>
+            <input
+              name="phone"
+              type="text"
+              placeholder="无肝肾异常、过敏史、妊娠"
+              v-model="userInfo['phone']"
+              maxlength="11"
+            />
           </view>
           <view class="labelInfo default">
-            <span>设置为默认地址</span>
+            <span>设置为默认用药人</span>
             <view class="uni-list-cell uni-list-cell-pd">
               <switch
                 :checked="userInfo['defaultInfo']"
@@ -129,10 +124,11 @@ export default {
         fullName: '',
         phone: '',
         userBirthday: '',
-        detailAddress: '',
-        province: '',
-        city: '',
-        area: '',
+        identityCard: '',
+        // detailAddress: '',
+        // province: '',
+        // city: '',
+        // area: '',
         defaultInfo: false,
       },
       pickerDefault: '2017-10-30',
@@ -145,19 +141,16 @@ export default {
         { value: '0', name: "男士" },
         { value: '1', name: "女士" }
       ],
-      currentLabel: '公司',
-      labelInfo: ['公司', '家', '学校']
     }
   },
   computed: {},
   methods: {
     submit () {
-      console.log('detailAddress_', this.userInfo.detailAddress);
       let formRules = [
         { name: 'fullName', type: 'required', errmsg: '请填写用户名' },
         { name: 'phone', required: true, type: 'phone', errmsg: '请输入正确的手机号' },
         { name: 'userBirthday', type: 'required', errmsg: '请选择出生年月' },
-        { name: 'detailAddress', type: 'required', errmsg: '请填写详细地址信息' }
+        { name: 'identityCard', type: 'required', errmsg: '请填写用药人身份证号码' }
 
       ]
       let valLoginRes = validate.validate(this.userInfo, formRules)
@@ -234,11 +227,11 @@ export default {
       this.userInfo['fullName'] = option['fullName']
       this.userInfo['phone'] = option['phone']
       // this.userInfo['userBirthday'] = option['province'] + option['city'] + option['area']
-      this.userInfo['detailAddress'] = option['detailAddress']
-      this.userInfo['defaultInfo'] = option['isDefault'] == 0 ? false : true
-      this.userInfo['province'] = option['province']
-      this.userInfo['city'] = option['city']
-      this.userInfo['area'] = option['area']
+      // this.userInfo['detailAddress'] = option['detailAddress']
+      // this.userInfo['defaultInfo'] = option['isDefault'] == 0 ? false : true
+      // this.userInfo['province'] = option['province']
+      // this.userInfo['city'] = option['city']
+      // this.userInfo['area'] = option['area']
 
       // this.pickerDefault = [option['province'], option['city'], option['area']]
       this.$set(this.userInfo, 'addressId', option['addressId'])
@@ -267,6 +260,8 @@ export default {
       display: flex;
       span {
         width: 105px;
+        // display: inline-block;
+        // width: 30%;
         font-size: 18px;
         color: #282828;
         letter-spacing: 0;
@@ -275,6 +270,10 @@ export default {
         height: 57px;
         line-height: 57px;
         text-overflow: ellipsis;
+      }
+      /deep/ uni-input {
+        // width: 80%;
+        width: 70%;
       }
       .placeholder-class {
         font-size: 18px;
