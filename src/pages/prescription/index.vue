@@ -9,7 +9,7 @@
           <text>
             请选择用药
           </text>
-          <text>
+          <text @click="toNewPatient">
             添加
           </text>
         </view>
@@ -45,7 +45,11 @@
 </template>
 <script>
 export default {
-
+  methods: {
+    toNewPatient () {
+      this.$navTo('/pages/prescription/newPatient')
+    }
+  }
 }
 </script>
 <style lang="scss">

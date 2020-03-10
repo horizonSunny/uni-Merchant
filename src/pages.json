@@ -126,6 +126,13 @@
         "navigationStyle": "custom",
         "navigationBarBackgroundColor": "#3A74F1"
       }
+    },
+    {
+      "path": "pages/prescription/newPatient",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarBackgroundColor": "#3A74F1"
+      }
     }
   ],
   "globalStyle": {
