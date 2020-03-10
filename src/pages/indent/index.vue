@@ -122,7 +122,7 @@
               在线支付
             </view>
           </view>
-          <view class="logistics">
+          <view class="logistics" @click="showInvoice">
             <view>
               发票信息
             </view>
@@ -183,6 +183,7 @@
       </view>
       <!-- <purchasefailed></purchasefailed> -->
       <distribution ref="distribution"></distribution>
+      <invoice ref="invoice"></invoice>
     </view>
     <!-- <tab-bar slot="tabBar"></tab-bar> -->
   </body-wrap>
@@ -192,11 +193,13 @@ import { mapActions, mapGetters } from "vuex";
 // import commidityItem from "./commidityItem";
 import purchasefailed from './purchasefailed';
 import distribution from './distribution';
+import invoice from './invoice';
 export default {
   components: {
     // commidityItem
     purchasefailed,
-    distribution
+    distribution,
+    invoice
   },
   data () {
     return {
@@ -230,8 +233,12 @@ export default {
     },
     // 去收货地址
     toDeliveryAddr () {
-      // this.$navTo("../deliveryAddr/index");
-      this.$navTo("../deliveryAddr/newAddr");
+      this.$navTo("../deliveryAddr/index");
+      // this.$navTo("../deliveryAddr/newAddr");
+    },
+    // 打开发票弹窗
+    showInvoice () {
+      this.$refs.invoice.openModal()
     }
   }
 };

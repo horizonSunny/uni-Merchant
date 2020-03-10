@@ -47,12 +47,12 @@ export default {
   },
   methods: {
     gotoDetail (operate, addressInfo = null) {
-      console.log('addressInfo_', addressInfo);
-      if (!addressInfo) {
-        this.$navTo('/pages/myOrder/selectPage/userAddress')
-      } else {
-        this.$navTo('/pages/myOrder/selectPage/userAddress', addressInfo)
-      }
+      this.$navTo("../deliveryAddr/newAddr");
+      // if (!addressInfo) {
+      //   this.$navTo('/pages/myOrder/selectPage/userAddress')
+      // } else {
+      //   this.$navTo('/pages/myOrder/selectPage/userAddress', addressInfo)
+      // }
     },
     selectAddress (item) {
       // this.$store.dispatch('setSelectedAdd', item).then(() => {
