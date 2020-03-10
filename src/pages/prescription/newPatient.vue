@@ -70,10 +70,12 @@
             <input
               name="phone"
               type="text"
+              disabled="true"
               placeholder="无肝肾异常、过敏史、妊娠"
               v-model="userInfo['phone']"
               maxlength="11"
             />
+            <img src="static/icon/main/home_right-2.svg" alt="" />
           </view>
           <view class="labelInfo default">
             <span>设置为默认用药人</span>
