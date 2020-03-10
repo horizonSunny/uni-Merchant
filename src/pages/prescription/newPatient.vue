@@ -110,15 +110,18 @@
         >
         </w-picker>
       </view>
+      <diseasesHistory></diseasesHistory>
     </view>
   </body-wrap>
 </template>
 <script>
 import wPicker from "@/components/w-picker_1.2.7/components/w-picker/w-picker.vue";
 import validate from '@/utils/validate'
+import diseasesHistory from './diseasesHistory'
 export default {
   components: {
-    wPicker
+    wPicker,
+    diseasesHistory
   },
   data () {
     return {
