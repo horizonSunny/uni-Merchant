@@ -69,7 +69,7 @@
             <img src="/static/mine/mine_address.svg" alt="" />
             <view>收货地址</view>
           </view>
-          <view class="detailsInfo">
+          <view class="detailsInfo" @click="goNextPage('用药人')">
             <img src="/static/mine/mine_drug users.svg" alt="" />
             <view>用药人</view>
           </view>
@@ -133,6 +133,9 @@ export default {
           break;
         case '收藏':
           this.$navTo("../mine/collect");
+          break;
+        case '用药人':
+          this.$navTo("../mine/medicineMan");
           break;
         default:
           break;
