@@ -146,7 +146,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import { debounce, throttle } from "@/utils/debounce";
 import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-refresh/mix-pulldown-refresh";
 import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
-import json from "../search/json";
+import * as json from "@/config/json";
 import {
   searchProductList,
   getCategoryProducts,

@@ -16,25 +16,6 @@
             @click="changeTab(index)"
             >{{ item.name }}</view
           >
-          <view
-            class="nav-item"
-            :class="{ current: filtrateSelected }"
-            @click="filtrateClick"
-          >
-            筛选
-            <img
-              class="filtrate "
-              v-show="!filtrateSelected"
-              src="static/icon/search/filtrate.svg"
-              alt=""
-            />
-            <img
-              class="filtrate"
-              src="static/icon/search/filtrateSelected.svg"
-              v-show="filtrateSelected"
-              alt=""
-            />
-          </view>
         </view>
         <view class="filtrateShow historySearch" v-if="filtrateSelected">
           <view>
@@ -146,7 +127,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import { debounce, throttle } from "@/utils/debounce";
 import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-refresh/mix-pulldown-refresh";
 import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
-import json from "../search/json";
+import * as json from "@/config/json";
 import {
   searchProductList,
   getCategoryProducts,
@@ -164,12 +145,13 @@ export default {
     ...mapGetters(["searchLibrary"])
   },
   onLoad (option) {
-    console.log("option.id_", option.categoryId); //打印出上个页面传递的参数。
-    if (option.categoryId) {
-      this.categoryId = option.categoryId
-    } else if (option.quickCategoryId) {
-      this.quickCategoryId = option.quickCategoryId
-    }
+    console.log("option.id_", option.orderStatus); //打印出上个页面传递的参数。
+
+    // if (option.categoryId) {
+    //   this.categoryId = option.categoryId
+    // } else if (option.quickCategoryId) {
+    //   this.quickCategoryId = option.quickCategoryId
+    // }
     this.loadTabbars();
   },
   onNavigationBarButtonTap (item) {
