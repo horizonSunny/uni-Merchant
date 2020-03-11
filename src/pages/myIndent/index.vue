@@ -1,7 +1,7 @@
 <template>
   <body-wrap>
     <tob-bar slot="topBar">
-      <text slot="title">所打动</text>
+      <text slot="title">我的订单</text>
     </tob-bar>
     <view slot="content" class="content">
       <!-- <view v-if="hasLogin" class="hello"> -->
@@ -202,7 +202,7 @@ export default {
   methods: {
     //获取分类
     loadTabbars () {
-      let tabList = json.tabList;
+      let tabList = json.indentTabList;
       tabList.forEach(item => {
         item.newsList = [];
         item.loadMoreStatus = 0; //加载更多 0加载前，1加载中，2没有更多了
@@ -533,30 +533,19 @@ export default {
     display: flex;
     justify-content: space-between;
     z-index: 10;
-    height: 90upx;
+    height: 96upx;
     white-space: nowrap;
     box-shadow: 0 2upx 8upx rgba(0, 0, 0, 0.06);
     background-color: #fff;
     .nav-item {
       display: inline-block;
       width: 25%;
-      height: 90upx;
+      height: 96upx;
       text-align: center;
-      line-height: 90upx;
+      line-height: 96upx;
       font-size: 30upx;
       color: #303133;
       position: relative;
-      //   &:after {
-      //     content: "";
-      //     width: 0;
-      //     height: 0;
-      //     border-bottom: 4upx solid #007aff;
-      //     position: absolute;
-      //     left: 50%;
-      //     bottom: 0;
-      //     transform: translateX(-50%);
-      //     transition: 0.3s;
-      //   }
       .filtrate {
         width: 12px;
         height: 12px;
