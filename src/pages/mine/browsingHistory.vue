@@ -5,7 +5,12 @@
     </tob-bar>
     <view slot="content" class="content">
       <view class="clearBoth" @click="clearBoth">清空</view>
-      <scroll-view class="scrollView">
+      <scroll-view
+        class="scrollView"
+        scroll-y="true"
+        lower-threshold="50"
+        @scrolltolower="scrolltolower"
+      >
         <view
           class="contentInfo"
           v-for="(item, index) in productInfo"
@@ -90,6 +95,11 @@ export default {
     },
     change (open) {
       console.log('当前开启状态：' + open)
+    },
+    // 滚动到底部
+    scrolltolower () {
+      console.log('scrolltolower');
+      this.productInfo = this.productInfo.concat(browsingHistory)
     }
   }
 }
@@ -113,7 +123,7 @@ export default {
   }
   .scrollView {
     flex: 1;
-
+    overflow: scroll;
     .contentInfo {
       .timeShow {
         height: 34px;
