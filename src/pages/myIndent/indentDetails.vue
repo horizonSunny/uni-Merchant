@@ -5,6 +5,9 @@
     </tob-bar>
     <view slot="content" class="content">
       <view class="indent">
+        <view class="titleInfo">
+
+        </view>
         <view class="userInfo">
           <view @click="toDeliveryAddr">
             <view class="user">
@@ -16,7 +19,7 @@
               长泰广场E座 长泰广场E座 长泰广场E座
             </view>
           </view>
-          <view class="pickUp" v-show="pickUp">
+          <view class="pickUp" v-show="true">
             <view class="user">
               <img
                 src="static/shoppingCart/shopping cart-business.svg"
@@ -136,50 +139,6 @@
             </view>
           </view>
         </view>
-        <view class="effectiveGoods">
-          <view class="title">
-            失效商品
-          </view>
-          <view
-            class="commidityInfo"
-            v-for="(item, index) in [1, 2]"
-            :key="index"
-          >
-            <view class="failure">失效</view>
-            <view class="productImg">
-              <img src="/static/img/home.png" alt="" width="60" height="60" />
-              <view class="model">已下架</view>
-            </view>
-            <view class="drugsInfo">
-              <view class="failureInfo">
-                <text class="mark">OTC</text>
-                <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
-                <text class="mark" v-show="item.isMp === 1">双规</text>
-                <text class="mark" v-show="item.isMp === 2">RX</text>
-                <text class="mark" v-show="item.isMp === 3">其他</text> -->
-                <text>爱康国宾 疾病 宾 疾病疾病 宾 疾病疾病 宾 疾病</text>
-              </view>
-
-              <view class="drugSpec">
-                <view>
-                  已选择：20mlX48支/盒
-                </view>
-                <view>
-                  X1
-                </view>
-              </view>
-              <view class="drugSpec">
-                无法送货到当前收获地址
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
-      <view class="payment">
-        <view class="amount"> 合记 <text>¥464</text> </view>
-        <view class="operate">
-          去支付
-        </view>
       </view>
       <!-- <purchasefailed></purchasefailed> -->
       <!-- <distribution ref="distribution"></distribution>
@@ -256,6 +215,14 @@ export default {
     width: 100%;
     height: auto;
     background: #f4f1f4;
+    .titleInfo {
+      height: 101px;
+      background: linear-gradient(
+        270deg,
+        rgba(58, 116, 241, 1) 0%,
+        rgba(80, 136, 255, 1) 100%
+      );
+    }
     .userInfo {
       margin-top: 5px;
       height: auto;
@@ -314,7 +281,7 @@ export default {
     }
     .effectiveGoods {
       margin-top: 10px;
-      margin-bottom: 50px;
+      margin-bottom: 10px;
       padding: 13px 16px;
       background: rgba(255, 255, 255, 1);
       .title {
@@ -466,51 +433,6 @@ export default {
           margin-left: 14px;
         }
       }
-    }
-  }
-  .payment {
-    display: flex;
-    position: fixed;
-    padding-top: 10px;
-    bottom: 0px;
-    z-index: 99;
-    background: #ededed;
-    height: 50px;
-    width: 100%;
-    align-items: center;
-    .amount {
-      height: 50px;
-      line-height: 50px;
-      width: 65%;
-      padding-left: 7%;
-      background: #fff;
-      font-size: 14px;
-      font-family: PingFangSC-Regular, PingFang SC;
-      font-weight: 400;
-      color: rgba(27, 27, 27, 1);
-      text {
-        margin-left: 5px;
-        width: 77px;
-        height: 25px;
-        font-size: 18px;
-        font-family: PingFangSC-Semibold, PingFang SC;
-        font-weight: 600;
-        color: rgba(250, 73, 73, 1);
-        line-height: 25px;
-      }
-    }
-    .operate {
-      flex: 1;
-      height: 50px;
-      line-height: 50px;
-      background: #3a74f1;
-      border: 0px;
-      text-align: center;
-      border-radius: 0px;
-      font-size: 15px;
-      font-family: PingFangSC-Semibold, PingFang SC;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 1);
     }
   }
 }
