@@ -39,7 +39,8 @@
                 :scroll-y="enableScroll"
                 @scrolltolower="loadMore"
               >
-                <view class="scrollInfo">
+                <!-- 这边是内容部分 -->
+                <!-- <view class="scrollInfo">
                   <view
                     v-for="(item, itemIndex) in tabItem.newsList"
                     :key="itemIndex"
@@ -62,7 +63,7 @@
                       <view class="drugPrice">¥ {{ item.price }}</view>
                     </view>
                   </view>
-                </view>
+                </view> -->
                 <!-- 上滑加载更多组件 -->
                 <mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
               </scroll-view>
