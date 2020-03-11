@@ -5,6 +5,7 @@
     </tob-bar>
     <view slot="content" class="content">
       <scroll-view
+        v-show="false"
         class="scrollView"
         scroll-y="true"
         lower-threshold="50"
@@ -72,9 +73,9 @@
       <view class="cancelCol" v-show="this.editorInfo">
         <button>取消收藏</button>
       </view>
-      <view v-show="false" class="noHistory">
-        <img src="static/mine/Search_Bitmap2.svg" alt="" />
-        <view class="noInfo">抱歉，暂无浏览记录哦～</view>
+      <view v-show="true" class="noHistory">
+        <img src="static/mine/Search_Bitmap3.svg" alt="" />
+        <view class="noInfo">抱歉，暂无收藏记录哦～</view>
       </view>
     </view>
   </body-wrap>
