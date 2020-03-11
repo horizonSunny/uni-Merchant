@@ -10,7 +10,7 @@
           <text>136****9087</text>
         </view>
         <view class="classify">
-          <view class="classifyItem">
+          <view class="classifyItem" @click="goNextPage('浏览记录')">
             <view>128</view>
             <view>浏览记录</view>
           </view>
@@ -125,19 +125,16 @@ export default {
       console.log("goClassify_");
       this.$navTo("../classify/classify");
     },
-    // 跳转快速分类页面
-    toClassify (item) {
-      console.log('item_', item);
-      uni.navigateTo({
-        url: "../classify/classifyDetails?quickCategoryId=" + item.quickCategoryId
-      });
-    },
-    // 跳转商品详情页面
-    toProductDetails (item) {
-      console.log(item.tenantPriceId);
-      uni.navigateTo({
-        url: "../commodityDetails/index?tenantPriceId=" + item.tenantPriceId
-      });
+    // 跳转下一个页面，依据判断
+    goNextPage (info) {
+      switch (info) {
+        case '浏览记录':
+          this.$navTo("../mine/browsingHistory");
+          break;
+
+        default:
+          break;
+      }
     }
   },
   data () {
