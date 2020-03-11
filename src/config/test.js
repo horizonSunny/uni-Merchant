@@ -40,4 +40,75 @@ let diseasesHistory = [
     diseases: ['肝功能', '恶性肿瘤', '心脏病']
   }
 ]
-export default diseasesHistory
+let browsingHistory = [
+  {
+    time: '2019-01-08',
+    product: [
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      },
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      },
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      }
+    ]
+  },
+  {
+    time: '2019-01-23',
+    product: [
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      },
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      },
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      }
+    ]
+  },
+  {
+    time: '2019-01-15',
+    product: [
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      },
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      },
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      }
+    ]
+  }
+]
+export { diseasesHistory, browsingHistory }

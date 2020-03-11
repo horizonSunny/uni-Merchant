@@ -70,7 +70,7 @@
 </template>
 <script>
 import modal from '@/components/modal.vue';
-import test from '@/config/test'
+import { diseasesHistory } from '@/config/test'
 export default {
   components: {
     modal
@@ -85,7 +85,7 @@ export default {
         { value: '1', name: "有" },
         { value: '0', name: "无" }
       ],
-      test: test,
+      test: diseasesHistory,
       // 当前要添加疾病的病史
       currentDiseases: '',
       // diseasesAdd
