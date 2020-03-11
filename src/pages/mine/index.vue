@@ -33,7 +33,7 @@
           </text>
           <view class="medicineOperate" @click="goClassify">
             <text class="operate">
-              全部药品
+              全部订单
             </text>
             <img src="static/icon/main/home_right-2.svg" alt="" />
           </view>
