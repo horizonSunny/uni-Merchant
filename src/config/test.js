@@ -111,4 +111,60 @@ let browsingHistory = [
     ]
   }
 ]
-export { diseasesHistory, browsingHistory }
+let collect = [
+  {
+    imgSrc: '',
+    productName: '商品品牌 通用名',
+    specification: '20mlX48支/盒',
+    price: '232.00'
+  },
+  {
+    imgSrc: '',
+    productName: '商品品牌 通用名',
+    specification: '20mlX48支/盒',
+    price: '232.00'
+  },
+  {
+    imgSrc: '',
+    productName: '商品品牌 通用名',
+    specification: '20mlX48支/盒',
+    price: '232.00'
+  },
+  {
+    imgSrc: '',
+    productName: '商品品牌 通用名',
+    specification: '20mlX48支/盒',
+    price: '232.00'
+  },
+  {
+    imgSrc: '',
+    productName: '商品品牌 通用名',
+    specification: '20mlX48支/盒',
+    price: '232.00'
+  },
+  {
+    imgSrc: '',
+    productName: '商品品牌 通用名',
+    specification: '20mlX48支/盒',
+    price: '232.00'
+  },
+  {
+    imgSrc: '',
+    productName: '商品品牌 通用名',
+    specification: '20mlX48支/盒',
+    price: '232.00'
+  },
+  {
+    imgSrc: '',
+    productName: '商品品牌 通用名',
+    specification: '20mlX48支/盒',
+    price: '232.00'
+  },
+  {
+    imgSrc: '',
+    productName: '商品品牌 通用名',
+    specification: '20mlX48支/盒',
+    price: '232.00'
+  }
+]
+export { diseasesHistory, browsingHistory, collect }

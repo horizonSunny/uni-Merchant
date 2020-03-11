@@ -4,13 +4,14 @@
       <text slot="title">浏览记录</text>
     </tob-bar>
     <view slot="content" class="content">
-      <view class="clearBoth" @click="clearBoth">清空</view>
       <scroll-view
         class="scrollView"
         scroll-y="true"
         lower-threshold="50"
         @scrolltolower="scrolltolower"
+        v-if="true"
       >
+        <view class="clearBoth" @click="clearBoth">清空</view>
         <view
           class="contentInfo"
           v-for="(item, index) in productInfo"
@@ -55,6 +56,10 @@
           </view>
         </view>
       </scroll-view>
+      <view v-show="false" class="noHistory">
+        <img src="static/mine/Search_Bitmap2.svg" alt="" />
+        <view class="noInfo">抱歉，暂无浏览记录哦～</view>
+      </view>
     </view>
   </body-wrap>
 </template>
@@ -189,6 +194,27 @@ export default {
           }
         }
       }
+    }
+  }
+  .noHistory {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    img {
+      width: 132px;
+      height: 101px;
+      margin-top: 37px;
+    }
+    .noInfo {
+      width: 143px;
+      height: 18px;
+      font-size: 13px;
+      font-family: PingFang-SC-Medium, PingFang-SC;
+      font-weight: 500;
+      color: rgba(190, 190, 190, 1);
+      line-height: 18px;
     }
   }
 }

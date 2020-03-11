@@ -15,7 +15,7 @@
             <view>浏览记录</view>
           </view>
           <view class="separator"></view>
-          <view class="classifyItem">
+          <view class="classifyItem" @click="goNextPage('收藏')">
             <view>39</view>
             <view>收藏</view>
           </view>
@@ -131,7 +131,9 @@ export default {
         case '浏览记录':
           this.$navTo("../mine/browsingHistory");
           break;
-
+        case '收藏':
+          this.$navTo("../mine/collect");
+          break;
         default:
           break;
       }
