@@ -25,9 +25,7 @@
             <uni-swipe-action>
               <uni-swipe-action-item
                 :options="options"
-                @click="onClick"
-                @change="change"
-                @click.stop
+                @click="onClick($event, itemInfo, item.time)"
               >
                 <view class="commidityInfo" @click.stop>
                   <view class="productImg">
@@ -90,11 +88,9 @@ export default {
     clearBoth () {
       console.log('清空');
     },
-    onClick (e) {
+    onClick (e, itemInfo, time) {
       console.log('当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text)
-    },
-    change (open) {
-      console.log('当前开启状态：' + open)
+      console.log(itemInfo, '_itemInfo_', time);
     },
     // 滚动到底部
     scrolltolower () {
