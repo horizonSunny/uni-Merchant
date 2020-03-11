@@ -40,9 +40,59 @@
                 @scrolltolower="loadMore"
               >
                 <!-- 这边是内容部分 -->
-                <view class="scrollInfo">
-                  <view class=""></view>
+                <view
+                  class="scrollInfo"
+                  v-for="(indentItem, indentIndex) in tabItem.newsList"
+                  :key="indentIndex"
+                >
+                  <view class="indentHead">
+                    <view>订单编号：{{ indentItem.orderNumber }}</view>
+                    <view>等待付款</view>
+                  </view>
+                  <view
+                    class="commidityInfo"
+                    v-for="(itemInfo, indexInfo) in indentItem.prodcutInfo"
+                    :key="indexInfo"
+                  >
+                    <view class="productImg">
+                      <img
+                        src="static/mine/Bitmap.png"
+                        alt=""
+                        width="60"
+                        height="60"
+                      />
+                    </view>
+                    <view class="drugsInfo">
+                      <view class="drugName">
+                        <!-- <text class="mark">OTC</text> -->
+                        <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
+                            <text class="mark" v-show="item.isMp === 1">双规</text>
+                            <text class="mark" v-show="item.isMp === 2">RX</text>
+                            <text class="mark" v-show="item.isMp === 3">其他</text> -->
+                        <view class="prodcutDetails">
+                          <view class="name">{{ itemInfo.productName }}</view>
+                          <view class="price">¥ {{ itemInfo["price"] }}</view>
+                        </view>
+                        <view class="drugSpec">乳腺癌检测 1次</view>
+                        <!-- <text>{{ item.productName }}</text> -->
+                      </view>
+                      <!-- <view class="drugSpec">{{ item.productSpecif }}</view> -->
+                    </view>
+                  </view>
+                  <view class="totalPrice">
+                    <view>共{{ indentItem.amount }}件商品 总价</view>
+                    <view class="price">¥{{ indentItem.totalPrice }}</view>
+                  </view>
+                  <view class="indentOperate">
+                    <view class="pray">删除订单</view>
+                    <!-- <view class="pray">取消订单</view> -->
+                    <view class="active">重新购买</view>
+                    <!-- <view class="active">查看物流</view>
+                    <view class="active">评价</view>
+                    <view class="active">付款</view> -->
+                  </view>
                 </view>
+
                 <!-- 上滑加载更多组件 -->
                 <mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
               </scroll-view>
@@ -439,10 +489,142 @@ export default {
   .swiperInfo {
     flex: 1;
     .scrollInfo {
+      height: auto;
+      padding: 12px 14px 20px;
+      background: #fff;
+      margin-top: 10px;
+      .indentHead {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+      }
+      .commidityInfo {
+        height: 89px;
+        // padding: 12px 14px 15px;
+        margin-top: 17px;
+        display: flex;
+        align-items: center;
+        .productImg {
+          width: 60px;
+          height: 60px;
+          position: relative;
+        }
+        .drugsInfo {
+          flex: 1;
+          height: 75px;
+          margin-top: 10px;
+          margin-left: 11px;
+          // display: flex;
+          // flex-direction: column;
+          // justify-content: space-between;
+          .drugName {
+            width: 100%;
+            height: 60px;
+            font-size: 14px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: rgba(27, 27, 27, 1);
+            line-height: 20px;
+            .mark {
+              position: relative;
+              display: inline-block;
+              height: 12px;
+              line-height: 12px;
+              top: -1px;
+              width: 30px;
+              height: 12px;
+              margin-right: 10px;
+              line-height: 12px;
+              border: 1px solid #d7242c;
+              border-radius: 5px;
+              text-align: center;
+              font-size: 5px;
+              color: #d7242c;
+              font-weight: 800;
+            }
+            .prodcutDetails {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              .name {
+                flex: 1;
+                width: 100px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+              .price {
+                height: 20px;
+                font-size: 14px;
+                font-family: PingFangSC-Medium, PingFang SC;
+                font-weight: 500;
+                color: rgba(250, 73, 73, 1);
+                line-height: 20px;
+                margin-left: 40px;
+              }
+            }
+          }
+          .drugSpec {
+            height: 18px;
+            margin-top: 7px;
+            font-size: 13px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: rgba(137, 137, 137, 1);
+            line-height: 18px;
+          }
+        }
+      }
+      .totalPrice {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        height: 20px;
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(27, 27, 27, 1);
+        line-height: 20px;
+        .price {
+          margin-left: 5px;
+          width: 60px;
+          height: 20px;
+          font-size: 14px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: rgba(250, 73, 73, 1);
+          line-height: 20px;
+        }
+      }
+      .indentOperate {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 10px;
+        view {
+          width: 90px;
+          height: 28px;
+          line-height: 28px;
+          border-radius: 14px;
+          text-align: center;
+          margin-left: 20px;
+        }
+        .pray {
+          border: 1px solid rgba(137, 137, 137, 1);
+          color: rgba(137, 137, 137, 1);
+        }
+        .active {
+          color: rgba(58, 116, 241, 1);
+          border: 1px solid #3a74f1;
+        }
+      }
     }
   }
   .panel-scroll-box {
     height: 100%;
+    background: #f4f1f4;
     .panel-item {
       background: #fff;
       padding: 30px 0;
