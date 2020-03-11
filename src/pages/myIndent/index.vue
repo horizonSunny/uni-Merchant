@@ -40,30 +40,9 @@
                 @scrolltolower="loadMore"
               >
                 <!-- 这边是内容部分 -->
-                <!-- <view class="scrollInfo">
-                  <view
-                    v-for="(item, itemIndex) in tabItem.newsList"
-                    :key="itemIndex"
-                    class="drugsDetails"
-                    @click="toProductDetails(item)"
-                  >
-                    <img
-                      src="../../static/icon/main/Product-Bitmap@2x.png"
-                      alt=""
-                    />
-                    <view class="drugsInfo">
-                      <view class="drugName">
-                        <text class="mark" v-show="item.isMp === 0">OTC</text>
-                        <text class="mark" v-show="item.isMp === 1">双规</text>
-                        <text class="mark" v-show="item.isMp === 2">RX</text>
-                        <text class="mark" v-show="item.isMp === 3">其他</text>
-                        <text>{{ item.productName }}</text>
-                      </view>
-                      <view class="drugSpec">{{ item.productSpecif }}</view>
-                      <view class="drugPrice">¥ {{ item.price }}</view>
-                    </view>
-                  </view>
-                </view> -->
+                <view class="scrollInfo">
+                  <view class=""></view>
+                </view>
                 <!-- 上滑加载更多组件 -->
                 <mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
               </scroll-view>
@@ -81,6 +60,7 @@ import { debounce, throttle } from "@/utils/debounce";
 import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-refresh/mix-pulldown-refresh";
 import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
 import * as json from "@/config/json";
+import { myIndent } from '@/config/test'
 import {
   searchProductList,
   getCategoryProducts,
@@ -99,6 +79,7 @@ export default {
   },
   onLoad (option) {
     console.log("option.id_", option.orderStatus); //打印出上个页面传递的参数。
+    this.tabCurrentIndex = Number(option.orderStatus)
     this.loadTabbars();
   },
   data () {
@@ -192,35 +173,12 @@ export default {
       }
 
       //这边是发送请求到接口和传参数
-      const params = {
-        tenantId: this.$store.getters.tenant.tenantId,
-        // categoryId: this.categoryId,
-        sale: this.sale,
-        price: this.price,
-        productType: this.confirmSelected.medicineType,
-        productBrands: this.confirmSelected.selectBrands.toString(),
-        // 只有当前页这一个是分开的
-        pageNumber: tabItem.currentNumber,
-        pageSize: this.pageSize
-      }
-      let func;
-      if (this.categoryId !== '') {
-        params.categoryId = this.categoryId
-        func = getCategoryProducts(params)
-      } else {
-        params.quickCategoryId = this.quickCategoryId
-        func = getQuickCategoryProducts(params)
-      }
-      func.then(res => {
-        console.log('searchProductList_', res);
-        this.productBrands = res.data.productBrands
-        // settimeout
-        let list = res.data.products
+      setTimeout(() => {
         if (type === "refresh") {
           tabItem.newsList = []; //刷新前清空数组
         }
-        list.forEach(item => {
-          item.id = parseInt(Math.random() * 10000);
+        myIndent.forEach(item => {
+          // item.id = parseInt(Math.random() * 10000);
           tabItem.newsList.push(item);
         });
         //下拉刷新 关闭刷新动画
@@ -238,12 +196,64 @@ export default {
           tabItem.loadMoreStatus = 0;
         }
         // 假如不满十条，则显示加载完成
-        if (list.length < 10) {
+        if (myIndent.length < 10) {
           console.log("上滑加载 处理状态");
           tabItem.loadMoreStatus = 2;
         }
         tabItem.currentNumber++;
-      })
+      }, 0);
+      // const params = {
+      //   tenantId: this.$store.getters.tenant.tenantId,
+      //   // categoryId: this.categoryId,
+      //   sale: this.sale,
+      //   price: this.price,
+      //   productType: this.confirmSelected.medicineType,
+      //   productBrands: this.confirmSelected.selectBrands.toString(),
+      //   // 只有当前页这一个是分开的
+      //   pageNumber: tabItem.currentNumber,
+      //   pageSize: this.pageSize
+      // }
+      // let func;
+      // if (this.categoryId !== '') {
+      //   params.categoryId = this.categoryId
+      //   func = getCategoryProducts(params)
+      // } else {
+      //   params.quickCategoryId = this.quickCategoryId
+      //   func = getQuickCategoryProducts(params)
+      // }
+      // func.then(res => {
+      //   console.log('searchProductList_', res);
+      //   this.productBrands = res.data.productBrands
+      //   // settimeout
+      //   let list = res.data.products
+      //   if (type === "refresh") {
+      //     tabItem.newsList = []; //刷新前清空数组
+      //   }
+      //   list.forEach(item => {
+      //     item.id = parseInt(Math.random() * 10000);
+      //     tabItem.newsList.push(item);
+      //   });
+      //   //下拉刷新 关闭刷新动画
+      //   if (type === "refresh") {
+      //     this.$refs.mixPulldownRefresh &&
+      //       this.$refs.mixPulldownRefresh.endPulldownRefresh();
+      //     // #ifdef APP-PLUS
+      //     tabItem.refreshing = false;
+      //     // #endif
+      //     tabItem.loadMoreStatus = 0;
+      //   }
+      //   //上滑加载 处理状态
+      //   if (type === "add") {
+      //     console.log("上滑加载 处理状态");
+      //     tabItem.loadMoreStatus = 0;
+      //   }
+      //   // 假如不满十条，则显示加载完成
+      //   if (list.length < 10) {
+      //     console.log("上滑加载 处理状态");
+      //     tabItem.loadMoreStatus = 2;
+      //   }
+      //   tabItem.currentNumber++;
+      // })
     },
     //下拉刷新
     onPulldownReresh () {
@@ -429,75 +439,6 @@ export default {
   .swiperInfo {
     flex: 1;
     .scrollInfo {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      padding: 0px 13px;
-      .drugsDetails {
-        display: flex;
-        flex-direction: column;
-        height: 216px;
-        width: 40%;
-        align-items: center;
-        margin-top: 1px;
-        background: #fff;
-        padding: 8px 13px 17px;
-        margin-bottom: 10px;
-        img {
-          height: 100px;
-          width: 100px;
-        }
-        .drugsInfo {
-          height: 105px;
-          margin-top: 10px;
-          margin-left: 11px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          .drugName {
-            height: 40px;
-            font-size: 14px;
-            font-family: PingFangSC-Regular, PingFang SC;
-            font-weight: 400;
-            color: rgba(27, 27, 27, 1);
-            line-height: 20px;
-            .mark {
-              position: relative;
-              display: inline-block;
-              height: 12px;
-              line-height: 12px;
-              top: -1px;
-              width: 30px;
-              height: 12px;
-              margin-right: 10px;
-              line-height: 12px;
-              border: 1px solid #d7242c;
-              border-radius: 5px;
-              text-align: center;
-              font-size: 5px;
-              color: #d7242c;
-              font-weight: 800;
-            }
-          }
-          .drugSpec {
-            height: 18px;
-            font-size: 13px;
-            font-family: PingFangSC-Regular, PingFang SC;
-            font-weight: 400;
-            color: rgba(137, 137, 137, 1);
-            line-height: 18px;
-          }
-          .drugPrice {
-            margin-top: 20px;
-            height: 25px;
-            font-size: 18px;
-            font-family: PingFangSC-Semibold, PingFang SC;
-            font-weight: 600;
-            color: rgba(250, 73, 73, 1);
-            line-height: 25px;
-          }
-        }
-      }
     }
   }
   .panel-scroll-box {

@@ -167,4 +167,85 @@ let collect = [
     price: '232.00'
   }
 ]
-export { diseasesHistory, browsingHistory, collect }
+// 订单假数据
+let myIndent = [
+  {
+    orderNumber: '091238729778778',
+    orderStatus: 0,
+    amount: 3,
+    totalPrice: '464.00',
+    prodcutInfo: [
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      },
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      },
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      }
+    ]
+  },
+  {
+    orderNumber: '091238729778778',
+    orderStatus: 0,
+    amount: 3,
+    totalPrice: '464.00',
+    prodcutInfo: [
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      },
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      },
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      }
+    ]
+  },
+  {
+    orderNumber: '091238729778778',
+    orderStatus: 0,
+    amount: 3,
+    totalPrice: '464.00',
+    prodcutInfo: [
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      },
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      },
+      {
+        imgSrc: '',
+        productName: '商品品牌 通用名',
+        specification: '20mlX48支/盒',
+        price: '232.00'
+      }
+    ]
+  }
+]
+export { diseasesHistory, browsingHistory, collect, myIndent }

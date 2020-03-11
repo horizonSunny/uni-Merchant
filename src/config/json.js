@@ -16,23 +16,23 @@ const tabList = [
 const indentTabList = [
   {
     name: '全部',
-    id: '1'
+    id: '0'
   },
   {
     name: '待付款/审核',
-    id: '2'
+    id: '1'
   },
   {
     name: '待发货',
-    id: '3'
+    id: '2'
   },
   {
     name: '待收货',
-    id: '4'
+    id: '3'
   },
   {
     name: '待评价',
-    id: '5'
+    id: '4'
   }
 ]
 export { tabList, indentTabList }

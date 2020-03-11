@@ -31,7 +31,7 @@
           <text class="title">
             我的订单
           </text>
-          <view class="medicineOperate" @click="goClassify">
+          <view class="medicineOperate" @click="goMyIndent(0)">
             <text class="operate">
               全部订单
             </text>
@@ -39,20 +39,20 @@
           </view>
         </view>
         <view class="classifyDetails">
-          <view class="detailsInfo">
+          <view class="detailsInfo" @click="goMyIndent(1)">
             <img src="/static/mine/mine_pending payment.svg" alt="" />
             <view>待付款</view>
           </view>
-          <view class="detailsInfo">
+          <view class="detailsInfo" @click="goMyIndent(2)">
             <img src="/static/mine/mine_to be shipped.svg" alt="" />
             <view>待发货</view>
           </view>
-          <view class="detailsInfo">
+          <view class="detailsInfo" @click="goMyIndent(3)">
             <img src="/static/mine/mine_goods to be received.svg" alt="" />
             <view>待收货</view>
           </view>
 
-          <view class="detailsInfo">
+          <view class="detailsInfo" @click="goMyIndent(4)">
             <img src="/static/mine/mine_to be evaluated.svg" alt="" />
             <view>待评价</view>
           </view>
@@ -121,9 +121,9 @@ export default {
         url: "../merchantsIntr/merchantsIntr"
       });
     },
-    goClassify () {
-      console.log("goClassify_");
-      this.$navTo("../myIndent/index", { orderStatus: 1 });
+    goMyIndent (info) {
+      console.log("goMyIndent_");
+      this.$navTo("../myIndent/index", { orderStatus: info });
     },
     // 跳转下一个页面，依据判断
     goNextPage (info) {
