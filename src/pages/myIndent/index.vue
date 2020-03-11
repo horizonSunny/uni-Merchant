@@ -610,6 +610,9 @@ export default {
           border-radius: 14px;
           text-align: center;
           margin-left: 20px;
+          font-size: 13px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
         }
         .pray {
           border: 1px solid rgba(137, 137, 137, 1);
