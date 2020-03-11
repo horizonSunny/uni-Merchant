@@ -44,6 +44,7 @@
                   class="scrollInfo"
                   v-for="(indentItem, indentIndex) in tabItem.newsList"
                   :key="indentIndex"
+                  @click="goDetails(indentItem)"
                 >
                   <view class="indentHead">
                     <view>订单编号：{{ indentItem.orderNumber }}</view>
@@ -83,7 +84,7 @@
                     <view>共{{ indentItem.amount }}件商品 总价</view>
                     <view class="price">¥{{ indentItem.totalPrice }}</view>
                   </view>
-                  <view class="indentOperate">
+                  <view class="indentOperate" @click.stop>
                     <view class="pray">删除订单</view>
                     <!-- <view class="pray">取消订单</view> -->
                     <view class="active">重新购买</view>
@@ -336,11 +337,9 @@ export default {
       });
     },
     // 跳转商品详情页面
-    toProductDetails (item) {
+    goDetails (item) {
       console.log(item.tenantPriceId);
-      uni.navigateTo({
-        url: "../commodityDetails/index?tenantPriceId=" + item.tenantPriceId
-      });
+      this.$navTo("../myIndent/indentDetails");
     }
   }
 };
