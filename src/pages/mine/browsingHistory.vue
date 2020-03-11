@@ -39,12 +39,18 @@
                   </view>
                   <view class="drugsInfo">
                     <view class="drugName">
-                      <text class="mark">OTC</text>
+                      <!-- <text class="mark">OTC</text> -->
                       <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
                 <text class="mark" v-show="item.isMp === 1">双规</text>
                 <text class="mark" v-show="item.isMp === 2">RX</text>
                 <text class="mark" v-show="item.isMp === 3">其他</text> -->
-                      <text>爱康国宾 疾病 宾 疾病</text>
+                      <view class="prodcutDetails">
+                        <view class="name"
+                          >爱康国宾 疾病 宾 疾病爱康国宾 疾病 宾 疾病爱康国宾
+                          疾病 宾 疾病爱康国宾 疾病 宾 疾病</view
+                        >
+                        <view class="price">¥ 133.00</view>
+                      </view>
                       <view class="drugSpec">乳腺癌检测 1次</view>
                       <!-- <text>{{ item.productName }}</text> -->
                     </view>
@@ -180,6 +186,27 @@ export default {
                 font-size: 5px;
                 color: #d7242c;
                 font-weight: 800;
+              }
+              .prodcutDetails {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                .name {
+                  flex: 1;
+                  width: 100px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                }
+                .price {
+                  height: 20px;
+                  font-size: 14px;
+                  font-family: PingFangSC-Medium, PingFang SC;
+                  font-weight: 500;
+                  color: rgba(250, 73, 73, 1);
+                  line-height: 20px;
+                  margin-left: 40px;
+                }
               }
             }
             .drugSpec {
