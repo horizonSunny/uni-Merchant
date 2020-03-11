@@ -17,54 +17,6 @@
             >{{ item.name }}</view
           >
         </view>
-        <view class="filtrateShow historySearch" v-if="filtrateSelected">
-          <view>
-            <view class="filtrateCond">
-              <view class="classifyTitle">
-                <text class="title">
-                  类型
-                </text>
-              </view>
-              <view class="classifyDetails filtrateDetails">
-                <view
-                  class="classifyItem"
-                  :class="medicineType === item.type ? 'selected' : ''"
-                  v-for="(item, index) in medicineClassify"
-                  :key="index"
-                  @click="medicineType = item.type"
-                >
-                  <text>{{ item.name }}</text>
-                </view>
-              </view>
-              <view class="classifyTitle">
-                <text class="title">
-                  品牌
-                </text>
-              </view>
-              <view class="classifyDetails filtrateDetails">
-                <view
-                  class="classifyItem"
-                  :class="selectBrands.indexOf(item) > -1 ? 'selected' : ''"
-                  v-for="(item, index) in productBrands"
-                  :key="index"
-                  @click="selectedInfo(selectBrands, item)"
-                >
-                  <text>{{ item }}</text>
-                </view>
-              </view>
-            </view>
-            <view class="filtrateOpearte">
-              <button @click="reset">
-                重置
-              </button>
-              <button @click="confirm" type="primary">确定</button>
-            </view>
-          </view>
-          <view
-            class="filtrateShade"
-            @click="() => (this.filtrateSelected = false)"
-          ></view>
-        </view>
         <!-- 下拉刷新组件 -->
         <mix-pulldown-refresh
           ref="mixPulldownRefresh"
@@ -146,54 +98,10 @@ export default {
   },
   onLoad (option) {
     console.log("option.id_", option.orderStatus); //打印出上个页面传递的参数。
-
-    // if (option.categoryId) {
-    //   this.categoryId = option.categoryId
-    // } else if (option.quickCategoryId) {
-    //   this.quickCategoryId = option.quickCategoryId
-    // }
     this.loadTabbars();
-  },
-  onNavigationBarButtonTap (item) {
-    // 这边绑定是该页面topBar上面的两个button事件
-    console.log("index_search_", item.index);
-    uni.navigateTo({
-      url: "../search/search"
-    });
   },
   data () {
     return {
-      keyLibrary: [],
-      // 查询筛选条件及分页数据,由categoryId判断是否是三级跳转还是快速找药跳转
-      categoryId: '',
-      quickCategoryId: '',
-      sale: -1,
-      price: -1,
-      productType: -1,
-      productBrands: [],
-      pageSize: 10,
-      selectBrands: [],
-      medicineType: -1,
-      confirmSelected: {
-        selectBrands: [],
-        medicineType: -1
-      },
-      // 是否筛选过
-      medicineClassify: [
-        {
-          type: -1,
-          name: "全部"
-        },
-        {
-          type: 0,
-          name: "处方药"
-        },
-        {
-          type: 1,
-          name: "非处方药"
-        }
-      ],
-      filtrateSelected: false,
       tabCurrentIndex: 0,
       tabBars: [],
       enableScroll: true,
@@ -226,23 +134,6 @@ export default {
       if (typeof e === "object") {
         index = e.detail.current;
       }
-      // 依据index,设置当前筛选条件为销量，价格还是默认
-      switch (index) {
-        case 0:
-          this.sale = -1
-          this.price = -1
-          break;
-        case 1:
-          this.sale = 1
-          this.price = -1
-          break;
-        case 2:
-          this.sale = -1
-          this.price = 1
-          break;
-        default:
-          break;
-      }
       if (typeof tabBar !== "object") {
         tabBar = await this.getElSize("nav-bar");
       }
@@ -258,7 +149,6 @@ export default {
           nowWidth = result.width;
         }
       }
-      // debugger;
       if (typeof e === "number") {
         //点击切换时先切换再滚动tabbar，避免同时切换视觉错位
         this.tabCurrentIndex = index;
@@ -300,7 +190,7 @@ export default {
         tabItem.refreshing = true;
       }
 
-      //异步请求数据,根据三级分类找到到
+      //这边是发送请求到接口和传参数
       const params = {
         tenantId: this.$store.getters.tenant.tenantId,
         // categoryId: this.categoryId,
@@ -383,30 +273,6 @@ export default {
           }
         ).exec();
       });
-    },
-    // filtrateClick 打开筛选界面
-    filtrateClick () {
-      this.filtrateSelected = !this.filtrateSelected;
-    },
-    // 选择品牌和类型，如果选中，再次点击就取消掉
-    selectedInfo (arr, item) {
-      const index = arr.indexOf(item)
-      if (index > -1) {
-        arr.splice(index, 1)
-      } else {
-        arr.push(item)
-      }
-    },
-    // 筛选重置
-    reset () {
-      this.selectBrands = [];
-      this.medicineType = -1;
-    },
-    // confirm
-    confirm () {
-      this.confirmSelected = { selectBrands: this.selectBrands, medicineType: this.medicineType }
-      this.onPulldownReresh()
-      this.filtrateSelected = false;
     },
     // 跳转商品详情页面
     toProductDetails (item) {
