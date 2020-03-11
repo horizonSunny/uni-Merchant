@@ -4,7 +4,14 @@
       <text slot="title">收藏</text>
     </tob-bar>
     <view slot="content" class="content">
-      <view class="scrollView">
+      <scroll-view
+        class="scrollView"
+        scroll-y="true"
+        lower-threshold="50"
+        @scrolltolower="scrolltolower"
+        v-if="true"
+        :style="{ height: this.editorInfo ? '80%' : '' }"
+      >
         <view class="clearBoth" @click="editor">{{
           this.editorInfo ? "完成" : "编辑"
         }}</view>
@@ -51,6 +58,7 @@
                         <view class="price">¥ 133.00</view>
                       </view>
                       <view class="drugSpec">乳腺癌检测 1次</view>
+                      <view class="drugSpec">药房全称药房全称药房全称</view>
                       <!-- <text>{{ item.productName }}</text> -->
                     </view>
                     <!-- <view class="drugSpec">{{ item.productSpecif }}</view> -->
@@ -60,6 +68,9 @@
             </uni-swipe-action>
           </label>
         </checkbox-group>
+      </scroll-view>
+      <view class="cancelCol" v-show="this.editorInfo">
+        <button>取消收藏</button>
       </view>
       <view v-show="false" class="noHistory">
         <img src="static/mine/Search_Bitmap2.svg" alt="" />
@@ -109,7 +120,7 @@ export default {
     // 滚动到底部
     scrolltolower () {
       console.log('scrolltolower');
-      this.productInfo = this.productInfo.concat(browsingHistory)
+      this.productInfo = this.productInfo.concat(collect)
     },
     // 编辑
     editor () {
@@ -247,6 +258,22 @@ export default {
         }
       }
     }
+  }
+  .cancelCol {
+    width: 100%;
+    height: 152px;
+    display: flex;
+    align-items: center;
+    button {
+      margin-top: 50px;
+      width: 80%;
+      background: #f15353;
+      font-size: 15px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+    }
+    // background: red;
   }
   .noHistory {
     display: flex;
