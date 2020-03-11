@@ -123,7 +123,7 @@ export default {
     },
     goClassify () {
       console.log("goClassify_");
-      this.$navTo("../classify/classify");
+      this.$navTo("../myIndent/index");
     },
     // 跳转下一个页面，依据判断
     goNextPage (info) {
