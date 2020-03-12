@@ -59,7 +59,7 @@
           </view>
         </view>
         <view class="separate logisticsInfo indentInfo">
-          <upImg></upImg>
+          <up-img></up-img>
         </view>
       </view>
     </view>
