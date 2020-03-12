@@ -1,6 +1,6 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
+    <tob-bar slot="topBar" :backInfo="false">
       <text slot="title">所打动</text>
     </tob-bar>
     <view slot="content" class="content">
