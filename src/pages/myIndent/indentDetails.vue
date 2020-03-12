@@ -112,8 +112,31 @@
             </view>
           </view>
         </view>
-         <view class="separate logisticsInfo indentInfo">
-           
+        <view class="separate logisticsInfo indentInfo">
+           <view class="indentTotal">
+             <text>订单总价</text>
+             <text>¥464</text>
+           </view>
+        </view>
+        <view class="separate logisticsInfo">
+          <view class="logistics">
+            订单编号
+            <view class="home_right">
+              092373273278783
+            </view>
+          </view>
+          <view class="logistics">
+            下单时间
+            <view class="home_right">
+             2020-01-08 12:09:35
+            </view>
+          </view>
+        </view>
+         <view class="separate logisticsInfo">
+          <view class="logistics" style="display:block">
+            请按照<text style="color:#4473E5;">《商品验收标准》</text>对货品进行验收
+          </view>
+        </view>
         </view>
       </view>
       <!-- <purchasefailed></purchasefailed> -->
@@ -416,7 +439,7 @@ export default {
       background: #fff;
       .logistics {
         height: 20px;
-        padding: 9px 0px;
+        padding: 5px 0px;
         font-size: 14px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
@@ -435,10 +458,61 @@ export default {
         .marginLeft {
           margin-left: 14px;
         }
+        .indentOperate {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          margin-top: 10px;
+          view {
+            width: 90px;
+            height: 28px;
+            line-height: 28px;
+            border-radius: 14px;
+            text-align: center;
+            margin-left: 20px;
+            font-size: 13px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+          }
+          .pray {
+            border: 1px solid rgba(137, 137, 137, 1);
+            color: rgba(137, 137, 137, 1);
+          }
+          .active {
+            color: rgba(58, 116, 241, 1);
+            border: 1px solid #3a74f1;
+          }
+        }
       }
     }
     .indentInfo {
       margin-top: 1px;
+      .indentTotal {
+        height: 21px;
+        line-height: 21px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        text {
+          margin-left: 5px;
+        }
+        text:nth-child(1) {
+          height: 18px;
+          font-size: 13px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(27, 27, 27, 1);
+          line-height: 18px;
+        }
+        text:nth-child(2) {
+          height: 21px;
+          font-size: 15px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: rgba(250, 73, 73, 1);
+          line-height: 21px;
+        }
+      }
     }
   }
 }
