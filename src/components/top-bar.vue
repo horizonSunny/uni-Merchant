@@ -6,9 +6,10 @@
     >
       <view class="uni-page-head-hd">
         <view class="uni-page-head-btn" style="display: none;">
-          <i class="uni-btn-icon" style="color: rgb(0, 0, 0); font-size: 27px;"
-            ></i
-          >
+          <i
+            class="uni-btn-icon"
+            style="color: rgb(0, 0, 0); font-size: 27px;"
+          ></i>
         </view>
         <!---->
       </view>
@@ -28,13 +29,12 @@
           <i
             class="uni-btn-icon"
             style="color: rgb(27, 27, 27); font-size: 22px; font-weight: normal; font-family: font1583301982308;"
-            ></i
-          >
+          ></i>
         </view>
       </view>
     </view>
-    <view class="uni-placeholder"></view
-  ></uni-page-head>
+    <view class="uni-placeholder"></view>
+  </uni-page-head>
 </template>
 <script>
 export default {
