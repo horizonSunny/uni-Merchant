@@ -62,7 +62,7 @@
           >
             <view class="productImg">
               <img src="/static/img/home.png" alt="" width="60" height="60" />
-              <view class="model">已下架</view>
+              <!-- <view class="model">已下架</view> -->
             </view>
             <view class="drugsInfo">
               <view class="drugName">
@@ -89,59 +89,31 @@
             </view>
           </view>
         </view>
-        <view class="separate logisticsInfo">
-          <view class="logistics" @click="openModal">
-            <view>
-              运费
-              <text class="marginLeft"> 8.00元起</text>
-            </view>
+        <view class="separate logisticsInfo indentInfo">
+          <view class="logistics">
+            发票信息
             <view class="home_right">
-              ¥12.00
-              <img
-                class="marginLeft"
-                src="static/icon/main/home_right-2.svg"
-                alt=""
-              />
+              无需发票
             </view>
           </view>
           <view class="logistics">
-            优惠券
-            <view class="home_right">
-              ¥12.00
-              <img
-                class="marginLeft"
-                src="static/icon/main/home_right-2.svg"
-                alt=""
-              />
-            </view>
-          </view>
-          <view class="logistics">
-            共x件商品 应付金额（含运费）
+            商品总价
             <view class="home_right">
               ¥464.00
             </view>
           </view>
-        </view>
-        <view class="separate logisticsInfo">
-          <view class="logistics">
-            付款方式
-            <view class="home_right">
-              在线支付
-            </view>
-          </view>
-          <view class="logistics" @click="showInvoice">
+          <view class="logistics" @click="openModal">
             <view>
-              发票信息
+              配送方式
+              <text class="marginLeft home_right"> 普通快递</text>
             </view>
             <view class="home_right">
-              请选择
-              <img
-                class="marginLeft"
-                src="static/icon/main/home_right-2.svg"
-                alt=""
-              />
+              ¥12.00
             </view>
           </view>
+        </view>
+         <view class="separate logisticsInfo indentInfo">
+           
         </view>
       </view>
       <!-- <purchasefailed></purchasefailed> -->
@@ -312,7 +284,7 @@ export default {
     }
     .effectiveGoods {
       margin-top: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 1px;
       padding: 13px 16px;
       background: rgba(255, 255, 255, 1);
       .title {
@@ -444,7 +416,7 @@ export default {
       background: #fff;
       .logistics {
         height: 20px;
-        padding: 12px 0px;
+        padding: 9px 0px;
         font-size: 14px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
@@ -452,7 +424,7 @@ export default {
         line-height: 20px;
         display: flex;
         justify-content: space-between;
-        text {
+        .home_right {
           height: 20px;
           font-size: 14px;
           font-family: PingFang-SC-Medium, PingFang-SC;
@@ -464,6 +436,9 @@ export default {
           margin-left: 14px;
         }
       }
+    }
+    .indentInfo {
+      margin-top: 1px;
     }
   }
 }
