@@ -6,7 +6,11 @@
     <view slot="content" class="content">
       <view class="indent">
         <view class="titleInfo">
-
+          <view class="remindInfo">
+            <view class="status">等待审核</view>
+            <view class="statusDetails">耐性等待，商家正在审核中哦～</view>
+          </view>
+         <img src="static/myIndent/my order-To examine.svg" alt="">
         </view>
         <view class="userInfo">
           <view @click="toDeliveryAddr">
@@ -222,6 +226,33 @@ export default {
         rgba(58, 116, 241, 1) 0%,
         rgba(80, 136, 255, 1) 100%
       );
+      padding: 25px 37px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      img {
+        width: 50px;
+        height: 50px;
+      }
+      .remindInfo {
+        color: #fff;
+        .status {
+          height: 22px;
+          font-size: 16px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 1);
+          line-height: 22px;
+        }
+        .statusDetails {
+          height: 16px;
+          font-size: 11px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(255, 255, 255, 1);
+          line-height: 16px;
+        }
+      }
     }
     .userInfo {
       margin-top: 5px;
