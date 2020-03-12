@@ -139,15 +139,16 @@
           </view>
            <view class="separate logisticsInfo">
                <view class="logistics">
-                    <view class="indentOperate" @click.stop>
+                  <view class="indentOperate" @click.stop>
                     <view class="pray">删除订单</view>
                     <!-- <view class="pray">取消订单</view> -->
                     <view class="active">重新购买</view>
+                    <view class="active" @click="toComment">评价</view>
                     <!-- <view class="active">查看物流</view>
-                    <view class="active">评价</view>
+                    
                     <view class="active">付款</view> -->
+                  </view>
                </view>
-            </view>
           </view>
         </view> 
       <!-- <purchasefailed></purchasefailed> -->
@@ -208,6 +209,10 @@ export default {
     // 打开发票弹窗
     showInvoice () {
       this.$refs.invoice.openModal()
+    },
+    // toComment去评论页面
+    toComment () {
+      this.$navTo("../myIndent/comment");
     }
   }
 };
@@ -392,18 +397,6 @@ export default {
               font-weight: 800;
             }
           }
-          .failureInfo {
-            width: 200px;
-            height: 18px;
-            font-size: 13px;
-            font-family: PingFangSC-Regular, PingFang SC;
-            font-weight: 400;
-            color: rgba(137, 137, 137, 1);
-            line-height: 18px;
-            text-overflow: ellipsis; /*让截断的文字显示为点点。还有一个值是clip意截断不显示点点*/
-            white-space: nowrap; /*让文字不换行*/
-            overflow: hidden;
-          }
           .drugSpec {
             margin-top: 10px;
             height: 18px;
@@ -423,21 +416,6 @@ export default {
             color: rgba(250, 73, 73, 1);
             margin-left: 23px;
           }
-          .failureInfo {
-          }
-        }
-        .failure {
-          width: 40px;
-          height: 18px;
-          line-height: 18px;
-          border-radius: 9px;
-          background: #a3a3a3;
-          font-size: 10px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: rgba(255, 255, 255, 1);
-          text-align: center;
-          margin-right: 2px;
         }
       }
     }
@@ -480,7 +458,7 @@ export default {
             line-height: 28px;
             border-radius: 14px;
             text-align: center;
-            margin-left: 20px;
+            margin-left: 10px;
             font-size: 13px;
             font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;
