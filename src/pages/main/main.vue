@@ -1,7 +1,17 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar" :backInfo="false">
-      <text slot="title">所打动</text>
+    <tob-bar slot="topBar" :backInfo="''">
+      <!-- <text slot="title"> -->
+      <view slot="title">
+        <input
+          class="search"
+          disabled
+          placeholder="输入商品名、通用名、批准文号"
+          placeholder-class="searchClass"
+        />
+        <icon :type="success" size="26" />
+      </view>
+      <!-- </text> -->
     </tob-bar>
     <view slot="content" class="content">
       <view class="main">
@@ -359,5 +369,21 @@ export default {
       }
     }
   }
+}
+.search {
+  width: 100%;
+  height: 30px;
+  background: rgba(137, 174, 255, 1);
+  border-radius: 17px;
+}
+.searchClass {
+  margin-left: 30px;
+  width: 168px;
+  height: 17px;
+  font-size: 12px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  line-height: 17px;
 }
 </style>

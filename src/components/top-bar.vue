@@ -4,17 +4,22 @@
       class="uni-page-head"
       style="background-color: #fff; color: rgb(0, 0, 0);"
     >
-      <view class="uni-page-head-ft" v-show="backInfo">
+      <view class="uni-page-head-ft">
+        <!-- <img src="static/main/home_scan.svg" alt class="reback" @click="goBack" /> -->
         <view
           class="uni-page-head-btn"
           style="background-color: transparent; width: 29px;"
+          v-show="backInfo === '' ? false : true"
+          @click="goBack"
         >
-          <img
-            src="static/icon/commodityDetails/reback.svg"
-            class="reback"
-            @click="goBack"
-          />
+          <img src="static/icon/commodityDetails/reback.svg" class="reback" />
         </view>
+        <!-- <view
+          class="uni-page-head-btn"
+          style="background-color: transparent; width: 29px;"
+        >
+          <img src="static/main/home_scan.svg" class="reback" />
+        </view> -->
       </view>
       <view class="uni-page-head-bd">
         <view class="uni-page-head__title" style="font-size: 16px; opacity: 1;">
@@ -31,12 +36,12 @@
         >
           <!-- {{ backInfo }} -->
         </view>
-        <view
+        <!-- <view
           class="uni-page-head-btn"
           style="background-color: transparent; width: 29px;"
         >
           hello
-        </view>
+        </view> -->
       </view>
     </view>
     <view class="uni-placeholder"></view>
