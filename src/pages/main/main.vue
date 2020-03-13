@@ -3,13 +3,12 @@
     <tob-bar slot="topBar" :backInfo="''">
       <!-- <text slot="title"> -->
       <view slot="title">
-        <input
+        <!-- <input
           class="search"
           disabled
           placeholder="输入商品名、通用名、批准文号"
           placeholder-class="searchClass"
-        />
-        <icon :type="success" size="26" />
+        /> -->
       </view>
       <!-- </text> -->
     </tob-bar>
