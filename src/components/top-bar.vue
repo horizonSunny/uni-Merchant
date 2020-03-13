@@ -6,12 +6,12 @@
         <view
           class="uni-page-head-btn"
           style="background-color: transparent; width: 29px;text-align: left;"
-          @click="goBack"
         >
           <img
             v-show="backInfo === '' ? false : true"
             src="static/icon/commodityDetails/reback.svg"
             class="reback"
+            @click="goBack"
           />
           <slot name="leftIcon" class="reback"></slot>
         </view>

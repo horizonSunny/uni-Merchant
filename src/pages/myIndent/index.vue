@@ -338,7 +338,6 @@ export default {
     },
     // 跳转商品详情页面
     goDetails (item) {
-      console.log(item.tenantPriceId);
       this.$navTo("../myIndent/indentDetails");
     }
   }

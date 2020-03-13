@@ -147,7 +147,6 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import tabBar from "@/components/tab-bar";
 import tobBar from "@/components/top-bar";
 export default {
-  // computed: mapState(["forcedLogin", "hasLogin", "userName"]),
   components: {
     tabBar,
     tobBar
@@ -163,7 +162,6 @@ export default {
     ...mapActions({
       getMainInfo: "GetMainInfo",
       getKeyWord: "GetKeyWord",
-      // 将 `this.add()` 映射为 `this.$store.dispatch('increment')`
     }),
     // 跳转页面
     gotoNextPage (url, parameters) {
