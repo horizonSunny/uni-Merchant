@@ -176,7 +176,7 @@ export default {
   data () {
     return {
       indicatorDots: false,
-      autoplay: false,
+      autoplay: true,
       interval: 2000,
       duration: 500
     };
