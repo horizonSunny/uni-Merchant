@@ -74,14 +74,8 @@
     {
       "path": "pages/smsValidte/smsValidte",
       "style": {
-        "navigationBarTitleText": "",
-        "navigationBarBackgroundColor": "#fff",
-        "app-plus": {
-          "titleNView": {
-            "type": "back",
-            "titleColor": "#000000"
-          }
-        }
+        "navigationStyle": "custom",
+        "navigationBarBackgroundColor": "#fff"
       }
     },
     {

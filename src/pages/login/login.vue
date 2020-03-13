@@ -1,7 +1,7 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
-      <text slot="title">所打动</text>
+    <tob-bar slot="topBar" :styleInfo="{ backgroundColor: '#fff' }">
+      <text slot="title"></text>
     </tob-bar>
     <view slot="content" class="content loginContent">
       <view>
@@ -74,11 +74,6 @@ import { checkMobile } from "utils/validator";
 export default {
   components: {
     mInput
-  },
-  onNavigationBarButtonTap (item) {
-    // 这边绑定是该页面topBar上面的两个button事件
-    console.log("index_", item.index);
-    uni.navigateBack();
   },
   data () {
     return {

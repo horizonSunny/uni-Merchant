@@ -1,26 +1,31 @@
 <template>
-  <view class="content smsContent">
-    <view class="input-row">
-      <text class="title-info">请输入验证码</text>
-    </view>
-    <view class="sms-info">
-      <view>
-        <text class="sms-between">已发送至</text>
-        <text class="sms-between" style="color:#141414">
-          &nbsp;&nbsp; {{ phone }}</text
-        >
+  <body-wrap>
+    <tob-bar slot="topBar" :styleInfo="{ backgroundColor: '#fff' }">
+      <text slot="title"></text>
+    </tob-bar>
+    <view slot="content" class="content smsContent">
+      <view class="input-row">
+        <text class="title-info">请输入验证码</text>
       </view>
-      <view>
-        <text class="sms-between " v-show="show" style="color:#389CFF">
-          &nbsp;&nbsp; {{ count }}秒后重新获取</text
-        >
-        <button type="default" size="mini" v-show="!show" @click="getSms">
-          获取验证码
-        </button>
+      <view class="sms-info">
+        <view>
+          <text class="sms-between">已发送至</text>
+          <text class="sms-between" style="color:#141414">
+            &nbsp;&nbsp; {{ phone }}</text
+          >
+        </view>
+        <view>
+          <text class="sms-between " v-show="show" style="color:#389CFF">
+            &nbsp;&nbsp; {{ count }}秒后重新获取</text
+          >
+          <button type="default" size="mini" v-show="!show" @click="getSms">
+            获取验证码
+          </button>
+        </view>
       </view>
+      <one-input ref="one" type="bottom" @finish="finishedOne"></one-input>
     </view>
-    <one-input ref="one" type="bottom" @finish="finishedOne"></one-input>
-  </view>
+  </body-wrap>
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";

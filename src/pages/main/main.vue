@@ -5,7 +5,12 @@
       :backInfo="''"
       :styleInfo="{ backgroundColor: '#3E79F5' }"
     >
-      <img src="static/main/home_scan.svg" alt="" slot="leftIcon" />
+      <img
+        src="static/main/home_scan.svg"
+        alt=""
+        slot="leftIcon"
+        @click="gotoNextPage('../login/login', {})"
+      />
       <div
         class="uni-page-head-search"
         style="border-radius: 17px; background-color: #89AEFF;height:30px;line-height:30px;"
