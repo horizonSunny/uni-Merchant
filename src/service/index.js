@@ -11,7 +11,7 @@ async function getClassify(params) {
 // 获取主页的各类信息
 async function getMainInfo(params) {
   console.log('in getMainInfo')
-  return http.get('/admin/v1/initPage?tenantId=1')
+  return http.get('/admin/v1/initPage')
 }
 
 // 获取词库信息

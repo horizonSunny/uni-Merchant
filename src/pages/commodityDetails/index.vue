@@ -241,7 +241,7 @@ import {
 export default {
   computed: mapState(["forcedLogin", "hasLogin", "userName"]),
   onLoad (option) {
-    getProductDetails({ tenantPriceId: option.tenantPriceId }).then((res) => {
+    getProductDetails({ productId: option.productId }).then((res) => {
       console.log('commodityDetails_', res.data);
       this.product = res.data.product
       this.tenant = res.data.tenant

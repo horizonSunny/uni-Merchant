@@ -115,7 +115,7 @@
               :key="index"
               @click="
                 gotoNextPage('../commodityDetails/index', {
-                  tenantPriceId: item.tenantPriceId
+                  productId: item.productId
                 })
               "
             >

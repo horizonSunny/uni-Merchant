@@ -484,9 +484,9 @@ export default {
     },
     // 跳转商品详情页面
     toProductDetails (item) {
-      console.log(item.tenantPriceId);
+      console.log(item.productId);
       uni.navigateTo({
-        url: "../commodityDetails/index?tenantPriceId=" + item.tenantPriceId
+        url: "../commodityDetails/index?productId=" + item.productId
       });
     }
   }
