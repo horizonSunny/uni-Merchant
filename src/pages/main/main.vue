@@ -5,12 +5,7 @@
       :backInfo="''"
       :styleInfo="{ backgroundColor: '#3E79F5' }"
     >
-      <!-- <input
-          class="search"
-          disabled
-          placeholder="输入商品名、通用名、批准文号"
-          placeholder-class="searchClass"
-        /> -->
+      <img src="static/main/home_scan.svg" alt="" slot="leftIcon" />
       <div
         class="uni-page-head-search"
         style="border-radius: 17px; background-color: #89AEFF;height:30px;line-height:30px;"
@@ -41,7 +36,7 @@
             </form></div
         ></uni-input>
       </div>
-      <!-- </text> -->
+      <img src="static/main/home_messages.svg" alt="" slot="rightIcon" />
     </tob-bar>
     <view slot="content" class="content">
       <view class="main">

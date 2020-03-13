@@ -5,18 +5,16 @@
         <!-- <img src="static/main/home_scan.svg" alt class="reback" @click="goBack" /> -->
         <view
           class="uni-page-head-btn"
-          style="background-color: transparent; width: 29px;"
-          v-show="backInfo === '' ? false : true"
+          style="background-color: transparent; width: 29px;text-align: left;"
           @click="goBack"
         >
-          <img src="static/icon/commodityDetails/reback.svg" class="reback" />
+          <img
+            v-show="backInfo === '' ? false : true"
+            src="static/icon/commodityDetails/reback.svg"
+            class="reback"
+          />
+          <slot name="leftIcon" class="reback"></slot>
         </view>
-        <!-- <view
-          class="uni-page-head-btn"
-          style="background-color: transparent; width: 29px;"
-        >
-          <img src="static/main/home_scan.svg" class="reback" />
-        </view> -->
       </view>
       <view class="uni-page-head-bd">
         <view class="uni-page-head__title" style="font-size: 16px; opacity: 1;">
@@ -29,16 +27,10 @@
       <view class="uni-page-head-ft">
         <view
           class="uni-page-head-btn"
-          style="background-color: transparent; width: 29px;"
+          style="background-color: transparent; width: 29px; text-align: right;"
         >
-          <!-- {{ backInfo }} -->
+          <slot name="rightIcon" class="reback"></slot>
         </view>
-        <!-- <view
-          class="uni-page-head-btn"
-          style="background-color: transparent; width: 29px;"
-        >
-          hello
-        </view> -->
       </view>
     </view>
     <view class="uni-placeholder"></view>
@@ -69,5 +61,9 @@ export default {
 .reback {
   width: 22px;
   height: 22px;
+}
+uni-page-head .uni-page-head-bd {
+  left: 60px;
+  right: 60px;
 }
 </style>
