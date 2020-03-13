@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getClassify: "GetClassify" // 将 `this.add()` 映射为 `this.$store.dispatch('increment')`
+      getClassify: "GetClassify"
     }),
     change (e) {
       this.current = e.detail.current;

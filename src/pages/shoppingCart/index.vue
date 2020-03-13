@@ -55,7 +55,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      getClassify: "GetClassify"
     }),
     // 改变当前是编辑状态还是完成状态
     reverseEditor () {

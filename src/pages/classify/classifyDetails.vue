@@ -148,7 +148,6 @@ import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-re
 import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
 import * as json from "@/config/json";
 import {
-  searchProductList,
   getCategoryProducts,
   getQuickCategoryProducts
 } from '@/service/index'
@@ -337,7 +336,6 @@ export default {
         func = getQuickCategoryProducts(params)
       }
       func.then(res => {
-        console.log('searchProductList_', res);
         this.productBrands = res.data.productBrands
         // settimeout
         let list = res.data.products

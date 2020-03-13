@@ -1,11 +1,9 @@
 import http from '@/config/axios'
 // 获取药品分类信息
 async function getClassify(params) {
-  console.log('in getClassify')
-  // return http.get('/admin/v1/category/getCategorys', {
-  //   params: params
-  // })
-  return http.get('/admin/v1/category/getCategorys?status=1')
+  return http.get('/admin/v1/category/getCategorys', {
+    params: { status: 1 }
+  })
 }
 
 // 获取主页的各类信息
@@ -23,7 +21,7 @@ async function searchKeyword(params) {
 // 搜索获取药品信息
 async function searchProductList(params) {
   console.log('in getMainInfo')
-  return http.get('/admin/v1/tenantProduct/searchProductList', {
+  return http.get('/admin/v1/searchProductList', {
     params: params
   })
 }

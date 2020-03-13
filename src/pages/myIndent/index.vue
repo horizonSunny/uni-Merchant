@@ -113,7 +113,6 @@ import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load
 import * as json from "@/config/json";
 import { myIndent } from '@/config/test'
 import {
-  searchProductList,
   getCategoryProducts,
   getQuickCategoryProducts
 } from '@/service/index'
@@ -273,7 +272,6 @@ export default {
       //   func = getQuickCategoryProducts(params)
       // }
       // func.then(res => {
-      //   console.log('searchProductList_', res);
       //   this.productBrands = res.data.productBrands
       //   // settimeout
       //   let list = res.data.products

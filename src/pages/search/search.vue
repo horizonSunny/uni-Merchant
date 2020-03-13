@@ -381,7 +381,6 @@ export default {
 
       //异步请求数据
       const params = {
-        tenantId: this.$store.getters.tenant.tenantId,
         keyword: this.searchInfo,
         sale: this.sale,
         price: this.price,
@@ -392,7 +391,6 @@ export default {
         pageSize: this.pageSize
       }
       searchProductList(params).then(res => {
-        console.log('searchProductList_', res);
         this.productBrands = res.data.productBrands
         this.historySearch = false
         this.searchKeyWord = false
