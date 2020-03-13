@@ -1,9 +1,6 @@
 <template>
-  <uni-page-head uni-page-head-type="default" style="position:relative">
-    <view
-      class="uni-page-head"
-      style="background-color: #fff; color: rgb(0, 0, 0);"
-    >
+  <uni-page-head uni-page-head-type="default" style="position:relative;">
+    <view class="uni-page-head" :style="styleInfo">
       <view class="uni-page-head-ft">
         <!-- <img src="static/main/home_scan.svg" alt class="reback" @click="goBack" /> -->
         <view
@@ -52,7 +49,7 @@ export default {
   // created(){
 
   // },
-  props: ['backInfo'],
+  props: ['backInfo', 'styleInfo'],
   data () {
     return {
       // goBack: true

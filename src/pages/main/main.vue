@@ -1,15 +1,46 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar" :backInfo="''">
-      <!-- <text slot="title"> -->
-      <view slot="title">
-        <!-- <input
+    <tob-bar
+      slot="topBar"
+      :backInfo="''"
+      :styleInfo="{ backgroundColor: '#3E79F5' }"
+    >
+      <!-- <input
           class="search"
           disabled
           placeholder="输入商品名、通用名、批准文号"
           placeholder-class="searchClass"
         /> -->
-      </view>
+      <div
+        class="uni-page-head-search"
+        style="border-radius: 17px; background-color: #89AEFF;height:30px;line-height:30px;"
+        slot="title"
+      >
+        <div
+          class="uni-page-head-search-placeholder uni-page-head-search-placeholder-center searchClass"
+        >
+          请输入商品名、通用名、批准文号
+        </div>
+        <uni-input
+          class="uni-page-head-search-input"
+          style="color: rgb(0, 0, 0);"
+          ><div class="uni-input-wrapper">
+            <div
+              class="uni-input-placeholder"
+              style="color: rgb(204, 204, 204);"
+            ></div>
+            <form action="" class="uni-input-form">
+              <input
+                disabled="disabled"
+                maxlength="140"
+                step=""
+                autocomplete="off"
+                type="search"
+                class="uni-input-input"
+              />
+            </form></div
+        ></uni-input>
+      </div>
       <!-- </text> -->
     </tob-bar>
     <view slot="content" class="content">
@@ -376,13 +407,21 @@ export default {
   border-radius: 17px;
 }
 .searchClass {
-  margin-left: 30px;
-  width: 168px;
-  height: 17px;
   font-size: 12px;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(255, 255, 255, 1);
-  line-height: 17px;
+}
+.uni-page-head-search-placeholder:before {
+  position: absolute;
+  top: 0;
+  left: 2px;
+  width: 30px;
+  content: "\ea0e";
+  display: block;
+  font-size: 20px;
+  font-family: uni;
+  text-align: center;
+  font-size: 15px;
 }
 </style>
