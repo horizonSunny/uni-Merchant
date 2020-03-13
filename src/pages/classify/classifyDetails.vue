@@ -320,8 +320,6 @@ export default {
 
       //异步请求数据,根据三级分类找到到
       const params = {
-        tenantId: this.$store.getters.tenant.tenantId,
-        // categoryId: this.categoryId,
         sale: this.sale,
         price: this.price,
         productType: this.confirmSelected.medicineType,

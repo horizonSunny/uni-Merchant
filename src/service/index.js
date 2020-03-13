@@ -30,20 +30,19 @@ async function searchProductList(params) {
 // 根据分类信息获取产品数据
 async function getCategoryProducts(params) {
   console.log('in getCategoryProducts')
-  return http.get('/admin/v1/tenantProduct/getCategoryProducts', {
+  return http.get('/admin/v1/getCategoryProducts', {
     params: params
   })
 }
 // 根据快速分类找药
 async function getQuickCategoryProducts(params) {
   console.log('in getQuickCategoryProducts')
-  return http.get('/admin/v1/tenantProduct/getQuickCategoryProducts', {
+  return http.get('/admin/v1/getQuickCategoryProducts', {
     params: params
   })
 }
 // 查看商品详情页面
 async function getProductDetails(params) {
-  console.log('in getProductDetails')
   return http.get('/admin/v1/getProductDetails', {
     params: params
   })
