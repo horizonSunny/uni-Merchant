@@ -1,6 +1,11 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
+    <tob-bar
+      slot="topBar"
+      backInfo="white"
+      jumpButton="white"
+      :styleInfo="{ backgroundColor: '#3E79F5' }"
+    >
       <text slot="title">店铺简介</text>
     </tob-bar>
     <view class="content" slot="content">

@@ -2,7 +2,8 @@
   <body-wrap>
     <tob-bar
       slot="topBar"
-      :backInfo="''"
+      backInfo=""
+      jumpButton=""
       :styleInfo="{ backgroundColor: '#3E79F5' }"
     >
       <img
