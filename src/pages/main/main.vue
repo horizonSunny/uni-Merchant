@@ -10,6 +10,7 @@
         class="uni-page-head-search"
         style="border-radius: 17px; background-color: #89AEFF;height:30px;line-height:30px;"
         slot="title"
+        @click="gotoNextPage('../search/search', {})"
       >
         <div
           class="uni-page-head-search-placeholder uni-page-head-search-placeholder-center searchClass"
@@ -45,7 +46,10 @@
             <img :src="tenant.tenantLogo" alt="" class="merchantIcon" />
             <text>{{ tenant.tenantName }}</text>
           </view>
-          <view class="merchantSkip" @click="toDrugIntr">
+          <view
+            class="merchantSkip"
+            @click="gotoNextPage('../merchantsIntr/merchantsIntr', {})"
+          >
             <img src="static/icon/main/home_right-1.svg" alt="" />
           </view>
         </view>
@@ -72,7 +76,10 @@
             <text class="title">
               快速找药
             </text>
-            <view class="medicineOperate" @click="goClassify">
+            <view
+              class="medicineOperate"
+              @click="gotoNextPage('../classify/classify', {})"
+            >
               <text class="operate">
                 全部药品
               </text>
@@ -84,7 +91,11 @@
               class="classifyItem"
               v-for="(item, index) in quickCategorys"
               :key="index"
-              @click="toClassify(item)"
+              @click="
+                gotoNextPage('../classify/classifyDetails', {
+                  quickCategoryId: item.quickCategoryId
+                })
+              "
             >
               <img :src="item.image" alt="" />
               <text>{{ item.categoryName }}</text>
@@ -102,7 +113,11 @@
               class="contentItem"
               v-for="(item, index) in products"
               :key="index"
-              @click="toProductDetails(item)"
+              @click="
+                gotoNextPage('../commodityDetails/index', {
+                  tenantPriceId: item.tenantPriceId
+                })
+              "
             >
               <img :src="item.productImage[0]" alt="" />
               <view class="productDetails">
@@ -144,48 +159,16 @@ export default {
     this.getMainInfo()
     // this.getKeyWord()
   },
-  onNavigationBarButtonTap (item) {
-    // 这边绑定是该页面topBar上面的两个button事件
-    console.log("index_", item.index);
-  },
-  // 输入框点击事件
-  onNavigationBarSearchInputClicked (e) {
-    // this.$api.msg('点击了搜索框');
-    uni.navigateTo({
-      url: "../search/search"
-    });
-  },
   methods: {
     ...mapActions({
       getMainInfo: "GetMainInfo",
       getKeyWord: "GetKeyWord",
       // 将 `this.add()` 映射为 `this.$store.dispatch('increment')`
     }),
-    // 跳转药品简介页面
-    toDrugIntr () {
-      console.log("toDrugIntr_");
-      uni.navigateTo({
-        url: "../merchantsIntr/merchantsIntr"
-      });
+    // 跳转页面
+    gotoNextPage (url, parameters) {
+      this.$navTo(url, parameters);
     },
-    goClassify () {
-      console.log("goClassify_");
-      this.$navTo("../classify/classify");
-    },
-    // 跳转快速分类页面
-    toClassify (item) {
-      console.log('item_', item);
-      uni.navigateTo({
-        url: "../classify/classifyDetails?quickCategoryId=" + item.quickCategoryId
-      });
-    },
-    // 跳转商品详情页面
-    toProductDetails (item) {
-      console.log(item.tenantPriceId);
-      uni.navigateTo({
-        url: "../commodityDetails/index?tenantPriceId=" + item.tenantPriceId
-      });
-    }
   },
   data () {
     return {
