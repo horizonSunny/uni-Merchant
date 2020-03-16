@@ -50,7 +50,7 @@
         slot="rightIcon"
         v-if="searchFocusInfo"
         style="font-size:16px;"
-        @click="searchConfirm"
+        @click="onSearchInputConfirmed"
       >
         搜索
       </div>
@@ -87,12 +87,7 @@
             <li
               v-for="(item, index) in keyLibrary"
               :key="index"
-              @click="
-                () => {
-                  this.searchInfo = item.keyword;
-                  this.loadNewsList();
-                }
-              "
+              @click="onSearchInputConfirmed(item)"
             >
               {{ item.keyword }}
             </li>
@@ -308,7 +303,8 @@ export default {
       enableScroll: true,
       // jumpButtonInfo
       jumpButtonInfo: 'white',
-      searchFocusInfo: false
+      searchFocusInfo: false,
+      searchValue: ''
     };
   },
   methods: {
@@ -543,6 +539,7 @@ export default {
         this.historySearch = true
         this.filtrateSelected = false
       } else {
+        this.searchInfo = item.detail.value
         this.filtrateSelected = false
         this.productListShow = false
         this.historySearch = false
@@ -557,7 +554,11 @@ export default {
     },
     //监听原生标题栏搜索输入框搜索事件，用户点击软键盘上的“搜索”按钮时触发。
     onSearchInputConfirmed (item) {
-      this.searchInfo = item.detail.value
+      // if (typeof (item) !== String) {
+      //   this.searchInfo = item.detail.value
+      // }
+      console.log('item_', item);
+
       this.loadNewsList();
     },
   }
