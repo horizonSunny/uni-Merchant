@@ -1,7 +1,11 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
-      <text slot="title">订单详情</text>
+    <tob-bar
+      slot="topBar"
+      :styleInfo="{ backgroundColor: '#fff' }"
+      jumpButton="black"
+    >
+      <text slot="title" style="color:#000">订单详情</text>
     </tob-bar>
     <view slot="content" class="content">
       <view class="indent">

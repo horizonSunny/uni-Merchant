@@ -1,7 +1,17 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
-      <text slot="title">我的订单</text>
+    <tob-bar
+      slot="topBar"
+      :styleInfo="{ backgroundColor: '#fff' }"
+      jumpButton="black"
+    >
+      <text slot="title" style="color:#000">我的订单</text>
+      <img
+        src="static/icon/main/D_search.svg"
+        alt=""
+        slot="rightIcon"
+        @click="gotoNextPage('../search/search', {})"
+      />
     </tob-bar>
     <view slot="content" class="content">
       <!-- <view v-if="hasLogin" class="hello"> -->
@@ -337,6 +347,10 @@ export default {
     // 跳转商品详情页面
     goDetails (item) {
       this.$navTo("../myIndent/indentDetails");
+    },
+    // 跳转页面
+    gotoNextPage (url, parameters) {
+      this.$navTo(url, parameters);
     }
   }
 };
@@ -349,6 +363,7 @@ export default {
   flex-direction: column;
   background: #fafafe;
   height: 100%;
+  border-top: 2px solid #f3f3f3;
   .historySearch {
     padding: 28px 10px 15px;
     .classifyTitle {

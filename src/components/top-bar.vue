@@ -35,8 +35,15 @@
         >
           <slot name="rightIcon" class="reback"></slot>
           <img
-            v-show="jumpButton === '' ? false : true"
-            :src="jumpButton === 'white' ? '/static/icon/main/dian.svg' : ''"
+            v-show="jumpButton === 'white'"
+            src="/static/icon/main/dian.svg"
+            class="reback"
+            style="margin-left:18px"
+            @click="showPage"
+          />
+          <img
+            v-show="jumpButton === 'black'"
+            src="/static/icon/commodityDetails/more.svg"
             class="reback"
             style="margin-left:18px"
             @click="showPage"
