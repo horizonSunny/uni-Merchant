@@ -4,7 +4,6 @@
       slot="topBar"
       :styleInfo="{ backgroundColor: '#fff' }"
       jumpButton=""
-      backInfo=""
     >
       <text slot="title" style="color:#000">购物车</text>
     </tob-bar>
