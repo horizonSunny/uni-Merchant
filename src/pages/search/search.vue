@@ -530,8 +530,6 @@ export default {
         this.searchFocusInfo = false
       }
     },
-    // 确认搜索
-    searchConfirm (e) { },
     // 监听原生标题栏搜索输入框输入内容变化事件
     onSearchInputChanged (item) {
       // console.log('item_', item);
