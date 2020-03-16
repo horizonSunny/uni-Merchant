@@ -31,13 +31,14 @@
       <view class="uni-page-head-ft">
         <view
           class="uni-page-head-btn"
-          style="background-color: transparent; width: 29px; text-aviewgn: right;"
+          style="background-color: transparent;  text-align: right;"
         >
           <slot name="rightIcon" class="reback"></slot>
           <img
             v-show="jumpButton === '' ? false : true"
             :src="jumpButton === 'white' ? '/static/icon/main/dian.svg' : ''"
             class="reback"
+            style="margin-left:18px"
             @click="showPage"
           />
         </view>
@@ -165,5 +166,9 @@ export default {
 uni-page-head .uni-page-head-bd {
   left: 60px;
   right: 60px;
+}
+uni-page-head .uni-page-head-ft {
+  height: 30px;
+  line-height: 30px;
 }
 </style>

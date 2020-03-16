@@ -1,7 +1,26 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
-      <text slot="title">所打动</text>
+    <tob-bar
+      slot="topBar"
+      :styleInfo="{ backgroundColor: '#fff' }"
+      jumpButton=""
+    >
+      <text
+        slot="title"
+        style="
+          font-size:16px;
+          font-family:PingFangSC-Medium,PingFang SC;
+          font-weight:500;
+          color:rgba(27,27,27,1);
+          "
+        >全部药品</text
+      >
+      <img
+        src="static/icon/main/D_search.svg"
+        alt=""
+        slot="rightIcon"
+        @click="gotoNextPage('../search/search', {})"
+      />
     </tob-bar>
     <view slot="content" class="content">
       <view class="siderBar">
@@ -85,10 +104,18 @@ export default {
     // 跳转三级分类页面
     toClassify (item) {
       console.log('item_', item);
-      uni.navigateTo({
-        url: "../classify/classifyDetails?categoryId=" + item.id
+      // uni.navigateTo({
+      //   url: "../classify/classifyDetails?categoryId=" + item.id
+      // });
+      this.$navTo('../classify/classifyDetails', {
+        categoryId: item.id,
+        cateName: item.cateName
       });
-    }
+    },
+    // 跳转页面
+    gotoNextPage (url, parameters) {
+      this.$navTo(url, parameters);
+    },
   }
 };
 </script>
@@ -100,6 +127,7 @@ export default {
   width: 100%;
   background: #fff;
   overflow: hidden;
+  border-top: 1px solid #d4d4d4;
   .siderBar {
     width: 25%;
     text-align: center;

@@ -1,7 +1,18 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
-      <text slot="title">所打动</text>
+    <tob-bar
+      slot="topBar"
+      backInfo="white"
+      jumpButton="white"
+      :styleInfo="{ backgroundColor: '#3E79F5' }"
+    >
+      <text slot="title">{{ cateName }}</text>
+      <img
+        src="/static/classify/classification_search2.svg"
+        alt=""
+        slot="rightIcon"
+        @click="gotoNextPage('../search/search', {})"
+      />
     </tob-bar>
     <view slot="content" class="content">
       <!-- <view v-if="hasLogin" class="hello"> -->
@@ -169,6 +180,9 @@ export default {
     } else if (option.quickCategoryId) {
       this.quickCategoryId = option.quickCategoryId
     }
+    if (option.cateName) {
+      this.cateName = option.cateName
+    }
     this.loadTabbars();
   },
   onNavigationBarButtonTap (item) {
@@ -214,6 +228,7 @@ export default {
       tabCurrentIndex: 0,
       tabBars: [],
       enableScroll: true,
+      cateName: ''
     };
   },
   methods: {
@@ -427,6 +442,9 @@ export default {
       uni.navigateTo({
         url: "../commodityDetails/index?productId=" + item.productId
       });
+    },
+    gotoNextPage (url, parameters) {
+      this.$navTo(url, parameters);
     }
   }
 };
