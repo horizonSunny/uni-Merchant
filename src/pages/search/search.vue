@@ -1,187 +1,230 @@
 <template>
-  <view class="content">
-    <!-- <view v-if="hasLogin" class="hello"> -->
-    <view class="main">
-      <!-- 清除搜索框 -->
-      <view
-        class="historySearch"
-        style="background-color:#fff;width:100%"
-        v-if="historySearch"
+  <body-wrap>
+    <tob-bar
+      slot="topBar"
+      backInfo="white"
+      :jumpButton="jumpButtonInfo"
+      :styleInfo="{ backgroundColor: '#3E79F5' }"
+    >
+      <div
+        class="uni-page-head-search"
+        style="border-radius: 17px; background-color: #89AEFF;height:30px;line-height:30px;"
+        slot="title"
       >
-        <view class="classifyTitle">
-          <text class="title">
-            历史记录
-          </text>
-          <view class="medicineOperate">
-            <img src="static/icon/search/Search_delete.svg" alt="" />
-          </view>
-        </view>
-        <view class="classifyDetails">
-          <view
-            class="classifyItem"
-            v-for="(item, index) in medicineClassify"
-            :key="index"
-          >
-            <text>{{ item.name }}</text>
-          </view>
-        </view>
-      </view>
-      <view class="debounce" v-if="searchKeyWord">
-        <ul>
-          <li
-            v-for="(item, index) in keyLibrary"
-            :key="index"
-            @click="
-              () => {
-                this.searchInfo = item.keyword;
-                this.loadNewsList();
-              }
-            "
-          >
-            {{ item.keyword }}
-          </li>
-        </ul>
-      </view>
-      <view
-        id="nav-bar"
-        class="nav-bar"
-        style="width :100%;"
-        v-if="productListShow"
-      >
-        <view
-          v-for="(item, index) in tabBars"
-          :key="item.id"
-          class="nav-item"
-          :class="{ current: index === tabCurrentIndex }"
-          :id="'tab' + index"
-          @click="changeTab(index)"
-          >{{ item.name }}</view
+        <div
+          class="uni-page-head-search-placeholder uni-page-head-search-placeholder-center searchClass"
         >
+          请输入商品名、通用名、批准文号
+        </div>
+        <uni-input
+          class="uni-page-head-search-input"
+          style="color: rgb(0, 0, 0);"
+          ><div class="uni-input-wrapper">
+            <div
+              class="uni-input-placeholder"
+              style="color: rgb(204, 204, 204);"
+            ></div>
+            <form action="" class="uni-input-form">
+              <input
+                disabled="disabled"
+                maxlength="140"
+                step=""
+                autocomplete="off"
+                type="search"
+                class="uni-input-input"
+              />
+            </form></div
+        ></uni-input>
+      </div>
+    </tob-bar>
+    <view class="content">
+      <!-- <view v-if="hasLogin" class="hello"> -->
+      <view class="main">
+        <!-- 清除搜索框 -->
         <view
-          class="nav-item"
-          :class="{ current: filtrateSelected }"
-          @click="filtrateClick"
+          class="historySearch"
+          style="background-color:#fff;width:100%"
+          v-if="historySearch"
         >
-          筛选
-          <img
-            class="filtrate "
-            v-show="!filtrateSelected"
-            src="static/icon/search/filtrate.svg"
-            alt=""
-          />
-          <img
-            class="filtrate"
-            src="static/icon/search/filtrateSelected.svg"
-            v-show="filtrateSelected"
-            alt=""
-          />
-        </view>
-      </view>
-      <view
-        class="filtrateShow historySearch"
-        v-if="filtrateSelected && productListShow"
-      >
-        <view>
-          <view class="filtrateCond">
-            <view class="classifyTitle">
-              <text class="title">
-                类型
-              </text>
-            </view>
-            <view class="classifyDetails filtrateDetails">
-              <view
-                class="classifyItem"
-                :class="medicineType === item.type ? 'selected' : ''"
-                v-for="(item, index) in medicineClassify"
-                :key="index"
-                @click="medicineType = item.type"
-              >
-                <text>{{ item.name }}</text>
-              </view>
-            </view>
-            <view class="classifyTitle">
-              <text class="title">
-                品牌
-              </text>
-            </view>
-            <view class="classifyDetails filtrateDetails">
-              <view
-                class="classifyItem"
-                :class="selectBrands.indexOf(item) > -1 ? 'selected' : ''"
-                v-for="(item, index) in productBrands"
-                :key="index"
-                @click="selectedInfo(selectBrands, item)"
-              >
-                <text>{{ item }}</text>
-              </view>
+          <view class="classifyTitle">
+            <text class="title">
+              历史记录
+            </text>
+            <view class="medicineOperate">
+              <img src="static/icon/search/Search_delete.svg" alt="" />
             </view>
           </view>
-          <view class="filtrateOpearte">
-            <button @click="reset">
-              重置
-            </button>
-            <button @click="confirm" type="primary">确定</button>
-          </view>
-        </view>
-        <view
-          class="filtrateShade"
-          @click="() => (this.filtrateSelected = false)"
-        ></view>
-      </view>
-      <!-- 下拉刷新组件 -->
-      <mix-pulldown-refresh
-        ref="mixPulldownRefresh"
-        class="panel-content"
-        :top="90"
-        @refresh="onPulldownReresh"
-        @setEnableScroll="setEnableScroll"
-        v-if="productListShow"
-      >
-        <!-- 内容部分 -->
-        <swiper
-          id="swiper"
-          class="swiper-box swiperInfo"
-          :duration="300"
-          :current="tabCurrentIndex"
-          @change="changeTab"
-        >
-          <swiper-item v-for="tabItem in tabBars" :key="tabItem.id">
-            <scroll-view
-              class="panel-scroll-box"
-              :scroll-y="enableScroll"
-              @scrolltolower="loadMore"
+          <view class="classifyDetails">
+            <view
+              class="classifyItem"
+              v-for="(item, index) in medicineClassify"
+              :key="index"
             >
-              <view
-                v-for="(itemInfo, indexInfo) in tabItem.newsList"
-                :key="indexInfo"
-                class="drugsDetails"
-                @click="toProductDetails(itemInfo)"
-              >
-                <img
-                  src="../../static/icon/main/Product-Bitmap@2x.png"
-                  alt=""
-                />
-                <view class="drugsInfo">
-                  <view class="drugName">
-                    <text class="mark" v-show="itemInfo.isMp === 0">OTC</text>
-                    <text class="mark" v-show="itemInfo.isMp === 1">双规</text>
-                    <text class="mark" v-show="itemInfo.isMp === 2">RX</text>
-                    <text class="mark" v-show="itemInfo.isMp === 3">其他</text>
-                    <text>{{ itemInfo.productName }}</text>
-                  </view>
-                  <view class="drugSpec">{{ itemInfo.productSpecif }}</view>
-                  <view class="drugSpec">{{ itemInfo.approvalNumber }}</view>
-                  <view class="drugPrice">¥ {{ itemInfo.price }}</view>
+              <text>{{ item.name }}</text>
+            </view>
+          </view>
+        </view>
+        <view class="debounce" v-if="searchKeyWord">
+          <ul>
+            <li
+              v-for="(item, index) in keyLibrary"
+              :key="index"
+              @click="
+                () => {
+                  this.searchInfo = item.keyword;
+                  this.loadNewsList();
+                }
+              "
+            >
+              {{ item.keyword }}
+            </li>
+          </ul>
+        </view>
+        <view
+          id="nav-bar"
+          class="nav-bar"
+          style="width :100%;"
+          v-if="productListShow"
+        >
+          <view
+            v-for="(item, index) in tabBars"
+            :key="item.id"
+            class="nav-item"
+            :class="{ current: index === tabCurrentIndex }"
+            :id="'tab' + index"
+            @click="changeTab(index)"
+            >{{ item.name }}</view
+          >
+          <view
+            class="nav-item"
+            :class="{ current: filtrateSelected }"
+            @click="filtrateClick"
+          >
+            筛选
+            <img
+              class="filtrate "
+              v-show="!filtrateSelected"
+              src="static/icon/search/filtrate.svg"
+              alt=""
+            />
+            <img
+              class="filtrate"
+              src="static/icon/search/filtrateSelected.svg"
+              v-show="filtrateSelected"
+              alt=""
+            />
+          </view>
+        </view>
+        <view
+          class="filtrateShow historySearch"
+          v-if="filtrateSelected && productListShow"
+        >
+          <view>
+            <view class="filtrateCond">
+              <view class="classifyTitle">
+                <text class="title">
+                  类型
+                </text>
+              </view>
+              <view class="classifyDetails filtrateDetails">
+                <view
+                  class="classifyItem"
+                  :class="medicineType === item.type ? 'selected' : ''"
+                  v-for="(item, index) in medicineClassify"
+                  :key="index"
+                  @click="medicineType = item.type"
+                >
+                  <text>{{ item.name }}</text>
                 </view>
               </view>
-              <!-- 上滑加载更多组件 -->
-              <mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
-            </scroll-view>
-          </swiper-item>
-        </swiper>
-      </mix-pulldown-refresh>
+              <view class="classifyTitle">
+                <text class="title">
+                  品牌
+                </text>
+              </view>
+              <view class="classifyDetails filtrateDetails">
+                <view
+                  class="classifyItem"
+                  :class="selectBrands.indexOf(item) > -1 ? 'selected' : ''"
+                  v-for="(item, index) in productBrands"
+                  :key="index"
+                  @click="selectedInfo(selectBrands, item)"
+                >
+                  <text>{{ item }}</text>
+                </view>
+              </view>
+            </view>
+            <view class="filtrateOpearte">
+              <button @click="reset">
+                重置
+              </button>
+              <button @click="confirm" type="primary">确定</button>
+            </view>
+          </view>
+          <view
+            class="filtrateShade"
+            @click="() => (this.filtrateSelected = false)"
+          ></view>
+        </view>
+        <!-- 下拉刷新组件 -->
+        <mix-pulldown-refresh
+          ref="mixPulldownRefresh"
+          class="panel-content"
+          :top="90"
+          @refresh="onPulldownReresh"
+          @setEnableScroll="setEnableScroll"
+          v-if="productListShow"
+        >
+          <!-- 内容部分 -->
+          <swiper
+            id="swiper"
+            class="swiper-box swiperInfo"
+            :duration="300"
+            :current="tabCurrentIndex"
+            @change="changeTab"
+          >
+            <swiper-item v-for="tabItem in tabBars" :key="tabItem.id">
+              <scroll-view
+                class="panel-scroll-box"
+                :scroll-y="enableScroll"
+                @scrolltolower="loadMore"
+              >
+                <view
+                  v-for="(itemInfo, indexInfo) in tabItem.newsList"
+                  :key="indexInfo"
+                  class="drugsDetails"
+                  @click="toProductDetails(itemInfo)"
+                >
+                  <img
+                    src="../../static/icon/main/Product-Bitmap@2x.png"
+                    alt=""
+                  />
+                  <view class="drugsInfo">
+                    <view class="drugName">
+                      <text class="mark" v-show="itemInfo.isMp === 0">OTC</text>
+                      <text class="mark" v-show="itemInfo.isMp === 1"
+                        >双规</text
+                      >
+                      <text class="mark" v-show="itemInfo.isMp === 2">RX</text>
+                      <text class="mark" v-show="itemInfo.isMp === 3"
+                        >其他</text
+                      >
+                      <text>{{ itemInfo.productName }}</text>
+                    </view>
+                    <view class="drugSpec">{{ itemInfo.productSpecif }}</view>
+                    <view class="drugSpec">{{ itemInfo.approvalNumber }}</view>
+                    <view class="drugPrice">¥ {{ itemInfo.price }}</view>
+                  </view>
+                </view>
+                <!-- 上滑加载更多组件 -->
+                <mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
+              </scroll-view>
+            </swiper-item>
+          </swiper>
+        </mix-pulldown-refresh>
+      </view>
     </view>
-  </view>
+  </body-wrap>
 </template>
 
 <script>
@@ -277,6 +320,8 @@ export default {
       tabCurrentIndex: 0,
       tabBars: [],
       enableScroll: true,
+      // jumpButtonInfo
+      jumpButtonInfo: 'white'
     };
   },
   methods: {
@@ -740,5 +785,23 @@ export default {
       border-bottom: 2px solid #000;
     }
   }
+}
+.searchClass {
+  font-size: 12px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+}
+.uni-page-head-search-placeholder:before {
+  position: absolute;
+  top: 0;
+  left: 2px;
+  width: 30px;
+  content: "\ea0e";
+  display: block;
+  font-size: 20px;
+  font-family: uni;
+  text-align: center;
+  font-size: 15px;
 }
 </style>

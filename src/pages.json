@@ -32,29 +32,8 @@
     {
       "path": "pages/search/search",
       "style": {
-        "navigationBarBackgroundColor": "#3A74F1",
-        "app-plus": {
-          "titleNView": {
-            "searchInput": {
-              "align": "center",
-              "backgroundColor": "#fff",
-              "borderRadius": "17px", // 只能用px作单位
-              "placeholder": "输入商品名，通用名，批准文号",
-              "width": "200px",
-              "fontSize": "22px",
-              "placeholderColor": "#C4C4C4"
-            },
-            "buttons": [{
-              "color": "#fff",
-              "colorPressed": "#eee",
-              "float": "right",
-              "fontSize": "22px",
-              "width": "29px",
-              "fontSrc": "/static/fontIcon/iconfont.ttf", // 字体文件
-              "text": "\ue603" // 字体图标\u 开头，加上字体图标unicode后面四位
-            }]
-          }
-        }
+        "navigationStyle": "custom",
+        "navigationBarBackgroundColor": "#fff"
       }
     },
     {
