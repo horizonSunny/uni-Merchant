@@ -1,7 +1,12 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
-      <text slot="title">所打动</text>
+    <tob-bar
+      slot="topBar"
+      :styleInfo="{ backgroundColor: '#fff' }"
+      jumpButton=""
+      backInfo=""
+    >
+      <text slot="title" style="color:#000">购物车</text>
     </tob-bar>
     <view slot="content" class="content">
       <!-- 假如购物车有东西 -->
