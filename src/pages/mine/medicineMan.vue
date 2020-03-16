@@ -1,7 +1,11 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
-      <text slot="title">用药人</text>
+    <tob-bar
+      slot="topBar"
+      :styleInfo="{ backgroundColor: '#fff' }"
+      jumpButton=""
+    >
+      <text slot="title" style="color:#000">用药人</text>
     </tob-bar>
     <view slot="content" class="content">
       <view class="userInfo" v-for="(item, index) in userInfo" :key="index">

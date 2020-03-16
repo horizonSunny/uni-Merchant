@@ -1,7 +1,13 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
+    <tob-bar
+      slot="topBar"
+      backInfo="white"
+      jumpButton=""
+      :styleInfo="{ backgroundColor: '#3E79F5' }"
+    >
       <text slot="title">个人中心</text>
+      <img src="static/main/home_messages.svg" alt="" slot="rightIcon" />
     </tob-bar>
     <view slot="content" class="content">
       <view class="head">
