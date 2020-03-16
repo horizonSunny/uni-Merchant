@@ -1,6 +1,10 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar" :styleInfo="{ backgroundColor: '#fff' }">
+    <tob-bar
+      slot="topBar"
+      :styleInfo="{ backgroundColor: '#fff' }"
+      jumpButton=""
+    >
       <text slot="title"></text>
     </tob-bar>
     <view slot="content" class="content smsContent">

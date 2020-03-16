@@ -15,7 +15,7 @@
                 : '/static/icon/commodityDetails/reback.svg'
             "
             class="reback"
-            @cviewck="goBack"
+            @click="goBack"
           />
           <slot name="leftIcon" class="reback"></slot>
         </view>
