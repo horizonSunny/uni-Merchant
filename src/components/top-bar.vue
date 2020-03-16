@@ -8,7 +8,7 @@
           style="background-color: transparent; width: 29px;text-aviewgn: left;"
         >
           <img
-            v-show="backInfo === '' ? false : true"
+            v-show="backInfo !== '' && this.pageStack.length > 1"
             :src="
               backInfo === 'white'
                 ? '/static/main/fanhui.svg'
@@ -67,6 +67,10 @@ export default {
 
   // },
   props: ['backInfo', 'styleInfo', 'jumpButton'],
+  created () {
+    this.pageStack = getCurrentPages()
+    console.log('this.getCurrentPages()_', getCurrentPages());
+  },
   data () {
     return {
       // goBack: true
@@ -94,7 +98,8 @@ export default {
         name: '我的',
         img: '/static/icon/main/D_my.svg'
       }],
-      jumpPageShow: false
+      jumpPageShow: false,
+      pageStack: ''
     }
   },
   methods: {
