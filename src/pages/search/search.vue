@@ -55,7 +55,7 @@
         搜索
       </div>
     </tob-bar>
-    <view class="content">
+    <view class="content" slot="content">
       <!-- <view v-if="hasLogin" class="hello"> -->
       <view class="main">
         <!-- 清除搜索框 -->
