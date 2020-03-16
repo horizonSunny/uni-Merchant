@@ -34,6 +34,8 @@
                 class="uni-input-input"
                 @focus="searchFocus"
                 @blur="searchBlur"
+                @input="onSearchInputChanged"
+                @confirm="onSearchInputConfirmed"
               />
             </form></div
         ></uni-input>
@@ -265,38 +267,6 @@ export default {
   },
   async onLoad () {
     this.loadTabbars();
-  },
-  onNavigationBarButtonTap (item) {
-    // 这边绑定是该页面topBar上面的两个button事件
-    console.log("index_search_", item.index);
-    uni.hideKeyboard();
-  },
-  // 监听原生标题栏搜索输入框输入内容变化事件
-  onNavigationBarSearchInputChanged (item) {
-    if (item.text === "") {
-      this.historySearch = true
-      this.filtrateSelected = false
-    } else {
-      this.filtrateSelected = false
-      this.productListShow = false
-      this.historySearch = false
-      this.searchKeyWord = true
-      console.log('this.searchLibrary_', this.searchLibrary);
-
-      this.keyLibrary = this.searchLibrary(item.text)
-      console.log('this.keyLibrary_', this.keyLibrary);
-
-    }
-    let a = function name (params) {
-      console.log(item);
-    };
-    debounce(a, 200)();
-  },
-  //监听原生标题栏搜索输入框搜索事件，用户点击软键盘上的“搜索”按钮时触发。
-
-  onNavigationBarSearchInputConfirmed (item) {
-    this.searchInfo = item.text
-    this.loadNewsList();
   },
   data () {
     return {
@@ -563,7 +533,36 @@ export default {
         this.jumpButtonInfo = 'white'
         this.searchFocusInfo = false
       }
-    }
+    },
+    // 确认搜索
+    searchConfirm (e) { },
+    // 监听原生标题栏搜索输入框输入内容变化事件
+    onSearchInputChanged (item) {
+      debugger;
+      if (item.detail.value === "") {
+        this.historySearch = true
+        this.filtrateSelected = false
+      } else {
+        this.filtrateSelected = false
+        this.productListShow = false
+        this.historySearch = false
+        this.searchKeyWord = true
+        console.log('this.searchLibrary_', this.searchLibrary);
+
+        this.keyLibrary = this.searchLibrary(item.detail.value)
+        console.log('this.keyLibrary_', this.keyLibrary);
+
+      }
+      let a = function name (params) {
+        console.log(item);
+      };
+      debounce(a, 200)();
+    },
+    //监听原生标题栏搜索输入框搜索事件，用户点击软键盘上的“搜索”按钮时触发。
+    onSearchInputConfirmed (item) {
+      this.searchInfo = item.detail.value
+      this.loadNewsList();
+    },
   }
 };
 </script>
