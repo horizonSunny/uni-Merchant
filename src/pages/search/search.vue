@@ -13,6 +13,7 @@
       >
         <div
           class="uni-page-head-search-placeholder uni-page-head-search-placeholder-center searchClass"
+          v-if="!searchFocusInfo"
         >
           请输入商品名、通用名、批准文号
         </div>
@@ -26,15 +27,30 @@
             ></div>
             <form action="" class="uni-input-form">
               <input
-                disabled="disabled"
                 maxlength="140"
                 step=""
                 autocomplete="off"
                 type="search"
                 class="uni-input-input"
+                @focus="searchFocus"
+                @blur="searchBlur"
               />
             </form></div
         ></uni-input>
+      </div>
+      <!-- <img
+        src="static/main/home_messages.svg"
+        alt=""
+        slot="rightIcon"
+        v-if="searchFocusInfo"
+      /> -->
+      <div
+        slot="rightIcon"
+        v-if="searchFocusInfo"
+        style="font-size:16px;"
+        @click="searchConfirm"
+      >
+        搜索
       </div>
     </tob-bar>
     <view class="content">
@@ -321,7 +337,8 @@ export default {
       tabBars: [],
       enableScroll: true,
       // jumpButtonInfo
-      jumpButtonInfo: 'white'
+      jumpButtonInfo: 'white',
+      searchFocusInfo: false
     };
   },
   methods: {
@@ -531,6 +548,21 @@ export default {
       uni.navigateTo({
         url: "../commodityDetails/index?productId=" + item.productId
       });
+    },
+
+    // 搜索框获取焦点
+    searchFocus () {
+      this.searchFocusInfo = true
+      this.jumpButtonInfo = ''
+    },
+    // 失去焦点时候判断内容是否为空
+    searchBlur (e) {
+      console.log('e.detail_', e.detail);
+
+      if (e.detail.value === '') {
+        this.jumpButtonInfo = 'white'
+        this.searchFocusInfo = false
+      }
     }
   }
 };
