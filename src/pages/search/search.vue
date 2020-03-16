@@ -538,7 +538,7 @@ export default {
     searchConfirm (e) { },
     // 监听原生标题栏搜索输入框输入内容变化事件
     onSearchInputChanged (item) {
-      debugger;
+      // console.log('item_', item);
       if (item.detail.value === "") {
         this.historySearch = true
         this.filtrateSelected = false
@@ -547,8 +547,6 @@ export default {
         this.productListShow = false
         this.historySearch = false
         this.searchKeyWord = true
-        console.log('this.searchLibrary_', this.searchLibrary);
-
         this.keyLibrary = this.searchLibrary(item.detail.value)
         console.log('this.keyLibrary_', this.keyLibrary);
 

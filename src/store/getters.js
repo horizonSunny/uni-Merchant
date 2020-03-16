@@ -11,7 +11,6 @@ const getters = {
   // searchLibrary: state => state.business.searchKeyword
   searchLibrary: state => keyWord => {
     console.log('state.business.searchKeyword_', state.business.searchKeyword)
-
     const keyInfo = state.business.searchKeyword.filter(item => {
       return item.keyword.indexOf(keyWord) != -1
     })
