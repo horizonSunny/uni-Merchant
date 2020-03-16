@@ -1,7 +1,11 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
-      <text slot="title">收货地址</text>
+    <tob-bar
+      slot="topBar"
+      :styleInfo="{ backgroundColor: '#fff' }"
+      jumpButton=""
+    >
+      <text slot="title" style="color:#000">收货地址</text>
     </tob-bar>
     <view slot="content" class="content">
       <scroll-view scroll-y class="scrollView">
@@ -69,7 +73,7 @@ export default {
 <style lang="scss">
 .content {
   flex: 1;
-  margin-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
   display: flex;
   flex-direction: column;
   .scrollView {

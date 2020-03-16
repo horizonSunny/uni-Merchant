@@ -1,7 +1,11 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
-      <text slot="title">新增用药人</text>
+    <tob-bar
+      slot="topBar"
+      :styleInfo="{ backgroundColor: '#fff' }"
+      jumpButton=""
+    >
+      <text slot="title" style="color:#000">新增用药人</text>
     </tob-bar>
     <view slot="content" class="content">
       <view>
@@ -110,7 +114,7 @@
         >
         </w-picker>
       </view>
-      <diseasesHistory></diseasesHistory>
+      <diseasesHistory v-if="false"></diseasesHistory>
     </view>
   </body-wrap>
 </template>
@@ -252,6 +256,7 @@ export default {
   display: flex;
   flex-direction: column;
   background: #fff;
+  border-top: 1px solid #f3f3f3;
   .form {
     border: 1px solid #f3f3f3;
     border-style: solid none;

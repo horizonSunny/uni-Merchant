@@ -1,7 +1,11 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
-      <text slot="title">新增收货地址</text>
+    <tob-bar
+      slot="topBar"
+      :styleInfo="{ backgroundColor: '#fff' }"
+      jumpButton=""
+    >
+      <text slot="title" style="color:#000">新增收货地址</text>
     </tob-bar>
     <view slot="content" class="content">
       <view>
@@ -292,6 +296,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
+  border-top: 1px solid #e5e5e5;
   background: #fff;
   .form {
     border: 1px solid #f3f3f3;
