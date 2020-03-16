@@ -549,7 +549,6 @@ export default {
         this.searchKeyWord = true
         this.keyLibrary = this.searchLibrary(item.detail.value)
         console.log('this.keyLibrary_', this.keyLibrary);
-
       }
       let a = function name (params) {
         console.log(item);
