@@ -119,7 +119,7 @@ export default {
   height: 22px;
 }
 .jumpPage {
-  z-index: 999;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   position: absolute;
