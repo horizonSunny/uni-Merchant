@@ -44,8 +44,8 @@
                   <yp-number-box
                     :min="1"
                     :max="9"
-                    :value="item.cartNum"
                     :index="index"
+                    :item="item"
                     @send-price="getCartNum"
                   ></yp-number-box>
                   <!-- {{ item.price }} -->
@@ -100,8 +100,8 @@
 <script>
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
 import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
-import ypNumberBox from "@/components/yp-number-box/yp-number-box.vue"
-import { mapActions, mapGetters } from "vuex";
+import ypNumberBox from '@/components/yp-number-box/yp-number-box.vue'
+import { mapActions, mapGetters } from 'vuex'
 import { productCollect, shopCartDelete } from '@/service/index'
 export default {
   components: {
@@ -109,14 +109,14 @@ export default {
     uniSwipeActionItem,
     ypNumberBox
   },
-  props: ["editorStatus"],
+  props: ['editorStatus'],
   computed: {
-    ...mapGetters(["getShopCartList"]),
-    calculateTotal () {
-      const selectCart = this.getShopCartList.filter((cartItem) => {
+    ...mapGetters(['getShopCartList']),
+    calculateTotal() {
+      const selectCart = this.getShopCartList.filter(cartItem => {
         return this.checkedArr.indexOf(cartItem.value) > -1
       })
-      console.log('selectCart_', selectCart);
+      console.log('selectCart_', selectCart)
       if (selectCart.length === 0) {
         this.totalNum = 0
         return 0
@@ -126,25 +126,23 @@ export default {
         selectCart.forEach(element => {
           this.totalNum += element.cartNum
           totalPrice += element.price * element.cartNum
-        });
-        console.log('this.totalNum _', this.totalNum);
+        })
+        console.log('this.totalNum _', this.totalNum)
         return totalPrice
       }
     }
   },
-  created () {
+  created() {
     uni.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         this.windowWidth = res.windowWidth
         this.windowHeight = res.windowHeight
-        console.log('this.windowWidth_', this.windowWidth, this.windowHeight);
-
+        console.log('this.windowWidth_', this.windowWidth, this.windowHeight)
       }
     })
-    console.log('getShopCartList_', this.getShopCartList);
-
+    console.log('getShopCartList_', this.getShopCartList)
   },
-  data () {
+  data() {
     return {
       correctUrl: '/static/shoppingCart/shopping cart-bitmap2.svg',
       options: [
@@ -153,15 +151,16 @@ export default {
           style: {
             backgroundColor: '#F4AF02',
             width: '50px',
-            textWidth: "30px",
+            textWidth: '30px',
             fontSize: '15px'
           }
-        }, {
+        },
+        {
           text: '删除',
           style: {
             backgroundColor: '#E60B35',
             width: '50px',
-            textWidth: "30px",
+            textWidth: '30px',
             fontSize: '15px'
           }
         }
@@ -172,74 +171,79 @@ export default {
     }
   },
   methods: {
-    checkboxChange: function (e) {
-      this.checkedArr = e.detail.value;
+    checkboxChange: function(e) {
+      this.checkedArr = e.detail.value
       // 如果选择的数组中有值，并且长度等于列表的长度，就是全选
-      if (this.checkedArr.length > 0 && this.checkedArr.length == this.getShopCartList.length) {
-        this.allChecked = true;
+      if (
+        this.checkedArr.length > 0 &&
+        this.checkedArr.length == this.getShopCartList.length
+      ) {
+        this.allChecked = true
       } else {
-        this.allChecked = false;
+        this.allChecked = false
       }
     },
     // 全选事件
-    allChoose (e) {
-      console.log('this.props.editorStatus_', this.editorStatus);
+    allChoose(e) {
+      console.log('this.props.editorStatus_', this.editorStatus)
 
-      let chooseItem = e.detail.value;
+      let chooseItem = e.detail.value
       // 全选
       if (chooseItem[0] == 'all') {
-        this.allChecked = true;
+        this.allChecked = true
         for (let item of this.getShopCartList) {
-          let itemVal = String(item.value);
+          let itemVal = String(item.value)
           if (!this.checkedArr.includes(itemVal)) {
-            this.checkedArr.push(itemVal);
+            this.checkedArr.push(itemVal)
           }
         }
       } else {
         // 取消全选
-        console.log('取消全选');
+        console.log('取消全选')
 
-        this.allChecked = false;
-        this.checkedArr = [];
+        this.allChecked = false
+        this.checkedArr = []
       }
     },
-    onClick (e) {
-      console.log('当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text)
+    onClick(e) {
+      console.log(
+        '当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text
+      )
     },
-    change (open) {
+    change(open) {
       console.log('当前开启状态：' + open)
     },
     // 结算
-    settlement () {
-      this.$navTo("../indent/index");
+    settlement() {
+      this.$navTo('../indent/index')
     },
     // 图片加载失败
-    imageError (item) {
-      console.log('imageError_', item);
-      item.productImage = this.correctUrl;
+    imageError(item) {
+      console.log('imageError_', item)
+      item.productImage = this.correctUrl
     },
     // 获取每一个购物车加减的参数
-    getCartNum (info) {
-      console.log('num_', info);
+    getCartNum(info) {
+      console.log('num_', info)
       const { index, value } = info
       this.getShopCartList[index].cartNum = value
     },
     // 移入收藏夹
-    moveToFavorites () {
+    moveToFavorites() {
       const params = {
         productIds: this.checkedArr
       }
-      productCollect(params).then((res) => {
-        console.log('res_', res);
+      productCollect(params).then(res => {
+        console.log('res_', res)
       })
     },
     // 删除购物车
-    cartDelete () {
+    cartDelete() {
       const params = {
         cartIds: this.checkedArr
       }
-      shopCartDelete(params).then((res) => {
-        console.log('res_', res);
+      shopCartDelete(params).then(res => {
+        console.log('res_', res)
       })
     }
   }

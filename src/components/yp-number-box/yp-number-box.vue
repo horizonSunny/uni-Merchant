@@ -42,13 +42,10 @@
   </view>
 </template>
 <script>
+import { updateCart } from '@/service/index'
 export default {
   name: 'UniNumberBox',
   props: {
-    value: {
-      type: [Number, String],
-      default: 0
-    },
     min: {
       type: Number,
       default: 0
@@ -66,22 +63,23 @@ export default {
       default: false
     },
     index: {
-      type: [Number, String],
-    }
+      type: [Number, String]
+    },
+    item: {}
   },
-  data () {
+  data() {
     return {
       inputValue: 0,
       windowHeight: '',
-      modelValue: 0,//model
-      showHide: false,//显示隐藏
+      modelValue: 0, //model
+      showHide: false //显示隐藏
     }
   },
   watch: {
-    value (val) {
+    value(val) {
       this.inputValue = +val
     },
-    inputValue (newVal, oldVal) {
+    inputValue(newVal, oldVal) {
       if (+newVal !== +oldVal) {
         let a = null
         if (this.index != undefined) {
@@ -93,12 +91,12 @@ export default {
       }
     }
   },
-  created () {
-    this.inputValue = +this.value
+  created() {
+    this.inputValue = +this.item.cartNum
   },
   methods: {
     // 要在这里设置一个http请求的加减函数
-    _calcValue (type) {
+    _calcValue(type) {
       if (this.disabled) {
         return
       }
@@ -113,13 +111,20 @@ export default {
       if (value < this.min || value > this.max) {
         return
       }
-      this.inputValue = value / scale
-      this.$emit('send-price', {
-        value: this.inputValue,
-        index: this.index
+      updateCart({
+        cartId: this.item.cartId,
+        productId: this.item.productId,
+        cartNum: value
+      }).then(res => {
+        console.log('updateCart_', updateCart)
+        this.inputValue = value / scale
+        this.$emit('send-price', {
+          value: this.inputValue,
+          index: this.index
+        })
       })
     },
-    _getDecimalScale () {
+    _getDecimalScale() {
       let scale = 1
       // 浮点型
       if (~~this.step !== this.step) {
@@ -127,10 +132,10 @@ export default {
       }
       return scale
     },
-    _onBlur (event) {
+    _onBlur(event) {
       let value = event.detail.value
       console.log(value)
-      return;
+      return
       if (!value) {
         this.inputValue = 0
         return
@@ -144,17 +149,17 @@ export default {
       this.inputValue = value
     },
     // 显示model
-    ifShow (e) {
+    ifShow(e) {
       this.modelValue = e
       console.log(this.modelValue)
       this.showHide = true
     },
     //隐藏model
-    modelHide () {
+    modelHide() {
       this.showHide = false
     },
     // 确定
-    confirm () {
+    confirm() {
       if (this.modelValue > this.max) {
         this.inputValue = this.max
       } else {
@@ -178,7 +183,7 @@ export default {
 }
 
 .uni-numbox:after {
-  content: "";
+  content: '';
   position: absolute;
   transform-origin: center;
   box-sizing: border-box;
@@ -221,7 +226,7 @@ export default {
 }
 
 .uni-numbox__value:after {
-  content: "";
+  content: '';
   position: absolute;
   transform-origin: center;
   box-sizing: border-box;
