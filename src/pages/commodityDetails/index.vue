@@ -132,7 +132,7 @@
         >有效期至
         <text
           >剩余有效期至>{{
-            product.productExpire ? product.productExpire : "暂无"
+            product.productExpire ? product.productExpire : '暂无'
           }}</text
         >
       </view>
@@ -159,7 +159,7 @@
         <view class="logistics">
           有效期
           <text>{{
-            product.productExpire ? product.productExpire : "暂无"
+            product.productExpire ? product.productExpire : '暂无'
           }}</text>
         </view>
         <view class="warning">
@@ -258,59 +258,66 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import {
-  getProductDetails
-} from '@/service/index'
+import { mapState } from 'vuex'
+import { getProductDetails } from '@/service/index'
 export default {
-  computed: mapState(["forcedLogin", "hasLogin", "userName"]),
-  onLoad (option) {
-    getProductDetails({ productId: option.productId }).then((res) => {
-      console.log('commodityDetails_', res.data);
+  computed: mapState(['forcedLogin', 'hasLogin', 'userName']),
+  onLoad(option) {
+    getProductDetails({ productId: option.productId }).then(res => {
+      console.log('commodityDetails_', res.data)
       this.product = res.data.product
       this.tenant = res.data.tenant
       this.comments = res.data.comments
-      this.basicInfo = [{
-        label: '通用名',
-        info: res.data.product.productName
-      }, {
-        label: '商品品牌',
-        info: res.data.product.productBrand
-      }, {
-        label: '批准文号',
-        info: res.data.product.approvalNumber
-      }, {
-        label: '剂型/型号',
-        info: res.data.product.productModel
-      }, {
-        label: '英文名称',
-        info: res.data.product.englishName
-      }, {
-        label: '汉语拼音',
-        info: res.data.product.pinyin
-      }, {
-        label: '有效期',
-        info: res.data.product.productExpire
-      }, {
-        label: '生产企业',
-        info: res.data.product.manufacturer
-      },]
+      this.basicInfo = [
+        {
+          label: '通用名',
+          info: res.data.product.productName
+        },
+        {
+          label: '商品品牌',
+          info: res.data.product.productBrand
+        },
+        {
+          label: '批准文号',
+          info: res.data.product.approvalNumber
+        },
+        {
+          label: '剂型/型号',
+          info: res.data.product.productModel
+        },
+        {
+          label: '英文名称',
+          info: res.data.product.englishName
+        },
+        {
+          label: '汉语拼音',
+          info: res.data.product.pinyin
+        },
+        {
+          label: '有效期',
+          info: res.data.product.productExpire
+        },
+        {
+          label: '生产企业',
+          info: res.data.product.manufacturer
+        }
+      ]
     })
   },
-  onNavigationBarButtonTap (item) {
+  onNavigationBarButtonTap(item) {
     // 这边绑定是该页面topBar上面的两个button事件
-    console.log("index_", item.index);
+    console.log('index_', item.index)
   },
   methods: {
-    scroll (e) {
+    scroll(e) {
       // console.log('e.detail.scrollTop_', e.detail.scrollTop);
       if (e.detail.scrollTop > 200) {
-        this.topBar = true;
-        this.scrollLocationShow = true;
+        this.topBar = true
+        this.scrollLocationShow = true
       } else {
-        this.topBar = false;
-        this.scrollLocationShow = false;
-      };
+        this.topBar = false
+        this.scrollLocationShow = false
+      }
       if (e.detail.scrollTop < 730) {
         this.scrollLocation = 0
       } else if (e.detail.scrollTop >= 730 && e.detail.scrollTop < 895) {
@@ -319,54 +326,54 @@ export default {
         this.scrollLocation = 2
       }
     },
-    goBack () {
-      console.log('goback');
+    goBack() {
+      console.log('goback')
       uni.navigateBack({
         delta: 1
-      });
+      })
     },
-    swiperslc (index) {
-      console.log('index_', index);
+    swiperslc(index) {
+      console.log('index_', index)
       this.swiperslcInfo = index
     },
-    toMain () {
+    toMain() {
       uni.switchTab({
-        url: "../main/main"
-      });
+        url: '../main/main'
+      })
     },
     // 点击上面tabar滚动
-    srcollLact (index) {
+    srcollLact(index) {
       switch (index) {
         case 0:
           this.tabScrollTop = 0
-          break;
+          break
         case 1:
           this.tabScrollTop = 730
-          break;
+          break
         case 2:
           this.tabScrollTop = 895
-          break;
+          break
         default:
-          break;
+          break
       }
-      console.log(index);
+      console.log(index)
     },
     // 立即购买
-    buyImmd () {
+    buyImmd() {
       uni.navigateTo({
-        url: "../login/login"
-      });
+        url: '../login/login'
+      })
     },
-    // more　
-    showPage () {
+    // more
+    showPage() {
       this.jumpPageShow = !this.jumpPageShow
     },
-    goPage (url) {
-      console.log(url);
-      this.$navTo(url);
+    goPage(url) {
+      console.log(url)
+      this.$navTo(url)
     }
   },
-  data () {
+  data() {
     return {
       indicatorDots: false,
       autoplay: false,
@@ -382,37 +389,38 @@ export default {
       comments: {},
       // 最下面服务保障切换
       swiperslcInfo: 0,
-      basicInfo: [
-
-      ],
+      basicInfo: [],
       jumpPageShow: false,
-      page: [{
-        url: '../main/main',
-        name: '首页',
-        img: '/static/icon/main/D_home.svg'
-      }, {
-        url: '../shoppingCart/index',
-        name: '购物车',
-        img: '/static/icon/main/D_Shopping Cart.svg'
-      },
-      {
-        url: '../search/search',
-        name: '搜索',
-        img: '/static/icon/main/D_search.svg'
-      },
-      {
-        url: '',
-        name: '消息',
-        img: '/static/icon/main/D_news.svg'
-      },
-      {
-        url: '../mine/index',
-        name: '我的',
-        img: '/static/icon/main/D_my.svg'
-      }],
-    };
+      page: [
+        {
+          url: '../main/main',
+          name: '首页',
+          img: '/static/icon/main/D_home.svg'
+        },
+        {
+          url: '../shoppingCart/index',
+          name: '购物车',
+          img: '/static/icon/main/D_Shopping Cart.svg'
+        },
+        {
+          url: '../search/search',
+          name: '搜索',
+          img: '/static/icon/main/D_search.svg'
+        },
+        {
+          url: '',
+          name: '消息',
+          img: '/static/icon/main/D_news.svg'
+        },
+        {
+          url: '../mine/index',
+          name: '我的',
+          img: '/static/icon/main/D_my.svg'
+        }
+      ]
+    }
   }
-};
+}
 </script>
 
 <style lang="scss">

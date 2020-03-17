@@ -91,8 +91,8 @@
       </button>
       <!-- this.editorStatus为完成时候 -->
       <view v-show="!this.editorStatus" class="allOperate">
-        <button>移入收藏夹</button>
-        <button>删除</button>
+        <button @click="moveToFavorites">移入收藏夹</button>
+        <button @click="cartDelete">删除</button>
       </view>
     </view>
   </view>
@@ -102,6 +102,7 @@ import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
 import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
 import ypNumberBox from "@/components/yp-number-box/yp-number-box.vue"
 import { mapActions, mapGetters } from "vuex";
+import { productCollect, shopCartDelete } from '@/service/index'
 export default {
   components: {
     uniSwipeAction,
@@ -222,6 +223,24 @@ export default {
       console.log('num_', info);
       const { index, value } = info
       this.getShopCartList[index].cartNum = value
+    },
+    // 移入收藏夹
+    moveToFavorites () {
+      const params = {
+        productIds: this.checkedArr
+      }
+      productCollect(params).then((res) => {
+        console.log('res_', res);
+      })
+    },
+    // 删除购物车
+    cartDelete () {
+      const params = {
+        cartIds: this.checkedArr
+      }
+      shopCartDelete(params).then((res) => {
+        console.log('res_', res);
+      })
     }
   }
 }
