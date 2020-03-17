@@ -17,9 +17,6 @@ const getters = {
     console.log('keyInfo_', keyInfo)
     return keyInfo
   },
-  // 获取用户地址的列表信息
-  getCustAddress: state => state.user.custAddress,
-
   /**
    * 二期购物车订单我的功能
    */

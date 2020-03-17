@@ -11,23 +11,21 @@
       <scroll-view scroll-y class="scrollView">
         <view
           class="addressItem"
-          v-for="(item, index) in custAddress"
+          v-for="(item, index) in getAddress"
           :key="index"
           @click="selectAddress(item)"
         >
           <view class="userInfo">
             <view class="userAddress">
-              <img src="static/deliveryAddr/address_company.svg" alt="" />
-              <text
-                >{{ item['province'] }}{{ item['city'] }}{{ item['area'] }}
-              </text>
-              <text>
-                {{ item['detailAddress'] }}
-              </text>
+              <img
+                :src="labelInfo(item['isDefault'], item['addressLabel'])"
+                alt=""
+              />
+              <text>{{ item['address'] }} </text>
             </view>
             <view class="userInfoItem">
               <text>{{ item['fullName'] }}</text>
-              <text>{{ item['sex'] }}</text>
+              <text>{{ item['sex'] === 1 ? '男士' : '女士' }}</text>
               <text>{{ item['phone'] }}</text>
             </view>
           </view>
@@ -43,11 +41,13 @@
   </body-wrap>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
-    return {
-      custAddress: this.$store.getters.getCustAddress
-    }
+    return {}
+  },
+  computed: {
+    ...mapGetters(['getAddress'])
   },
   methods: {
     gotoDetail(operate, addressInfo = null) {
@@ -62,10 +62,25 @@ export default {
       // this.$store.dispatch('setSelectedAdd', item).then(() => {
       //   uni.navigateBack()
       // })
+    },
+    labelInfo(isDefault, addressLabel) {
+      if (isDefault === 1) {
+        return 'static/deliveryAddr/address_company.svg'
+      }
+      switch (addressLabel) {
+        case '家':
+          return 'static/deliveryAddr/address_home.svg'
+          break
+        case '公司':
+          return 'static/deliveryAddr/address_company.svg'
+          break
+        case '学校':
+          return 'static/deliveryAddr/address_school.svg'
+          break
+        default:
+          break
+      }
     }
-  },
-  onShow() {
-    this.custAddress = this.$store.getters.getCustAddress
   }
 }
 </script>
