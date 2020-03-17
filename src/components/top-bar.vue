@@ -74,53 +74,55 @@ export default {
 
   // },
   props: ['backInfo', 'styleInfo', 'jumpButton'],
-  created () {
+  created() {
     this.pageStack = getCurrentPages()
-    console.log('this.getCurrentPages()_', getCurrentPages());
   },
-  data () {
+  data() {
     return {
       // goBack: true
-      page: [{
-        url: '../main/main',
-        name: '首页',
-        img: '/static/icon/main/D_home.svg'
-      }, {
-        url: '../shoppingCart/index',
-        name: '购物车',
-        img: '/static/icon/main/D_Shopping Cart.svg'
-      },
-      {
-        url: '../search/search',
-        name: '搜索',
-        img: '/static/icon/main/D_search.svg'
-      },
-      {
-        url: '',
-        name: '消息',
-        img: '/static/icon/main/D_news.svg'
-      },
-      {
-        url: '../mine/index',
-        name: '我的',
-        img: '/static/icon/main/D_my.svg'
-      }],
+      page: [
+        {
+          url: '../main/main',
+          name: '首页',
+          img: '/static/icon/main/D_home.svg'
+        },
+        {
+          url: '../shoppingCart/index',
+          name: '购物车',
+          img: '/static/icon/main/D_Shopping Cart.svg'
+        },
+        {
+          url: '../search/search',
+          name: '搜索',
+          img: '/static/icon/main/D_search.svg'
+        },
+        {
+          url: '',
+          name: '消息',
+          img: '/static/icon/main/D_news.svg'
+        },
+        {
+          url: '../mine/index',
+          name: '我的',
+          img: '/static/icon/main/D_my.svg'
+        }
+      ],
       jumpPageShow: false,
       pageStack: ''
     }
   },
   methods: {
-    goBack () {
-      console.log('goback');
+    goBack() {
+      console.log('goback')
       uni.navigateBack({
         delta: 1
-      });
+      })
     },
-    goPage (url) {
-      console.log(url);
-      this.$navTo(url);
+    goPage(url) {
+      console.log(url)
+      this.$navTo(url)
     },
-    showPage () {
+    showPage() {
       this.jumpPageShow = !this.jumpPageShow
     }
   }

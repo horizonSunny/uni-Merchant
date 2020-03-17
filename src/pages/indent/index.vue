@@ -212,8 +212,8 @@ export default {
       pickUp: false
     }
   },
-  onLoad () {
-    console.log('saSsa');
+  onLoad (option) {
+    console.log('saSsa_',option.selectCart);
 
   },
   computed: {

@@ -66,58 +66,57 @@
   </body-wrap>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  onNavigationBarButtonTap (item) {
+  onNavigationBarButtonTap(item) {
     // 这边绑定是该页面topBar上面的两个button事件
-    console.log("index_search_", item.index);
+    console.log('index_search_', item.index)
     // uni.navigateTo({
     //   url: "../search/search"
     // });
   },
-  data () {
+  data() {
     return {
       tabCurrentIndex: 0,
       currentClassify: []
-    };
+    }
   },
-  onLoad () {
-    console.log('this.getCurrentPages()_', getCurrentPages());
+  onLoad() {
     this.getClassify().then(res => {
-      this.currentClassify = res[0]["children"];
-    });
+      this.currentClassify = res[0]['children']
+    })
   },
   computed: {
-    ...mapGetters(["classify"])
+    ...mapGetters(['classify'])
   },
   methods: {
     ...mapActions({
-      getClassify: "GetClassify"
+      getClassify: 'GetClassify'
     }),
-    change (e) {
-      this.current = e.detail.current;
+    change(e) {
+      this.current = e.detail.current
     },
-    selectBar (item, index) {
-      this.tabCurrentIndex = index;
-      this.currentClassify = item.children;
+    selectBar(item, index) {
+      this.tabCurrentIndex = index
+      this.currentClassify = item.children
     },
     // 跳转三级分类页面
-    toClassify (item) {
-      console.log('item_', item);
+    toClassify(item) {
+      console.log('item_', item)
       // uni.navigateTo({
       //   url: "../classify/classifyDetails?categoryId=" + item.id
       // });
       this.$navTo('../classify/classifyDetails', {
         categoryId: item.id,
         cateName: item.cateName
-      });
+      })
     },
     // 跳转页面
-    gotoNextPage (url, parameters) {
-      this.$navTo(url, parameters);
-    },
+    gotoNextPage(url, parameters) {
+      this.$navTo(url, parameters)
+    }
   }
-};
+}
 </script>
 <style lang="scss">
 .content {

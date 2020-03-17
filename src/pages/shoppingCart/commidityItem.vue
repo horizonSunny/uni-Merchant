@@ -9,9 +9,7 @@
         <uni-swipe-action>
           <uni-swipe-action-item
             :options="options"
-            @click="onClick"
-            @change="change"
-            @click.stop
+            @click="onClick($event, item)"
           >
             <view class="commidityInfo" @click.stop>
               <checkbox
@@ -171,6 +169,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      getShopCartInfo: 'GetShopCartInfo'
+    }),
     checkboxChange: function(e) {
       this.checkedArr = e.detail.value
       // 如果选择的数组中有值，并且长度等于列表的长度，就是全选
@@ -205,17 +206,34 @@ export default {
         this.checkedArr = []
       }
     },
-    onClick(e) {
+    onClick(e, cart) {
       console.log(
         '当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text
       )
-    },
-    change(open) {
-      console.log('当前开启状态：' + open)
+      switch (e.index) {
+        case 0:
+          this.moveToFavorites([cart.cartId])
+          break
+        case 1:
+          this.cartDelete([cart.cartId])
+          break
+        default:
+          break
+      }
+      // console.log('cart_', cart)
     },
     // 结算
     settlement() {
-      this.$navTo('../indent/index')
+      if (this.checkedArr.length === 0) {
+        uni.showToast({
+          icon: 'none',
+          title: '请选择需要结算的商品'
+        })
+      } else {
+        this.$navTo('../indent/index', {
+          selectCart: this.checkedArr
+        })
+      }
     },
     // 图片加载失败
     imageError(item) {
@@ -229,21 +247,21 @@ export default {
       this.getShopCartList[index].cartNum = value
     },
     // 移入收藏夹
-    moveToFavorites() {
+    moveToFavorites(itemInfo) {
       const params = {
-        productIds: this.checkedArr
+        productIds: itemInfo ? itemInfo : this.checkedArr
       }
       productCollect(params).then(res => {
-        console.log('res_', res)
+        this.getShopCartInfo()
       })
     },
     // 删除购物车
-    cartDelete() {
+    cartDelete(itemInfo) {
       const params = {
-        cartIds: this.checkedArr
+        cartIds: itemInfo ? itemInfo : this.checkedArr
       }
       shopCartDelete(params).then(res => {
-        console.log('res_', res)
+        this.getShopCartInfo()
       })
     }
   }
