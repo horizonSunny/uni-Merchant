@@ -29,7 +29,7 @@
               <text>{{ item['phone'] }}</text>
             </view>
           </view>
-          <view class="editor" @click.stop="gotoDetail('edit', item)">
+          <view class="editor" @click.stop="gotoDetail('edit', item.addressId)">
             <img
               src="static/deliveryAddr/shopping cart-edit address.svg"
               alt=""
@@ -37,6 +37,11 @@
           </view>
         </view>
       </scroll-view>
+      <view class="newAddress">
+        <button type="primary" @click.stop="gotoDetail('new')">
+          新增收货地址
+        </button>
+      </view>
     </view>
   </body-wrap>
 </template>
@@ -51,12 +56,13 @@ export default {
   },
   methods: {
     gotoDetail(operate, addressInfo = null) {
-      this.$navTo('../deliveryAddr/newAddr')
-      // if (!addressInfo) {
-      //   this.$navTo('/pages/myOrder/selectPage/userAddress')
-      // } else {
-      //   this.$navTo('/pages/myOrder/selectPage/userAddress', addressInfo)
-      // }
+      if (!addressInfo) {
+        this.$navTo('../deliveryAddr/newAddr')
+      } else {
+        this.$navTo('../deliveryAddr/newAddr', {
+          addressId: addressInfo
+        })
+      }
     },
     selectAddress(item) {
       // this.$store.dispatch('setSelectedAdd', item).then(() => {
@@ -92,7 +98,7 @@ export default {
   flex-direction: column;
   .scrollView {
     width: 100%;
-    height: 100%;
+    flex: 1;
     background: #fff;
     // background: red;
     .addressItem {
@@ -132,6 +138,20 @@ export default {
         height: 40px;
         line-height: 40px;
       }
+    }
+  }
+  .newAddress {
+    width: 100%;
+    height: 90px;
+    position: relative;
+    bottom: 0px;
+    line-height: 90px;
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    button {
+      width: 80%;
+      font-size: 16px;
     }
   }
 }

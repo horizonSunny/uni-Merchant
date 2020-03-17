@@ -160,14 +160,14 @@
 </template>
 <script>
 // import wPicker from "@/components/w-picker/components/w-picker/w-picker.vue";
-import wPicker from "@/components/w-picker_1.2.7/components/w-picker/w-picker.vue";
-
+import wPicker from '@/components/w-picker_1.2.7/components/w-picker/w-picker.vue'
+import { mapActions, mapGetters } from 'vuex'
 import validate from '@/utils/validate'
 export default {
   components: {
     wPicker
   },
-  data () {
+  data() {
     return {
       userInfo: {
         fullName: '',
@@ -177,7 +177,7 @@ export default {
         province: '',
         city: '',
         area: '',
-        defaultInfo: false,
+        defaultInfo: false
       },
       pickerDefault: ['浙江省', '杭州市', '滨江区'],
       //是新增还是更新
@@ -186,23 +186,34 @@ export default {
       // 性别
       currentSex: '0',
       items: [
-        { value: '0', name: "男士" },
-        { value: '1', name: "女士" }
+        { value: '0', name: '男士' },
+        { value: '1', name: '女士' }
       ],
       currentLabel: '公司',
-      labelInfo: ['公司', '家', '学校']
+      labelInfo: ['公司', '家', '学校'],
+      addressInfo: null
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['getAddress'])
+  },
   methods: {
-    submit () {
-      console.log('detailAddress_', this.userInfo.detailAddress);
+    submit() {
+      console.log('detailAddress_', this.userInfo.detailAddress)
       let formRules = [
         { name: 'fullName', type: 'required', errmsg: '请填写用户名' },
-        { name: 'phone', required: true, type: 'phone', errmsg: '请输入正确的手机号' },
+        {
+          name: 'phone',
+          required: true,
+          type: 'phone',
+          errmsg: '请输入正确的手机号'
+        },
         { name: 'userAddress', type: 'required', errmsg: '请选择地址' },
-        { name: 'detailAddress', type: 'required', errmsg: '请填写详细地址信息' }
-
+        {
+          name: 'detailAddress',
+          type: 'required',
+          errmsg: '请填写详细地址信息'
+        }
       ]
       let valLoginRes = validate.validate(this.userInfo, formRules)
       if (!valLoginRes.isOk) {
@@ -216,25 +227,32 @@ export default {
         operate: this.operate,
         addressInfo: this.userInfo
       }
-      info['addressInfo']['isDefault'] = info['addressInfo']['defaultInfo'] ? 1 : 0
+      info['addressInfo']['isDefault'] = info['addressInfo']['defaultInfo']
+        ? 1
+        : 0
       if (info['addressInfo']['addressId']) {
-        info['addressInfo']['addressId'] = parseInt(info['addressInfo']['addressId'])
+        info['addressInfo']['addressId'] = parseInt(
+          info['addressInfo']['addressId']
+        )
       }
-      console.log('addressInfo____', info);
-      this.$store.dispatch('setCustAdd', info).then((res) => { })
+      console.log('addressInfo____', info)
+      this.$store.dispatch('setCustAdd', info).then(res => {})
     },
     // 删除收获地址
-    deleteAddress () {
+    deleteAddress() {
       if (!this.deleteActive) {
         return
       }
       let url = 'patient/address/' + this.userInfo.addressId
-      this.$http.delete(url).then((res) => {
-        this.$store.dispatch('getCustAdd').then((res) => {
+      this.$http.delete(url).then(res => {
+        this.$store.dispatch('getCustAdd').then(res => {
           // 如果删除的是选中地址，store要清空
           if (this.$store.getters.getCustSelectedAddress) {
             const hasSelected = this.$store.getters.getCustSelectedAddress
-            if (parseInt(this.userInfo.addressId) === parseInt(hasSelected.addressId)) {
+            if (
+              parseInt(this.userInfo.addressId) ===
+              parseInt(hasSelected.addressId)
+            ) {
               console.log('this.userInfo.addressId === hasSelected.addressId')
               this.$store.commit('DELETE_SELECTCUST')
             }
@@ -243,50 +261,54 @@ export default {
         })
       })
     },
-    selectArea () {
-      this.$refs['region'].show();
+    selectArea() {
+      this.$refs['region'].show()
     },
-    inputAreaDetail (event) {
-      setTimeout(() => { this.userInfo.detailAddress = event.detail.value }, 0)
+    inputAreaDetail(event) {
+      setTimeout(() => {
+        this.userInfo.detailAddress = event.detail.value
+      }, 0)
     },
-    onConfirmArea (val) {
+    onConfirmArea(val) {
       this.userInfo.userAddress = val.result
       this.userInfo.province = val.checkArr[0]
       this.userInfo.city = val.checkArr[1]
       this.userInfo.area = val.checkArr[2]
-      console.log('val_', val);
+      console.log('val_', val)
     },
-    changeDefaultInfo (event) {
-      console.log('event.detail.value_', event.detail.value);
+    changeDefaultInfo(event) {
+      console.log('event.detail.value_', event.detail.value)
       this.userInfo.defaultInfo = event.detail.value
     },
     // sexChange
-    sexChange () { },
+    sexChange() {},
     //selectLabel
-    selectLabel (e) {
-      this.currentLabel = e;
-      console.log(e);
-
+    selectLabel(e) {
+      this.currentLabel = e
+      console.log(e)
     }
   },
-  onLoad: function (option) {
-    console.log('option_', option)
-    if (JSON.stringify(option) !== '{}') {
-      this.operate = 'reset'
-      //赋值
-      this.userInfo['fullName'] = option['fullName']
-      this.userInfo['phone'] = option['phone']
-      this.userInfo['userAddress'] = option['province'] + option['city'] + option['area']
-      this.userInfo['detailAddress'] = option['detailAddress']
-      this.userInfo['defaultInfo'] = option['isDefault'] == 0 ? false : true
-      this.userInfo['province'] = option['province']
-      this.userInfo['city'] = option['city']
-      this.userInfo['area'] = option['area']
+  onLoad: function(option) {
+    this.addressInfo = this.getAddress.find(item => {
+      return item.addressId == option.addressId
+    })
+    // if (JSON.stringify(option) !== '{}') {
+    //   this.operate = 'reset'
+    //   //赋值
+    //   this.userInfo['fullName'] = option['fullName']
+    //   this.userInfo['phone'] = option['phone']
+    //   this.userInfo['userAddress'] =
+    //     option['province'] + option['city'] + option['area']
+    //   this.userInfo['detailAddress'] = option['detailAddress']
+    //   this.userInfo['defaultInfo'] = option['isDefault'] == 0 ? false : true
+    //   this.userInfo['province'] = option['province']
+    //   this.userInfo['city'] = option['city']
+    //   this.userInfo['area'] = option['area']
 
-      this.pickerDefault = [option['province'], option['city'], option['area']]
-      this.$set(this.userInfo, 'addressId', option['addressId'])
-      this.deleteActive = true
-    }
+    //   this.pickerDefault = [option['province'], option['city'], option['area']]
+    //   this.$set(this.userInfo, 'addressId', option['addressId'])
+    //   this.deleteActive = true
+    // }
   }
 }
 </script>
@@ -311,7 +333,7 @@ export default {
       display: flex;
       span {
         width: 105px;
-        font-size: 18px;
+        font-size: 17px;
         color: #282828;
         letter-spacing: 0;
       }
@@ -391,7 +413,9 @@ export default {
     margin-top: 12px;
     button {
       height: 47px;
+      line-height: 47px;
       width: 80%;
+      font-size: 16px;
     }
     .save {
       background: #3a74f1;
