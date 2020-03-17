@@ -79,7 +79,15 @@
         v-show="this.editorStatus"
         @click="settlement"
       >
-        结算(99)
+        <text v-if="totalNum === 0">结算</text>
+        <text v-else-if="totalNum < 99 && totalNum > 0"
+          >结算({{ this.totalNum }})</text
+        >
+        <text v-else>结算(99)</text>
+        <!--<text v-if="this.totalNum < 99 && this.totalNum > 0">
+          结算(this.totalNum )</text
+        > -->
+        <!-- 结算({{ this.totalNum }}) -->
       </button>
       <!-- this.editorStatus为完成时候 -->
       <view v-show="!this.editorStatus" class="allOperate">
@@ -109,13 +117,16 @@ export default {
       })
       console.log('selectCart_', selectCart);
       if (selectCart.length === 0) {
+        this.totalNum = 0
         return 0
       } else {
         let totalPrice = 0
+        this.totalNum = 0
         selectCart.forEach(element => {
+          this.totalNum += element.cartNum
           totalPrice += element.price * element.cartNum
         });
-        console.log(totalPrice);
+        console.log('this.totalNum _', this.totalNum);
         return totalPrice
       }
     }
@@ -155,7 +166,8 @@ export default {
         }
       ],
       checkedArr: [], //复选框选中的值
-      allChecked: false //是否全选
+      allChecked: false, //是否全选
+      totalNum: 0
     }
   },
   methods: {
