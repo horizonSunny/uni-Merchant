@@ -19,16 +19,16 @@
             <view class="userAddress">
               <img src="static/deliveryAddr/address_company.svg" alt="" />
               <text
-                >{{ item["province"] }}{{ item["city"] }}{{ item["area"] }}
+                >{{ item['province'] }}{{ item['city'] }}{{ item['area'] }}
               </text>
               <text>
-                {{ item["detailAddress"] }}
+                {{ item['detailAddress'] }}
               </text>
             </view>
             <view class="userInfoItem">
-              <text>{{ item["fullName"] }}</text>
-              <text>{{ item["sex"] }}</text>
-              <text>{{ item["phone"] }}</text>
+              <text>{{ item['fullName'] }}</text>
+              <text>{{ item['sex'] }}</text>
+              <text>{{ item['phone'] }}</text>
             </view>
           </view>
           <view class="editor" @click.stop="gotoDetail('edit', item)">
@@ -44,28 +44,27 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       custAddress: this.$store.getters.getCustAddress
     }
   },
   methods: {
-    gotoDetail (operate, addressInfo = null) {
-      this.$navTo("../deliveryAddr/newAddr");
+    gotoDetail(operate, addressInfo = null) {
+      this.$navTo('../deliveryAddr/newAddr')
       // if (!addressInfo) {
       //   this.$navTo('/pages/myOrder/selectPage/userAddress')
       // } else {
       //   this.$navTo('/pages/myOrder/selectPage/userAddress', addressInfo)
       // }
     },
-    selectAddress (item) {
+    selectAddress(item) {
       // this.$store.dispatch('setSelectedAdd', item).then(() => {
       //   uni.navigateBack()
       // })
     }
   },
-  onShow () {
-    // console.log('getCustAddress_', this.$store.getters.getCustAddress);
+  onShow() {
     this.custAddress = this.$store.getters.getCustAddress
   }
 }
