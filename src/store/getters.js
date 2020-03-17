@@ -34,6 +34,7 @@ const getters = {
     })
     console.log('cartList_', cartList)
     return cartList
-  }
+  },
+  getNewIndent: state => state.shopCart.newIndent
 }
 export default getters

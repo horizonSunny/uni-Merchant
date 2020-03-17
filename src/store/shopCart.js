@@ -1,13 +1,19 @@
 import { shopCart } from '@/service/index'
 const shopCartModule = {
   state: {
-    shopCartInfo: []
+    shopCartInfo: [],
+    // 由购物车或者立即购买生成的订单信息
+    newIndent: ''
   },
   getters: {},
   mutations: {
     SET_SHOPCART: (state, data) => {
       console.log('SET_SHOPCART_', data)
       state.shopCartInfo = data
+    },
+    NEW_INDENT: (state, data) => {
+      console.log('NEW_INDENT_', data)
+      state.newIndent = data
     }
   },
   actions: {

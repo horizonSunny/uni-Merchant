@@ -121,11 +121,11 @@ export default {
       } else {
         let totalPrice = 0
         this.totalNum = 0
+        this.selectedCart = selectCart
         selectCart.forEach(element => {
           this.totalNum += element.cartNum
           totalPrice += element.price * element.cartNum
         })
-        console.log('this.totalNum _', this.totalNum)
         return totalPrice
       }
     }
@@ -165,7 +165,8 @@ export default {
       ],
       checkedArr: [], //复选框选中的值
       allChecked: false, //是否全选
-      totalNum: 0
+      totalNum: 0,
+      selectedCart: ''
     }
   },
   methods: {
