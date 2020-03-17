@@ -70,8 +70,8 @@
         </view>
       </view>
       <view class="button">
-        <button type="primary">加入购物车</button>
-        <button type="warn" @click="buyImmd()">立即购买</button>
+        <button type="primary" @click="addShoppingCart">加入购物车</button>
+        <button type="warn" @click="buyImmd">立即购买</button>
       </view>
     </view>
     <!-- 轮播图 -->
@@ -259,7 +259,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getProductDetails } from '@/service/index'
+import { getProductDetails, newCart } from '@/service/index'
 export default {
   computed: mapState(['forcedLogin', 'hasLogin', 'userName']),
   onLoad(option) {
@@ -303,10 +303,6 @@ export default {
         }
       ]
     })
-  },
-  onNavigationBarButtonTap(item) {
-    // 这边绑定是该页面topBar上面的两个button事件
-    console.log('index_', item.index)
   },
   methods: {
     scroll(e) {
@@ -371,6 +367,15 @@ export default {
     goPage(url) {
       console.log(url)
       this.$navTo(url)
+    },
+    // 加入购物车,判断一下，如果
+    addShoppingCart() {
+      newCart({
+        productId: this.product.productId,
+        cartNum: 1
+      }).then(res => {
+        this.$navTo('../shoppingCart/index')
+      })
     }
   },
   data() {

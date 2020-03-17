@@ -17,4 +17,12 @@ async function shopCartDelete(params) {
     }
   })
 }
-export { shopCart, productCollect, shopCartDelete }
+// 更新购物车
+async function updateCart(params) {
+  return http.put('/order/shopCart', params)
+}
+// 新增购物车
+async function newCart(params) {
+  return http.post('/order/shopCart', params)
+}
+export { shopCart, productCollect, shopCartDelete, updateCart, newCart }
