@@ -13,11 +13,11 @@
           <view @click="toDeliveryAddr">
             <view class="user">
               <img src="static/icon/merchantsIntr/location.svg" alt="" />
-              <view class="userName">王慧</view>
-              <view class="phone">13890876778</view>
+              <view class="userName">{{ getDefaultAddress.fullName }}</view>
+              <view class="phone">{{ getDefaultAddress.phone }}</view>
             </view>
             <view class="address">
-              长泰广场E座 长泰广场E座 长泰广场E座
+              {{ getDefaultAddress.address }}
             </view>
           </view>
           <view class="pickUp" v-show="pickUp">
@@ -30,7 +30,7 @@
             </view>
             <view class="address">
               地址：上海市 浦东新区 海科路100号 23号楼
-              </br>
+              <br />
               营业时间：每个公族日 9:00-22:00
             </view>
           </view>
@@ -193,11 +193,11 @@
   </body-wrap>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex'
 // import commidityItem from "./commidityItem";
-import purchasefailed from './purchasefailed';
-import distribution from './distribution';
-import invoice from './invoice';
+import purchasefailed from './purchasefailed'
+import distribution from './distribution'
+import invoice from './invoice'
 export default {
   components: {
     // commidityItem
@@ -205,46 +205,44 @@ export default {
     distribution,
     invoice
   },
-  data () {
+  data() {
     return {
       editor: true,
       // 选择自提时候，改变为true
       pickUp: false
     }
   },
-  onLoad (option) {
-    console.log('saSsa_',option.selectCart);
-
+  onLoad(option) {
+    console.log('getDefaultAddress_', this.getDefaultAddress)
   },
   computed: {
-    ...mapGetters(["classify"])
+    ...mapGetters(['getDefaultAddress'])
   },
   methods: {
-    ...mapActions({
-    }),
+    ...mapActions({}),
     // 改变当前是编辑状态还是完成状态
-    reverseEditor () {
+    reverseEditor() {
       this.editor = !this.editor
     },
     // 获取当前页面位置
-    prescription () {
-      this.$navTo("../prescription/index");
+    prescription() {
+      this.$navTo('../prescription/index')
     },
     // 打开快递配送
-    openModal () {
+    openModal() {
       this.$refs.distribution.openModal()
     },
     // 去收货地址
-    toDeliveryAddr () {
-      this.$navTo("../deliveryAddr/index");
+    toDeliveryAddr() {
+      this.$navTo('../deliveryAddr/index')
       // this.$navTo("../deliveryAddr/newAddr");
     },
     // 打开发票弹窗
-    showInvoice () {
+    showInvoice() {
       this.$refs.invoice.openModal()
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .content {
@@ -317,7 +315,6 @@ export default {
     }
     .effectiveGoods {
       margin-top: 10px;
-      margin-bottom: 50px;
       padding: 13px 16px;
       background: rgba(255, 255, 255, 1);
       .title {

@@ -1,29 +1,31 @@
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
-  onLaunch: function () {
+  onLaunch: function() {
     this.getKeyWord()
     this.getMainInfo()
-    console.log("App Launch");
+    this.getAddress()
+    console.log('App Launch')
   },
-  onShow: function () {
-    console.log("App Show");
+  onShow: function() {
+    console.log('App Show')
   },
-  onHide: function () {
-    console.log("App Hide");
+  onHide: function() {
+    console.log('App Hide')
   },
   methods: {
     ...mapActions({
-      getMainInfo: "GetMainInfo",
-      getKeyWord: "GetKeyWord",
+      getMainInfo: 'GetMainInfo',
+      getKeyWord: 'GetKeyWord',
+      getAddress: 'GetAddressInfo'
     })
   }
-};
+}
 </script>
 
 <style lang="scss">
 /* 头条小程序需要把 iconfont 样式放到组件外 */
-@import "components/m-icon/m-icon.css";
+@import 'components/m-icon/m-icon.css';
 
 /*每个页面公共css */
 page {
@@ -93,7 +95,7 @@ m-input {
   top: 0;
   left: 0;
   height: 1px;
-  content: "";
+  content: '';
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   background-color: #c8c7cc;
@@ -105,7 +107,7 @@ m-input {
   bottom: 0;
   left: 0;
   height: 1px;
-  content: "";
+  content: '';
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   background-color: #c8c7cc;
@@ -130,7 +132,7 @@ m-input {
   bottom: 0;
   left: 8px;
   height: 1px;
-  content: "";
+  content: '';
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   background-color: #c8c7cc;

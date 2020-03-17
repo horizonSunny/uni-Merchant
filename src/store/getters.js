@@ -35,6 +35,17 @@ const getters = {
     console.log('cartList_', cartList)
     return cartList
   },
-  getNewIndent: state => state.shopCart.newIndent
+  getNewIndent: state => state.shopCart.newIndent,
+  // 获取患者地址信息 和获取默认地址
+  getAddress: state => state.patientAddress.addressInfo,
+  getDefaultAddress: (state, getters) => {
+    let item = getters.getAddress.find(item => {
+      return item.isDefault === 1
+    })
+    if (item === undefined) {
+      return getters.getAddress[0]
+    }
+    return item
+  }
 }
 export default getters

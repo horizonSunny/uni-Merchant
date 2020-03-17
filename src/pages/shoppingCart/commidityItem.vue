@@ -16,6 +16,7 @@
                 :value="item.value"
                 color="#FFCC33"
                 :checked="checkedArr.includes(String(item.value))"
+                :disabled="item.isShelf === 0"
               />
               <view class="productImg">
                 <img
@@ -231,9 +232,11 @@ export default {
           title: '请选择需要结算的商品'
         })
       } else {
-        this.$navTo('../indent/index', {
-          selectCart: this.checkedArr
+        console.log(this.selectedCart)
+        this.$store.commit('NEW_INDENT', {
+          selectedCart: this.selectedCart
         })
+        this.$navTo('../indent/index')
       }
     },
     // 图片加载失败

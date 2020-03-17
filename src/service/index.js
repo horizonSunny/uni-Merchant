@@ -6,6 +6,13 @@ import {
   updateCart,
   newCart
 } from './shoppingCart'
+
+import {
+  patientAddress,
+  addressDelete,
+  updateAddress,
+  newAddress
+} from './patientAddress'
 // 获取药品分类信息
 async function getClassify(params) {
   return http.get('/admin/v1/category/getCategorys', {
@@ -75,3 +82,5 @@ export {
 }
 // 导出购物车接口
 export { shopCart, productCollect, shopCartDelete, updateCart, newCart }
+// 用药人地址
+export { patientAddress, addressDelete, updateAddress, newAddress }
