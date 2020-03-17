@@ -18,6 +18,22 @@ const getters = {
     return keyInfo
   },
   // 获取用户地址的列表信息
-  getCustAddress: state => state.user.custAddress
+  getCustAddress: state => state.user.custAddress,
+
+  /**
+   * 二期购物车订单我的功能
+   */
+  // 获取购物车列表
+  getShopCartList: state => {
+    console.log('cartList_', state.shopCart.shopCartInfo)
+    let cartList = state.shopCart.shopCartInfo.map(item => {
+      item.checked = false
+      // value就是购物车id
+      item.value = item.cartId + ''
+      return item
+    })
+    console.log('cartList_', cartList)
+    return cartList
+  }
 }
 export default getters

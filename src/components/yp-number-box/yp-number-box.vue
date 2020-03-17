@@ -114,6 +114,10 @@ export default {
         return
       }
       this.inputValue = value / scale
+      this.$emit('send-price', {
+        value: this.inputValue,
+        index: this.index
+      })
     },
     _getDecimalScale () {
       let scale = 1

@@ -1,4 +1,5 @@
 import http from '@/config/axios'
+import { shopCart } from './shoppingCart'
 // 获取药品分类信息
 async function getClassify(params) {
   return http.get('/admin/v1/category/getCategorys', {
@@ -66,3 +67,5 @@ export {
   getSms,
   getUserInfo
 }
+// 导出购物车接口
+export { shopCart }

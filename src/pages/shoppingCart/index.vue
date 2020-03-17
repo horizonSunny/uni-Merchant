@@ -52,13 +52,14 @@ export default {
     }
   },
   onLoad () {
-
+    this.getShopCartInfo()
   },
   computed: {
-    ...mapGetters(["classify"])
+    ...mapGetters(["getShopCartList"])
   },
   methods: {
     ...mapActions({
+      getShopCartInfo: "GetShopCartInfo",
     }),
     // 改变当前是编辑状态还是完成状态
     reverseEditor () {

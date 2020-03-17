@@ -3,7 +3,7 @@
     <checkbox-group @change="checkboxChange">
       <label
         class="uni-list-cell uni-list-cell-pd"
-        v-for="item in items"
+        v-for="(item, index) in getShopCartList"
         :key="item.value"
       >
         <uni-swipe-action>
@@ -20,26 +20,34 @@
                 :checked="checkedArr.includes(String(item.value))"
               />
               <view class="productImg">
-                <img src="/static/img/home.png" alt="" width="60" height="60" />
-                <view class="model">已下架</view>
+                <img
+                  :src="item.productImage"
+                  @error="imageError(item)"
+                  alt=""
+                  width="60"
+                  height="60"
+                />
+                <view v-show="item.isShelf === 0" class="model">已下架</view>
               </view>
               <view class="drugsInfo">
                 <view class="drugName">
-                  <text class="mark">OTC</text>
-                  <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
-                <text class="mark" v-show="item.isMp === 1">双规</text>
-                <text class="mark" v-show="item.isMp === 2">RX</text>
-                <text class="mark" v-show="item.isMp === 3">其他</text> -->
-                  <text>爱康国宾 疾病 宾 疾病</text>
-                  <view class="drugSpec">乳腺癌检测 1次</view>
-                  <!-- <text>{{ item.productName }}</text> -->
+                  <text class="mark" v-show="item.isMp === 0">OTC</text>
+                  <text class="mark" v-show="item.isMp === 1">双规</text>
+                  <text class="mark" v-show="item.isMp === 2">RX</text>
+                  <text class="mark" v-show="item.isMp === 3">其他</text>
+                  <text>{{ item.productName }}</text>
+                  <view class="drugSpec">{{ item.productSpecif }}</view>
                 </view>
                 <!-- <view class="drugSpec">{{ item.productSpecif }}</view> -->
                 <view class="drugPrice">
-                  <text>
-                    ¥ 123
-                  </text>
-                  <yp-number-box :min="0" :max="9"></yp-number-box>
+                  <text> ¥ {{ item.price }} </text>
+                  <yp-number-box
+                    :min="1"
+                    :max="9"
+                    :value="item.cartNum"
+                    :index="index"
+                    @send-price="getCartNum"
+                  ></yp-number-box>
                   <!-- {{ item.price }} -->
                 </view>
               </view>
@@ -61,7 +69,7 @@
       </checkbox-group>
       <!-- this.editorStatus 为编辑显示 -->
       <view class="price" v-show="this.editorStatus">
-        <view class="priceInfo">¥ 232.00</view>
+        <view class="priceInfo">¥ {{ calculateTotal }}</view>
         <view class="reminder">不包含运费</view>
       </view>
       <button
@@ -85,6 +93,7 @@
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
 import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
 import ypNumberBox from "@/components/yp-number-box/yp-number-box.vue"
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     uniSwipeAction,
@@ -92,6 +101,25 @@ export default {
     ypNumberBox
   },
   props: ["editorStatus"],
+  computed: {
+    ...mapGetters(["getShopCartList"]),
+    calculateTotal () {
+      const selectCart = this.getShopCartList.filter((cartItem) => {
+        return this.checkedArr.indexOf(cartItem.value) > -1
+      })
+      console.log('selectCart_', selectCart);
+      if (selectCart.length === 0) {
+        return 0
+      } else {
+        let totalPrice = 0
+        selectCart.forEach(element => {
+          totalPrice += element.price * element.cartNum
+        });
+        console.log(totalPrice);
+        return totalPrice
+      }
+    }
+  },
   created () {
     uni.getSystemInfo({
       success: function (res) {
@@ -101,19 +129,12 @@ export default {
 
       }
     })
+    console.log('getShopCartList_', this.getShopCartList);
+
   },
   data () {
     return {
-      items: [{
-        value: 'USA',
-        name: '美国'
-      },
-      {
-        value: 'CHN',
-        name: '中国',
-        checked: 'true'
-      }
-      ],
+      correctUrl: '/static/shoppingCart/shopping cart-bitmap2.svg',
       options: [
         {
           text: '移入收藏',
@@ -141,21 +162,11 @@ export default {
     checkboxChange: function (e) {
       this.checkedArr = e.detail.value;
       // 如果选择的数组中有值，并且长度等于列表的长度，就是全选
-      if (this.checkedArr.length > 0 && this.checkedArr.length == this.items.length) {
+      if (this.checkedArr.length > 0 && this.checkedArr.length == this.getShopCartList.length) {
         this.allChecked = true;
       } else {
         this.allChecked = false;
       }
-      // var items = this.items,
-      //   values = e.detail.value;
-      // for (var i = 0, lenI = items.length; i < lenI; ++i) {
-      //   const item = items[i]
-      //   if (values.includes(item.value)) {
-      //     this.$set(item, 'checked', true)
-      //   } else {
-      //     this.$set(item, 'checked', false)
-      //   }
-      // }
     },
     // 全选事件
     allChoose (e) {
@@ -165,7 +176,7 @@ export default {
       // 全选
       if (chooseItem[0] == 'all') {
         this.allChecked = true;
-        for (let item of this.items) {
+        for (let item of this.getShopCartList) {
           let itemVal = String(item.value);
           if (!this.checkedArr.includes(itemVal)) {
             this.checkedArr.push(itemVal);
@@ -188,6 +199,17 @@ export default {
     // 结算
     settlement () {
       this.$navTo("../indent/index");
+    },
+    // 图片加载失败
+    imageError (item) {
+      console.log('imageError_', item);
+      item.productImage = this.correctUrl;
+    },
+    // 获取每一个购物车加减的参数
+    getCartNum (info) {
+      console.log('num_', info);
+      const { index, value } = info
+      this.getShopCartList[index].cartNum = value
     }
   }
 }
