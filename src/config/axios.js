@@ -29,7 +29,7 @@ const http = axios.create({
   // #endif
   headers: {
     'Content-Type': 'application/json',
-    authorization: storage.getSync('accsee_token')
+    authorization: channelNo
   }
 })
 // 拦截器 在请求之前拦截
@@ -37,7 +37,7 @@ http.interceptors.request.use(config => {
   // code...
   let accsess_token = storage.getSync('access_token')
   if (accsess_token) {
-    config.headers.authorization = accsess_token
+    config.headers.authorization = 'bearer ' + accsess_token
   }
   _reqlog(config)
   // uni.showLoading({

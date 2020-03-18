@@ -111,7 +111,7 @@ export default {
   props: ['editorStatus'],
   computed: {
     ...mapGetters(['getShopCartList']),
-    calculateTotal() {
+    calculateTotal () {
       const selectCart = this.getShopCartList.filter(cartItem => {
         return this.checkedArr.indexOf(cartItem.value) > -1
       })
@@ -131,9 +131,9 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     uni.getSystemInfo({
-      success: function(res) {
+      success: function (res) {
         this.windowWidth = res.windowWidth
         this.windowHeight = res.windowHeight
         console.log('this.windowWidth_', this.windowWidth, this.windowHeight)
@@ -141,7 +141,7 @@ export default {
     })
     console.log('getShopCartList_', this.getShopCartList)
   },
-  data() {
+  data () {
     return {
       correctUrl: '/static/shoppingCart/shopping cart-bitmap2.svg',
       options: [
@@ -174,7 +174,7 @@ export default {
     ...mapActions({
       getShopCartInfo: 'GetShopCartInfo'
     }),
-    checkboxChange: function(e) {
+    checkboxChange: function (e) {
       this.checkedArr = e.detail.value
       // 如果选择的数组中有值，并且长度等于列表的长度，就是全选
       if (
@@ -187,7 +187,7 @@ export default {
       }
     },
     // 全选事件
-    allChoose(e) {
+    allChoose (e) {
       console.log('this.props.editorStatus_', this.editorStatus)
 
       let chooseItem = e.detail.value
@@ -208,7 +208,7 @@ export default {
         this.checkedArr = []
       }
     },
-    onClick(e, cart) {
+    onClick (e, cart) {
       console.log(
         '当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text
       )
@@ -225,7 +225,7 @@ export default {
       // console.log('cart_', cart)
     },
     // 结算
-    settlement() {
+    settlement () {
       if (this.checkedArr.length === 0) {
         uni.showToast({
           icon: 'none',
@@ -240,27 +240,30 @@ export default {
       }
     },
     // 图片加载失败
-    imageError(item) {
+    imageError (item) {
       console.log('imageError_', item)
       item.productImage = this.correctUrl
     },
     // 获取每一个购物车加减的参数
-    getCartNum(info) {
+    getCartNum (info) {
       console.log('num_', info)
       const { index, value } = info
       this.getShopCartList[index].cartNum = value
     },
     // 移入收藏夹
-    moveToFavorites(itemInfo) {
+    moveToFavorites (itemInfo) {
       const params = {
         productIds: itemInfo ? itemInfo : this.checkedArr
       }
       productCollect(params).then(res => {
-        this.getShopCartInfo()
+        this.cartDelete(params).then(res => {
+          this.getShopCartInfo()
+        })
       })
     },
     // 删除购物车
-    cartDelete(itemInfo) {
+    cartDelete (itemInfo) {
+      console.log('this.checkedArr_', this.checkedArr);
       const params = {
         cartIds: itemInfo ? itemInfo : this.checkedArr
       }

@@ -33,6 +33,7 @@
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
+import * as storage from '@/config/storage'
 import oneInput from "@/components/myp-one/components/myp-one/myp-one.vue";
 export default {
   components: {
@@ -65,9 +66,10 @@ export default {
         userType: 2
       }
       this.getUserInfo(params).then((res) => {
-        console.log('res_', res)
+        console.log('res_', res.access_token)
+        storage.setSync('access_token', res.access_token)
         uni.navigateBack({
-          delta: 2
+          delta: 3
         });
       })
     },

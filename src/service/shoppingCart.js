@@ -11,7 +11,7 @@ async function productCollect(params) {
 // 删除购物车
 async function shopCartDelete(params) {
   return http.delete('/order/shopCart/delete', {
-    params,
+    data: params,
     paramsSerializer: params => {
       return qs.stringify(params, { indices: false })
     }
