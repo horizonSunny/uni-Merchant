@@ -23,8 +23,15 @@
               {{ getDefaultAddress.address }}
             </view>
           </view>
-          <view v-else @click="gotoNextPage('../deliveryAddr/newAddr', {})">
-            暂无收货地址,请添加
+          <view
+            v-else
+            @click="gotoNextPage('../deliveryAddr/newAddr', {})"
+            class="noAddress"
+          >
+            <img src="/static/myIndent/Add address.svg" alt="" />
+            <view>
+              添加收货地址
+            </view>
           </view>
           <view class="pickUp" v-if="pickUp">
             <view class="user">
@@ -293,6 +300,18 @@ export default {
         line-height: 21px;
         .userName {
           margin: 0px 15px 0px 8px;
+        }
+      }
+      .noAddress {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(58, 116, 241, 1);
+        justify-content: center;
+        view {
+          margin-left: 7px;
         }
       }
       .address {

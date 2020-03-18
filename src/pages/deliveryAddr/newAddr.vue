@@ -296,8 +296,9 @@ export default {
     const option = this.getAddress.find(item => {
       return item.addressId == optionInfo.addressId
     })
+    console.log('option_', option);
 
-    if (JSON.stringify(option) !== '{}') {
+    if (JSON.stringify(option) !== '{}' && option) {
       this.operate = 'reset'
       //赋值
       this.userInfo['fullName'] = option['fullName']
@@ -315,6 +316,8 @@ export default {
       this.pickerDefault = [option['province'], option['city'], option['area']]
       this.$set(this.userInfo, 'addressId', option['addressId'])
       this.deleteActive = true
+    } else {
+      this.operate = 'add'
     }
   },
   beforeDestroy: function (optionInfo) {
