@@ -10,7 +10,10 @@
     <view slot="content" class="content">
       <view class="indent">
         <view class="userInfo">
-          <view @click="toDeliveryAddr">
+          <view
+            @click="gotoNextPage('../deliveryAddr/index', {})"
+            v-if="getDefaultAddress"
+          >
             <view class="user">
               <img src="static/icon/merchantsIntr/location.svg" alt="" />
               <view class="userName">{{ getDefaultAddress.fullName }}</view>
@@ -20,7 +23,10 @@
               {{ getDefaultAddress.address }}
             </view>
           </view>
-          <view class="pickUp" v-show="pickUp">
+          <view v-else @click="gotoNextPage('../deliveryAddr/newAddr', {})">
+            暂无收货地址,请添加
+          </view>
+          <view class="pickUp" v-if="pickUp">
             <view class="user">
               <img
                 src="static/shoppingCart/shopping cart-business.svg"
@@ -242,10 +248,9 @@ export default {
     openModal () {
       this.$refs.distribution.openModal()
     },
-    // 去收货地址
-    toDeliveryAddr () {
-      this.$navTo('../deliveryAddr/index')
-      // this.$navTo("../deliveryAddr/newAddr");
+    // 跳转页面
+    gotoNextPage (url, parameters) {
+      this.$navTo(url, parameters);
     },
     // 打开发票弹窗
     showInvoice () {
