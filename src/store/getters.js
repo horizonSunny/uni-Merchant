@@ -56,6 +56,8 @@ const getters = {
       return getters.getAddress[0]
     }
     return item
-  }
+  },
+  // 获取个人中心里面的浏览记录等
+  getProductVisit: state => state.user.productVisit
 }
 export default getters

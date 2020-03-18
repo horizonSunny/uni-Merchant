@@ -97,28 +97,14 @@ export default {
     tobBar
   },
   computed: {
-    ...mapGetters(["tenant", "banners", "quickCategorys", "products"])
+    ...mapGetters(["getProductVisit"])
   },
   onLoad () {
-    this.getMainInfo()
-    // this.getKeyWord()
-  },
-  onNavigationBarButtonTap (item) {
-    // 这边绑定是该页面topBar上面的两个button事件
-    console.log("index_", item.index);
-  },
-  // 输入框点击事件
-  onNavigationBarSearchInputClicked (e) {
-    // this.$api.msg('点击了搜索框');
-    uni.navigateTo({
-      url: "../search/search"
-    });
+    this.productVisit()
   },
   methods: {
     ...mapActions({
-      getMainInfo: "GetMainInfo",
-      getKeyWord: "GetKeyWord",
-      // 将 `this.add()` 映射为 `this.$store.dispatch('increment')`
+      productVisit: "ProductVisit"
     }),
     // 跳转药品简介页面
     toDrugIntr () {

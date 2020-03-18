@@ -29,7 +29,7 @@ const http = axios.create({
   // #endif
   headers: {
     'Content-Type': 'application/json',
-    authorization: channelNo
+    authorization: storage.getSync('accsee_token')
   }
 })
 // 拦截器 在请求之前拦截
@@ -57,7 +57,7 @@ http.interceptors.response.use(
     //     url: "/pages/login/index"
     //   });
     // } else
-    if (response.data.code !== 1) {
+    if (response.data.code === 0) {
       setTimeout(() => {
         uni.showToast({
           icon: 'none',
@@ -65,6 +65,11 @@ http.interceptors.response.use(
         })
       }, 500)
       return Promise.reject(response.data.msg)
+    } else if (response.data.code === 2) {
+      // code为2是没有权限
+      uni.navigateTo({
+        url: '../login/login'
+      })
     }
     // uni.hideLoading();
     return response.data
