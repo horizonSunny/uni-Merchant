@@ -16,7 +16,7 @@
                 <view>
                   <text class="mark">OTC</text>
                   <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
-                  <text class="mark" v-show="item.isMp === 1">双规</text>
+                  <text class="mark" v-show="item.isMp === 1"   style="color:red;border: 1px solid green;">OTC</text>
                   <text class="mark" v-show="item.isMp === 2">RX</text>
                   <text class="mark" v-show="item.isMp === 3">其他</text> -->
                   <text class="name"
