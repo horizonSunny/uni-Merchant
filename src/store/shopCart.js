@@ -8,11 +8,10 @@ const shopCartModule = {
   getters: {},
   mutations: {
     SET_SHOPCART: (state, data) => {
-      console.log('SET_SHOPCART_', data)
       state.shopCartInfo = data
     },
+    // 代表订单里面的所有信息
     NEW_INDENT: (state, data) => {
-      console.log('NEW_INDENT_', data)
       state.newIndent = data
     }
   },

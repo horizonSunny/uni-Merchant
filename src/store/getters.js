@@ -33,6 +33,19 @@ const getters = {
     return cartList
   },
   getNewIndent: state => state.shopCart.newIndent,
+  // 对订单做一个区分
+  newIndentClassification: (state, getters) => {
+    let activeIndent = [],
+      invalidIndent = []
+    getters.getNewIndent.selectedCart.forEach(element => {
+      if (element.isShelf === 1) {
+        activeIndent.push(element)
+      } else {
+        invalidIndent.push(element)
+      }
+    })
+    return { activeIndent, invalidIndent }
+  },
   // 获取患者地址信息 和获取默认地址
   getAddress: state => state.patientAddress.addressInfo,
   getDefaultAddress: (state, getters) => {

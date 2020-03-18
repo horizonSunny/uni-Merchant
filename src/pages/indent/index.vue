@@ -36,7 +36,7 @@
           </view>
           <!-- <view class="pickUp"> </view> -->
         </view>
-        <view class="prescription" @click="prescription">
+        <view class="prescription" @click="prescription" v-if="haveRx">
           <view class="title">
             <img
               src="static/shoppingCart/shopping cart-prescription.svg"
@@ -54,34 +54,32 @@
           </view>
           <view
             class="commidityInfo"
-            v-for="(item, index) in [1, 2]"
+            v-for="(item, index) in newIndentClassification.activeIndent"
             :key="index"
           >
             <view class="productImg">
-              <img src="/static/img/home.png" alt="" width="60" height="60" />
-              <view class="model">已下架</view>
+              <img
+                :src="item.productImage"
+                @error="imageError(item)"
+                alt=""
+                width="60"
+                height="60"
+              />
             </view>
             <view class="drugsInfo">
               <view class="drugName">
                 <view>
-                  <text class="mark">OTC</text>
-                  <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
-                <text class="mark" v-show="item.isMp === 1">双规</text>
-                <text class="mark" v-show="item.isMp === 2">RX</text>
-                <text class="mark" v-show="item.isMp === 3">其他</text> -->
-                  <text>爱康国宾 疾病 宾 疾病疾病 宾 疾病疾病 宾 疾病</text>
+                  <text class="mark" v-show="item.isMp === 0">OTC</text>
+                  <text class="mark" v-show="item.isMp === 1">双规</text>
+                  <text class="mark" v-show="item.isMp === 2">RX</text>
+                  <text class="mark" v-show="item.isMp === 3">其他</text>
+                  <text>{{ item.productName }}</text>
                 </view>
-                <view class="drugPrice">
-                  ¥ 123
-                </view>
+                <view class="drugPrice"> ¥ {{ item.price }} </view>
               </view>
               <view class="drugSpec">
-                <view>
-                  已选择：20mlX48支/盒
-                </view>
-                <view>
-                  X1
-                </view>
+                <view> 已选择：{{ item.productSpecif }} </view>
+                <view> X{{ item.cartNum }} </view>
               </view>
             </view>
           </view>
@@ -151,7 +149,13 @@
           >
             <view class="failure">失效</view>
             <view class="productImg">
-              <img src="/static/img/home.png" alt="" width="60" height="60" />
+              <img
+                src="/static/img/home.png"
+                @error="imageError(item)"
+                alt=""
+                width="60"
+                height="60"
+              />
               <view class="model">已下架</view>
             </view>
             <view class="drugsInfo">
@@ -178,6 +182,7 @@
             </view>
           </view>
         </view>
+        <view style="width:100%;height:50px"></view>
       </view>
       <view class="payment">
         <view class="amount"> 合记 <text>¥464</text> </view>
@@ -205,42 +210,55 @@ export default {
     distribution,
     invoice
   },
-  data() {
+  data () {
     return {
       editor: true,
       // 选择自提时候，改变为true
-      pickUp: false
+      pickUp: false,
+      haveRx: false,
+      correctUrl: '/static/shoppingCart/shopping cart-bitmap2.svg',
     }
   },
-  onLoad(option) {
+  onLoad (option) {
     console.log('getDefaultAddress_', this.getDefaultAddress)
+    console.log('newIndentClassification_', this.newIndentClassification)
+    // this.haveRx = this.getNewIndent.selectedCart.some((item) => {
+    //   return item.isMp === 3
+    // })
+    // console.log('this.haveRx _', this.haveRx);
+
   },
   computed: {
-    ...mapGetters(['getDefaultAddress'])
+    ...mapGetters(['getDefaultAddress', 'newIndentClassification'])
   },
   methods: {
     ...mapActions({}),
     // 改变当前是编辑状态还是完成状态
-    reverseEditor() {
+    reverseEditor () {
       this.editor = !this.editor
     },
     // 获取当前页面位置
-    prescription() {
+    prescription () {
       this.$navTo('../prescription/index')
     },
     // 打开快递配送
-    openModal() {
+    openModal () {
       this.$refs.distribution.openModal()
     },
     // 去收货地址
-    toDeliveryAddr() {
+    toDeliveryAddr () {
       this.$navTo('../deliveryAddr/index')
       // this.$navTo("../deliveryAddr/newAddr");
     },
     // 打开发票弹窗
-    showInvoice() {
+    showInvoice () {
       this.$refs.invoice.openModal()
-    }
+    },
+    // 图片加载失败
+    imageError (item) {
+      console.log('imageError_', item)
+      item.productImage = this.correctUrl
+    },
   }
 }
 </script>
@@ -418,6 +436,7 @@ export default {
             font-weight: 600;
             color: rgba(250, 73, 73, 1);
             margin-left: 23px;
+            text-align: right;
           }
           .failureInfo {
           }
@@ -471,7 +490,7 @@ export default {
   .payment {
     display: flex;
     position: fixed;
-    padding-top: 10px;
+    border-top: 2px solid #ededed;
     bottom: 0px;
     z-index: 99;
     background: #ededed;
