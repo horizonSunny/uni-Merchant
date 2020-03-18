@@ -242,10 +242,9 @@ export default {
   onLoad (option) {
     console.log('getDefaultAddress_', this.getDefaultAddress)
     console.log('newIndentClassification_', this.newIndentClassification)
-    // this.haveRx = this.getNewIndent.selectedCart.some((item) => {
-    //   return item.isMp === 3
-    // })
-    // console.log('this.haveRx _', this.haveRx);
+    this.haveRx = this.newIndentClassification.activeIndent.some((item) => {
+      return item.isMp === 2
+    })
 
   },
   computed: {
