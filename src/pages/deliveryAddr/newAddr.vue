@@ -5,7 +5,9 @@
       :styleInfo="{ backgroundColor: '#fff' }"
       jumpButton=""
     >
-      <text slot="title" style="color:#000">新增收货地址</text>
+      <text slot="title" style="color:#000">{{
+        this.operate === "reset" ? "编辑收货地址" : "新增收货地址"
+      }}</text>
     </tob-bar>
     <view slot="content" class="content">
       <view>
@@ -163,7 +165,7 @@
 import wPicker from '@/components/w-picker_1.2.7/components/w-picker/w-picker.vue'
 import { mapActions, mapGetters } from 'vuex'
 import validate from '@/utils/validate'
-import { newAddress } from '@/service/index'
+import { newAddress, updateAddress, addressDelete } from '@/service/index'
 export default {
   components: {
     wPicker
@@ -191,14 +193,16 @@ export default {
         { value: '2', name: '女士' }
       ],
       currentLabel: '公司',
-      labelInfo: ['公司', '家', '学校'],
-      addressInfo: null
+      labelInfo: ['公司', '家', '学校']
     }
   },
   computed: {
     ...mapGetters(['getAddress'])
   },
   methods: {
+    ...mapActions({
+      getAddressInfo: 'GetAddressInfo'
+    }),
     submit () {
       console.log('address_', this.userInfo.address)
       let formRules = [
@@ -239,31 +243,23 @@ export default {
           info['addressInfo']['addressId']
         )
       }
-      newAddress(info['addressInfo']).then(res => {
-        uni.navigateBack()
-      })
+      if (this.operate === 'add') {
+        newAddress(info['addressInfo']).then(res => {
+          uni.navigateBack()
+        })
+      } else if (this.operate = 'reset') {
+        updateAddress(info['addressInfo']).then(res => {
+          uni.navigateBack()
+        })
+      }
     },
     // 删除收获地址
     deleteAddress () {
       if (!this.deleteActive) {
         return
       }
-      let url = 'patient/address/' + this.userInfo.addressId
-      this.$http.delete(url).then(res => {
-        this.$store.dispatch('getCustAdd').then(res => {
-          // 如果删除的是选中地址，store要清空
-          if (this.$store.getters.getCustSelectedAddress) {
-            const hasSelected = this.$store.getters.getCustSelectedAddress
-            if (
-              parseInt(this.userInfo.addressId) ===
-              parseInt(hasSelected.addressId)
-            ) {
-              console.log('this.userInfo.addressId === hasSelected.addressId')
-              this.$store.commit('DELETE_SELECTCUST')
-            }
-          }
-          uni.navigateBack()
-        })
+      addressDelete(this.userInfo.addressId).then(res => {
+        uni.navigateBack()
       })
     },
     selectArea () {
@@ -296,27 +292,33 @@ export default {
       console.log(e)
     }
   },
-  onLoad: function (option) {
-    this.addressInfo = this.getAddress.find(item => {
-      return item.addressId == option.addressId
+  onLoad: function (optionInfo) {
+    const option = this.getAddress.find(item => {
+      return item.addressId == optionInfo.addressId
     })
-    // if (JSON.stringify(option) !== '{}') {
-    //   this.operate = 'reset'
-    //   //赋值
-    //   this.userInfo['fullName'] = option['fullName']
-    //   this.userInfo['phone'] = option['phone']
-    //   this.userInfo['userAddress'] =
-    //     option['province'] + option['city'] + option['area']
-    //   this.userInfo['address'] = option['address']
-    //   this.userInfo['defaultInfo'] = option['isDefault'] == 0 ? false : true
-    //   this.userInfo['province'] = option['province']
-    //   this.userInfo['city'] = option['city']
-    //   this.userInfo['area'] = option['area']
 
-    //   this.pickerDefault = [option['province'], option['city'], option['area']]
-    //   this.$set(this.userInfo, 'addressId', option['addressId'])
-    //   this.deleteActive = true
-    // }
+    if (JSON.stringify(option) !== '{}') {
+      this.operate = 'reset'
+      //赋值
+      this.userInfo['fullName'] = option['fullName']
+      this.userInfo['phone'] = option['phone']
+      this.userInfo['userAddress'] =
+        option['province'] + option['city'] + option['area']
+      this.userInfo['address'] = option['address']
+      this.userInfo['defaultInfo'] = option['isDefault'] == 2 ? false : true
+      this.userInfo['province'] = option['province']
+      this.userInfo['city'] = option['city']
+      this.userInfo['area'] = option['area']
+
+      this.currentLabel = option['addressLabel']
+      this.currentSex = option['sex']
+      this.pickerDefault = [option['province'], option['city'], option['area']]
+      this.$set(this.userInfo, 'addressId', option['addressId'])
+      this.deleteActive = true
+    }
+  },
+  beforeDestroy: function (optionInfo) {
+    this.getAddressInfo()
   }
 }
 </script>
@@ -348,7 +350,7 @@ export default {
       input {
         height: 57px;
         line-height: 57px;
-        text-overflow: ellipsis;
+        flex: 1;
       }
       .placeholder-class {
         font-size: 18px;
