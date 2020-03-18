@@ -138,46 +138,43 @@
             </view>
           </view>
         </view>
-        <view class="effectiveGoods">
+        <view
+          class="effectiveGoods"
+          v-if="newIndentClassification.invalidIndent.length !== 0"
+        >
           <view class="title">
             失效商品
           </view>
           <view
             class="commidityInfo"
-            v-for="(item, index) in [1, 2]"
+            v-for="(item, index) in newIndentClassification.invalidIndent"
             :key="index"
           >
             <view class="failure">失效</view>
             <view class="productImg">
               <img
-                src="/static/img/home.png"
+                :src="item.productImage"
                 @error="imageError(item)"
                 alt=""
                 width="60"
                 height="60"
               />
-              <view class="model">已下架</view>
             </view>
             <view class="drugsInfo">
               <view class="failureInfo">
-                <text class="mark">OTC</text>
-                <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
+                <text class="mark" v-show="item.isMp === 0">OTC</text>
                 <text class="mark" v-show="item.isMp === 1">双规</text>
                 <text class="mark" v-show="item.isMp === 2">RX</text>
-                <text class="mark" v-show="item.isMp === 3">其他</text> -->
-                <text>爱康国宾 疾病 宾 疾病疾病 宾 疾病疾病 宾 疾病</text>
+                <text class="mark" v-show="item.isMp === 3">其他</text>
+                <text>{{ item.productName }}</text>
               </view>
 
               <view class="drugSpec">
-                <view>
-                  已选择：20mlX48支/盒
-                </view>
-                <view>
-                  X1
-                </view>
+                <view> 已选择：{{ item.productSpecif }} </view>
+                <view> X{{ item.cartNum }} </view>
               </view>
               <view class="drugSpec">
-                无法送货到当前收获地址
+                {{ item.reasons }}
               </view>
             </view>
           </view>
