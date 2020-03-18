@@ -34,14 +34,14 @@
             <radio-group @change="sexChange">
               <view class="sexSel">
                 <label
-                  v-for="(item, index) in items"
+                  v-for="item in items"
                   :key="item.value"
                   style="margin-right:20px;"
                 >
                   <view>
                     <radio
                       :value="item.value"
-                      :checked="index === currentSex"
+                      :checked="item.value == currentSex"
                     />{{ item.name }}
                   </view>
                 </label>
@@ -64,11 +64,11 @@
             <span class="textarea_span">详细地址</span>
             <textarea
               type="text"
-              name="detailAddress"
+              name="address"
               placeholder="如道路、门牌号、小区"
               rows="3"
               cols="4"
-              :value="userInfo['detailAddress']"
+              :value="userInfo['address']"
               @input="inputAreaDetail"
             />
           </view>
@@ -163,17 +163,18 @@
 import wPicker from '@/components/w-picker_1.2.7/components/w-picker/w-picker.vue'
 import { mapActions, mapGetters } from 'vuex'
 import validate from '@/utils/validate'
+import { newAddress } from '@/service/index'
 export default {
   components: {
     wPicker
   },
-  data() {
+  data () {
     return {
       userInfo: {
         fullName: '',
         phone: '',
         userAddress: '',
-        detailAddress: '',
+        address: '',
         province: '',
         city: '',
         area: '',
@@ -184,10 +185,10 @@ export default {
       operate: 'add',
       deleteActive: false,
       // 性别
-      currentSex: '0',
+      currentSex: 1,
       items: [
-        { value: '0', name: '男士' },
-        { value: '1', name: '女士' }
+        { value: '1', name: '男士' },
+        { value: '2', name: '女士' }
       ],
       currentLabel: '公司',
       labelInfo: ['公司', '家', '学校'],
@@ -198,8 +199,8 @@ export default {
     ...mapGetters(['getAddress'])
   },
   methods: {
-    submit() {
-      console.log('detailAddress_', this.userInfo.detailAddress)
+    submit () {
+      console.log('address_', this.userInfo.address)
       let formRules = [
         { name: 'fullName', type: 'required', errmsg: '请填写用户名' },
         {
@@ -210,7 +211,7 @@ export default {
         },
         { name: 'userAddress', type: 'required', errmsg: '请选择地址' },
         {
-          name: 'detailAddress',
+          name: 'address',
           type: 'required',
           errmsg: '请填写详细地址信息'
         }
@@ -229,17 +230,21 @@ export default {
       }
       info['addressInfo']['isDefault'] = info['addressInfo']['defaultInfo']
         ? 1
-        : 0
+        : 2
+      info['addressInfo']['sex'] = Number(this.currentSex)
+      info['addressInfo']['addressLabel'] = this.currentLabel
+      info['addressInfo']['houseNumber'] = '删除'
       if (info['addressInfo']['addressId']) {
         info['addressInfo']['addressId'] = parseInt(
           info['addressInfo']['addressId']
         )
       }
-      console.log('addressInfo____', info)
-      this.$store.dispatch('setCustAdd', info).then(res => {})
+      newAddress(info['addressInfo']).then(res => {
+        uni.navigateBack()
+      })
     },
     // 删除收获地址
-    deleteAddress() {
+    deleteAddress () {
       if (!this.deleteActive) {
         return
       }
@@ -261,34 +266,37 @@ export default {
         })
       })
     },
-    selectArea() {
+    selectArea () {
       this.$refs['region'].show()
     },
-    inputAreaDetail(event) {
+    inputAreaDetail (event) {
       setTimeout(() => {
-        this.userInfo.detailAddress = event.detail.value
+        this.userInfo.address = event.detail.value
       }, 0)
     },
-    onConfirmArea(val) {
+    onConfirmArea (val) {
       this.userInfo.userAddress = val.result
       this.userInfo.province = val.checkArr[0]
       this.userInfo.city = val.checkArr[1]
       this.userInfo.area = val.checkArr[2]
       console.log('val_', val)
     },
-    changeDefaultInfo(event) {
+    changeDefaultInfo (event) {
       console.log('event.detail.value_', event.detail.value)
       this.userInfo.defaultInfo = event.detail.value
     },
     // sexChange
-    sexChange() {},
+    sexChange (e) {
+      this.currentSex = e.detail.value
+      console.log(this.currentSex)
+    },
     //selectLabel
-    selectLabel(e) {
+    selectLabel (e) {
       this.currentLabel = e
       console.log(e)
     }
   },
-  onLoad: function(option) {
+  onLoad: function (option) {
     this.addressInfo = this.getAddress.find(item => {
       return item.addressId == option.addressId
     })
@@ -299,7 +307,7 @@ export default {
     //   this.userInfo['phone'] = option['phone']
     //   this.userInfo['userAddress'] =
     //     option['province'] + option['city'] + option['area']
-    //   this.userInfo['detailAddress'] = option['detailAddress']
+    //   this.userInfo['address'] = option['address']
     //   this.userInfo['defaultInfo'] = option['isDefault'] == 0 ? false : true
     //   this.userInfo['province'] = option['province']
     //   this.userInfo['city'] = option['city']
