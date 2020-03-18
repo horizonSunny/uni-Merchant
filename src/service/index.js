@@ -21,6 +21,8 @@ import {
   deleteProductVisitAll
 } from './productVisit'
 
+import { confirmOrder, cancelOrder, generateOrder } from './indent'
+
 // 获取药品分类信息
 async function getClassify(params) {
   return http.get('/admin/v1/category/getCategorys', {
@@ -99,3 +101,5 @@ export {
   deleteProductVisit,
   deleteProductVisitAll
 }
+// 生成订单页面
+export { confirmOrder, cancelOrder, generateOrder }

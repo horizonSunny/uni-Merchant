@@ -23,9 +23,7 @@
           </view>
         </view>
         <view class="classifyDetails">
-          <view class="uni-list">
-            <commidityItem :editorStatus="editor"></commidityItem>
-          </view>
+          <commidityItem :editorStatus="editor"></commidityItem>
         </view>
       </view>
       <!-- 假如购物车没东西 -->
@@ -79,7 +77,8 @@ export default {
   .classify {
     margin-top: 10px;
     width: 100%;
-    background: #f4f1f4;
+    display: flex;
+    flex-direction: column;
     .classifyTitle {
       padding: 0px 14px;
       display: flex;
@@ -116,8 +115,12 @@ export default {
       }
     }
     .classifyDetails {
-      background: #fff;
-      padding: 0 0 50px 0;
+      background: #efecf0;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
     }
   }
 }

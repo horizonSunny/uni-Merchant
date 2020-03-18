@@ -1,65 +1,68 @@
 <template>
-  <view>
-    <checkbox-group @change="checkboxChange">
-      <label
-        class="uni-list-cell uni-list-cell-pd"
-        v-for="(item, index) in getShopCartList"
-        :key="item.value"
-      >
-        <uni-swipe-action>
-          <uni-swipe-action-item
-            :options="options"
-            @click="onClick($event, item)"
-          >
-            <view class="commidityInfo" @click.stop>
-              <checkbox
-                :value="item.value"
-                color="#FFCC33"
-                :checked="checkedArr.includes(String(item.value))"
-                :disabled="item.isShelf === 0"
-              />
-              <view class="productImg">
-                <img
-                  :src="item.productImage"
-                  @error="imageError(item)"
-                  alt=""
-                  width="60"
-                  height="60"
+  <view class="content">
+    <view class="contentShopping">
+      <checkbox-group @change="checkboxChange">
+        <label
+          class="uni-list-cell uni-list-cell-pd"
+          v-for="(item, index) in getShopCartList"
+          :key="item.value"
+        >
+          <uni-swipe-action>
+            <uni-swipe-action-item
+              :options="options"
+              @click="onClick($event, item)"
+            >
+              <view class="commidityInfo" @click.stop>
+                <checkbox
+                  :value="item.value"
+                  color="#FFCC33"
+                  :checked="checkedArr.includes(String(item.value))"
+                  :disabled="item.isShelf === 0"
                 />
-                <view v-show="item.isShelf === 0" class="model">已下架</view>
-              </view>
-              <view class="drugsInfo">
-                <view class="drugName">
-                  <text class="mark" v-show="item.isMp === 0">OTC</text>
-                  <text
-                    class="mark"
-                    v-show="item.isMp === 1"
-                    style="color:red;border: 1px solid green;"
-                    >OTC</text
-                  >
-                  <text class="mark" v-show="item.isMp === 2">RX</text>
-                  <text class="mark" v-show="item.isMp === 3">其他</text>
-                  <text>{{ item.productName }}</text>
-                  <view class="drugSpec">{{ item.productSpecif }}</view>
+                <view class="productImg">
+                  <img
+                    :src="item.productImage"
+                    @error="imageError(item)"
+                    alt=""
+                    width="60"
+                    height="60"
+                  />
+                  <view v-show="item.isShelf === 0" class="model">已下架</view>
                 </view>
-                <!-- <view class="drugSpec">{{ item.productSpecif }}</view> -->
-                <view class="drugPrice">
-                  <text> ¥ {{ item.price }} </text>
-                  <yp-number-box
-                    :min="1"
-                    :max="9"
-                    :index="index"
-                    :item="item"
-                    @send-price="getCartNum"
-                  ></yp-number-box>
-                  <!-- {{ item.price }} -->
+                <view class="drugsInfo">
+                  <view class="drugName">
+                    <text class="mark" v-show="item.isMp === 0">OTC</text>
+                    <text
+                      class="mark"
+                      v-show="item.isMp === 1"
+                      style="color:red;border: 1px solid green;"
+                      >OTC</text
+                    >
+                    <text class="mark" v-show="item.isMp === 2">RX</text>
+                    <text class="mark" v-show="item.isMp === 3">其他</text>
+                    <text>{{ item.productName }}</text>
+                    <view class="drugSpec">{{ item.productSpecif }}</view>
+                  </view>
+                  <!-- <view class="drugSpec">{{ item.productSpecif }}</view> -->
+                  <view class="drugPrice">
+                    <text> ¥ {{ item.price }} </text>
+                    <yp-number-box
+                      :min="1"
+                      :max="9"
+                      :index="index"
+                      :item="item"
+                      @send-price="getCartNum"
+                    ></yp-number-box>
+                    <!-- {{ item.price }} -->
+                  </view>
                 </view>
               </view>
-            </view>
-          </uni-swipe-action-item>
-        </uni-swipe-action>
-      </label>
-    </checkbox-group>
+            </uni-swipe-action-item>
+          </uni-swipe-action>
+        </label>
+      </checkbox-group>
+      <view style="width:100%;height:50px"></view>
+    </view>
     <view class="settleAccounts">
       <checkbox-group @change="allChoose">
         <label>
@@ -284,6 +287,79 @@ export default {
 /deep/ .uni-checkbox-input {
   border-radius: 11px;
 }
+.content {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  .contentShopping {
+    flex: 1;
+    overflow: scroll;
+  }
+  .settleAccounts {
+    border-top: 1px solid #f4f1f4;
+    position: absolute;
+    background: #fff;
+    display: flex;
+    padding-left: 15px;
+    align-items: center;
+    bottom: 0px;
+    width: 100%;
+    height: 50px;
+    .price {
+      margin-left: 9px;
+      .priceInfo {
+        width: 69px;
+        height: 22px;
+        font-size: 16px;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: rgba(250, 73, 73, 1);
+        line-height: 22px;
+      }
+      .reminder {
+        width: 84px;
+        height: 17px;
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(137, 137, 137, 1);
+        line-height: 17px;
+      }
+    }
+    .button {
+      background: #3a74f1;
+      float: right;
+      width: 120px;
+      height: 50px;
+      border-radius: 0px;
+      margin-right: 15px;
+      color: #fff;
+    }
+    .allOperate {
+      display: flex;
+      flex: 1;
+      justify-content: flex-end;
+      button {
+        height: 28px;
+        line-height: 28px;
+        font-size: 13px;
+        border-radius: 4px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        margin: 0px;
+        margin-right: 20px;
+      }
+      button:nth-child(1) {
+        border: 1px solid rgba(255, 180, 0, 1);
+        color: rgba(246, 174, 0, 1);
+      }
+      button:nth-child(2) {
+        border: 1px solid rgba(229, 11, 53, 1);
+        color: #e50b35;
+      }
+    }
+  }
+}
 .commidityInfo {
   height: 89px;
   width: 100%;
@@ -365,69 +441,6 @@ export default {
       line-height: 25px;
       display: flex;
       justify-content: space-between;
-    }
-  }
-}
-.settleAccounts {
-  position: fixed;
-  background: #fff;
-  display: flex;
-  padding-left: 15px;
-  align-items: center;
-  bottom: 48px;
-  width: 100%;
-  height: 50px;
-  .price {
-    margin-left: 9px;
-    .priceInfo {
-      width: 69px;
-      height: 22px;
-      font-size: 16px;
-      font-family: PingFangSC-Semibold, PingFang SC;
-      font-weight: 600;
-      color: rgba(250, 73, 73, 1);
-      line-height: 22px;
-    }
-    .reminder {
-      width: 84px;
-      height: 17px;
-      font-size: 12px;
-      font-family: PingFangSC-Regular, PingFang SC;
-      font-weight: 400;
-      color: rgba(137, 137, 137, 1);
-      line-height: 17px;
-    }
-  }
-  .button {
-    background: #3a74f1;
-    float: right;
-    width: 120px;
-    height: 50px;
-    border-radius: 0px;
-    margin-right: 15px;
-    color: #fff;
-  }
-  .allOperate {
-    display: flex;
-    flex: 1;
-    justify-content: flex-end;
-    button {
-      height: 28px;
-      line-height: 28px;
-      font-size: 13px;
-      border-radius: 4px;
-      font-family: PingFangSC-Regular, PingFang SC;
-      font-weight: 400;
-      margin: 0px;
-      margin-right: 20px;
-    }
-    button:nth-child(1) {
-      border: 1px solid rgba(255, 180, 0, 1);
-      color: rgba(246, 174, 0, 1);
-    }
-    button:nth-child(2) {
-      border: 1px solid rgba(229, 11, 53, 1);
-      color: #e50b35;
     }
   }
 }
