@@ -1,4 +1,9 @@
-import { getClassify, getMainInfo, searchKeyword } from '@/service/index'
+import {
+  getClassify,
+  getMainInfo,
+  searchKeyword,
+  getMedicineTemplate
+} from '@/service/index'
 const businessModule = {
   state: {
     // 找药/分类数据
@@ -9,7 +14,9 @@ const businessModule = {
     quickCategorys: [],
     products: [],
     // 获取搜索词库
-    searchKeyword: []
+    searchKeyword: [],
+    // 获取病史模版
+    getMedicineTemplate: []
   },
   getters: {
     // getPermission(state, getters, rootState, rootGetters) {
@@ -30,6 +37,9 @@ const businessModule = {
     },
     SET_SEARCH_KEY: (state, keyword) => {
       state.searchKeyword = keyword
+    },
+    SET_MEDICINE_TEMPLATE: (state, templateInfo) => {
+      state.getMedicineTemplate = templateInfo
     }
   },
   actions: {
@@ -51,6 +61,12 @@ const businessModule = {
     GetKeyWord({ commit }) {
       searchKeyword().then(res => {
         commit('SET_SEARCH_KEY', res.data)
+      })
+    },
+    // 获取病史模版
+    GetMedicineTemplate({ commit }) {
+      getMedicineTemplate().then(res => {
+        commit('SET_MEDICINE_TEMPLATE', res.data)
       })
     }
   }

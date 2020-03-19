@@ -7,6 +7,7 @@ export default {
     this.getKeyWord()
     this.getMainInfo()
     this.getAddress()
+    this.getMedicineTemplate()
     console.log('App Launch')
   },
   onShow: function () {
@@ -19,7 +20,8 @@ export default {
     ...mapActions({
       getMainInfo: 'GetMainInfo',
       getKeyWord: 'GetKeyWord',
-      getAddress: 'GetAddressInfo'
+      getAddress: 'GetAddressInfo',
+      getMedicineTemplate: 'GetMedicineTemplate'
     })
   }
 }
