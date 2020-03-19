@@ -49,12 +49,17 @@ const getters = {
   // 获取患者地址信息 和获取默认地址
   getAddress: state => state.patientAddress.addressInfo,
   getDefaultAddress: (state, getters) => {
-    let item = getters.getAddress.find(item => {
-      return item.isDefault === 1
-    })
+    console.log('getters_', getters)
+
+    let item =
+      getters.getAddress.length !== 0 &&
+      getters.getAddress.find(item => {
+        return item.isDefault === 1
+      })
     if (item === undefined) {
       return getters.getAddress[0]
     }
+    console.log('item_', item)
     return item
   },
   // 获取个人中心里面的浏览记录等
