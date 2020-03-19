@@ -26,6 +26,7 @@
               type="text"
               placeholder="请输入用药人身份证号码"
               v-model="userInfo['identityCard']"
+              maxlength="18"
             />
           </view>
           <view class="labelInfo">
@@ -33,7 +34,7 @@
             <input
               type="text"
               name="userBirthday"
-              placeholder="点击选择地区"
+              placeholder="选择出生年月"
               placeholder-class="placeholder-class"
               disabled
               :value="userInfo['userBirthday']"
@@ -79,7 +80,11 @@
               v-model="userInfo['phone']"
               maxlength="11"
             />
-            <img src="static/icon/main/home_right-2.svg" alt="" />
+            <img
+              src="static/icon/main/home_right-2.svg"
+              alt=""
+              @click="showTemplate"
+            />
           </view>
           <view class="labelInfo default">
             <span>设置为默认用药人</span>
@@ -114,7 +119,7 @@
         >
         </w-picker>
       </view>
-      <diseasesHistory v-if="false"></diseasesHistory>
+      <diseasesHistory v-if="diseasesShow"></diseasesHistory>
     </view>
   </body-wrap>
 </template>
@@ -134,10 +139,6 @@ export default {
         phone: '',
         userBirthday: '',
         identityCard: '',
-        // detailAddress: '',
-        // province: '',
-        // city: '',
-        // area: '',
         defaultInfo: false,
       },
       pickerDefault: '2017-10-30',
@@ -145,11 +146,11 @@ export default {
       operate: 'add',
       deleteActive: false,
       // 性别
-      currentSex: '0',
+      currentSex: '1',
       items: [
-        { value: '0', name: "男士" },
-        { value: '1', name: "女士" }
-      ],
+        { value: '1', name: "男士" },
+        { value: '2', name: "女士" }
+      ]
     }
   },
   computed: {},
@@ -157,10 +158,9 @@ export default {
     submit () {
       let formRules = [
         { name: 'fullName', type: 'required', errmsg: '请填写用户名' },
+        { name: 'identityCard', required: true, type: 'identityCard', errmsg: '请填写用药人正确身份证号码' },
         { name: 'phone', required: true, type: 'phone', errmsg: '请输入正确的手机号' },
         { name: 'userBirthday', type: 'required', errmsg: '请选择出生年月' },
-        { name: 'identityCard', type: 'required', errmsg: '请填写用药人身份证号码' }
-
       ]
       let valLoginRes = validate.validate(this.userInfo, formRules)
       if (!valLoginRes.isOk) {
@@ -226,6 +226,10 @@ export default {
       this.currentLabel = e;
       console.log(e);
 
+    },
+    //selectLabel
+    showTemplate () {
+      this.diseasesShow = !this.diseasesShow
     }
   },
   onLoad: function (option) {
@@ -267,12 +271,13 @@ export default {
       line-height: 57px;
       padding: 0px 15px;
       border-bottom: 1px solid #f3f3f3;
+      font-size: 14px;
       display: flex;
       span {
         width: 105px;
         // display: inline-block;
         // width: 30%;
-        font-size: 18px;
+        font-size: 14px;
         color: #282828;
         letter-spacing: 0;
       }
@@ -284,6 +289,7 @@ export default {
       /deep/ uni-input {
         // width: 80%;
         width: 70%;
+        font-size: 14px;
       }
       .placeholder-class {
         font-size: 18px;
