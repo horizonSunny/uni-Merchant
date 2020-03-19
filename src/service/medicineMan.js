@@ -9,7 +9,7 @@ async function getMedicineTemplate(params) {
 }
 // 删除购物车
 async function medicineManDelete(params) {
-  return http.delete('/patient/medicine' + params)
+  return http.delete('/patient/medicine/' + params)
 }
 // 更新购物车
 async function updateMedicineMan(params) {

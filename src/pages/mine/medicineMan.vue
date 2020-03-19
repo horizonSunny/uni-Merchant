@@ -106,8 +106,9 @@ export default {
         justify-content: flex-start;
         align-items: center;
         .name {
-          height: 21px;
-          font-size: 15px;
+          height: 20px;
+          width: 50px;
+          font-size: 14px;
           font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 500;
           color: rgba(27, 27, 27, 1);

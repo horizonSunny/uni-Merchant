@@ -5,7 +5,9 @@
       :styleInfo="{ backgroundColor: '#fff' }"
       jumpButton=""
     >
-      <text slot="title" style="color:#000">新增用药人</text>
+      <text slot="title" style="color:#000">{{
+        operate === "reset" ? "编辑用药人" : "新增用药人"
+      }}</text>
     </tob-bar>
     <view slot="content" class="content">
       <view>
@@ -132,7 +134,7 @@ import validate from '@/utils/validate'
 import diseasesHistory from './diseasesHistory'
 import { mapActions, mapGetters } from "vuex"
 import deepCopy from '@/utils/deepCopy'
-import { updateMedicineMan, newMedicineMan } from '@/service/index'
+import { updateMedicineMan, newMedicineMan, medicineManDelete } from '@/service/index'
 export default {
   components: {
     wPicker,
@@ -168,6 +170,9 @@ export default {
     ...mapGetters(["medicineTemplate", 'getCurrentMedicineMan']),
   },
   methods: {
+    ...mapActions({
+      getMedicineMan: 'GetMedicineMan'
+    }),
     submit () {
       let formRules = [
         { name: 'fullName', type: 'required', errmsg: '请填写用户名' },
@@ -206,26 +211,19 @@ export default {
       const medicine = medicineInfo.filter(item => item !== undefined)
       console.log('medicineInfo_', medicine);
       info['patientInfo']['medicineInfo'] = medicine
-      newMedicineMan(info['patientInfo']).then(res => { })
+      if (this.operate === 'reset') {
+        updateMedicineMan(info['patientInfo']).then(res => { uni.navigateBack() })
+      } else {
+        newMedicineMan(info['patientInfo']).then(res => { uni.navigateBack() })
+      }
     },
     // 删除收获地址
     deleteAddress () {
       if (!this.deleteActive) {
         return
       }
-      let url = 'patient/address/' + this.userInfo.addressId
-      this.$http.delete(url).then((res) => {
-        this.$store.dispatch('getCustAdd').then((res) => {
-          // 如果删除的是选中地址，store要清空
-          if (this.$store.getters.getCustSelectedAddress) {
-            const hasSelected = this.$store.getters.getCustSelectedAddress
-            if (parseInt(this.userInfo.addressId) === parseInt(hasSelected.addressId)) {
-              console.log('this.userInfo.addressId === hasSelected.addressId')
-              this.$store.commit('DELETE_SELECTCUST')
-            }
-          }
-          uni.navigateBack()
-        })
+      medicineManDelete(this.getCurrentMedicineMan.medicineUserId).then(res => {
+        uni.navigateBack()
       })
     },
     selectArea () {
@@ -286,10 +284,11 @@ export default {
     if (JSON.stringify(currentMedicineMan) !== '{}' && currentMedicineMan) {
       this.operate = 'reset'
       //赋值
+      this.userInfo['medicineUserId'] = currentMedicineMan['medicineUserId']
       this.userInfo['fullName'] = currentMedicineMan['fullName']
       this.userInfo['phone'] = currentMedicineMan['phone']
       //
-      this.userInfo['sex'] = currentMedicineMan['sex']
+      this.currentSex = currentMedicineMan['sex'] + ''
       this.userInfo['defaultInfo'] = currentMedicineMan['isDefault'] == 2 ? false : true
       this.medicineInfo = currentMedicineMan['medicineInfo']
       console.log('this.medicineInfo_', this.medicineInfo);
@@ -298,6 +297,9 @@ export default {
       this.userInfo['idCard'] = currentMedicineMan['idCard']
       this.deleteActive = true
     }
+  },
+  beforeDestroy: function () {
+    this.getMedicineMan()
   }
 }
 </script>
