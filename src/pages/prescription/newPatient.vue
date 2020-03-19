@@ -53,7 +53,7 @@
                   <view>
                     <radio
                       :value="item.value"
-                      :checked="index === currentSex"
+                      :checked="item.value === currentSex"
                     />{{ item.name }}
                   </view>
                 </label>
@@ -132,6 +132,7 @@ import validate from '@/utils/validate'
 import diseasesHistory from './diseasesHistory'
 import { mapActions, mapGetters } from "vuex"
 import deepCopy from '@/utils/deepCopy'
+import { updateMedicineMan, newMedicineMan } from '@/service/index'
 export default {
   components: {
     wPicker,
@@ -170,7 +171,7 @@ export default {
     submit () {
       let formRules = [
         { name: 'fullName', type: 'required', errmsg: '请填写用户名' },
-        { name: 'idCard', required: true, type: 'idCard', errmsg: '请填写用药人正确身份证号码' },
+        { name: 'idCard', required: true, type: 'identityCard', errmsg: '请填写用药人正确身份证号码' },
         { name: 'phone', required: true, type: 'phone', errmsg: '请输入正确的手机号' },
         { name: 'birthday', type: 'required', errmsg: '请选择出生年月' },
       ]
@@ -184,14 +185,28 @@ export default {
       }
       const info = {
         operate: this.operate,
-        addressInfo: this.userInfo
+        patientInfo: this.userInfo
       }
-      info['addressInfo']['isDefault'] = info['addressInfo']['defaultInfo'] ? 1 : 0
-      if (info['addressInfo']['addressId']) {
-        info['addressInfo']['addressId'] = parseInt(info['addressInfo']['addressId'])
+      info['patientInfo']['sex'] = this.currentSex;
+      info['patientInfo']['isDefault'] = info['patientInfo']['defaultInfo'] ? 1 : 2
+      if (info['patientInfo']['addressId']) {
+        info['patientInfo']['addressId'] = parseInt(info['patientInfo']['addressId'])
       }
-      console.log('addressInfo____', info);
-      this.$store.dispatch('setCustAdd', info).then((res) => { })
+      console.log('patientInfo____', info);
+      console.log('this.preTemplateInfo_', this.preTemplateInfo);
+      const medicineInfo = this.preTemplateInfo.map((item) => {
+        const judge = Number(item.status) === 1 && item.diseases.length !== 0
+        if (judge) {
+          return {
+            id: item.id,
+            labels: item.diseases
+          }
+        }
+      })
+      const medicine = medicineInfo.filter(item => item !== undefined)
+      console.log('medicineInfo_', medicine);
+      info['patientInfo']['medicineInfo'] = medicine
+      newMedicineMan(info['patientInfo']).then(res => { })
     },
     // 删除收获地址
     deleteAddress () {
@@ -228,7 +243,10 @@ export default {
       this.userInfo.defaultInfo = event.detail.value
     },
     // sexChange
-    sexChange () { },
+    sexChange (e) {
+      console.log(e.detail.value);
+      this.currentSex = e.detail.value
+    },
     //selectLabel
     selectLabel (e) {
       this.currentLabel = e;
