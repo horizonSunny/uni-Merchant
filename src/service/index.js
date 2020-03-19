@@ -31,6 +31,8 @@ import {
 
 import { confirmOrder, cancelOrder, generateOrder } from './indent'
 
+import { userInfo, getStatisticData } from './mine'
+
 // 获取药品分类信息
 async function getClassify(params) {
   return http.get('/admin/v1/category/getCategorys', {
@@ -120,3 +122,5 @@ export {
   updateMedicineMan,
   newMedicineMan
 }
+// 获取统计数据
+export { userInfo, getStatisticData }

@@ -7,15 +7,15 @@ async function medicineMan(params) {
 async function getMedicineTemplate(params) {
   return http.get('/patient/medicine/getMedicineTemplate')
 }
-// 删除购物车
+// 删除用药人信息
 async function medicineManDelete(params) {
   return http.delete('/patient/medicine/' + params)
 }
-// 更新购物车
+// 更新用药人信息
 async function updateMedicineMan(params) {
   return http.put('/patient/medicine', params)
 }
-// 新增购物车
+// 新增用药人信息
 async function newMedicineMan(params) {
   return http.post('/patient/medicine', params)
 }
