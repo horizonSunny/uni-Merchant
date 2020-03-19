@@ -165,7 +165,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["medicineTemplate"]),
+    ...mapGetters(["medicineTemplate", 'getCurrentMedicineMan']),
   },
   methods: {
     submit () {
@@ -281,18 +281,21 @@ export default {
     this.preTemplateInfo = deepCopy(this.templateInfo)
   },
   onLoad: function (option) {
-    console.log('option_', option)
-    if (JSON.stringify(option) !== '{}' && option) {
+    const currentMedicineMan = deepCopy(this.getCurrentMedicineMan)
+    console.log('getCurrentMedicineMan_', currentMedicineMan);
+    if (JSON.stringify(currentMedicineMan) !== '{}' && currentMedicineMan) {
       this.operate = 'reset'
       //赋值
-      this.userInfo['fullName'] = option['fullName']
-      this.userInfo['phone'] = option['phone']
+      this.userInfo['fullName'] = currentMedicineMan['fullName']
+      this.userInfo['phone'] = currentMedicineMan['phone']
       //
-      this.userInfo['sex'] = option['sex']
-      this.userInfo['defaultInfo'] = option['isDefault'] == 2 ? false : true
-      this.medicineInfo = option['medicineInfo']
-      this.userInfo['birthday'] = option['birthday']
-      this.userInfo['idCard'] = option['idCard']
+      this.userInfo['sex'] = currentMedicineMan['sex']
+      this.userInfo['defaultInfo'] = currentMedicineMan['isDefault'] == 2 ? false : true
+      this.medicineInfo = currentMedicineMan['medicineInfo']
+      console.log('this.medicineInfo_', this.medicineInfo);
+      console.log('this.medicineInfo_', currentMedicineMan['medicineInfo']);
+      this.userInfo['birthday'] = currentMedicineMan['birthday']
+      this.userInfo['idCard'] = currentMedicineMan['idCard']
       this.deleteActive = true
     }
   }

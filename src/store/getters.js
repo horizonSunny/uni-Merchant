@@ -67,6 +67,8 @@ const getters = {
   // 获取模版信息 state获取模版,如果修改的话，修改变动用药人疾病信息。这边state会获取用药人信息和模版信息
   medicineTemplate: state => state.business.getMedicineTemplate,
   // 获取用药人信息
-  getMedicineMan: state => state.user.medicineMan
+  getMedicineMan: state => state.user.medicineMan,
+  // 获取当前编辑用药人
+  getCurrentMedicineMan: state => state.user.currentMedicineMan
 }
 export default getters

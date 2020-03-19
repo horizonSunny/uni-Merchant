@@ -25,7 +25,7 @@
           </view>
           <view
             class="editor"
-            @click="gotoNextPage('../prescription/newPatient', {})"
+            @click="gotoNextPage('../prescription/newPatient', item)"
             >编辑</view
           >
         </view>
@@ -68,6 +68,7 @@ export default {
     }),
     // 跳转页面
     gotoNextPage (url, parameters) {
+      this.$store.commit('SET_CURRENT_MEDICINE_MAN', parameters)
       this.$navTo(url, parameters);
     },
   },

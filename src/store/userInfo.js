@@ -4,7 +4,9 @@ const userModule = {
     userInfo: {},
     productVisit: [],
     // 用药人信息数组
-    medicineMan: []
+    medicineMan: [],
+    // 当前编辑用药人
+    currentMedicineMan: ''
   },
   getters: {},
   mutations: {
@@ -16,6 +18,10 @@ const userModule = {
     },
     SET_MEDICINE_MAN: (state, medicineMan) => {
       state.medicineMan = medicineMan
+    },
+    SET_CURRENT_MEDICINE_MAN: (state, medicineMan) => {
+      console.log('SET_CURRENT_MEDICINE_MAN_', medicineMan)
+      state.currentMedicineMan = medicineMan
     }
   },
   actions: {
