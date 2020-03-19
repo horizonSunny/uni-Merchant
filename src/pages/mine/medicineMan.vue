@@ -22,6 +22,7 @@
   </body-wrap>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -30,8 +31,20 @@ export default {
       }, {}, {}]
     }
   },
+  computed: {
+    ...mapGetters(['getMedicineMan'])
+  },
   methods: {
+    ...mapActions({
+      getMedicineManInfo: 'GetMedicineMan'
+    }),
     editor (item) { }
+  },
+  onLoad (option) {
+    this.getMedicineManInfo()
+    setTimeout(() => {
+      console.log('this.getMedicineMan_', this.getMedicineMan);
+    }, 0);
   }
 }
 </script>

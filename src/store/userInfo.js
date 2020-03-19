@@ -1,8 +1,9 @@
-import { getUserInfo, productVisit } from '@/service/index'
+import { getUserInfo, productVisit, medicineMan } from '@/service/index'
 const userModule = {
   state: {
     userInfo: {},
-    productVisit: []
+    productVisit: [],
+    medicineMan: []
   },
   getters: {},
   mutations: {
@@ -11,6 +12,9 @@ const userModule = {
     },
     SET_PRODUCT_VISIT: (state, productVisit) => {
       state.productVisit = productVisit
+    },
+    SET_MEDICINE_MAN: (state, medicineMan) => {
+      state.medicineMan = medicineMan
     }
   },
   actions: {
@@ -23,6 +27,13 @@ const userModule = {
     ProductVisit({ commit }, params) {
       return productVisit(params).then(res => {
         commit('SET_PRODUCT_VISIT', res.data)
+        return res.data
+      })
+    },
+    // 获取用药人信息
+    GetMedicineMan({ commit }, params) {
+      return medicineMan(params).then(res => {
+        commit('SET_MEDICINE_MAN', res.data)
         return res.data
       })
     }

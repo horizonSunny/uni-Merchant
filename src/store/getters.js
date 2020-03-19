@@ -63,6 +63,8 @@ const getters = {
     return item
   },
   // 获取个人中心里面的浏览记录等
-  getProductVisit: state => state.user.productVisit
+  getProductVisit: state => state.user.productVisit,
+  // 获取用药人信息
+  getMedicineMan: state => state.user.medicineMan
 }
 export default getters
