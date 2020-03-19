@@ -31,7 +31,7 @@ import {
 
 import { confirmOrder, cancelOrder, generateOrder } from './indent'
 
-import { userInfo, getStatisticData } from './mine'
+import { userDetails, getStatisticData } from './mine'
 
 // 获取药品分类信息
 async function getClassify(params) {
@@ -84,7 +84,7 @@ async function getSms(params) {
   console.log('in getSms')
   return http.get('/patient/sms/' + params.phone)
 }
-// 获取用户登陆信息
+// 获取用户登陆token信息
 async function getUserInfo(params) {
   console.log('in getProductDetails')
   return http.post('/auth/oauth/token', params)
@@ -122,5 +122,5 @@ export {
   updateMedicineMan,
   newMedicineMan
 }
-// 获取统计数据
-export { userInfo, getStatisticData }
+// 获取统计数据及用户详情
+export { userDetails, getStatisticData }
