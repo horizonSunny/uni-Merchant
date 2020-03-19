@@ -1,5 +1,5 @@
 <template>
-  <modal>
+  <modal v-if="modal">
     <view class="diseasesHistory">
       <view class="title">
         <view class="titleInfo">疾病史</view>

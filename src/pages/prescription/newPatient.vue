@@ -119,7 +119,7 @@
         >
         </w-picker>
       </view>
-      <diseasesHistory v-if="diseasesShow"></diseasesHistory>
+      <diseasesHistory ref="diseasesHistory"></diseasesHistory>
     </view>
   </body-wrap>
 </template>
@@ -229,7 +229,7 @@ export default {
     },
     //selectLabel
     showTemplate () {
-      this.diseasesShow = !this.diseasesShow
+      this.$refs.diseasesHistory.openModal()
     }
   },
   onLoad: function (option) {
