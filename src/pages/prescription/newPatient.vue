@@ -22,10 +22,10 @@
           <view class="labelInfo">
             <span>身份证号</span>
             <input
-              name="identityCard"
+              name="idCard"
               type="text"
               placeholder="请输入用药人身份证号码"
-              v-model="userInfo['identityCard']"
+              v-model="userInfo['idCard']"
               maxlength="18"
             />
           </view>
@@ -33,11 +33,11 @@
             <span>出生年月</span>
             <input
               type="text"
-              name="userBirthday"
+              name="birthday"
               placeholder="选择出生年月"
               placeholder-class="placeholder-class"
               disabled
-              :value="userInfo['userBirthday']"
+              :value="userInfo['birthday']"
               @click="selectArea"
             />
           </view>
@@ -77,7 +77,6 @@
               type="text"
               disabled="true"
               placeholder="无肝肾异常、过敏史、妊娠"
-              v-model="userInfo['phone']"
               maxlength="11"
             />
             <img
@@ -119,7 +118,11 @@
         >
         </w-picker>
       </view>
-      <diseasesHistory ref="diseasesHistory"></diseasesHistory>
+      <diseasesHistory
+        ref="diseasesHistory"
+        :templateInfo="templateInfo"
+        @diseasesConfirm="diseasesConfirm"
+      ></diseasesHistory>
     </view>
   </body-wrap>
 </template>
@@ -128,6 +131,7 @@ import wPicker from "@/components/w-picker_1.2.7/components/w-picker/w-picker.vu
 import validate from '@/utils/validate'
 import diseasesHistory from './diseasesHistory'
 import { mapActions, mapGetters } from "vuex"
+import deepCopy from '@/utils/deepCopy'
 export default {
   components: {
     wPicker,
@@ -138,8 +142,8 @@ export default {
       userInfo: {
         fullName: '',
         phone: '',
-        userBirthday: '',
-        identityCard: '',
+        birthday: '',
+        idCard: '',
         defaultInfo: false,
       },
       pickerDefault: '2017-10-30',
@@ -151,16 +155,24 @@ export default {
       items: [
         { value: '1', name: "男士" },
         { value: '2', name: "女士" }
-      ]
+      ],
+      // 用于保存模版中的信息
+      templateInfo: [],
+      preTemplateInfo: [],
+      // 用来保存初始过来的用药人的病史信息
+      medicineInfo: []
     }
+  },
+  computed: {
+    ...mapGetters(["medicineTemplate"]),
   },
   methods: {
     submit () {
       let formRules = [
         { name: 'fullName', type: 'required', errmsg: '请填写用户名' },
-        { name: 'identityCard', required: true, type: 'identityCard', errmsg: '请填写用药人正确身份证号码' },
+        { name: 'idCard', required: true, type: 'idCard', errmsg: '请填写用药人正确身份证号码' },
         { name: 'phone', required: true, type: 'phone', errmsg: '请输入正确的手机号' },
-        { name: 'userBirthday', type: 'required', errmsg: '请选择出生年月' },
+        { name: 'birthday', type: 'required', errmsg: '请选择出生年月' },
       ]
       let valLoginRes = validate.validate(this.userInfo, formRules)
       if (!valLoginRes.isOk) {
@@ -208,11 +220,7 @@ export default {
       setTimeout(() => { this.userInfo.detailAddress = event.detail.value }, 0)
     },
     onConfirmDate (val) {
-      // this.userInfo.userBirthday = val.result
-      // this.userInfo.province = val.checkArr[0]
-      // this.userInfo.city = val.checkArr[1]
-      // this.userInfo.area = val.checkArr[2]
-      this.userInfo.userBirthday = val.result
+      this.userInfo.birthday = val.result
       console.log('val_', val.result);
     },
     changeDefaultInfo (event) {
@@ -229,25 +237,44 @@ export default {
     },
     //selectLabel
     showTemplate () {
+      this.templateInfo = deepCopy(this.preTemplateInfo)
       this.$refs.diseasesHistory.openModal()
+    },
+    //diseasesConfirm
+    diseasesConfirm () {
+      this.preTemplateInfo = deepCopy(this.templateInfo)
     }
+  },
+  created () {
+    console.log('medicineTemplate_', this.medicineTemplate);
+    // 为了解决getter数据变化视图不更改原因
+    const template = deepCopy(this.medicineTemplate)
+    this.templateInfo = template.map((item) => {
+      item.status = 0
+      item.diseases = []
+      this.medicineInfo.length !== 0 && this.medicineInfo.forEach((medicineInfo) => {
+        if (medicineInfo.id === item.id) {
+          item.status = 1
+          item.diseases = medicineInfo.labels
+        }
+      })
+      return item
+    })
+    this.preTemplateInfo = deepCopy(this.templateInfo)
   },
   onLoad: function (option) {
     console.log('option_', option)
-    if (JSON.stringify(option) !== '{}') {
+    if (JSON.stringify(option) !== '{}' && option) {
       this.operate = 'reset'
       //赋值
       this.userInfo['fullName'] = option['fullName']
       this.userInfo['phone'] = option['phone']
-      // this.userInfo['userBirthday'] = option['province'] + option['city'] + option['area']
-      // this.userInfo['detailAddress'] = option['detailAddress']
-      // this.userInfo['defaultInfo'] = option['isDefault'] == 0 ? false : true
-      // this.userInfo['province'] = option['province']
-      // this.userInfo['city'] = option['city']
-      // this.userInfo['area'] = option['area']
-
-      // this.pickerDefault = [option['province'], option['city'], option['area']]
-      this.$set(this.userInfo, 'addressId', option['addressId'])
+      //
+      this.userInfo['sex'] = option['sex']
+      this.userInfo['defaultInfo'] = option['isDefault'] == 2 ? false : true
+      this.medicineInfo = option['medicineInfo']
+      this.userInfo['birthday'] = option['birthday']
+      this.userInfo['idCard'] = option['idCard']
       this.deleteActive = true
     }
   }

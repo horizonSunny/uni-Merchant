@@ -13,7 +13,7 @@
         > -->
         <view
           class="contentWrap"
-          v-for="(item, index) in diseasesHistory"
+          v-for="(item, index) in templateInfo"
           :key="index"
         >
           <view class="contentDis">
@@ -54,7 +54,7 @@
         </view>
       </view>
       <view class="confirm">
-        <button type="primary" class="save" @click="submit">
+        <button type="primary" class="save" @click="confirmDiseases">
           完成
         </button>
       </view>
@@ -69,10 +69,12 @@
         <input
           @input="onKeyInput"
           class="uni-input"
-          confirm-type="search"
           placeholder="请输入疾病名称"
           @confirm="confirmInput"
         />
+      </view>
+      <view class="contentInfo addDiseases">
+        <button type="primary" @click="confirmAdd">保存并添加</button>
       </view>
     </view>
   </modal>
@@ -85,6 +87,7 @@ export default {
   components: {
     modal
   },
+  props: ['templateInfo'],
   computed: {
     ...mapGetters(["medicineTemplate"])
   },
@@ -102,7 +105,7 @@ export default {
       currentDiseases: '',
       // diseasesAdd
       diseasesAdd: false,
-      diseasesHistory: []
+      addDiseasesOperate: ''
     }
   },
   methods: {
@@ -114,16 +117,9 @@ export default {
     },
     // 选中有无时候
     diseaChange (evt, item) {
-      // console.log('evt_', evt.detail.value);
-      // item.status = evt.detail.value
-      // this.medicineTemplate(diseases)
-      let diseases = [' cc', 'bb', 'aa']
-      let status = 1
-      let userInfo = {
-        diseases,
-        status
-      }
-      this.diseasesHistory = this.medicineTemplate(userInfo)
+      console.log(evt.detail.value);
+      console.log(item);
+      item.status = evt.detail.value
     },
     // deleteDiseases删除病下面的疾病
     deleteDiseases (item, diseases) {
@@ -145,22 +141,24 @@ export default {
     },
     onKeyInput: function (event) {
       console.log('event.target.value_', event.target.value);
+      this.addDiseasesOperate = event.target.value
       // this.inputValue = event.target.value
     },
     confirmInput (event) {
       console.log('event.target.value_', event.target.value);
-    }
-  },
-  created () {
-    let diseases = [' aa', 'bb', 'cc']
-    let status = 0
-    let userInfo = {
-      diseases,
-      status
-    }
-    this.diseasesHistory = this.medicineTemplate(userInfo)
-    console.log('this.diseasesHistory_', this.diseasesHistory);
+    },
+    // 点击完成，确认preTemplateInfo =templateInfo,否则 templateInfo = preTemplateInfo
+    confirmDiseases () {
+      console.log('confirm');
 
+      this.$emit('diseasesConfirm')
+      this.modal = false;
+    },
+    // 添加疾病
+    confirmAdd () {
+      this.currentDiseases.diseases.push(this.addDiseasesOperate)
+      this.closeAdd()
+    }
   }
 }
 </script>
@@ -282,6 +280,13 @@ export default {
       background: rgba(245, 245, 245, 1);
       border-radius: 6px;
     }
+  }
+  .addDiseases {
+    position: absolute;
+    bottom: 100px;
+    width: 200px;
+    left: 50%;
+    margin-left: -110px;
   }
 }
 </style>
