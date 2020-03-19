@@ -3,6 +3,7 @@ const userModule = {
   state: {
     userInfo: {},
     productVisit: [],
+    // 用药人信息数组
     medicineMan: []
   },
   getters: {},
