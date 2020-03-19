@@ -9,13 +9,19 @@
     </tob-bar>
     <view slot="content" class="content">
       <view class="userWrap">
-        <view class="userInfo" v-for="(item, index) in userInfo" :key="index">
+        <view
+          class="userInfo"
+          v-for="(item, index) in getMedicineMan"
+          :key="index"
+        >
           <view class="userMessage">
-            <text class="name">王慧</text>
-            <text class="sex">女 </text>
-            <text class="sex">57岁</text>
-            <text class="sex">136****7856</text>
-            <text class="label">默认</text>
+            <text class="name">{{ item.fullName }}</text>
+            <text class="sex">{{ item.sex === 1 ? "先生" : "女士" }}</text>
+            <text class="sex">{{ calculateAge(item.birthday) }}</text>
+            <text class="sex">{{ item.phone }}</text>
+            <text class="label" v-if="item.isDefault === 1">{{
+              item.isDefault === 1 ? "默认" : ""
+            }}</text>
           </view>
           <view
             class="editor"
@@ -37,6 +43,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import { getDate, timeChangetype, formatDate } from '@/utils/date'
 export default {
   data () {
     return {
@@ -44,7 +51,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getMedicineMan'])
+    ...mapGetters(['getMedicineMan']),
+    calculateAge: function () {
+      return function (birthday) {
+        console.log('birthday_', birthday);
+        const info = getDate(birthday)
+        const time = Date.parse(new Date()) - timeChangetype(info)
+        const age = time / (365 * 24 * 60 * 60 * 1000)
+        return parseInt(age) + '岁'
+      }
+    }
   },
   methods: {
     ...mapActions({
