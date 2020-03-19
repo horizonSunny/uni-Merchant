@@ -37,7 +37,7 @@ http.interceptors.request.use(config => {
   // code...
   let accsess_token = storage.getSync('access_token')
   if (accsess_token) {
-    config.headers.authorization = 'bearer ' + accsess_token
+    config.headers.authorization = accsess_token
   }
   _reqlog(config)
   // uni.showLoading({
@@ -67,6 +67,7 @@ http.interceptors.response.use(
       return Promise.reject(response.data.msg)
     } else if (response.data.code === 2) {
       // code为2是没有权限
+      storage.setSync('access_token', channelNo)
       uni.navigateTo({
         url: '../login/login'
       })

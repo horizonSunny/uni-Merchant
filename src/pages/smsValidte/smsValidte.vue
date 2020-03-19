@@ -67,7 +67,7 @@ export default {
       }
       this.getUserInfo(params).then((res) => {
         console.log('res_', res.access_token)
-        storage.setSync('access_token', res.access_token)
+        storage.setSync('access_token', 'bearer ' + res.access_token)
         uni.navigateBack({
           delta: 3
         });
