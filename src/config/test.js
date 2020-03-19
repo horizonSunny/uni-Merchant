@@ -1,6 +1,6 @@
 let diseasesHistory = [
   {
-    name: '过往病史',
+    medicineName: '过往病史',
     id: '0',
     status: 0,
     diseases: [
@@ -16,25 +16,25 @@ let diseasesHistory = [
     ]
   },
   {
-    name: '过敏史',
+    medicineName: '过敏史',
     id: '1',
     status: 0,
     diseases: ['过敏史病', '恶性肿瘤', '心脏病']
   },
   {
-    name: '家族病史',
+    medicineName: '家族病史',
     id: '2',
     status: 0,
     diseases: ['家族病史', '恶性肿瘤', '心脏病']
   },
   {
-    name: '肾功能',
+    medicineName: '肾功能',
     id: '3',
     status: 0,
     diseases: ['肾功能', '恶性肿瘤', '心脏病']
   },
   {
-    name: '肝功能',
+    medicineName: '肝功能',
     id: '4',
     status: 1,
     diseases: ['肝功能', '恶性肿瘤', '心脏病']
@@ -46,19 +46,19 @@ let browsingHistory = [
     product: [
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       },
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       },
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       }
@@ -69,19 +69,19 @@ let browsingHistory = [
     product: [
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       },
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       },
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       }
@@ -92,19 +92,19 @@ let browsingHistory = [
     product: [
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       },
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       },
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       }
@@ -114,55 +114,55 @@ let browsingHistory = [
 let collect = [
   {
     imgSrc: '',
-    productName: '商品品牌 通用名',
+    productmedicineName: '商品品牌 通用名',
     specification: '20mlX48支/盒',
     price: '232.00'
   },
   {
     imgSrc: '',
-    productName: '商品品牌 通用名',
+    productmedicineName: '商品品牌 通用名',
     specification: '20mlX48支/盒',
     price: '232.00'
   },
   {
     imgSrc: '',
-    productName: '商品品牌 通用名',
+    productmedicineName: '商品品牌 通用名',
     specification: '20mlX48支/盒',
     price: '232.00'
   },
   {
     imgSrc: '',
-    productName: '商品品牌 通用名',
+    productmedicineName: '商品品牌 通用名',
     specification: '20mlX48支/盒',
     price: '232.00'
   },
   {
     imgSrc: '',
-    productName: '商品品牌 通用名',
+    productmedicineName: '商品品牌 通用名',
     specification: '20mlX48支/盒',
     price: '232.00'
   },
   {
     imgSrc: '',
-    productName: '商品品牌 通用名',
+    productmedicineName: '商品品牌 通用名',
     specification: '20mlX48支/盒',
     price: '232.00'
   },
   {
     imgSrc: '',
-    productName: '商品品牌 通用名',
+    productmedicineName: '商品品牌 通用名',
     specification: '20mlX48支/盒',
     price: '232.00'
   },
   {
     imgSrc: '',
-    productName: '商品品牌 通用名',
+    productmedicineName: '商品品牌 通用名',
     specification: '20mlX48支/盒',
     price: '232.00'
   },
   {
     imgSrc: '',
-    productName: '商品品牌 通用名',
+    productmedicineName: '商品品牌 通用名',
     specification: '20mlX48支/盒',
     price: '232.00'
   }
@@ -177,19 +177,19 @@ let myIndent = [
     prodcutInfo: [
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       },
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       },
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       }
@@ -203,19 +203,19 @@ let myIndent = [
     prodcutInfo: [
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       },
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       },
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       }
@@ -229,19 +229,19 @@ let myIndent = [
     prodcutInfo: [
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       },
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       },
       {
         imgSrc: '',
-        productName: '商品品牌 通用名',
+        productmedicineName: '商品品牌 通用名',
         specification: '20mlX48支/盒',
         price: '232.00'
       }

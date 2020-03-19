@@ -6,9 +6,18 @@
         <view class="close" @click="closeModal">X</view>
       </view>
       <view class="content">
-        <view class="contentWrap" v-for="(item, index) in test" :key="index">
+        <!-- <view
+          class="contentWrap"
+          v-for="(item, index) in medicineTemplate"
+          :key="index"
+        > -->
+        <view
+          class="contentWrap"
+          v-for="(item, index) in diseasesHistory"
+          :key="index"
+        >
           <view class="contentDis">
-            <span>{{ item.name }}</span>
+            <span>{{ item.medicineName }}</span>
             <radio-group @change="diseaChange($event, item)">
               <view class="choose">
                 <label
@@ -26,7 +35,7 @@
               </view>
             </radio-group>
           </view>
-          <view v-show="item.status == 1" class="diseases">
+          <view v-if="item.status == 1" class="diseases">
             <view
               class="diseasesItem"
               v-for="(diseasesInfo, diseasesIndex) in item.diseases"
@@ -70,10 +79,14 @@
 </template>
 <script>
 import modal from '@/components/modal.vue';
+import { mapActions, mapGetters } from "vuex"
 import { diseasesHistory } from '@/config/test'
 export default {
   components: {
     modal
+  },
+  computed: {
+    ...mapGetters(["medicineTemplate"])
   },
   data () {
     return {
@@ -85,11 +98,11 @@ export default {
         { value: '1', name: "有" },
         { value: '0', name: "无" }
       ],
-      test: diseasesHistory,
       // 当前要添加疾病的病史
       currentDiseases: '',
       // diseasesAdd
-      diseasesAdd: false
+      diseasesAdd: false,
+      diseasesHistory: []
     }
   },
   methods: {
@@ -101,10 +114,16 @@ export default {
     },
     // 选中有无时候
     diseaChange (evt, item) {
-      console.log('evt_', evt.detail.value);
-      console.log('item_', item.status);
-      item.status = evt.detail.value
-      console.log('test_', test);
+      // console.log('evt_', evt.detail.value);
+      // item.status = evt.detail.value
+      // this.medicineTemplate(diseases)
+      let diseases = [' cc', 'bb', 'aa']
+      let status = 1
+      let userInfo = {
+        diseases,
+        status
+      }
+      this.diseasesHistory = this.medicineTemplate(userInfo)
     },
     // deleteDiseases删除病下面的疾病
     deleteDiseases (item, diseases) {
@@ -131,6 +150,17 @@ export default {
     confirmInput (event) {
       console.log('event.target.value_', event.target.value);
     }
+  },
+  created () {
+    let diseases = [' aa', 'bb', 'cc']
+    let status = 0
+    let userInfo = {
+      diseases,
+      status
+    }
+    this.diseasesHistory = this.medicineTemplate(userInfo)
+    console.log('this.diseasesHistory_', this.diseasesHistory);
+
   }
 }
 </script>
@@ -141,6 +171,7 @@ export default {
   bottom: 0px;
   width: 100%;
   background: #fff;
+  font-size: 14px;
   .title {
     height: 40px;
     width: 100%;
@@ -230,7 +261,8 @@ export default {
     flex-direction: column;
     justify-content: center;
     flex: 1;
-    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 2px solid #f3f3f3;
     button {
       height: 47px;
       width: 80%;

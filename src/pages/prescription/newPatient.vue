@@ -127,6 +127,7 @@
 import wPicker from "@/components/w-picker_1.2.7/components/w-picker/w-picker.vue";
 import validate from '@/utils/validate'
 import diseasesHistory from './diseasesHistory'
+import { mapActions, mapGetters } from "vuex"
 export default {
   components: {
     wPicker,
@@ -153,7 +154,6 @@ export default {
       ]
     }
   },
-  computed: {},
   methods: {
     submit () {
       let formRules = [
@@ -347,7 +347,7 @@ export default {
     }
     .default {
       display: flex;
-      border-bottom: 0px;
+      border-bottom: 1px solid #f3f3f3;
       justify-content: space-between;
       span {
         width: 150px;
@@ -359,7 +359,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     flex: 1;
-    margin-top: 12px;
+    margin-top: 20px;
     button {
       height: 47px;
       width: 80%;
