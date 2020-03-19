@@ -15,6 +15,14 @@ import {
 } from './patientAddress'
 
 import {
+  medicineMan,
+  getMedicineTemplate,
+  medicineManDelete,
+  updateMedicineMan,
+  newMedicineMan
+} from './medicineMan'
+
+import {
   productVisit,
   setProductVisit,
   deleteProductVisit,
@@ -103,3 +111,12 @@ export {
 }
 // 生成订单页面
 export { confirmOrder, cancelOrder, generateOrder }
+
+// 用药人信息
+export {
+  medicineMan,
+  getMedicineTemplate,
+  medicineManDelete,
+  updateMedicineMan,
+  newMedicineMan
+}
