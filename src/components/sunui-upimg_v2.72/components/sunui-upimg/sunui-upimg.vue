@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import * as storage from '@/config/storage'
 export default {
   data () {
     return {
@@ -62,7 +63,7 @@ export default {
     // 服务器url
     url: {
       type: String,
-      default: 'https://a3.dns06.net.cn/app/index.php?i=2&c=entry&a=wxapp&do=Upload_qiniu_b&m=jzwx_a'
+      default: 'http://47.103.158.133:8088/admin/v1/uploadFile'
     },
     // 上传样式宽高
     upload_img_wh: {
@@ -100,7 +101,8 @@ export default {
     header: {
       type: Object,
       default: () => {
-        return {};
+        return {
+        };
       }
     }
   },
@@ -222,6 +224,9 @@ const upload = function (options) {
     filePath: path,
     name: name,
     formData: extra,
+    header: {
+      authorization: storage.getSync('access_token')
+    },
     success: function (res) {
       var data = res.data;
       console.warn('sunui-upimg - 如发现没有获取到返回值请到源码191行修改后端返回图片路径以便正常使用插件', JSON.parse(data));

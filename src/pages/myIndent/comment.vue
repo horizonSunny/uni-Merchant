@@ -1,7 +1,11 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar">
-      <text slot="title">订单详情</text>
+    <tob-bar
+      slot="topBar"
+      :styleInfo="{ backgroundColor: '#fff' }"
+      jumpButton=""
+    >
+      <text slot="title" style="color:#000">评价</text>
     </tob-bar>
     <view slot="content" class="content">
       <view class="indentWrap">
@@ -80,10 +84,16 @@
 import uniRate from '@/components/rate/uni-rate/uni-rate.vue'
 import upImg from '@/components/sunui-upimg_v2.72/components/sunui-upimg/sunui-upimg.vue'
 import { mapActions, mapGetters } from "vuex";
+import * as storage from '@/config/storage'
 export default {
   components: { uniRate, upImg },
   computed: {
-    ...mapGetters(["getIndentInfo"])
+    ...mapGetters(["getIndentInfo"]),
+    header () {
+      return {
+        authorization: storage.getSync('access_token')
+      }
+    }
   },
   methods: {
     commentRate (e, id) {
@@ -91,9 +101,13 @@ export default {
     },
     textareaInput (e) {
       console.log(e.detail.cursor);
-
     }
   },
+  data () {
+    return {
+
+    }
+  }
 }
 </script>
 <style lang="scss">

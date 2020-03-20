@@ -7,4 +7,5 @@ async function userDetails(params) {
 async function getStatisticData(params) {
   return http.get('/patient/patient/getStatisticData')
 }
+
 export { userDetails, getStatisticData }
