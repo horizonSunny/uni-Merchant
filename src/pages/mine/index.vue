@@ -107,7 +107,7 @@ export default {
   computed: {
     ...mapGetters(["getUserDetails", "getStatisticData"])
   },
-  onLoad () {
+  created () {
     this.userDetails()
     this.statisticData()
   },

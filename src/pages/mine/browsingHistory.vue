@@ -30,7 +30,7 @@
             <uni-swipe-action>
               <uni-swipe-action-item
                 :options="options"
-                @click="onClick($event, itemInfo, item.time)"
+                @click="onClick($event, itemInfo, item)"
               >
                 <view class="commidityInfo" @click.stop>
                   <view class="productImg">
@@ -45,10 +45,17 @@
                   <view class="drugsInfo">
                     <view class="drugName">
                       <!-- <text class="mark">OTC</text> -->
-                      <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
-                <text class="mark" v-show="item.isMp === 1"   style="color:red;border: 1px solid green;">OTC</text>
-                <text class="mark" v-show="item.isMp === 2">RX</text>
-                <text class="mark" v-show="item.isMp === 3">其他</text> -->
+                      <text class="mark" v-show="itemInfo.isMp === 0">OTC</text>
+                      <text
+                        class="mark"
+                        v-show="itemInfo.isMp === 1"
+                        style="color:red;border: 1px solid green;"
+                        >OTC</text
+                      >
+                      <text class="mark" v-show="itemInfo.isMp === 2">RX</text>
+                      <text class="mark" v-show="itemInfo.isMp === 3"
+                        >其他</text
+                      >
                       <view class="prodcutDetails">
                         <view class="name">{{ itemInfo.productName }}</view>
                         <view class="price">¥ {{ itemInfo.price }}</view>
@@ -72,10 +79,14 @@
   </body-wrap>
 </template>
 <script>
-import { browsingHistory } from '@/config/test'
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
 import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
 import { mapState, mapActions, mapGetters } from "vuex";
+import {
+  deleteProductVisitAll,
+  deleteProductVisit,
+  productVisit
+} from '@/service/index'
 export default {
   computed: {
     ...mapGetters(["getProductVisit"])
@@ -86,7 +97,6 @@ export default {
   },
   data () {
     return {
-      productInfo: browsingHistory,
       options: [
         {
           text: '删除',
@@ -106,14 +116,44 @@ export default {
   },
   methods: {
     ...mapActions({
-      getHistory: 'ProductVisit'
+      getHistory: 'ProductVisit',
+      // deleteProductVisit: 'DeleteProductVisit'
     }),
     clearBoth () {
-      console.log('清空');
+      // console.log('清空'); 
+      deleteProductVisitAll().then(res => {
+        this.$store.commit('CLEAR_PRODUCT_VISIT')
+      })
     },
-    onClick (e, itemInfo, time) {
-      console.log('当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text)
-      console.log(itemInfo, '_itemInfo_', time);
+    onClick (e, itemInfo, item) {
+      deleteProductVisit({ productVisitId: itemInfo.productVisitId }).then(res => {
+        const index = item.productVisits.findIndex(itemInfoDel => {
+          return itemInfoDel.productVisitId === itemInfo.productVisitId
+        })
+        item.productVisits.splice(index, 1)
+        if (item.productVisits.length === 0) {
+          // 删除这个时间段
+          const indexInfo = this.getProductVisit.findIndex(info => {
+            return info.dataTime === item.dataTime
+          })
+          this.getProductVisit.splice(indexInfo, 1)
+        }
+        console.log('index', index);
+        // 删除一个必须要添加一个
+        productVisit({
+          pageNumber: this.pageNumber - 1,
+          pageSize: this.pageSize,
+        }).then((res) => {
+          const data = res.data;
+          const info = data[data.length - 1]
+          const item = info.productVisits.splice(0, info.productVisits.length - 1)
+          console.log('res_', data);
+          console.log('info_', info);
+          console.log('res_', info.productVisits);
+          // 删除一个加一个
+          this.$store.commit('SET_PRODUCT_VISIT', [info])
+        })
+      })
     },
     // 滚动到底部
     scrolltolower () {
