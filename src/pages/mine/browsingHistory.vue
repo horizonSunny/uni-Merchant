@@ -151,10 +151,10 @@ export default {
           pageNumber: this.pageNumber,
           pageSize: this.pageSize,
         }).then(res => {
-          console.log(res);
-          if (res.length === 0) {
-            this.historyFull = true
-          }
+          console.log('res_', res);
+          // if (res.length === 0) {
+          //   this.historyFull = true
+          // }
           this.pageNumber++
         })
       }
