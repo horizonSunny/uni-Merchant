@@ -77,9 +77,9 @@ const userModule = {
     // 获取历史浏览记录列表
     ProductVisit({ commit }, params) {
       return productVisit(params).then(res => {
-        console.log('SET_PRODUCT_VISIT_', res.data)
-        commit('SET_PRODUCT_VISIT', res.data)
-        return res.data
+        console.log('SET_PRODUCT_VISIT_', res.data.historyRecord)
+        commit('SET_PRODUCT_VISIT', res.data.historyRecord)
+        return res.data.historyRecord
       })
     },
     // 获取用药人信息列表

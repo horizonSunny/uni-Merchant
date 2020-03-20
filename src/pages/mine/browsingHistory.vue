@@ -132,7 +132,10 @@ export default {
           pageNumber: this.pageNumber - 1,
           pageSize: this.pageSize,
         }).then((res) => {
-          const data = res.data;
+          const data = res.data.historyRecord;
+          if (res.data.lastPage) {
+            return
+          }
           const info = data[data.length - 1]
           const item = info.productVisits.splice(0, info.productVisits.length - 1)
           console.log('res_', data);
