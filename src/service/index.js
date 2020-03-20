@@ -1,11 +1,5 @@
 import http from '@/config/axios'
-import {
-  shopCart,
-  productCollect,
-  shopCartDelete,
-  updateCart,
-  newCart
-} from './shoppingCart'
+import { shopCart, shopCartDelete, updateCart, newCart } from './shoppingCart'
 
 import {
   patientAddress,
@@ -32,6 +26,12 @@ import {
 import { confirmOrder, cancelOrder, generateOrder } from './indent'
 
 import { userDetails, getStatisticData } from './mine'
+
+import {
+  productCollect,
+  setProductCollect,
+  deleteProductCollect
+} from './collect'
 
 // 获取药品分类信息
 async function getClassify(params) {
@@ -101,7 +101,7 @@ export {
   getUserInfo
 }
 // 导出购物车接口
-export { shopCart, productCollect, shopCartDelete, updateCart, newCart }
+export { shopCart, shopCartDelete, updateCart, newCart }
 // 用药人地址
 export { patientAddress, addressDelete, updateAddress, newAddress }
 // 浏览记录
@@ -124,3 +124,6 @@ export {
 }
 // 获取统计数据及用户详情
 export { userDetails, getStatisticData }
+
+// 获取收藏信息
+export { productCollect, setProductCollect, deleteProductCollect }

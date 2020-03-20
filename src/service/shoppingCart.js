@@ -4,10 +4,6 @@ import qs from 'qs'
 async function shopCart(params) {
   return http.get('/order/shopCart/info')
 }
-// 移入收藏夹
-async function productCollect(params) {
-  return http.post('/order/productCollect', params)
-}
 // 删除购物车
 async function shopCartDelete(params) {
   return http.delete('/order/shopCart/delete', {
@@ -25,4 +21,4 @@ async function updateCart(params) {
 async function newCart(params) {
   return http.post('/order/shopCart', params)
 }
-export { shopCart, productCollect, shopCartDelete, updateCart, newCart }
+export { shopCart, shopCartDelete, updateCart, newCart }

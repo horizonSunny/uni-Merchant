@@ -3,7 +3,8 @@ import {
   productVisit,
   medicineMan,
   userDetails,
-  getStatisticData
+  getStatisticData,
+  productCollect
 } from '@/service/index'
 const userModule = {
   state: {
@@ -14,7 +15,9 @@ const userModule = {
     // 当前编辑用药人
     currentMedicineMan: '',
     userDetails: {},
-    statisticData: {}
+    statisticData: {},
+    // 收藏信息
+    collect: []
   },
   getters: {},
   mutations: {
@@ -57,6 +60,10 @@ const userModule = {
     },
     SET_STATISTICE: (state, statisticData) => {
       state.statisticData = statisticData
+    },
+    //收藏夹信息
+    SET_COLLECT: (state, collect) => {
+      state.collect = collect
     }
   },
   actions: {
@@ -89,12 +96,21 @@ const userModule = {
         return res.data
       })
     },
-    // 获取统计数据
+    // 获取我的模块统计数据
     GetStatisticData({ commit }, params) {
       console.log('GetStatisticData')
 
       return getStatisticData(params).then(res => {
         commit('SET_STATISTICE', res.data)
+        return res.data
+      })
+    },
+    // 获取收藏
+    GetProductCollect({ commit }, params) {
+      console.log('GetStatisticData')
+
+      return productCollect(params).then(res => {
+        commit('SET_COLLECT', res.data)
         return res.data
       })
     }

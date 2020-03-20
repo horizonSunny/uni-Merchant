@@ -139,7 +139,7 @@ export default {
           this.getProductVisit.splice(indexInfo, 1)
         }
         console.log('index', index);
-        // 删除一个必须要添加一个
+        // 删除一个必须要添加一个,这边其实可以要求后端做一个数据跳过的逻辑，告诉他查多少条后的数据
         productVisit({
           pageNumber: this.pageNumber - 1,
           pageSize: this.pageSize,

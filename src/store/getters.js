@@ -72,6 +72,8 @@ const getters = {
   getCurrentMedicineMan: state => state.user.currentMedicineMan,
   // 获取用户信息详情和用户统计数据
   getUserDetails: state => state.user.userDetails,
-  getStatisticData: state => state.user.statisticData
+  getStatisticData: state => state.user.statisticData,
+  // 获取收藏信息
+  getCollectInfo: state => state.user.collect
 }
 export default getters
