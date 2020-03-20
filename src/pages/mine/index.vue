@@ -79,7 +79,7 @@
           </text>
         </view>
         <view class="classifyDetails">
-          <view class="detailsInfo">
+          <view class="detailsInfo" @click="goNextPage('收货地址')">
             <img src="/static/mine/mine_address.svg" alt="" />
             <view>收货地址</view>
           </view>
@@ -138,6 +138,9 @@ export default {
           break;
         case '用药人':
           this.$navTo("../mine/medicineMan");
+          break;
+        case '收货地址':
+          this.$navTo("../deliveryAddr/index");
           break;
         default:
           break;
