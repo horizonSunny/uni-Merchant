@@ -74,6 +74,8 @@ const getters = {
   getUserDetails: state => state.user.userDetails,
   getStatisticData: state => state.user.statisticData,
   // 获取收藏信息
-  getCollectInfo: state => state.user.collect
+  getCollectInfo: state => state.user.collect,
+  // 拉取保存的订单信息
+  getIndentInfo: state => state.business.myIndentInfo
 }
 export default getters

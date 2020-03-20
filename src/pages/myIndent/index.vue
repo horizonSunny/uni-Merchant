@@ -131,7 +131,7 @@
                     <view
                       class="active"
                       v-if="indentItem.orderStatus === 4"
-                      @click="jumpInfo(indentItem)"
+                      @click="jumpInfo(indentItem, indentItem.orderStatus)"
                       >评价</view
                     >
                     <view class="active" v-if="indentItem.orderStatus === 0"
@@ -379,9 +379,17 @@ export default {
       this.$navTo(url, parameters);
     },
     // jumpInfo
-    jumpInfo (info) {
+    jumpInfo (info, key) {
       // console.log('info_', info);
       this.$store.commit('SET_INDENT_INFO', info);
+      switch (key) {
+        case 4:
+          this.gotoNextPage('../myIndent/comment', {})
+          break;
+
+        default:
+          break;
+      }
     }
   }
 };
