@@ -34,7 +34,7 @@
               >
                 <view class="commidityInfo">
                   <checkbox
-                    :value="item.value"
+                    :value="item.productCollectId"
                     color="#FFCC33"
                     :checked="checkedArr.includes(String(item.value))"
                     v-if="editorInfo"
@@ -65,7 +65,7 @@
         </checkbox-group>
       </scroll-view>
       <view class="cancelCol" v-show="this.editorInfo">
-        <button>取消收藏</button>
+        <button @click="cancelCollect()">取消收藏</button>
       </view>
       <view v-show="false" class="noHistory">
         <img src="static/mine/Search_Bitmap3.svg" alt="" />
@@ -115,6 +115,10 @@ export default {
       // deleteProductVisit: 'DeleteProductVisit'
     }),
     checkboxChange: function (e) {
+      console.log(e.detail.value);
+
+      this.checkedArr = e.detail.value
+      // 如果选择的数组中有值，并且长度等于列表的长度，就是全选
     },
     editor () {
       console.log('编辑');
@@ -122,9 +126,17 @@ export default {
     onClick (e, itemInfo, time) {
       console.log(itemInfo, '_itemInfo_');
       const deleteArr = [itemInfo.productCollectId]
-      deleteProductCollect({ productCollectId: deleteArr }).then((res) => {
+      this.cancelCollect(deleteArr)
+    },
+    cancelCollect (collectArr) {
+      console.log('collectArr_', collectArr);
+      if (collectArr === undefined) {
+        //代表的是取消收藏按钮
+        collectArr = this.checkedArr
+      }
+      deleteProductCollect({ productCollectId: collectArr }).then((res) => {
         this.getCollectInfo.forEach((element, index) => {
-          if (deleteArr.indexOf(element.productCollectId) !== -1) {
+          if (collectArr.indexOf(element.productCollectId) !== -1) {
             this.getCollectInfo.splice(index, 1)
           }
         });
