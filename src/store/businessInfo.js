@@ -16,7 +16,8 @@ const businessModule = {
     // 获取搜索词库
     searchKeyword: [],
     // 获取病史模版
-    getMedicineTemplate: []
+    getMedicineTemplate: [],
+    myIndentInfo: null
   },
   getters: {
     // getPermission(state, getters, rootState, rootGetters) {
@@ -40,6 +41,10 @@ const businessModule = {
     },
     SET_MEDICINE_TEMPLATE: (state, templateInfo) => {
       state.getMedicineTemplate = templateInfo
+    },
+    // 设置我的订单页面关于点击某一个订单信息，保存订单的问题
+    SET_INDENT_INFO: (state, indentInfo) => {
+      state.myIndentInfo = indentInfo
     }
   },
   actions: {
