@@ -57,17 +57,18 @@
                   @click="goDetails(indentItem)"
                 >
                   <view class="indentHead">
-                    <view>订单编号：{{ indentItem.orderNumber }}</view>
-                    <view>等待付款</view>
+                    <view>订单编号：{{ indentItem.orderNo }}</view>
+                    <view>{{ orderStatus(indentItem.orderStatus) }}</view>
                   </view>
                   <view
                     class="commidityInfo"
-                    v-for="(itemInfo, indexInfo) in indentItem.prodcutInfo"
+                    v-for="(itemInfo, indexInfo) in indentItem.orderItems"
                     :key="indexInfo"
                   >
                     <view class="productImg">
+                      <!-- src="static/mine/Bitmap.png" -->
                       <img
-                        src="static/mine/Bitmap.png"
+                        :src="itemInfo['productImage'][0]"
                         alt=""
                         width="60"
                         height="60"
@@ -75,32 +76,64 @@
                     </view>
                     <view class="drugsInfo">
                       <view class="drugName">
-                        <!-- <text class="mark">OTC</text> -->
-                        <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
-                            <text class="mark" v-show="item.isMp === 1"   style="color:red;border: 1px solid green;">OTC</text>
-                            <text class="mark" v-show="item.isMp === 2">RX</text>
-                            <text class="mark" v-show="item.isMp === 3">其他</text> -->
                         <view class="prodcutDetails">
+                          <text class="mark" v-show="itemInfo.isMp === 0"
+                            >OTC</text
+                          >
+                          <text
+                            class="mark"
+                            v-show="itemInfo.isMp === 1"
+                            style="color:red;border: 1px solid green;"
+                            >OTC</text
+                          >
+                          <text class="mark" v-show="itemInfo.isMp === 2"
+                            >RX</text
+                          >
+                          <text class="mark" v-show="itemInfo.isMp === 3"
+                            >其他</text
+                          >
                           <view class="name">{{ itemInfo.productName }}</view>
                           <view class="price">¥ {{ itemInfo["price"] }}</view>
                         </view>
-                        <view class="drugSpec">乳腺癌检测 1次</view>
+                        <view class="drugSpec">
+                          <text>{{ itemInfo.productSpecif }}</text>
+                          <text style="float:right"
+                            >x{{ itemInfo.cartNum }}</text
+                          >
+                        </view>
                         <!-- <text>{{ item.productName }}</text> -->
                       </view>
                       <!-- <view class="drugSpec">{{ item.productSpecif }}</view> -->
                     </view>
                   </view>
                   <view class="totalPrice">
-                    <view>共{{ indentItem.amount }}件商品 总价</view>
+                    <view>共{{ indentItem.totalNum }}件商品 总价</view>
                     <view class="price">¥{{ indentItem.totalPrice }}</view>
                   </view>
                   <view class="indentOperate" @click.stop>
-                    <view class="pray">删除订单</view>
-                    <!-- <view class="pray">取消订单</view> -->
-                    <view class="active">重新购买</view>
-                    <!-- <view class="active">查看物流</view>
-                    <view class="active">评价</view>
-                    <view class="active">付款</view> -->
+                    <view
+                      class="pray"
+                      v-if="
+                        indentItem.orderStatus === 5 ||
+                          indentItem.orderStatus === 4
+                      "
+                      >删除订单</view
+                    >
+                    <view class="pray" v-if="indentItem.orderStatus === 0"
+                      >取消订单</view
+                    >
+                    <view class="active" v-if="indentItem.orderStatus === 5"
+                      >重新购买</view
+                    >
+                    <view class="active" v-if="indentItem.orderStatus === 3"
+                      >查看物流</view
+                    >
+                    <view class="active" v-if="indentItem.orderStatus === 4"
+                      >评价</view
+                    >
+                    <view class="active" v-if="indentItem.orderStatus === 0"
+                      >付款</view
+                    >
                   </view>
                 </view>
 
@@ -121,11 +154,8 @@ import { debounce, throttle } from "@/utils/debounce";
 import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-refresh/mix-pulldown-refresh";
 import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
 import * as json from "@/config/json";
-import { myIndent } from '@/config/test'
-import {
-  getCategoryProducts,
-  getQuickCategoryProducts
-} from '@/service/index'
+// import { myIndent } from '@/config/test'
+import { getOrderList } from '@/service/index'
 let windowWidth = 0,
   scrollTimer = false,
   tabBar;
@@ -135,7 +165,39 @@ export default {
     mixLoadMore
   },
   computed: {
-    ...mapGetters(["searchLibrary"])
+    ...mapGetters(["searchLibrary"]),
+    orderStatus () {
+      return function (status) {
+        switch (status) {
+          case -1:
+            return '申请退款'
+            break;
+          case -2:
+            return '已退款'
+            break;
+          case 0:
+            return '等待付款'
+            break;
+          case 1:
+            return '待审核'
+            break;
+          case 2:
+            return '待发货'
+            break;
+          case 3:
+            return '待收货'
+            break;
+          case 4:
+            return '交易成功'
+            break;
+          case 5:
+            return '交易取消'
+            break;
+          default:
+            break;
+        }
+      }
+    }
   },
   onLoad (option) {
     console.log("option.id_", option.orderStatus); //打印出上个页面传递的参数。
@@ -147,6 +209,7 @@ export default {
       tabCurrentIndex: 0,
       tabBars: [],
       enableScroll: true,
+      pageSize: 10
     };
   },
   methods: {
@@ -231,14 +294,25 @@ export default {
         tabItem.currentNumber = 0
         tabItem.refreshing = true;
       }
+      const params = {
+        // productType: this.confirmSelected.medicineType,
+        keyword: '',
+        status: Number(this.tabCurrentIndex) + 1,
+        // productBrands: this.confirmSelected.selectBrands.toString(),
+        // 只有当前页这一个是分开的
+        pageNumber: tabItem.currentNumber,
+        pageSize: this.pageSize
+      }
 
-      //这边是发送请求到接口和传参数
-      setTimeout(() => {
+      getOrderList(params).then(res => {
+        // settimeout
+        let list = res.data
+        console.log('res.data_', res.data);
         if (type === "refresh") {
           tabItem.newsList = []; //刷新前清空数组
         }
-        myIndent.forEach(item => {
-          // item.id = parseInt(Math.random() * 10000);
+        list.forEach(item => {
+          item.id = parseInt(Math.random() * 10000);
           tabItem.newsList.push(item);
         });
         //下拉刷新 关闭刷新动画
@@ -256,63 +330,12 @@ export default {
           tabItem.loadMoreStatus = 0;
         }
         // 假如不满十条，则显示加载完成
-        if (myIndent.length < 10) {
+        if (list.length < 10) {
           console.log("上滑加载 处理状态");
           tabItem.loadMoreStatus = 2;
         }
         tabItem.currentNumber++;
-      }, 0);
-      // const params = {
-      //   tenantId: this.$store.getters.tenant.tenantId,
-      //   // categoryId: this.categoryId,
-      //   sale: this.sale,
-      //   price: this.price,
-      //   productType: this.confirmSelected.medicineType,
-      //   productBrands: this.confirmSelected.selectBrands.toString(),
-      //   // 只有当前页这一个是分开的
-      //   pageNumber: tabItem.currentNumber,
-      //   pageSize: this.pageSize
-      // }
-      // let func;
-      // if (this.categoryId !== '') {
-      //   params.categoryId = this.categoryId
-      //   func = getCategoryProducts(params)
-      // } else {
-      //   params.quickCategoryId = this.quickCategoryId
-      //   func = getQuickCategoryProducts(params)
-      // }
-      // func.then(res => {
-      //   this.productBrands = res.data.productBrands
-      //   // settimeout
-      //   let list = res.data.products
-      //   if (type === "refresh") {
-      //     tabItem.newsList = []; //刷新前清空数组
-      //   }
-      //   list.forEach(item => {
-      //     item.id = parseInt(Math.random() * 10000);
-      //     tabItem.newsList.push(item);
-      //   });
-      //   //下拉刷新 关闭刷新动画
-      //   if (type === "refresh") {
-      //     this.$refs.mixPulldownRefresh &&
-      //       this.$refs.mixPulldownRefresh.endPulldownRefresh();
-      //     // #ifdef APP-PLUS
-      //     tabItem.refreshing = false;
-      //     // #endif
-      //     tabItem.loadMoreStatus = 0;
-      //   }
-      //   //上滑加载 处理状态
-      //   if (type === "add") {
-      //     console.log("上滑加载 处理状态");
-      //     tabItem.loadMoreStatus = 0;
-      //   }
-      //   // 假如不满十条，则显示加载完成
-      //   if (list.length < 10) {
-      //     console.log("上滑加载 处理状态");
-      //     tabItem.loadMoreStatus = 2;
-      //   }
-      //   tabItem.currentNumber++;
-      // })
+      })
     },
     //下拉刷新
     onPulldownReresh () {
@@ -543,17 +566,17 @@ export default {
               display: inline-block;
               height: 12px;
               line-height: 12px;
-              top: -1px;
+              top: 3px;
               width: 30px;
               height: 12px;
               margin-right: 10px;
-              line-height: 12px;
+              line-height: 11px;
               border: 1px solid #d7242c;
-              border-radius: 5px;
+              border-radius: 11px;
               text-align: center;
               font-size: 5px;
               color: #d7242c;
-              font-weight: 800;
+              font-weight: 400;
             }
             .prodcutDetails {
               display: flex;
@@ -571,9 +594,10 @@ export default {
                 font-size: 14px;
                 font-family: PingFangSC-Medium, PingFang SC;
                 font-weight: 500;
+                width: 45px;
                 color: rgba(250, 73, 73, 1);
                 line-height: 20px;
-                margin-left: 40px;
+                margin-left: 50px;
               }
             }
           }
