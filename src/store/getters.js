@@ -69,6 +69,9 @@ const getters = {
   // 获取用药人信息
   getMedicineMan: state => state.user.medicineMan,
   // 获取当前编辑用药人
-  getCurrentMedicineMan: state => state.user.currentMedicineMan
+  getCurrentMedicineMan: state => state.user.currentMedicineMan,
+  // 获取用户信息详情和用户统计数据
+  getUserDetails: state => state.user.userDetails,
+  getStatisticData: state => state.user.statisticData
 }
 export default getters

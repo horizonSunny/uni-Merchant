@@ -70,6 +70,8 @@ const userModule = {
     },
     // 获取统计数据
     GetStatisticData({ commit }, params) {
+      console.log('GetStatisticData')
+
       return getStatisticData(params).then(res => {
         commit('SET_STATISTICE', res.data)
         return res.data

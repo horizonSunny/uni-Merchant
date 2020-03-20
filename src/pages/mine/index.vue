@@ -13,7 +13,7 @@
       <view class="head">
         <view class="headPortrait">
           <img src="/static/mine/mine_default head.svg" alt="" />
-          <text>136****9087</text>
+          <text>{{ getUserDetails["phone"] }}</text>
         </view>
         <view class="classify">
           <view class="classifyItem" @click="goNextPage('浏览记录')">
@@ -97,14 +97,16 @@ export default {
     tobBar
   },
   computed: {
-    ...mapGetters(["getProductVisit"])
+    ...mapGetters(["getUserDetails", "getStatisticData"])
   },
   onLoad () {
-    this.productVisit()
+    this.userDetails()
+    this.statisticData()
   },
   methods: {
     ...mapActions({
-      productVisit: "ProductVisit"
+      userDetails: "GetUserDetails",
+      statisticData: "GetStatisticData",
     }),
     // 跳转药品简介页面
     toDrugIntr () {
