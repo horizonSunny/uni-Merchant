@@ -23,7 +23,7 @@
         <checkbox-group @change="checkboxChange">
           <label
             class="uni-list-cell uni-list-cell-pd"
-            v-for="(item, index) in productInfo"
+            v-for="(item, index) in getCollectInfo"
             :key="index"
           >
             <uni-swipe-action>
@@ -87,6 +87,7 @@
 <script>
 import { collect } from '@/config/test'
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
+import { mapActions, mapGetters } from "vuex"
 import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
 export default {
   // computed: mapState(["forcedLogin", "hasLogin", "userName"]),
@@ -109,10 +110,19 @@ export default {
         }
       ],
       checkedArr: [],
-      editorInfo: false
+      editorInfo: false,
+      pageNumber: 0,
+      pageSize: 10,
     }
   },
+  computed: {
+    ...mapGetters(["getCollectInfo"])
+  },
   methods: {
+    ...mapActions({
+      getProductCollect: 'GetProductCollect',
+      // deleteProductVisit: 'DeleteProductVisit'
+    }),
     checkboxChange: function (e) {
     },
     editor () {
@@ -131,6 +141,9 @@ export default {
     editor () {
       this.editorInfo = !this.editorInfo
     }
+  },
+  onLoad () {
+    this.getProductCollect()
   }
 }
 </script>

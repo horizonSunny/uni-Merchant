@@ -44,18 +44,6 @@
                   </view>
                   <view class="drugsInfo">
                     <view class="drugName">
-                      <!-- <text class="mark">OTC</text> -->
-                      <text class="mark" v-show="itemInfo.isMp === 0">OTC</text>
-                      <text
-                        class="mark"
-                        v-show="itemInfo.isMp === 1"
-                        style="color:red;border: 1px solid green;"
-                        >OTC</text
-                      >
-                      <text class="mark" v-show="itemInfo.isMp === 2">RX</text>
-                      <text class="mark" v-show="itemInfo.isMp === 3"
-                        >其他</text
-                      >
                       <view class="prodcutDetails">
                         <view class="name">{{ itemInfo.productName }}</view>
                         <view class="price">¥ {{ itemInfo.price }}</view>

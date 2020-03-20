@@ -2,7 +2,7 @@ import http from '@/config/axios'
 import qs from 'qs'
 // 获取收藏列表信息
 async function productCollect(params) {
-  return http.get('/order/productCollect', { data: params })
+  return http.get('/order/productCollect', { params })
 }
 // 收藏
 async function setProductCollect(params) {
