@@ -33,6 +33,14 @@ import {
   deleteProductCollect
 } from './collect'
 
+import {
+  getOrderList,
+  alipay
+  // cancelOrder,
+  // confirmOrder,
+  // generateOrder
+} from './orderList'
+
 // 获取药品分类信息
 async function getClassify(params) {
   return http.get('/admin/v1/category/getCategorys', {
@@ -127,3 +135,6 @@ export { userDetails, getStatisticData }
 
 // 获取收藏信息
 export { productCollect, setProductCollect, deleteProductCollect }
+
+// 订单列表页
+export { getOrderList, alipay }
