@@ -21,8 +21,9 @@ const userModule = {
     SET_USER: (state, userInfo) => {
       state.userInfo = userInfo
     },
+    // 设置浏览记录
     SET_PRODUCT_VISIT: (state, productVisit) => {
-      state.productVisit = productVisit
+      state.productVisit.concat(productVisit)
     },
     SET_MEDICINE_MAN: (state, medicineMan) => {
       state.medicineMan = medicineMan

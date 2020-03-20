@@ -77,8 +77,16 @@
 import { browsingHistory } from '@/config/test'
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
 import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
+import { mapState, mapActions, mapGetters } from "vuex";
 export default {
-  // computed: mapState(["forcedLogin", "hasLogin", "userName"]),
+  computed: {
+    ...mapGetters(["getProductVisit"])
+  },
+  methods: {
+    ...mapActions({
+      productVisitList: "ProductVisit"
+    })
+  },
   components: {
     uniSwipeAction,
     uniSwipeActionItem
@@ -97,6 +105,8 @@ export default {
           }
         }
       ],
+      pageNumber: 0,
+      pageSize: 10,
     }
   },
   methods: {
@@ -112,6 +122,9 @@ export default {
       console.log('scrolltolower');
       this.productInfo = this.productInfo.concat(browsingHistory)
     }
+  },
+  onLoad () {
+    // getProductVisit
   }
 }
 </script>

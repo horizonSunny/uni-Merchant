@@ -2,7 +2,7 @@ import http from '@/config/axios'
 import qs from 'qs'
 // 获取历史浏览信息
 async function productVisit(params) {
-  return http.get('/patient/productVisit')
+  return http.get('/patient/productVisit', { data: params })
 }
 // 保存商品浏览记录
 async function setProductVisit(params) {

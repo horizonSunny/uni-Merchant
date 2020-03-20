@@ -62,7 +62,7 @@ const getters = {
     console.log('item_', item)
     return item
   },
-  // 获取个人中心里面的浏览记录等
+  // 获取浏览记录等
   getProductVisit: state => state.user.productVisit,
   // 获取模版信息 state获取模版,如果修改的话，修改变动用药人疾病信息。这边state会获取用药人信息和模版信息
   medicineTemplate: state => state.business.getMedicineTemplate,
