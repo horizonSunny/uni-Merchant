@@ -17,16 +17,20 @@
             @error="imageError(item)"
             alt=""
           />
-          <text>{{ getUserDetails["phone"] }}</text>
+          <text>{{ getUserDetails.phone ? getUserDetails.phone : 0 }}</text>
         </view>
         <view class="classify">
           <view class="classifyItem" @click="goNextPage('浏览记录')">
-            <view>{{ getStatisticData.visitCount }}</view>
+            <view>{{
+              getStatisticData.visitCount ? getStatisticData.visitCount : 0
+            }}</view>
             <view>浏览记录</view>
           </view>
           <view class="separator"></view>
           <view class="classifyItem" @click="goNextPage('收藏')">
-            <view>{{ getStatisticData.collectCount }}</view>
+            <view>{{
+              getStatisticData.collectCount ? getStatisticData.collectCount : 0
+            }}</view>
             <view>收藏</view>
           </view>
           <view class="separator"></view>
