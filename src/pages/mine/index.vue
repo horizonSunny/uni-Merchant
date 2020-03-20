@@ -12,22 +12,26 @@
     <view slot="content" class="content">
       <view class="head">
         <view class="headPortrait">
-          <img src="/static/mine/mine_default head.svg" alt="" />
+          <img
+            :src="getUserDetails.avatar ? getUserDetails.avatar : correctUrl"
+            @error="imageError(item)"
+            alt=""
+          />
           <text>{{ getUserDetails["phone"] }}</text>
         </view>
         <view class="classify">
           <view class="classifyItem" @click="goNextPage('浏览记录')">
-            <view>128</view>
+            <view>{{ getStatisticData.visitCount }}</view>
             <view>浏览记录</view>
           </view>
           <view class="separator"></view>
           <view class="classifyItem" @click="goNextPage('收藏')">
-            <view>39</view>
+            <view>{{ getStatisticData.collectCount }}</view>
             <view>收藏</view>
           </view>
           <view class="separator"></view>
           <view class="classifyItem">
-            <view>104</view>
+            <view>{{ getStatisticData.waitGoodsCount }}</view>
             <view>药店关注</view>
           </view>
         </view>
@@ -134,14 +138,20 @@ export default {
         default:
           break;
       }
-    }
+    },
+    // 图片加载失败
+    imageError (item) {
+      console.log('imageError_', item)
+      item.productImage = this.correctUrl
+    },
   },
   data () {
     return {
-      indicatorDots: false,
-      autoplay: false,
-      interval: 2000,
-      duration: 500
+      // indicatorDots: false,
+      // autoplay: false,
+      // interval: 2000,
+      // duration: 500,
+      correctUrl: "/static/mine/mine_default head.svg"
     };
   }
 };
