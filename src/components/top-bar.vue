@@ -74,10 +74,10 @@ export default {
 
   // },
   props: ['backInfo', 'styleInfo', 'jumpButton'],
-  created() {
+  created () {
     this.pageStack = getCurrentPages()
   },
-  data() {
+  data () {
     return {
       // goBack: true
       page: [
@@ -112,17 +112,17 @@ export default {
     }
   },
   methods: {
-    goBack() {
+    goBack () {
       console.log('goback')
       uni.navigateBack({
         delta: 1
       })
     },
-    goPage(url) {
+    goPage (url) {
       console.log(url)
       this.$navTo(url)
     },
-    showPage() {
+    showPage () {
       this.jumpPageShow = !this.jumpPageShow
     }
   }

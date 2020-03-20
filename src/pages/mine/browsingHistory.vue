@@ -100,6 +100,8 @@ export default {
       ],
       pageNumber: 0,
       pageSize: 10,
+      // 表示分页数据未完成
+      historyFull: false
     }
   },
   methods: {
@@ -116,7 +118,19 @@ export default {
     // 滚动到底部
     scrolltolower () {
       console.log('scrolltolower');
-      this.productInfo = this.productInfo.concat(browsingHistory)
+      if (!this.historyFull) {
+        this.getHistory({
+          pageNumber: this.pageNumber,
+          pageSize: this.pageSize,
+        }).then(res => {
+          console.log(res);
+          if (res.length === 0) {
+            this.historyFull = true
+          }
+          this.pageNumber++
+        })
+      }
+      // this.productInfo = this.productInfo.concat(browsingHistory)
     }
   },
   onLoad () {
@@ -125,13 +139,12 @@ export default {
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
     }).then(res => {
-
+      this.pageNumber++
     })
-    setTimeout(() => {
-      console.log(' this.getProductVisit_', this.getProductVisit);
-
-    }, 1000);
     // getProductVisit
+  },
+  beforeDestroy () {
+    this.$store.commit('CLEAR_PRODUCT_VISIT')
   }
 }
 </script>
@@ -141,6 +154,7 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border-top: 1px solid #d5d5d5;
   .clearBoth {
     height: 35px;
     line-height: 35px;

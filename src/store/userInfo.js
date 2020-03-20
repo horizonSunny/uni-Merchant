@@ -24,9 +24,26 @@ const userModule = {
     // 设置浏览记录
     SET_PRODUCT_VISIT: (state, productVisit) => {
       console.log('state.productVisit_', productVisit)
+      let productVisitOld = state.productVisit
+      if (
+        productVisitOld.length !== 0 &&
+        productVisit[0].dataTime ===
+          productVisitOld[productVisitOld.length - 1].dataTime
+      ) {
+        productVisitOld[productVisitOld.length - 1]['productVisits'].push(
+          ...productVisit[0]['productVisits']
+        )
+        productVisit.shift()
+      }
       state.productVisit.push(...productVisit)
+
+      // state.productVisit.push(...productVisit)
       console.log('state.productVisit_', state.productVisit)
     },
+    CLEAR_PRODUCT_VISIT: (state, productVisit) => {
+      state.productVisit = []
+    },
+    // 设置用药人信息
     SET_MEDICINE_MAN: (state, medicineMan) => {
       state.medicineMan = medicineMan
     },
