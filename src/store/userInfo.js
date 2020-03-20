@@ -23,7 +23,9 @@ const userModule = {
     },
     // 设置浏览记录
     SET_PRODUCT_VISIT: (state, productVisit) => {
-      state.productVisit.concat(productVisit)
+      console.log('state.productVisit_', productVisit)
+      state.productVisit.push(...productVisit)
+      console.log('state.productVisit_', state.productVisit)
     },
     SET_MEDICINE_MAN: (state, medicineMan) => {
       state.medicineMan = medicineMan
@@ -37,7 +39,6 @@ const userModule = {
       state.userDetails = userInfo
     },
     SET_STATISTICE: (state, statisticData) => {
-      console.log('SET_STATISTICE', statisticData)
       state.statisticData = statisticData
     }
   },
@@ -49,8 +50,10 @@ const userModule = {
         return res.data
       })
     },
+    // 获取历史浏览记录列表
     ProductVisit({ commit }, params) {
       return productVisit(params).then(res => {
+        console.log('SET_PRODUCT_VISIT_', res.data)
         commit('SET_PRODUCT_VISIT', res.data)
         return res.data
       })

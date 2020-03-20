@@ -18,12 +18,12 @@
         <view class="clearBoth" @click="clearBoth">清空</view>
         <view
           class="contentInfo"
-          v-for="(item, index) in productInfo"
+          v-for="(item, index) in getProductVisit"
           :key="index"
         >
-          <view class="timeShow">{{ item.time }}</view>
+          <view class="timeShow">{{ item.dataTime }}</view>
           <view
-            v-for="(itemInfo, indexInfo) in item.product"
+            v-for="(itemInfo, indexInfo) in item.productVisits"
             :key="indexInfo"
             class="productInfo"
           >
@@ -34,8 +34,9 @@
               >
                 <view class="commidityInfo" @click.stop>
                   <view class="productImg">
+                    <!-- :src="/static/img/home.png" -->
                     <img
-                      src="/static/img/home.png"
+                      :src="itemInfo.productImage[0]"
                       alt=""
                       width="60"
                       height="60"
@@ -49,13 +50,10 @@
                 <text class="mark" v-show="item.isMp === 2">RX</text>
                 <text class="mark" v-show="item.isMp === 3">其他</text> -->
                       <view class="prodcutDetails">
-                        <view class="name"
-                          >爱康国宾 疾病 宾 疾病爱康国宾 疾病 宾 疾病爱康国宾
-                          疾病 宾 疾病爱康国宾 疾病 宾 疾病</view
-                        >
-                        <view class="price">¥ 133.00</view>
+                        <view class="name">{{ itemInfo.productName }}</view>
+                        <view class="price">¥ {{ itemInfo.price }}</view>
                       </view>
-                      <view class="drugSpec">乳腺癌检测 1次</view>
+                      <view class="drugSpec">{{ itemInfo.productSpecif }}</view>
                       <!-- <text>{{ item.productName }}</text> -->
                     </view>
                     <!-- <view class="drugSpec">{{ item.productSpecif }}</view> -->
@@ -82,11 +80,6 @@ export default {
   computed: {
     ...mapGetters(["getProductVisit"])
   },
-  methods: {
-    ...mapActions({
-      productVisitList: "ProductVisit"
-    })
-  },
   components: {
     uniSwipeAction,
     uniSwipeActionItem
@@ -110,6 +103,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      getHistory: 'ProductVisit'
+    }),
     clearBoth () {
       console.log('清空');
     },
@@ -124,6 +120,17 @@ export default {
     }
   },
   onLoad () {
+    // this.getMedicineMan()
+    this.getHistory({
+      pageNumber: this.pageNumber,
+      pageSize: this.pageSize,
+    }).then(res => {
+
+    })
+    setTimeout(() => {
+      console.log(' this.getProductVisit_', this.getProductVisit);
+
+    }, 1000);
     // getProductVisit
   }
 }
