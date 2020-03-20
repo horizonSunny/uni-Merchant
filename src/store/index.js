@@ -4,6 +4,7 @@ import user from './userInfo'
 import business from './businessInfo'
 import shopCart from './shopCart'
 import patientAddress from './patientAddress'
+import order from './order'
 import getters from './getters'
 
 Vue.use(Vuex)
@@ -22,7 +23,8 @@ const store = new Vuex.Store({
     user,
     business,
     shopCart,
-    patientAddress
+    patientAddress,
+    order
   },
   getters
 })
