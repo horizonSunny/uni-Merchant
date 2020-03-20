@@ -29,10 +29,10 @@
             <uni-swipe-action>
               <uni-swipe-action-item
                 :options="options"
-                @click="onClick"
+                @click="onClick($event, item)"
                 @click.stop
               >
-                <view class="commidityInfo" @click.stop>
+                <view class="commidityInfo">
                   <checkbox
                     :value="item.value"
                     color="#FFCC33"
@@ -41,7 +41,7 @@
                   />
                   <view class="productImg">
                     <img
-                      src="/static/img/home.png"
+                      :src="item.productImage[0]"
                       alt=""
                       width="60"
                       height="60"
@@ -50,21 +50,11 @@
                   </view>
                   <view class="drugsInfo">
                     <view class="drugName">
-                      <!-- <text class="mark">OTC</text> -->
-                      <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
-                <text class="mark" v-show="item.isMp === 1"   style="color:red;border: 1px solid green;">OTC</text>
-                <text class="mark" v-show="item.isMp === 2">RX</text>
-                <text class="mark" v-show="item.isMp === 3">其他</text> -->
                       <view class="prodcutDetails">
-                        <view class="name"
-                          >爱康国宾 疾病 宾 疾病爱康国宾 疾病 宾 疾病爱康国宾
-                          疾病 宾 疾病爱康国宾 疾病 宾 疾病</view
-                        >
-                        <view class="price">¥ 133.00</view>
+                        <view class="name">{{ item.productName }}</view>
+                        <view class="price">¥ {{ item.price }}</view>
                       </view>
-                      <view class="drugSpec">乳腺癌检测 1次</view>
-                      <view class="drugSpec">药房全称药房全称药房全称</view>
-                      <!-- <text>{{ item.productName }}</text> -->
+                      <view class="drugSpec">{{ item.productSpecif }}</view>
                     </view>
                     <!-- <view class="drugSpec">{{ item.productSpecif }}</view> -->
                   </view>
@@ -85,10 +75,12 @@
   </body-wrap>
 </template>
 <script>
-import { collect } from '@/config/test'
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
 import { mapActions, mapGetters } from "vuex"
 import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
+import {
+  deleteProductCollect
+} from '@/service/index'
 export default {
   // computed: mapState(["forcedLogin", "hasLogin", "userName"]),
   components: {
@@ -97,7 +89,6 @@ export default {
   },
   data () {
     return {
-      productInfo: collect,
       options: [
         {
           text: '取消收藏',
@@ -112,7 +103,7 @@ export default {
       checkedArr: [],
       editorInfo: false,
       pageNumber: 0,
-      pageSize: 10,
+      pageSize: 1000,
     }
   },
   computed: {
@@ -129,8 +120,15 @@ export default {
       console.log('编辑');
     },
     onClick (e, itemInfo, time) {
-      console.log('当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text)
-      console.log(itemInfo, '_itemInfo_', time);
+      console.log(itemInfo, '_itemInfo_');
+      const deleteArr = [itemInfo.productCollectId]
+      deleteProductCollect({ productCollectId: deleteArr }).then((res) => {
+        this.getCollectInfo.forEach((element, index) => {
+          if (deleteArr.indexOf(element.productCollectId) !== -1) {
+            this.getCollectInfo.splice(index, 1)
+          }
+        });
+      })
     },
     // 滚动到底部
     scrolltolower () {
@@ -143,7 +141,10 @@ export default {
     }
   },
   onLoad () {
-    this.getProductCollect()
+    this.getProductCollect({
+      pageNumber: this.pageNumber,
+      pageSize: this.pageSize
+    })
   }
 }
 </script>
@@ -175,7 +176,7 @@ export default {
       width: 100%;
       padding: 12px 14px 15px;
       display: flex;
-      margin-bottom: 15px;
+      border-bottom: 1px solid #f2f2f2;
       // justify-content: center;
       align-items: center;
       .productImg {

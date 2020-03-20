@@ -109,7 +109,7 @@ import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
 import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
 import ypNumberBox from '@/components/yp-number-box/yp-number-box.vue'
 import { mapActions, mapGetters } from 'vuex'
-import { productCollect, shopCartDelete } from '@/service/index'
+import { setProductCollect, shopCartDelete } from '@/service/index'
 export default {
   components: {
     uniSwipeAction,
@@ -218,11 +218,11 @@ export default {
     },
     onClick (e, cart) {
       console.log(
-        '当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text
+        'cart_', cart
       )
       switch (e.index) {
         case 0:
-          this.moveToFavorites([cart.cartId])
+          this.moveToFavorites(cart)
           break
         case 1:
           this.cartDelete([cart.cartId])
@@ -260,11 +260,21 @@ export default {
     },
     // 移入收藏夹
     moveToFavorites (itemInfo) {
+      console.log('itemInfo_', itemInfo);
+      console.log('this.getShopCartList_', this.getShopCartList);
+      console.log('this.collectArr_', this.checkedArr);
+      const collectArr = this.getShopCartList.map((item) => {
+        const id = item.cartId + ''
+        if (this.checkedArr.indexOf(id) !== -1) {
+          return item.productId
+        }
+      })
+      console.log('collectArr_', collectArr);
       const params = {
-        productIds: itemInfo ? itemInfo : this.checkedArr
+        productIds: itemInfo.productId ? [itemInfo.productId] : collectArr
       }
-      productCollect(params).then(res => {
-        this.cartDelete(params).then(res => {
+      setProductCollect(params).then(res => {
+        shopCartDelete({ cartIds: itemInfo.cartId ? [itemInfo.cartId] : this.checkedArr }).then(res => {
           this.getShopCartInfo()
         })
       })
@@ -273,7 +283,7 @@ export default {
     cartDelete (itemInfo) {
       console.log('this.checkedArr_', this.checkedArr);
       const params = {
-        cartIds: itemInfo ? itemInfo : this.checkedArr
+        cartIds: itemInfo.cartId ? itemInfo.cartId : this.checkedArr
       }
       shopCartDelete(params).then(res => {
         this.getShopCartInfo()
