@@ -45,6 +45,7 @@ const businessModule = {
     // 设置我的订单页面关于点击某一个订单信息，保存订单的问题
     SET_INDENT_INFO: (state, indentInfo) => {
       state.myIndentInfo = indentInfo
+      console.log('indentInfo_', indentInfo)
     }
   },
   actions: {

@@ -380,7 +380,8 @@ export default {
     },
     // jumpInfo
     jumpInfo (info) {
-      console.log('info_', info);
+      // console.log('info_', info);
+      this.$store.commit('SET_INDENT_INFO', info);
     }
   }
 };
