@@ -128,7 +128,10 @@
                     <view class="active" v-if="indentItem.orderStatus === 3"
                       >查看物流</view
                     >
-                    <view class="active" v-if="indentItem.orderStatus === 4"
+                    <view
+                      class="active"
+                      v-if="indentItem.orderStatus === 4"
+                      @click="gotoNextPage('../myIndent/comment', {})"
                       >评价</view
                     >
                     <view class="active" v-if="indentItem.orderStatus === 0"
