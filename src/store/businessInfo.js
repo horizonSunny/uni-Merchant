@@ -45,9 +45,6 @@ const businessModule = {
     // 设置我的订单页面关于点击某一个订单信息，保存订单的问题
     SET_INDENT_INFO: (state, indentInfo) => {
       // 设置一个五星标志
-      indentInfo.orderItems.forEach(item => {
-        item.rate = 5;
-      });
       state.myIndentInfo = indentInfo;
       console.log("indentInfo_", indentInfo);
     }

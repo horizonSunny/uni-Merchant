@@ -124,6 +124,9 @@ export default {
   },
   onLoad() {
     this.indentInfo = deepCopy(this.getIndentInfo);
+    this.indentInfo.orderItems.forEach(item => {
+      item.rate = 5;
+    });
   }
 };
 </script>
