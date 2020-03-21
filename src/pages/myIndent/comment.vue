@@ -34,12 +34,12 @@
                 <view class="rate">
                   <uni-rate
                     size="20"
-                    :value="item.rate"
+                    :value="item.commentStar"
                     margin="20"
                     @change="commentRate($event, item)"
                     class="uniRate"
                   ></uni-rate>
-                  <text class="rateInfo">{{commentInfo(item.rate)}}</text>
+                  <text class="rateInfo">{{commentInfo(item.commentStar)}}</text>
                 </view>
               </view>
             </view>
@@ -54,12 +54,12 @@
               color:rgba(137,137,137,1);
               line-height:17px;"
               maxlength="200"
-              @input="textareaInput"
+              @input="textareaInput($event,item)"
             />
             <view class="importability">100/200</view>
           </view>
           <view class="separate logisticsInfo indentInfo">
-            <up-img></up-img>
+            <up-img @change="imgChange"></up-img>
           </view>
         </view>
       </view>
@@ -109,12 +109,15 @@ export default {
   methods: {
     commentRate(e, item) {
       // console.log(e.value, id);
-      item.rate = e.value;
-      // this.$set(item, "rate", e.value);
+      item.commentStar = e.value;
       console.log(item);
     },
-    textareaInput(e) {
-      console.log(e.detail.cursor);
+    textareaInput(e, item) {
+      console.log(e.detail.cursor, item);
+      item.content = e.detail.value;
+    },
+    imgChange(e) {
+      console.log("e_", e);
     }
   },
   data() {
@@ -125,7 +128,9 @@ export default {
   onLoad() {
     this.indentInfo = deepCopy(this.getIndentInfo);
     this.indentInfo.orderItems.forEach(item => {
-      item.rate = 5;
+      // item.commentStar = 5;
+      this.$set(item, "commentStar", 5);
+      this.$set(item, "commentImg", []);
     });
   }
 };

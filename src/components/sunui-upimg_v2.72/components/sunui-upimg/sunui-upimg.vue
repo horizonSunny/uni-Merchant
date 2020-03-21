@@ -20,13 +20,11 @@
             class="sunui-img-removeicon right"
             @click.stop="removeImage(index)"
             v-show="upimg_move"
-            >×</view
-          >
+          >×</view>
           <view
             class="sunui-loader-filecontent"
             v-if="item.upload_percent < 100"
-            >{{ item.upload_percent }}%</view
-          >
+          >{{ item.upload_percent }}%</view>
         </view>
       </block>
       <view
@@ -36,21 +34,18 @@
         @click="chooseImage"
         :style="upload_img_wh"
       >
-        <view
-          ><text
-            class="iconfont icon-mn_shangchuantupian"
-            style="color: #666;"
-          ></text
-        ></view>
+        <view>
+          <text class="iconfont icon-mn_shangchuantupian" style="color: #666;"></text>
+        </view>
       </view>
     </view>
   </view>
 </template>
 
 <script>
-import * as storage from '@/config/storage'
+import * as storage from "@/config/storage";
 export default {
-  data () {
+  data() {
     return {
       upload_len: 0,
       upload_cache: [],
@@ -58,17 +53,17 @@ export default {
       upload_before_list: []
     };
   },
-  name: 'sunui-upimg',
+  name: "sunui-upimg",
   props: {
     // 服务器url
     url: {
       type: String,
-      default: 'http://47.103.158.133:8088/admin/v1/uploadFile'
+      default: "http://47.103.158.133:8088/admin/v1/uploadFile"
     },
     // 上传样式宽高
     upload_img_wh: {
       type: String,
-      default: 'width:162rpx;height:162rpx;'
+      default: "width:162rpx;height:162rpx;"
     },
     // 上传数量
     upload_count: {
@@ -101,31 +96,34 @@ export default {
     header: {
       type: Object,
       default: () => {
-        return {
-        };
+        return {};
       }
     }
   },
-  async created () {
+  async created() {
     let _self = this;
     setTimeout(() => {
-      this.upload_before_list = this.upload_before_list.concat(this.upimg_preview);
+      this.upload_before_list = this.upload_before_list.concat(
+        this.upimg_preview
+      );
       this.upload_len = this.upload_before_list.length;
       this.upimg_preview.map(item => {
         // step2.这里修改服务器返回字段 ！！！
+        // console.log("upload_cache_list_", item);
+
         this.upload_cache_list.push(item.path);
       });
       this.emit();
     }, this.upimg_delaytime);
   },
   methods: {
-    upImage (paths, header) {
+    upImage(paths, header) {
       let _self = this;
-      const promises = paths.map(function (path) {
+      const promises = paths.map(function(path) {
         return promisify(upload)({
           url: _self.url,
           path: path,
-          name: 'file',
+          name: "file",
           extra: header,
           _self: _self
         });
@@ -136,39 +134,43 @@ export default {
       });
 
       Promise.all(promises)
-        .then(function (data) {
+        .then(function(data) {
           uni.hideLoading();
+          console.log("all_promises_", data);
+
           _self.upload_cache_list.push(...data);
           _self.emit();
         })
-        .catch(function (res) {
+        .catch(function(res) {
           uni.hideLoading();
         });
     },
-    chooseImage () {
+    chooseImage() {
       let _self = this;
       uni.chooseImage({
         count: _self.upload_count - _self.upload_before_list.length,
-        sizeType: ['compressed', 'original'],
-        sourceType: ['album', 'camera'],
-        success: function (res) {
+        sizeType: ["compressed", "original"],
+        sourceType: ["album", "camera"],
+        success: function(res) {
           for (let i = 0, len = res.tempFiles.length; i < len; i++) {
-            res.tempFiles[i]['upload_percent'] = 0;
+            res.tempFiles[i]["upload_percent"] = 0;
             _self.upload_before_list.push(res.tempFiles[i]);
           }
           _self.upload_cache = res.tempFilePaths;
           _self.upload(_self.upload_auto);
         },
-        fail: function (err) {
+        fail: function(err) {
           console.log(err);
         }
       });
     },
-    async upload (upload_auto) {
+    async upload(upload_auto) {
       let _self = this;
-      upload_auto ? await _self.upImage(_self.upload_cache, _self.header) : console.warn(`传输参数:this.$refs.xx.upload(true)才可上传,默认false`);
+      upload_auto
+        ? await _self.upImage(_self.upload_cache, _self.header)
+        : console.warn(`传输参数:this.$refs.xx.upload(true)才可上传,默认false`);
     },
-    previewImage (idx) {
+    previewImage(idx) {
       let _self = this;
       let preview = [];
       for (let i = 0, len = _self.upload_before_list.length; i < len; i++) {
@@ -180,23 +182,23 @@ export default {
         urls: preview
       });
     },
-    removeImage (idx) {
+    removeImage(idx) {
       let _self = this;
       _self.upload_before_list.splice(idx, 1);
       _self.upload_cache_list.splice(idx, 1);
       _self.upload_len = _self.upload_before_list.length;
       _self.emit();
     },
-    emit () {
+    emit() {
       let _self = this;
-      _self.$emit('change', _self.upload_cache_list);
+      _self.$emit("change", _self.upload_cache_list);
     }
   }
 };
 
 const promisify = api => {
-  return function (options, ...params) {
-    return new Promise(function (resolve, reject) {
+  return function(options, ...params) {
+    return new Promise(function(resolve, reject) {
       api(
         Object.assign({}, options, {
           success: resolve,
@@ -208,7 +210,7 @@ const promisify = api => {
   };
 };
 
-const upload = function (options) {
+const upload = function(options) {
   let url = options.url,
     _self = options._self,
     path = options.path,
@@ -225,11 +227,14 @@ const upload = function (options) {
     name: name,
     formData: extra,
     header: {
-      authorization: storage.getSync('access_token')
+      authorization: storage.getSync("access_token")
     },
-    success: function (res) {
+    success: function(res) {
       var data = res.data;
-      console.warn('sunui-upimg - 如发现没有获取到返回值请到源码191行修改后端返回图片路径以便正常使用插件', JSON.parse(data));
+      console.warn(
+        "sunui-upimg - 如发现没有获取到返回值请到源码191行修改后端返回图片路径以便正常使用插件",
+        JSON.parse(data)
+      );
       try {
         //Tip : 切记->主要修改这里图片的返回值为真实返回路径!!! 详情见示例
         data = JSON.parse(res.data).info;
@@ -239,6 +244,9 @@ const upload = function (options) {
       // 根据自己的返回数据做相应判断,服务器返回200即代表成功请求
       if (res.statusCode == 200) {
         if (success) {
+          console.log("res.data_", res.data);
+
+          // this.upload_cache_list.push(item.path);
           success(data);
         }
       } else {
@@ -247,16 +255,16 @@ const upload = function (options) {
         }
       }
     },
-    fail: function (res) {
+    fail: function(res) {
       console.log(res);
       if (fail) {
         fail(res);
       }
     }
   });
-  uploadTask.onProgressUpdate(async function (res) {
+  uploadTask.onProgressUpdate(async function(res) {
     for (let i = 0, len = _self.upload_before_list.length; i < len; i++) {
-      _self.upload_before_list[i]['upload_percent'] = await res.progress;
+      _self.upload_before_list[i]["upload_percent"] = await res.progress;
     }
     _self.upload_before_list = _self.upload_before_list;
     _self.upload_len = _self.upload_before_list.length;
