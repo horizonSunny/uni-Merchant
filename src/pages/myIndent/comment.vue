@@ -59,12 +59,12 @@
             <view class="importability">100/200</view>
           </view>
           <view class="separate logisticsInfo indentInfo">
-            <up-img @change="imgChange"></up-img>
+            <up-img @change="imgChange($event,item)"></up-img>
           </view>
         </view>
       </view>
       <view class="issue">
-        <button type="primary">发布</button>
+        <button type="primary" @click="issue">发布</button>
       </view>
     </view>
   </body-wrap>
@@ -74,6 +74,7 @@ import uniRate from "@/components/rate/uni-rate/uni-rate.vue";
 import upImg from "@/components/sunui-upimg_v2.72/components/sunui-upimg/sunui-upimg.vue";
 import { mapActions, mapGetters } from "vuex";
 import deepCopy from "@/utils/deepCopy";
+import { productComment } from "@/service/index";
 import * as storage from "@/config/storage";
 export default {
   components: { uniRate, upImg },
@@ -116,8 +117,20 @@ export default {
       console.log(e.detail.cursor, item);
       item.content = e.detail.value;
     },
-    imgChange(e) {
-      console.log("e_", e);
+    imgChange(e, item) {
+      item.commentImg = e;
+    },
+    issue() {
+      this.indentInfo.orderItems.forEach(item => {
+        console.log("item_", item);
+        const params = {
+          commentImg: item.commentImg,
+          commentStar: item.commentStar,
+          content: item.content,
+          productId: item.productId
+        };
+        productComment(params);
+      });
     }
   },
   data() {
@@ -131,6 +144,7 @@ export default {
       // item.commentStar = 5;
       this.$set(item, "commentStar", 5);
       this.$set(item, "commentImg", []);
+      this.$set(item, "content", []);
     });
   }
 };

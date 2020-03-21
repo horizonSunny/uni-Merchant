@@ -110,8 +110,7 @@ export default {
       this.upimg_preview.map(item => {
         // step2.这里修改服务器返回字段 ！！！
         // console.log("upload_cache_list_", item);
-
-        this.upload_cache_list.push(item.path);
+        // this.upload_cache_list.push(item.path);
       });
       this.emit();
     }, this.upimg_delaytime);
@@ -138,7 +137,7 @@ export default {
           uni.hideLoading();
           console.log("all_promises_", data);
 
-          _self.upload_cache_list.push(...data);
+          // _self.upload_cache_list.push(...data);
           _self.emit();
         })
         .catch(function(res) {
@@ -244,8 +243,10 @@ const upload = function(options) {
       // 根据自己的返回数据做相应判断,服务器返回200即代表成功请求
       if (res.statusCode == 200) {
         if (success) {
-          console.log("res.data_", res.data);
-
+          let url = JSON.parse(res.data).data;
+          // console.log("res.data_", JSON.parse(res.data).data);
+          // console.log("this.upload_cache_list_", _self.upload_cache_list);
+          _self.upload_cache_list.push(JSON.parse(res.data).data);
           // this.upload_cache_list.push(item.path);
           success(data);
         }
