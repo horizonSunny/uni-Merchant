@@ -39,7 +39,9 @@
         <view class="title">
           <text>上传处方信息</text>
         </view>
-        <view class="contentWrap"></view>
+        <view class="contentWrap">
+          <up-img @change="imgChange($event)" :upload_count="3"></up-img>
+        </view>
         <view class="reminder">
           <text>药店药师审核，请上传正规处方（仅可上传3张）</text>
         </view>
@@ -48,8 +50,10 @@
   </body-wrap>
 </template>
 <script>
+import upImg from "@/components/sunui-upimg_v2.72/components/sunui-upimg/sunui-upimg.vue";
 import { mapActions, mapGetters } from "vuex";
 export default {
+  components: { upImg },
   data() {
     return {
       currentPatient: 0
@@ -73,6 +77,9 @@ export default {
     gotoNextPage(url, parameters) {
       this.$store.commit("SET_CURRENT_MEDICINE_MAN", parameters);
       this.$navTo(url, parameters);
+    },
+    imgChange(e) {
+      console.log("e_", e);
     }
   },
   onShow() {

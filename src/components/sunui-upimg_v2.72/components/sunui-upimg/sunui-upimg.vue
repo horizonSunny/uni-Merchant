@@ -28,7 +28,7 @@
         </view>
       </block>
       <view
-        v-show="upload_len < upload_count"
+        v-show="upload_cache_list.length < upload_count"
         hover-class="sunui-uploader-hover"
         class="sunui-uploader-inputbox"
         @click="chooseImage"
