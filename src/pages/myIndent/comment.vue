@@ -121,16 +121,26 @@ export default {
       item.commentImg = e;
     },
     issue() {
+      const promiseInfo = [];
       this.indentInfo.orderItems.forEach(item => {
-        console.log("item_", item);
         const params = {
           commentImg: item.commentImg,
           commentStar: item.commentStar,
           content: item.content,
           productId: item.productId
         };
-        productComment(params);
+        promiseInfo.push(productComment(params));
       });
+      Promise.all(promiseInfo)
+        .then(result => {
+          console.log("success_", result); // [ '3秒后醒来', '2秒后醒来' ]
+          uni.navigateBack({
+            delta: 1
+          });
+        })
+        .catch(error => {
+          console.log("error_", error);
+        });
     }
   },
   data() {
