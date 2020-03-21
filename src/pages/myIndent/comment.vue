@@ -1,44 +1,35 @@
 <template>
   <body-wrap>
-    <tob-bar
-      slot="topBar"
-      :styleInfo="{ backgroundColor: '#fff' }"
-      jumpButton=""
-    >
+    <tob-bar slot="topBar" :styleInfo="{ backgroundColor: '#fff' }" jumpButton>
       <text slot="title" style="color:#000">评价</text>
     </tob-bar>
     <view slot="content" class="content">
       <view class="indentWrap">
-        <view
-          class="indent"
-          v-for="(item, index) in getIndentInfo.orderItems"
-          :key="index"
-        >
+        <view class="indent" v-for="(item, index) in getIndentInfo.orderItems" :key="index">
           <view class="effectiveGoods">
             <view class="commidityInfo">
               <view class="productImg">
-                <img
-                  :src="item['productImage'][0]"
-                  alt=""
-                  width="60"
-                  height="60"
-                />
+                <img :src="item['productImage'][0]" alt width="60" height="60" />
                 <!-- <img src="/static/img/home.png" alt="" width="60" height="60" /> -->
                 <!-- <view class="model">已下架</view> -->
               </view>
               <view class="drugsInfo">
                 <view class="drugName">
                   <view>
-                    <text class="mark">OTC</text>
-                    <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
-                  <text class="mark" v-show="item.isMp === 1"   style="color:red;border: 1px solid green;">OTC</text>
-                  <text class="mark" v-show="item.isMp === 2">RX</text>
-                  <text class="mark" v-show="item.isMp === 3">其他</text> -->
+                    <!-- <text class="mark">OTC</text> -->
+                    <text class="mark" v-show="item.isMp === 0">OTC</text>
+                    <text
+                      class="mark"
+                      v-show="item.isMp === 1"
+                      style="color:red;border: 1px solid green;"
+                    >OTC</text>
+                    <text class="mark" v-show="item.isMp === 2">RX</text>
+                    <text class="mark" v-show="item.isMp === 3">其他</text>
                     <text class="name">{{ item.productName }}</text>
                   </view>
                 </view>
                 <view class="drugSpec">
-                  <view> 已选择：{{ item.productSpecif }} </view>
+                  <view>已选择：{{ item.productSpecif }}</view>
                 </view>
                 <view class="rate">
                   <uni-rate
@@ -65,9 +56,7 @@
               maxlength="200"
               @input="textareaInput"
             />
-            <view class="importability">
-              100/200
-            </view>
+            <view class="importability">100/200</view>
           </view>
           <view class="separate logisticsInfo indentInfo">
             <up-img></up-img>
@@ -81,34 +70,32 @@
   </body-wrap>
 </template>
 <script>
-import uniRate from '@/components/rate/uni-rate/uni-rate.vue'
-import upImg from '@/components/sunui-upimg_v2.72/components/sunui-upimg/sunui-upimg.vue'
+import uniRate from "@/components/rate/uni-rate/uni-rate.vue";
+import upImg from "@/components/sunui-upimg_v2.72/components/sunui-upimg/sunui-upimg.vue";
 import { mapActions, mapGetters } from "vuex";
-import * as storage from '@/config/storage'
+import * as storage from "@/config/storage";
 export default {
   components: { uniRate, upImg },
   computed: {
     ...mapGetters(["getIndentInfo"]),
-    header () {
+    header() {
       return {
-        authorization: storage.getSync('access_token')
-      }
+        authorization: storage.getSync("access_token")
+      };
     }
   },
   methods: {
-    commentRate (e, id) {
+    commentRate(e, id) {
       console.log(e.value, id);
     },
-    textareaInput (e) {
+    textareaInput(e) {
       console.log(e.detail.cursor);
     }
   },
-  data () {
-    return {
-
-    }
+  data() {
+    return {};
   }
-}
+};
 </script>
 <style lang="scss">
 .content {
@@ -207,6 +194,9 @@ export default {
                 text-overflow: ellipsis;
                 white-space: nowrap;
               }
+              view {
+                width: 100%;
+              }
             }
             .drugSpec {
               height: 18px;
@@ -239,7 +229,7 @@ export default {
                 line-height: 17px;
                 position: relative;
                 top: -7px;
-                right: -10px;
+                right: -15px;
               }
             }
           }
