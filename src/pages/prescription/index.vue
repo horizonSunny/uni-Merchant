@@ -46,6 +46,9 @@
           <text>药店药师审核，请上传正规处方（仅可上传3张）</text>
         </view>
       </view>
+      <view class="confirm">
+        <button type="primary">完成</button>
+      </view>
     </view>
   </body-wrap>
 </template>
@@ -91,6 +94,7 @@ export default {
 </script>
 <style lang="scss">
 .content {
+  position: relative;
   .contentInfo {
     border-top: 1px solid #d4d4d4;
     height: 155px;
@@ -150,6 +154,15 @@ export default {
       font-weight: 400;
       color: rgba(137, 137, 137, 1);
       line-height: 17px;
+    }
+  }
+  .confirm {
+    button {
+      width: 80%;
+      left: 50%;
+      margin-left: -40%;
+      position: absolute;
+      bottom: 20px;
     }
   }
   .contentInfo:nth-child(2) {
