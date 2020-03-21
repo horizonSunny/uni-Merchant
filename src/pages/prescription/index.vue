@@ -47,7 +47,7 @@
         </view>
       </view>
       <view class="confirm">
-        <button type="primary">完成</button>
+        <button type="primary" @click="confirm">完成</button>
       </view>
     </view>
   </body-wrap>
@@ -59,7 +59,8 @@ export default {
   components: { upImg },
   data() {
     return {
-      currentPatient: 0
+      currentPatient: 0,
+      prescriptionImg: []
     };
   },
   computed: {
@@ -83,6 +84,10 @@ export default {
     },
     imgChange(e) {
       console.log("e_", e);
+      this.prescriptionImg = e;
+    },
+    confirm() {
+      // 处方填写完毕
     }
   },
   onShow() {
