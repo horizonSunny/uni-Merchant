@@ -5,7 +5,7 @@
     </tob-bar>
     <view slot="content" class="content">
       <view class="indentWrap">
-        <view class="indent" v-for="(item, index) in getIndentInfo.orderItems" :key="index">
+        <view class="indent" v-for="(item, index) in indentInfo.orderItems" :key="index">
           <view class="effectiveGoods">
             <view class="commidityInfo">
               <view class="productImg">
@@ -34,12 +34,12 @@
                 <view class="rate">
                   <uni-rate
                     size="20"
-                    value="5"
+                    :value="item.rate"
                     margin="20"
-                    @change="commentRate($event, 1)"
+                    @change="commentRate($event, item)"
                     class="uniRate"
                   ></uni-rate>
-                  <text class="rateInfo">非常好</text>
+                  <text class="rateInfo">{{commentInfo(item.rate)}}</text>
                 </view>
               </view>
             </view>
@@ -73,27 +73,57 @@
 import uniRate from "@/components/rate/uni-rate/uni-rate.vue";
 import upImg from "@/components/sunui-upimg_v2.72/components/sunui-upimg/sunui-upimg.vue";
 import { mapActions, mapGetters } from "vuex";
+import deepCopy from "@/utils/deepCopy";
 import * as storage from "@/config/storage";
 export default {
   components: { uniRate, upImg },
   computed: {
     ...mapGetters(["getIndentInfo"]),
-    header() {
-      return {
-        authorization: storage.getSync("access_token")
+    commentInfo() {
+      return function(commentRate) {
+        console.log("commentRate_", commentRate);
+
+        switch (commentRate) {
+          case 5:
+            return "非常好";
+            break;
+          case 4:
+            return "好";
+            break;
+          case 3:
+            return "一般";
+            break;
+          case 2:
+            return "差";
+            break;
+          case 1:
+            return "非常差";
+            break;
+
+          default:
+            break;
+        }
       };
     }
   },
   methods: {
-    commentRate(e, id) {
-      console.log(e.value, id);
+    commentRate(e, item) {
+      // console.log(e.value, id);
+      item.rate = e.value;
+      // this.$set(item, "rate", e.value);
+      console.log(item);
     },
     textareaInput(e) {
       console.log(e.detail.cursor);
     }
   },
   data() {
-    return {};
+    return {
+      indentInfo: ""
+    };
+  },
+  onLoad() {
+    this.indentInfo = deepCopy(this.getIndentInfo);
   }
 };
 </script>
@@ -230,6 +260,7 @@ export default {
                 position: relative;
                 top: -7px;
                 right: -15px;
+                text-align: right;
               }
             }
           }
