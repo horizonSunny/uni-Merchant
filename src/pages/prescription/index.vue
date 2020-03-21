@@ -7,7 +7,7 @@
       <view class="contentInfo">
         <view class="title">
           <text>请选择用药</text>
-          <text @click="toNewPatient">添加</text>
+          <text @click="gotoNextPage('../prescription/newPatient', {})">添加</text>
         </view>
         <view class="contentWrap">
           <scroll-view scroll-x="true" class="scrollView">
@@ -21,7 +21,7 @@
               <view class="editor">
                 <view>{{item.fullName}}</view>
                 <img
-                  @click.stop
+                  @click.stop="gotoNextPage('../prescription/newPatient', item)"
                   :src="currentPatient === index?'static/myIndent/shopping cart-editdu-sel.svg':'static/myIndent/shopping cart-editdu-nl.svg'"
                   alt
                 />
@@ -68,6 +68,11 @@ export default {
     },
     selectPatient(index) {
       this.$store.commit("REVERSE_MEDICINE_MAN", index);
+    },
+    // 跳转页面
+    gotoNextPage(url, parameters) {
+      this.$store.commit("SET_CURRENT_MEDICINE_MAN", parameters);
+      this.$navTo(url, parameters);
     }
   },
   onShow() {
