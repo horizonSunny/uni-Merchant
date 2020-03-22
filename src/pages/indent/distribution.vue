@@ -11,14 +11,14 @@
           <radio-group @change="radioChange">
             <label
               class="uni-list-cell uni-list-cell-pd"
-              v-for="(item, index) in items"
-              :key="item.value"
+              v-for="(item, index) in shipperType"
+              :key="index"
             >
-              <view class="selectInfo" :class="index === current ? 'active' : ''">
-                <view>{{item.name}}</view>
+              <view class="selectInfo" :class="item.shipperTypeId == current ? 'active' : ''">
+                <view>{{item.shipperName}}</view>
                 <view>
-                  ¥{{item.price}}
-                  <radio :value="item.value" :checked="index === current" />
+                  ¥{{item.shipperAmount}}
+                  <radio :value="item.shipperTypeId +''" :checked="item.shipperTypeId == current" />
                 </view>
               </view>
             </label>
@@ -31,40 +31,28 @@
 <script>
 import modal from "@/components/modal.vue";
 export default {
+  props: ["shipperType", "hasSelected"],
   components: {
     modal
   },
   data() {
     return {
-      items: [
-        {
-          value: "0",
-          price: 12,
-          name: "普通快递"
-        },
-        {
-          value: "1",
-          price: 24,
-          name: "加急快递"
-        },
-        {
-          value: "2",
-          price: 0,
-          name: "到店自提"
-        }
-      ],
-      current: 0,
+      current: this.hasSelected ? this.hasSelected : 1,
       modal: false
     };
   },
   methods: {
     radioChange: function(evt) {
-      for (let i = 0; i < this.items.length; i++) {
-        if (this.items[i].value === evt.target.value) {
-          this.current = i;
+      console.log("this.shipperType_", this.shipperType);
+
+      for (let i = 0; i < this.shipperType.length; i++) {
+        if (this.shipperType[i].shipperTypeId == evt.target.value) {
+          this.current = evt.target.value;
           break;
         }
       }
+      this.$emit("shipperSelected", evt.detail.value);
+      this.closeModal();
     },
     closeModal() {
       this.modal = false;
@@ -73,6 +61,9 @@ export default {
       this.modal = true;
     }
   }
+  // created() {
+  //   console.log("this.hasSelected_", this.hasSelected);
+  // }
 };
 </script>
 <style lang="scss" scoped>

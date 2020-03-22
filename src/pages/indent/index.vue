@@ -152,7 +152,12 @@
         <view class="operate">去支付</view>
       </view>
       <!-- <purchasefailed></purchasefailed> -->
-      <distribution ref="distribution"></distribution>
+      <distribution
+        ref="distribution"
+        :shipperType="shipperType"
+        @shipperSelected="shipperChange"
+        :hasSelected="shipperSelected"
+      ></distribution>
       <invoice ref="invoice"></invoice>
     </view>
     <!-- <tab-bar slot="tabBar"></tab-bar> -->
@@ -180,7 +185,9 @@ export default {
       haveRx: false,
       correctUrl: "/static/shoppingCart/shopping cart-bitmap2.svg",
       // 可配送地址id
-      addressIds: []
+      addressIds: [],
+      shipperType: [],
+      shipperSelected: 1
     };
   },
   onLoad(option) {},
@@ -197,8 +204,9 @@ export default {
     // 依据购物车信息确认可配送订单信息
     confirmOrder({ shopCartIds: shopCartId }).then(res => {
       // console.log("res_", res.data);
-      console.log("res.data.addressId_", res.data.addressIds);
-
+      console.log("confirmOrder_", res.data);
+      // 配送模版
+      this.shipperType = res.data.shipperType;
       this.addressIds = res.data.addressIds;
     });
   },
@@ -245,6 +253,21 @@ export default {
     imageError(item) {
       console.log("imageError_", item);
       item.productImage = this.correctUrl;
+    },
+    // 运费模版选择
+    shipperChange(e) {
+      console.log("shipperSelected_", e);
+      const shipper = e;
+      this.shipperSelected = e;
+      const select = this.shipperType.find(item => {
+        return item.shipperTypeId == e;
+      });
+      console.log("select_", select);
+      if (select.shipperName === "到店自提") {
+        this.pickUp = true;
+      } else {
+        this.pickUp = false;
+      }
     }
   }
 };
