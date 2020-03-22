@@ -148,6 +148,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { buyAgain } from "@/service/index";
 export default {
   components: {},
   data() {
@@ -247,7 +248,15 @@ export default {
       this.$navTo("../myIndent/comment");
     },
     // 重新购买
-    repurchase() {}
+    repurchase() {
+      buyAgain({
+        orderNo: this.getOrderDetails.orderNo
+      }).then(res => {
+        this.$navTo("../shoppingCart/index", {
+          productIds: res.data.productIds
+        });
+      });
+    }
   }
 };
 </script>

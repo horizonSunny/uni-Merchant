@@ -109,14 +109,13 @@ export default {
     uniSwipeActionItem,
     ypNumberBox
   },
-  props: ["editorStatus"],
+  props: ["editorStatus", "selectedArr"],
   computed: {
     ...mapGetters(["getShopCartList"]),
     calculateTotal() {
       const selectCart = this.getShopCartList.filter(cartItem => {
         return this.checkedArr.indexOf(cartItem.value) > -1;
       });
-      console.log("selectCart_", selectCart);
       if (selectCart.length === 0) {
         this.totalNum = 0;
         return 0;
@@ -133,14 +132,21 @@ export default {
     }
   },
   created() {
-    uni.getSystemInfo({
-      success: function(res) {
-        this.windowWidth = res.windowWidth;
-        this.windowHeight = res.windowHeight;
-        console.log("this.windowWidth_", this.windowWidth, this.windowHeight);
-      }
-    });
-    console.log("getShopCartList_", this.getShopCartList);
+    console.log("this.selectedArr_", this.selectedArr);
+
+    // this.checkedArr = this.selectedArr;
+    // const shopCart = this.getShopCartList.map(item => {
+    //   if (this.selectedArr.indexOf(item.productId + "") !== -1) {
+    //     // return item.value;
+    //     console.log("item_", item.value);
+    //     return item.value;
+    //   }
+    // });
+    // this.checkedArr.push(...shopCart);
+    // console.log("this.checkedArr_", this.checkedArr);
+
+    // console.log("shopCart_", shopCart);
+    // console.log("getShopCartList_", this.getShopCartList);
   },
   mounted() {
     // this.allChecked = false;
@@ -182,6 +188,8 @@ export default {
     }),
     checkboxChange: function(e) {
       this.checkedArr = e.detail.value;
+      console.log("this.checkedArr_", this.checkedArr);
+
       // 如果选择的数组中有值，并且长度等于列表的长度，就是全选
       if (
         this.checkedArr.length > 0 &&

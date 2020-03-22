@@ -17,7 +17,7 @@
           </view>
         </view>
         <view class="classifyDetails">
-          <commidityItem :editorStatus="editor"></commidityItem>
+          <commidityItem :editorStatus="editor" :selectedArr="selectArr"></commidityItem>
         </view>
       </view>
       <!-- 假如购物车没东西 -->
@@ -40,10 +40,19 @@ export default {
   },
   data() {
     return {
-      editor: true
+      editor: true,
+      selectArr: []
     };
   },
+  onLoad(option) {
+    if (option.productIds) {
+      const selectArr = option.productIds.split(",");
+      console.log("selectArr_", selectArr);
+      this.selectArr = selectArr;
+    }
+  },
   onShow() {
+    // console.log("ONSHOW");
     this.getShopCartInfo();
   },
   computed: {

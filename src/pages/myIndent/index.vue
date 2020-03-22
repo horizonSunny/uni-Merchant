@@ -100,7 +100,11 @@
                       "
                     >删除订单</view>
                     <view class="pray" v-if="indentItem.orderStatus === 0">取消订单</view>
-                    <view class="active" v-if="indentItem.orderStatus === 5">重新购买</view>
+                    <view
+                      class="active"
+                      v-if="indentItem.orderStatus === 5"
+                      @click="repurchase(indentItem)"
+                    >重新购买</view>
                     <view class="active" v-if="indentItem.orderStatus === 3">查看物流</view>
                     <view
                       class="active"
@@ -129,7 +133,7 @@ import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-re
 import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
 import * as json from "@/config/json";
 // import { myIndent } from '@/config/test'
-import { getOrderList } from "@/service/index";
+import { getOrderList, buyAgain } from "@/service/index";
 let windowWidth = 0,
   scrollTimer = false,
   tabBar;
@@ -373,6 +377,16 @@ export default {
         default:
           break;
       }
+    },
+    // 重新购买
+    repurchase(indentItem) {
+      buyAgain({
+        orderNo: indentItem.orderNo
+      }).then(res => {
+        this.$navTo("../shoppingCart/index", {
+          productIds: res.data.productIds
+        });
+      });
     }
   }
 };

@@ -1,5 +1,11 @@
 import http from "@/config/axios";
-import { shopCart, shopCartDelete, updateCart, newCart } from "./shoppingCart";
+import {
+  shopCart,
+  shopCartDelete,
+  updateCart,
+  newCart,
+  buyAgain
+} from "./shoppingCart";
 
 import {
   patientAddress,
@@ -114,7 +120,7 @@ export {
   productComment
 };
 // 导出购物车接口
-export { shopCart, shopCartDelete, updateCart, newCart };
+export { shopCart, shopCartDelete, updateCart, newCart, buyAgain };
 // 用药人地址
 export { patientAddress, addressDelete, updateAddress, newAddress };
 // 浏览记录
