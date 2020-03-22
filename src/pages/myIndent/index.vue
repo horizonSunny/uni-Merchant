@@ -100,7 +100,11 @@
                       "
                       @click="deleteOrder(indentItem,tabItem.newsList,indentIndex)"
                     >删除订单</view>
-                    <view class="pray" v-if="indentItem.orderStatus === 0">取消订单</view>
+                    <view
+                      class="pray"
+                      v-if="indentItem.orderStatus === 0"
+                      @click="openModal(indentItem)"
+                    >取消订单</view>
                     <view
                       class="active"
                       v-if="indentItem.orderStatus === 5"
@@ -123,6 +127,7 @@
           </swiper>
         </mix-pulldown-refresh>
       </view>
+      <cancelOrder ref="cancelOrder" :currentOpeateOrder="currentOpeateOrder"></cancelOrder>
     </view>
   </body-wrap>
 </template>
@@ -133,6 +138,7 @@ import { debounce, throttle } from "@/utils/debounce";
 import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-refresh/mix-pulldown-refresh";
 import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
 import * as json from "@/config/json";
+import cancelOrder from "./cancelOrder";
 // import { myIndent } from '@/config/test'
 import { getOrderList, buyAgain, deleteOrder } from "@/service/index";
 let windowWidth = 0,
@@ -141,7 +147,8 @@ let windowWidth = 0,
 export default {
   components: {
     mixPulldownRefresh,
-    mixLoadMore
+    mixLoadMore,
+    cancelOrder
   },
   computed: {
     ...mapGetters(["searchLibrary"]),
@@ -188,7 +195,8 @@ export default {
       tabCurrentIndex: 0,
       tabBars: [],
       enableScroll: true,
-      pageSize: 10
+      pageSize: 10,
+      currentOpeateOrder: null
     };
   },
   methods: {
@@ -395,6 +403,11 @@ export default {
         console.log("res_", res);
         tabItem.splice(index, 1);
       });
+    },
+    // 取消订单
+    openModal(openModal) {
+      this.currentOpeateOrder = openModal;
+      this.$refs.cancelOrder.openModal();
     }
   }
 };

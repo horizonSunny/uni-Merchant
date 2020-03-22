@@ -127,7 +127,11 @@
                           getOrderDetails.orderStatus === 4
                       "
               >删除订单</view>
-              <view class="pray" v-if="getOrderDetails.orderStatus === 0">取消订单</view>
+              <view
+                class="pray"
+                v-if="getOrderDetails.orderStatus === 0"
+                @click="openModal(indentItem)"
+              >取消订单</view>
               <view
                 class="active"
                 v-if="getOrderDetails.orderStatus === 5"
@@ -144,14 +148,16 @@
           </view>
         </view>
       </view>
+      <cancelOrder ref="cancelOrder" :currentOpeateOrder="currentOpeateOrder"></cancelOrder>
     </view>
   </body-wrap>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { buyAgain, deleteOrder } from "@/service/index";
+import cancelOrder from "./cancelOrder";
 export default {
-  components: {},
+  components: { cancelOrder },
   data() {
     return {
       editor: true,
@@ -277,6 +283,12 @@ export default {
         // console.log("res_", res);
         // tabItem.splice(index, 1);
       });
+    },
+    // 取消订单
+    openModal(openModal) {
+      this.currentOpeateOrder = openModal;
+      this.$refs.cancelOrder.openModal();
+      // uni.navigateBack();
     }
   }
 };
