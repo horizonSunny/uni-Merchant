@@ -1,14 +1,10 @@
 <template>
   <body-wrap>
-    <tob-bar
-      slot="topBar"
-      :styleInfo="{ backgroundColor: '#fff' }"
-      jumpButton="black"
-    >
+    <tob-bar slot="topBar" :styleInfo="{ backgroundColor: '#fff' }" jumpButton="black">
       <text slot="title" style="color:#000">我的订单</text>
       <img
         src="static/icon/main/D_search.svg"
-        alt=""
+        alt
         slot="rightIcon"
         @click="gotoNextPage('../search/search', {})"
       />
@@ -24,8 +20,7 @@
             :class="{ current: index === tabCurrentIndex }"
             :id="'tab' + index"
             @click="changeTab(index)"
-            >{{ item.name }}</view
-          >
+          >{{ item.name }}</view>
         </view>
         <!-- 下拉刷新组件 -->
         <mix-pulldown-refresh
@@ -67,39 +62,25 @@
                   >
                     <view class="productImg">
                       <!-- src="static/mine/Bitmap.png" -->
-                      <img
-                        :src="itemInfo['productImage'][0]"
-                        alt=""
-                        width="60"
-                        height="60"
-                      />
+                      <img :src="itemInfo['productImage'][0]" alt width="60" height="60" />
                     </view>
                     <view class="drugsInfo">
                       <view class="drugName">
                         <view class="prodcutDetails">
-                          <text class="mark" v-show="itemInfo.isMp === 0"
-                            >OTC</text
-                          >
+                          <text class="mark" v-show="itemInfo.isMp === 0">OTC</text>
                           <text
                             class="mark"
                             v-show="itemInfo.isMp === 1"
                             style="color:red;border: 1px solid green;"
-                            >OTC</text
-                          >
-                          <text class="mark" v-show="itemInfo.isMp === 2"
-                            >RX</text
-                          >
-                          <text class="mark" v-show="itemInfo.isMp === 3"
-                            >其他</text
-                          >
+                          >OTC</text>
+                          <text class="mark" v-show="itemInfo.isMp === 2">RX</text>
+                          <text class="mark" v-show="itemInfo.isMp === 3">其他</text>
                           <view class="name">{{ itemInfo.productName }}</view>
                           <view class="price">¥ {{ itemInfo["price"] }}</view>
                         </view>
                         <view class="drugSpec">
                           <text>{{ itemInfo.productSpecif }}</text>
-                          <text style="float:right"
-                            >x{{ itemInfo.cartNum }}</text
-                          >
+                          <text style="float:right">x{{ itemInfo.cartNum }}</text>
                         </view>
                         <!-- <text>{{ item.productName }}</text> -->
                       </view>
@@ -117,26 +98,16 @@
                         indentItem.orderStatus === 5 ||
                           indentItem.orderStatus === 4
                       "
-                      >删除订单</view
-                    >
-                    <view class="pray" v-if="indentItem.orderStatus === 0"
-                      >取消订单</view
-                    >
-                    <view class="active" v-if="indentItem.orderStatus === 5"
-                      >重新购买</view
-                    >
-                    <view class="active" v-if="indentItem.orderStatus === 3"
-                      >查看物流</view
-                    >
+                    >删除订单</view>
+                    <view class="pray" v-if="indentItem.orderStatus === 0">取消订单</view>
+                    <view class="active" v-if="indentItem.orderStatus === 5">重新购买</view>
+                    <view class="active" v-if="indentItem.orderStatus === 3">查看物流</view>
                     <view
                       class="active"
                       v-if="indentItem.orderStatus === 4"
                       @click="jumpInfo(indentItem, indentItem.orderStatus)"
-                      >评价</view
-                    >
-                    <view class="active" v-if="indentItem.orderStatus === 0"
-                      >付款</view
-                    >
+                    >评价</view>
+                    <view class="active" v-if="indentItem.orderStatus === 0">付款</view>
                   </view>
                 </view>
 
@@ -158,7 +129,7 @@ import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-re
 import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
 import * as json from "@/config/json";
 // import { myIndent } from '@/config/test'
-import { getOrderList } from '@/service/index'
+import { getOrderList } from "@/service/index";
 let windowWidth = 0,
   scrollTimer = false,
   tabBar;
@@ -169,45 +140,45 @@ export default {
   },
   computed: {
     ...mapGetters(["searchLibrary"]),
-    orderStatus () {
-      return function (status) {
+    orderStatus() {
+      return function(status) {
         switch (status) {
           case -1:
-            return '申请退款'
+            return "申请退款";
             break;
           case -2:
-            return '已退款'
+            return "已退款";
             break;
           case 0:
-            return '等待付款'
+            return "等待付款";
             break;
           case 1:
-            return '待审核'
+            return "待审核";
             break;
           case 2:
-            return '待发货'
+            return "待发货";
             break;
           case 3:
-            return '待收货'
+            return "待收货";
             break;
           case 4:
-            return '交易成功'
+            return "交易成功";
             break;
           case 5:
-            return '交易取消'
+            return "交易取消";
             break;
           default:
             break;
         }
-      }
+      };
     }
   },
-  onLoad (option) {
+  onLoad(option) {
     console.log("option.id_", option.orderStatus); //打印出上个页面传递的参数。
-    this.tabCurrentIndex = Number(option.orderStatus)
+    this.tabCurrentIndex = Number(option.orderStatus);
     this.loadTabbars();
   },
-  data () {
+  data() {
     return {
       tabCurrentIndex: 0,
       tabBars: [],
@@ -217,21 +188,22 @@ export default {
   },
   methods: {
     //获取分类
-    loadTabbars () {
+    loadTabbars() {
       let tabList = json.indentTabList;
       tabList.forEach(item => {
         item.newsList = [];
         item.loadMoreStatus = 0; //加载更多 0加载前，1加载中，2没有更多了
         item.refreshing = 0;
-        item.currentNumber = 0;
-        item.loaded = false
+        // 最后一条订单的id，由此进行分页，查询id后十条
+        item.lastOrderId = 0;
+        item.loaded = false;
       });
       console.log("loadTabbars_", tabList);
       this.tabBars = tabList;
       this.loadNewsList("add");
     },
     //tab切换
-    async changeTab (e) {
+    async changeTab(e) {
       if (scrollTimer) {
         //多次切换只执行最后一次
         clearTimeout(scrollTimer);
@@ -276,16 +248,19 @@ export default {
 
         //第一次切换tab，动画结束后需要加载数据
         let tabItem = this.tabBars[this.tabCurrentIndex];
-        if (this.tabCurrentIndex !== 0 && tabItem.loaded !== true) {
-          console.log("in");
+        // 切换完就刷新数据
+        this.loadNewsList("refresh");
+        tabItem.loaded = true;
+        // if (this.tabCurrentIndex !== 0 && tabItem.loaded !== true) {
+        //   console.log("in");
 
-          this.loadNewsList("add");
-          tabItem.loaded = true;
-        }
-      }, 300);
+        //   this.loadNewsList("add");
+        //   tabItem.loaded = true;
+        // }
+      }, 100);
     },
     //加载数据
-    loadNewsList (type) {
+    loadNewsList(type) {
       let tabItem = this.tabBars[this.tabCurrentIndex];
       //type add 加载更多 refresh下拉刷新
       if (type === "add") {
@@ -294,23 +269,26 @@ export default {
         }
         tabItem.loadMoreStatus = 0;
       } else if (type === "refresh") {
-        tabItem.currentNumber = 0
+        tabItem.lastOrderId = 0;
         tabItem.refreshing = true;
       }
+      console.log("tabItem_", tabItem);
+
       const params = {
         // productType: this.confirmSelected.medicineType,
-        keyword: '',
+        id: 0,
+        keyword: "",
         status: Number(this.tabCurrentIndex) + 1,
         // productBrands: this.confirmSelected.selectBrands.toString(),
         // 只有当前页这一个是分开的
-        pageNumber: tabItem.currentNumber,
+        id: tabItem.lastOrderId,
         pageSize: this.pageSize
-      }
+      };
 
       getOrderList(params).then(res => {
         // settimeout
-        let list = res.data
-        console.log('res.data_', res.data);
+        let list = res.data;
+        console.log("res.data_", res.data);
         if (type === "refresh") {
           tabItem.newsList = []; //刷新前清空数组
         }
@@ -337,25 +315,30 @@ export default {
           console.log("上滑加载 处理状态");
           tabItem.loadMoreStatus = 2;
         }
-        tabItem.currentNumber++;
-      })
+        console.log("tabItem.newsList_", tabItem.newsList);
+        const orderProductList = tabItem.newsList;
+        // tabItem.lastOrderId =
+        //   orderProductList[orderProductList.length - 1].orderId;
+        // console.log("tabItem.lastOrderId_", tabItem.lastOrderId);
+        // tabItem.lastOrderId++;
+      });
     },
     //下拉刷新
-    onPulldownReresh () {
+    onPulldownReresh() {
       this.loadNewsList("refresh");
     },
     //上滑加载
-    loadMore () {
+    loadMore() {
       this.loadNewsList("add");
     },
     //设置scroll-view是否允许滚动，在小程序里下拉刷新时避免列表可以滑动
-    setEnableScroll (enable) {
+    setEnableScroll(enable) {
       if (this.enableScroll !== enable) {
         this.enableScroll = enable;
       }
     },
     //获得元素的size
-    getElSize (id) {
+    getElSize(id) {
       return new Promise((res, rej) => {
         let el = uni.createSelectorQuery().select("#" + id);
         el.fields(
@@ -371,20 +354,20 @@ export default {
       });
     },
     // 跳转商品详情页面
-    goDetails (item) {
+    goDetails(item) {
       this.$navTo("../myIndent/indentDetails");
     },
     // 跳转页面
-    gotoNextPage (url, parameters) {
+    gotoNextPage(url, parameters) {
       this.$navTo(url, parameters);
     },
     // jumpInfo
-    jumpInfo (info, key) {
+    jumpInfo(info, key) {
       // console.log('info_', info);
-      this.$store.commit('SET_INDENT_INFO', info);
+      this.$store.commit("SET_INDENT_INFO", info);
       switch (key) {
         case 4:
-          this.gotoNextPage('../myIndent/comment', {})
+          this.gotoNextPage("../myIndent/comment", {});
           break;
 
         default:
