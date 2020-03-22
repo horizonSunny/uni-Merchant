@@ -87,7 +87,14 @@ export default {
       this.prescriptionImg = e;
     },
     confirm() {
-      // 处方填写完毕
+      // 处方填写完毕,收货人选择收货人列表第一个，只需要把处方图片传递当前订单 ADD_INDENT
+      this.$store.commit("ADD_INDENT", {
+        prescription: {
+          prescriptionImg: this.prescriptionImg,
+          prescriptionMan: this.getMedicineMan[0]
+        }
+      });
+      uni.navigateBack();
     }
   },
   onShow() {
