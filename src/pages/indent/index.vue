@@ -175,7 +175,7 @@ import { mapActions, mapGetters } from "vuex";
 import purchasefailed from "./purchasefailed";
 import distribution from "./distribution";
 import invoice from "./invoice";
-import { confirmOrder, generateOrder } from "@/service/index";
+import { confirmOrder, generateOrder, alipay } from "@/service/index";
 export default {
   components: {
     // commidityItem
@@ -354,7 +354,8 @@ export default {
       console.log("params_", params);
       generateOrder(params).then(
         res => {
-          console.log("res_", res);
+          console.log("res_", res.data.orderId);
+          alipay({ orderNo: res.data.orderId });
         },
         error => {
           console.log("error_", error);

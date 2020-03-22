@@ -1,13 +1,8 @@
 <template>
   <body-wrap>
-    <tob-bar
-      slot="topBar"
-      backInfo="white"
-      jumpButton=""
-      :styleInfo="{ backgroundColor: '#3E79F5' }"
-    >
+    <tob-bar slot="topBar" backInfo="white" jumpButton :styleInfo="{ backgroundColor: '#3E79F5' }">
       <text slot="title">个人中心</text>
-      <img src="static/main/home_messages.svg" alt="" slot="rightIcon" />
+      <img src="static/main/home_messages.svg" alt slot="rightIcon" />
     </tob-bar>
     <view slot="content" class="content">
       <view class="head">
@@ -15,76 +10,74 @@
           <img
             :src="getUserDetails.avatar ? getUserDetails.avatar : correctUrl"
             @error="imageError(item)"
-            alt=""
+            alt
           />
           <text>{{ getUserDetails.phone ? getUserDetails.phone : 0 }}</text>
         </view>
         <view class="classify">
           <view class="classifyItem" @click="goNextPage('浏览记录')">
-            <view>{{
+            <view>
+              {{
               getStatisticData.visitCount ? getStatisticData.visitCount : 0
-            }}</view>
+              }}
+            </view>
             <view>浏览记录</view>
           </view>
           <view class="separator"></view>
           <view class="classifyItem" @click="goNextPage('收藏')">
-            <view>{{
+            <view>
+              {{
               getStatisticData.collectCount ? getStatisticData.collectCount : 0
-            }}</view>
+              }}
+            </view>
             <view>收藏</view>
           </view>
           <view class="separator"></view>
           <view class="classifyItem">
-            <view>{{ getStatisticData.waitGoodsCount }}</view>
+            <view>{{ getStatisticData.waitGoodsCount ? getStatisticData.waitGoodsCount : 0 }}</view>
             <view>药店关注</view>
           </view>
         </view>
       </view>
       <view class="function">
         <view class="classifyTitle">
-          <text class="title">
-            我的订单
-          </text>
+          <text class="title">我的订单</text>
           <view class="medicineOperate" @click="goMyIndent(0)">
-            <text class="operate">
-              全部订单
-            </text>
-            <img src="static/icon/main/home_right-2.svg" alt="" />
+            <text class="operate">全部订单</text>
+            <img src="static/icon/main/home_right-2.svg" alt />
           </view>
         </view>
         <view class="classifyDetails">
           <view class="detailsInfo" @click="goMyIndent(1)">
-            <img src="/static/mine/mine_pending payment.svg" alt="" />
+            <img src="/static/mine/mine_pending payment.svg" alt />
             <view>待付款</view>
           </view>
           <view class="detailsInfo" @click="goMyIndent(2)">
-            <img src="/static/mine/mine_to be shipped.svg" alt="" />
+            <img src="/static/mine/mine_to be shipped.svg" alt />
             <view>待发货</view>
           </view>
           <view class="detailsInfo" @click="goMyIndent(3)">
-            <img src="/static/mine/mine_goods to be received.svg" alt="" />
+            <img src="/static/mine/mine_goods to be received.svg" alt />
             <view>待收货</view>
           </view>
 
           <view class="detailsInfo" @click="goMyIndent(4)">
-            <img src="/static/mine/mine_to be evaluated.svg" alt="" />
+            <img src="/static/mine/mine_to be evaluated.svg" alt />
             <view>待评价</view>
           </view>
         </view>
       </view>
       <view class="function">
         <view class="classifyTitle">
-          <text class="title">
-            我的服务
-          </text>
+          <text class="title">我的服务</text>
         </view>
         <view class="classifyDetails">
           <view class="detailsInfo" @click="goNextPage('收货地址')">
-            <img src="/static/mine/mine_address.svg" alt="" />
+            <img src="/static/mine/mine_address.svg" alt />
             <view>收货地址</view>
           </view>
           <view class="detailsInfo" @click="goNextPage('用药人')">
-            <img src="/static/mine/mine_drug users.svg" alt="" />
+            <img src="/static/mine/mine_drug users.svg" alt />
             <view>用药人</view>
           </view>
         </view>
@@ -107,39 +100,39 @@ export default {
   computed: {
     ...mapGetters(["getUserDetails", "getStatisticData"])
   },
-  onShow () {
-    this.userDetails()
-    this.statisticData()
+  onShow() {
+    this.userDetails();
+    this.statisticData();
   },
   methods: {
     ...mapActions({
       userDetails: "GetUserDetails",
-      statisticData: "GetStatisticData",
+      statisticData: "GetStatisticData"
     }),
     // 跳转药品简介页面
-    toDrugIntr () {
+    toDrugIntr() {
       console.log("toDrugIntr_");
       uni.navigateTo({
         url: "../merchantsIntr/merchantsIntr"
       });
     },
-    goMyIndent (info) {
+    goMyIndent(info) {
       console.log("goMyIndent_");
       this.$navTo("../myIndent/index", { orderStatus: info });
     },
     // 跳转下一个页面，依据判断
-    goNextPage (info) {
+    goNextPage(info) {
       switch (info) {
-        case '浏览记录':
+        case "浏览记录":
           this.$navTo("../mine/browsingHistory");
           break;
-        case '收藏':
+        case "收藏":
           this.$navTo("../mine/collect");
           break;
-        case '用药人':
+        case "用药人":
           this.$navTo("../mine/medicineMan");
           break;
-        case '收货地址':
+        case "收货地址":
           this.$navTo("../deliveryAddr/index");
           break;
         default:
@@ -147,12 +140,12 @@ export default {
       }
     },
     // 图片加载失败
-    imageError (item) {
-      console.log('imageError_', item)
-      item.productImage = this.correctUrl
-    },
+    imageError(item) {
+      console.log("imageError_", item);
+      item.productImage = this.correctUrl;
+    }
   },
-  data () {
+  data() {
     return {
       // indicatorDots: false,
       // autoplay: false,

@@ -276,12 +276,11 @@ export default {
 
       const params = {
         // productType: this.confirmSelected.medicineType,
-        id: 0,
         keyword: "",
         status: Number(this.tabCurrentIndex) + 1,
         // productBrands: this.confirmSelected.selectBrands.toString(),
         // 只有当前页这一个是分开的
-        id: tabItem.lastOrderId,
+        orderId: tabItem.lastOrderId,
         pageSize: this.pageSize
       };
 
@@ -317,8 +316,8 @@ export default {
         }
         console.log("tabItem.newsList_", tabItem.newsList);
         const orderProductList = tabItem.newsList;
-        // tabItem.lastOrderId =
-        //   orderProductList[orderProductList.length - 1].orderId;
+        tabItem.lastOrderId =
+          orderProductList[orderProductList.length - 1].orderId;
         // console.log("tabItem.lastOrderId_", tabItem.lastOrderId);
         // tabItem.lastOrderId++;
       });
