@@ -35,7 +35,7 @@
 import modal from "@/components/modal.vue";
 import { cancelOrder } from "@/service/index";
 export default {
-  props: ["currentOpeateOrder"],
+  props: ["currentOpeateOrder", "goBack"],
   components: {
     modal
   },
@@ -76,6 +76,9 @@ export default {
       }).then(res => {
         console.log("res_", res);
         this.closeModal();
+        if (this.goBack) {
+          uni.navigateBack();
+        }
       });
     }
   }

@@ -127,7 +127,7 @@
           </swiper>
         </mix-pulldown-refresh>
       </view>
-      <cancelOrder ref="cancelOrder" :currentOpeateOrder="currentOpeateOrder"></cancelOrder>
+      <cancelOrder ref="cancelOrder" :currentOpeateOrder="currentOpeateOrder" :goBack="false"></cancelOrder>
     </view>
   </body-wrap>
 </template>

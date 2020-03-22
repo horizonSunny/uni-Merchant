@@ -130,7 +130,7 @@
               <view
                 class="pray"
                 v-if="getOrderDetails.orderStatus === 0"
-                @click="openModal(indentItem)"
+                @click="openModal(getOrderDetails)"
               >取消订单</view>
               <view
                 class="active"
@@ -148,7 +148,7 @@
           </view>
         </view>
       </view>
-      <cancelOrder ref="cancelOrder" :currentOpeateOrder="currentOpeateOrder"></cancelOrder>
+      <cancelOrder ref="cancelOrder" :currentOpeateOrder="this.currentOpeateOrder" :goBack="true"></cancelOrder>
     </view>
   </body-wrap>
 </template>
@@ -162,7 +162,8 @@ export default {
     return {
       editor: true,
       // 选择自提时候，改变为true
-      pickUp: false
+      pickUp: false,
+      currentOpeateOrder: null
     };
   },
   onLoad(option) {
@@ -287,6 +288,8 @@ export default {
     // 取消订单
     openModal(openModal) {
       this.currentOpeateOrder = openModal;
+      console.log("openModal", this.currentOpeateOrder);
+
       this.$refs.cancelOrder.openModal();
       // uni.navigateBack();
     }
