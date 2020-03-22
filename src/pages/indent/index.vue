@@ -6,10 +6,7 @@
     <view slot="content" class="content">
       <view class="indent">
         <view class="userInfo">
-          <view
-            @click="gotoNextPage('../deliveryAddr/index', {activeAddressIds:addressIds})"
-            v-if="getDefaultAddress(addressIds)"
-          >
+          <view v-if="getDefaultAddress(addressIds)">
             <view class="user">
               <img src="static/icon/merchantsIntr/location.svg" alt />
               <view class="userName">{{ getDefaultAddress(addressIds).fullName }}</view>

@@ -75,9 +75,9 @@ export default {
       }
     },
     selectAddress(item) {
-      // this.$store.dispatch('setSelectedAdd', item).then(() => {
-      //   uni.navigateBack()
-      // })
+      // this.$store.dispatch("setSelectedAddrss", item).then(() => {
+      //   uni.navigateBack();
+      // });
     },
     labelInfo(isDefault, addressLabel) {
       if (isDefault === 1) {
@@ -98,7 +98,7 @@ export default {
       }
     },
     onLoad(option) {
-      // 假如options有传参，说明要对地址做一个过滤，如果没有就不用过滤、
+      // 假如options有传参，说明是从订单页面过来的,要对地址做一个过滤，如果没有就不用过滤
       // console.log("option_", option.activeAddressIds);
       console.log("this.addressInfo_", option.activeAddressIds);
       // this.activeAddressIds = option.activeAddressIds;
