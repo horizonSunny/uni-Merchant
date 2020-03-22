@@ -1,10 +1,6 @@
 <template>
   <body-wrap>
-    <tob-bar
-      slot="topBar"
-      :styleInfo="{ backgroundColor: '#fff' }"
-      jumpButton=""
-    >
+    <tob-bar slot="topBar" :styleInfo="{ backgroundColor: '#fff' }" jumpButton>
       <text slot="title" style="color:#000">浏览记录</text>
     </tob-bar>
     <view slot="content" class="content">
@@ -16,11 +12,7 @@
         v-if="true"
       >
         <view class="clearBoth" @click="clearBoth">清空</view>
-        <view
-          class="contentInfo"
-          v-for="(item, index) in getProductVisit"
-          :key="index"
-        >
+        <view class="contentInfo" v-for="(item, index) in getProductVisit" :key="index">
           <view class="timeShow">{{ item.dataTime }}</view>
           <view
             v-for="(itemInfo, indexInfo) in item.productVisits"
@@ -28,19 +20,11 @@
             class="productInfo"
           >
             <uni-swipe-action>
-              <uni-swipe-action-item
-                :options="options"
-                @click="onClick($event, itemInfo, item)"
-              >
+              <uni-swipe-action-item :options="options" @click="onClick($event, itemInfo, item)">
                 <view class="commidityInfo" @click.stop>
                   <view class="productImg">
                     <!-- :src="/static/img/home.png" -->
-                    <img
-                      :src="itemInfo.productImage[0]"
-                      alt=""
-                      width="60"
-                      height="60"
-                    />
+                    <img :src="itemInfo.productImage[0]" alt width="60" height="60" />
                   </view>
                   <view class="drugsInfo">
                     <view class="drugName">
@@ -60,21 +44,21 @@
         </view>
       </scroll-view>
       <view v-show="false" class="noHistory">
-        <img src="static/mine/Search_Bitmap2.svg" alt="" />
+        <img src="static/mine/Search_Bitmap2.svg" alt />
         <view class="noInfo">抱歉，暂无浏览记录哦～</view>
       </view>
     </view>
   </body-wrap>
 </template>
 <script>
-import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
-import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
+import uniSwipeAction from "@/components/uni-swipe-action/uni-swipe-action.vue";
+import uniSwipeActionItem from "@/components/uni-swipe-action-item/uni-swipe-action-item.vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 import {
   deleteProductVisitAll,
   deleteProductVisit,
   productVisit
-} from '@/service/index'
+} from "@/service/index";
 export default {
   computed: {
     ...mapGetters(["getProductVisit"])
@@ -83,16 +67,16 @@ export default {
     uniSwipeAction,
     uniSwipeActionItem
   },
-  data () {
+  data() {
     return {
       options: [
         {
-          text: '删除',
+          text: "删除",
           style: {
-            backgroundColor: '#E60B35',
-            width: '50px',
+            backgroundColor: "#E60B35",
+            width: "50px",
             textWidth: "30px",
-            fontSize: '15px'
+            fontSize: "15px"
           }
         }
       ],
@@ -100,84 +84,90 @@ export default {
       pageSize: 10,
       // 表示分页数据未完成
       historyFull: false
-    }
+    };
   },
   methods: {
     ...mapActions({
-      getHistory: 'ProductVisit',
+      getHistory: "ProductVisit"
       // deleteProductVisit: 'DeleteProductVisit'
     }),
-    clearBoth () {
-      // console.log('清空'); 
+    clearBoth() {
+      // console.log('清空');
       deleteProductVisitAll().then(res => {
-        this.$store.commit('CLEAR_PRODUCT_VISIT')
-      })
+        this.$store.commit("CLEAR_PRODUCT_VISIT");
+      });
     },
-    onClick (e, itemInfo, item) {
-      deleteProductVisit({ productVisitId: itemInfo.productVisitId }).then(res => {
-        const index = item.productVisits.findIndex(itemInfoDel => {
-          return itemInfoDel.productVisitId === itemInfo.productVisitId
-        })
-        item.productVisits.splice(index, 1)
-        if (item.productVisits.length === 0) {
-          // 删除这个时间段
-          const indexInfo = this.getProductVisit.findIndex(info => {
-            return info.dataTime === item.dataTime
-          })
-          this.getProductVisit.splice(indexInfo, 1)
-        }
-        console.log('index', index);
-        // 删除一个必须要添加一个,这边其实可以要求后端做一个数据跳过的逻辑，告诉他查多少条后的数据
-        productVisit({
-          pageNumber: this.pageNumber - 1,
-          pageSize: this.pageSize,
-        }).then((res) => {
-          const data = res.data.historyRecord;
-          if (res.data.lastPage) {
-            return
+    onClick(e, itemInfo, item) {
+      deleteProductVisit({ productVisitId: itemInfo.productVisitId }).then(
+        res => {
+          const index = item.productVisits.findIndex(itemInfoDel => {
+            return itemInfoDel.productVisitId === itemInfo.productVisitId;
+          });
+          item.productVisits.splice(index, 1);
+          if (item.productVisits.length === 0) {
+            // 删除这个时间段
+            const indexInfo = this.getProductVisit.findIndex(info => {
+              return info.dataTime === item.dataTime;
+            });
+            this.getProductVisit.splice(indexInfo, 1);
           }
-          const info = data[data.length - 1]
-          const item = info.productVisits.splice(0, info.productVisits.length - 1)
-          console.log('res_', data);
-          console.log('info_', info);
-          console.log('res_', info.productVisits);
-          // 删除一个加一个
-          this.$store.commit('SET_PRODUCT_VISIT', [info])
-        })
-      })
+          console.log("index", index);
+          // 删除一个必须要添加一个,这边其实可以要求后端做一个数据跳过的逻辑，告诉他查多少条后的数据
+          productVisit({
+            pageNumber: this.pageNumber - 1,
+            pageSize: this.pageSize
+          }).then(res => {
+            const data = res.data.historyRecord;
+            if (res.data.lastPage) {
+              return;
+            }
+            const info = data[data.length - 1];
+            const item = info.productVisits.splice(
+              0,
+              info.productVisits.length - 1
+            );
+            console.log("res_", data);
+            console.log("info_", info);
+            console.log("res_", info.productVisits);
+            // 删除一个加一个
+            this.$store.commit("SET_PRODUCT_VISIT", [info]);
+          });
+        }
+      );
     },
     // 滚动到底部
-    scrolltolower () {
-      console.log('scrolltolower');
+    scrolltolower() {
+      console.log("scrolltolower");
       if (!this.historyFull) {
         this.getHistory({
           pageNumber: this.pageNumber,
-          pageSize: this.pageSize,
+          pageSize: this.pageSize
         }).then(res => {
-          console.log('res_', res);
+          console.log("res_", res);
           // if (res.length === 0) {
           //   this.historyFull = true
           // }
-          this.pageNumber++
-        })
+          this.pageNumber++;
+        });
       }
       // this.productInfo = this.productInfo.concat(browsingHistory)
     }
   },
-  onLoad () {
+  onLoad() {
     // this.getMedicineMan()
     this.getHistory({
-      pageNumber: this.pageNumber,
-      pageSize: this.pageSize,
+      pageSize: this.pageSize
     }).then(res => {
-      this.pageNumber++
-    })
+      let data = res.data;
+      let lastTime = data[data.length - 1];
+      let lastProductVisits = lastTime.productVisits;
+    });
     // getProductVisit
   },
-  beforeDestroy () {
-    this.$store.commit('CLEAR_PRODUCT_VISIT')
+  beforeDestroy() {
+    this.$store.commit("CLEAR_PRODUCT_VISIT");
   }
-}
+};
 </script>
 <style lang="scss">
 .content {

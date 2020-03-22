@@ -8,10 +8,7 @@
           :key="item.value"
         >
           <uni-swipe-action>
-            <uni-swipe-action-item
-              :options="options"
-              @click="onClick($event, item)"
-            >
+            <uni-swipe-action-item :options="options" @click="onClick($event, item)">
               <view class="commidityInfo" @click.stop>
                 <checkbox
                   :value="item.value"
@@ -23,7 +20,7 @@
                   <img
                     :src="item.productImage"
                     @error="imageError(item)"
-                    alt=""
+                    alt
                     width="60"
                     height="60"
                   />
@@ -36,8 +33,7 @@
                       class="mark"
                       v-show="item.isMp === 1"
                       style="color:red;border: 1px solid green;"
-                      >OTC</text
-                    >
+                    >OTC</text>
                     <text class="mark" v-show="item.isMp === 2">RX</text>
                     <text class="mark" v-show="item.isMp === 3">其他</text>
                     <text>{{ item.productName }}</text>
@@ -45,7 +41,7 @@
                   </view>
                   <!-- <view class="drugSpec">{{ item.productSpecif }}</view> -->
                   <view class="drugPrice">
-                    <text> ¥ {{ item.price }} </text>
+                    <text>¥ {{ item.price }}</text>
                     <yp-number-box
                       :min="1"
                       :max="9"
@@ -70,8 +66,7 @@
             value="all"
             :class="{ checked: allChecked }"
             :checked="allChecked ? true : false"
-          ></checkbox>
-          全选
+          ></checkbox>全选
         </label>
       </checkbox-group>
       <!-- this.editorStatus 为编辑显示 -->
@@ -87,13 +82,11 @@
         @click="settlement"
       >
         <text v-if="totalNum === 0">结算</text>
-        <text v-else-if="totalNum < 99 && totalNum > 0"
-          >结算({{ this.totalNum }})</text
-        >
+        <text v-else-if="totalNum < 99 && totalNum > 0">结算({{ this.totalNum }})</text>
         <text v-else>结算(99)</text>
         <!--<text v-if="this.totalNum < 99 && this.totalNum > 0">
           结算(this.totalNum )</text
-        > -->
+        >-->
         <!-- 结算({{ this.totalNum }}) -->
       </button>
       <!-- this.editorStatus为完成时候 -->
@@ -105,192 +98,198 @@
   </view>
 </template>
 <script>
-import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
-import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
-import ypNumberBox from '@/components/yp-number-box/yp-number-box.vue'
-import { mapActions, mapGetters } from 'vuex'
-import { setProductCollect, shopCartDelete } from '@/service/index'
+import uniSwipeAction from "@/components/uni-swipe-action/uni-swipe-action.vue";
+import uniSwipeActionItem from "@/components/uni-swipe-action-item/uni-swipe-action-item.vue";
+import ypNumberBox from "@/components/yp-number-box/yp-number-box.vue";
+import { mapActions, mapGetters } from "vuex";
+import { setProductCollect, shopCartDelete } from "@/service/index";
 export default {
   components: {
     uniSwipeAction,
     uniSwipeActionItem,
     ypNumberBox
   },
-  props: ['editorStatus'],
+  props: ["editorStatus"],
   computed: {
-    ...mapGetters(['getShopCartList']),
-    calculateTotal () {
+    ...mapGetters(["getShopCartList"]),
+    calculateTotal() {
       const selectCart = this.getShopCartList.filter(cartItem => {
-        return this.checkedArr.indexOf(cartItem.value) > -1
-      })
-      console.log('selectCart_', selectCart)
+        return this.checkedArr.indexOf(cartItem.value) > -1;
+      });
+      console.log("selectCart_", selectCart);
       if (selectCart.length === 0) {
-        this.totalNum = 0
-        return 0
+        this.totalNum = 0;
+        return 0;
       } else {
-        let totalPrice = 0
-        this.totalNum = 0
-        this.selectedCart = selectCart
+        let totalPrice = 0;
+        this.totalNum = 0;
+        this.selectedCart = selectCart;
         selectCart.forEach(element => {
-          this.totalNum += element.cartNum
-          totalPrice += element.price * element.cartNum
-        })
-        return totalPrice
+          this.totalNum += element.cartNum;
+          totalPrice += element.price * element.cartNum;
+        });
+        return totalPrice;
       }
     }
   },
-  created () {
+  created() {
     uni.getSystemInfo({
-      success: function (res) {
-        this.windowWidth = res.windowWidth
-        this.windowHeight = res.windowHeight
-        console.log('this.windowWidth_', this.windowWidth, this.windowHeight)
+      success: function(res) {
+        this.windowWidth = res.windowWidth;
+        this.windowHeight = res.windowHeight;
+        console.log("this.windowWidth_", this.windowWidth, this.windowHeight);
       }
-    })
-    console.log('getShopCartList_', this.getShopCartList)
+    });
+    console.log("getShopCartList_", this.getShopCartList);
   },
-  data () {
+  mounted() {
+    // this.allChecked = false;
+    // this.checkedArr = [];
+    // console.log("mounted", this.getShopCartList);
+  },
+  data() {
     return {
-      correctUrl: '/static/shoppingCart/shopping cart-bitmap2.svg',
+      correctUrl: "/static/shoppingCart/shopping cart-bitmap2.svg",
       options: [
         {
-          text: '移入收藏',
+          text: "移入收藏",
           style: {
-            backgroundColor: '#F4AF02',
-            width: '50px',
-            textWidth: '30px',
-            fontSize: '15px'
+            backgroundColor: "#F4AF02",
+            width: "50px",
+            textWidth: "30px",
+            fontSize: "15px"
           }
         },
         {
-          text: '删除',
+          text: "删除",
           style: {
-            backgroundColor: '#E60B35',
-            width: '50px',
-            textWidth: '30px',
-            fontSize: '15px'
+            backgroundColor: "#E60B35",
+            width: "50px",
+            textWidth: "30px",
+            fontSize: "15px"
           }
         }
       ],
       checkedArr: [], //复选框选中的值
       allChecked: false, //是否全选
       totalNum: 0,
-      selectedCart: ''
-    }
+      selectedCart: ""
+    };
   },
   methods: {
     ...mapActions({
-      getShopCartInfo: 'GetShopCartInfo'
+      getShopCartInfo: "GetShopCartInfo"
     }),
-    checkboxChange: function (e) {
-      this.checkedArr = e.detail.value
+    checkboxChange: function(e) {
+      this.checkedArr = e.detail.value;
       // 如果选择的数组中有值，并且长度等于列表的长度，就是全选
       if (
         this.checkedArr.length > 0 &&
         this.checkedArr.length == this.getShopCartList.length
       ) {
-        this.allChecked = true
+        this.allChecked = true;
       } else {
-        this.allChecked = false
+        this.allChecked = false;
       }
     },
     // 全选事件
-    allChoose (e) {
-      console.log('this.props.editorStatus_', this.editorStatus)
+    allChoose(e) {
+      console.log("this.props.editorStatus_", this.editorStatus);
 
-      let chooseItem = e.detail.value
+      let chooseItem = e.detail.value;
       // 全选
-      if (chooseItem[0] == 'all') {
-        this.allChecked = true
+      if (chooseItem[0] == "all") {
+        this.allChecked = true;
         for (let item of this.getShopCartList) {
-          let itemVal = String(item.value)
+          let itemVal = String(item.value);
           if (!this.checkedArr.includes(itemVal)) {
-            this.checkedArr.push(itemVal)
+            this.checkedArr.push(itemVal);
           }
         }
       } else {
         // 取消全选
-        console.log('取消全选')
+        console.log("取消全选");
 
-        this.allChecked = false
-        this.checkedArr = []
+        this.allChecked = false;
+        this.checkedArr = [];
       }
     },
-    onClick (e, cart) {
-      console.log(
-        'cart_', cart
-      )
+    onClick(e, cart) {
+      console.log("cart_", cart);
       switch (e.index) {
         case 0:
-          this.moveToFavorites(cart)
-          break
+          this.moveToFavorites(cart);
+          break;
         case 1:
-          this.cartDelete([cart.cartId])
-          break
+          this.cartDelete([cart.cartId]);
+          break;
         default:
-          break
+          break;
       }
       // console.log('cart_', cart)
     },
     // 结算
-    settlement () {
+    settlement() {
       if (this.checkedArr.length === 0) {
         uni.showToast({
-          icon: 'none',
-          title: '请选择需要结算的商品'
-        })
+          icon: "none",
+          title: "请选择需要结算的商品"
+        });
       } else {
-        console.log(this.selectedCart)
-        this.$store.commit('NEW_INDENT', {
+        console.log(this.selectedCart);
+        this.$store.commit("NEW_INDENT", {
           selectedCart: this.selectedCart
-        })
-        this.$navTo('../indent/index')
+        });
+        this.$navTo("../indent/index");
       }
     },
     // 图片加载失败
-    imageError (item) {
-      console.log('imageError_', item)
-      item.productImage = this.correctUrl
+    imageError(item) {
+      console.log("imageError_", item);
+      item.productImage = this.correctUrl;
     },
     // 获取每一个购物车加减的参数
-    getCartNum (info) {
-      console.log('num_', info)
-      const { index, value } = info
-      this.getShopCartList[index].cartNum = value
+    getCartNum(info) {
+      console.log("num_", info);
+      const { index, value } = info;
+      this.getShopCartList[index].cartNum = value;
     },
     // 移入收藏夹
-    moveToFavorites (itemInfo) {
-      console.log('itemInfo_', itemInfo);
-      console.log('this.getShopCartList_', this.getShopCartList);
-      console.log('this.collectArr_', this.checkedArr);
-      const collectArr = this.getShopCartList.map((item) => {
-        const id = item.cartId + ''
+    moveToFavorites(itemInfo) {
+      console.log("itemInfo_", itemInfo);
+      console.log("this.getShopCartList_", this.getShopCartList);
+      console.log("this.collectArr_", this.checkedArr);
+      const collectArr = this.getShopCartList.map(item => {
+        const id = item.cartId + "";
         if (this.checkedArr.indexOf(id) !== -1) {
-          return item.productId
+          return item.productId;
         }
-      })
-      console.log('collectArr_', collectArr);
+      });
+      console.log("collectArr_", collectArr);
       const params = {
         productIds: itemInfo.productId ? [itemInfo.productId] : collectArr
-      }
+      };
       setProductCollect(params).then(res => {
-        shopCartDelete({ cartIds: itemInfo.cartId ? [itemInfo.cartId] : this.checkedArr }).then(res => {
-          this.getShopCartInfo()
-        })
-      })
+        shopCartDelete({
+          cartIds: itemInfo.cartId ? [itemInfo.cartId] : this.checkedArr
+        }).then(res => {
+          this.getShopCartInfo();
+        });
+      });
     },
     // 删除购物车
-    cartDelete (itemInfo) {
-      console.log('this.checkedArr_', this.checkedArr);
+    cartDelete(itemInfo) {
+      console.log("this.checkedArr_", this.checkedArr);
+      console.log("itemInfo_", itemInfo);
       const params = {
-        cartIds: itemInfo.cartId ? itemInfo.cartId : this.checkedArr
-      }
+        cartIds: Array.isArray(itemInfo) ? itemInfo : this.checkedArr
+      };
       shopCartDelete(params).then(res => {
-        this.getShopCartInfo()
-      })
+        this.getShopCartInfo();
+      });
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 // 改变组件样式

@@ -157,7 +157,7 @@
         </view>
         <view class="operate" @click="pay">去支付</view>
       </view>
-      <!-- <purchasefailed></purchasefailed> -->
+      <purchasefailed v-if="efficacyInfo.length!==0" :efficacyInfo="efficacyInfo"></purchasefailed>
       <distribution
         ref="distribution"
         :shipperType="shipperType"
@@ -196,7 +196,9 @@ export default {
       shipperSelected: null,
       // 由下一个页面选择过来
       selectAddressInfo: null,
-      shopCartId: ""
+      shopCartId: "",
+      // 确认订单后出错信息
+      efficacyInfo: []
     };
   },
   onLoad(option) {
@@ -350,9 +352,29 @@ export default {
         };
       }
       console.log("params_", params);
-      generateOrder(params).then(res => {
-        console.log("params_", params);
-      });
+      generateOrder(params).then(
+        res => {
+          console.log("res_", res);
+        },
+        error => {
+          console.log("error_", error);
+          let efficacyInfo = [];
+          const efficacyProduct = error.data;
+          console.log("this.getNewIndent_", this.getNewIndent);
+          const efficacyProductId = this.getNewIndent.selectedCart.forEach(
+            item => {
+              efficacyProduct.forEach(errorItem => {
+                if (item.productId === errorItem.productId) {
+                  item.reasons = errorItem.reasons;
+                  efficacyInfo.push(item);
+                }
+              });
+            }
+          );
+          console.log("efficacyInfo_", efficacyInfo);
+          this.efficacyInfo = efficacyInfo;
+        }
+      );
     }
   }
 };

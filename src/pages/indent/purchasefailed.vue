@@ -1,60 +1,67 @@
 <template>
-  <modal>
+  <modal v-if="modal">
     <view class="purchasefailed">
-      <view class="title">
-        购买失败
-      </view>
+      <view class="title">购买失败</view>
       <view class="content">
         <view class="effectiveGoods">
-          <view
-            class="commidityInfo"
-            v-for="(item, index) in [1, 2]"
-            :key="index"
-          >
+          <view class="commidityInfo" v-for="(item, index) in efficacyInfo" :key="index">
             <view class="failure">失效</view>
             <view class="productImg">
-              <img src="/static/img/home.png" alt="" width="60" height="60" />
+              <img src="/static/img/home.png" alt width="60" height="60" />
               <view class="model">已下架</view>
             </view>
             <view class="drugsInfo">
               <view class="failureInfo">
-                <text class="mark">OTC</text>
-                <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
-                <text class="mark" v-show="item.isMp === 1"  style="color:red;border: 1px solid green;">OTC</text>
+                <text class="mark" v-show="item.isMp === 0">OTC</text>
+                <text
+                  class="mark"
+                  v-show="item.isMp === 1"
+                  style="color:red;border: 1px solid green;"
+                >OTC</text>
                 <text class="mark" v-show="item.isMp === 2">RX</text>
-                <text class="mark" v-show="item.isMp === 3">其他</text> -->
-                <text>爱康国宾 疾病 宾 疾病疾病 宾 疾病疾病 宾 疾病</text>
+                <text class="mark" v-show="item.isMp === 3">其他</text>
+                <text>{{item.productName}}</text>
               </view>
 
               <view class="drugSpec">
-                <view>
-                  已选择：20mlX48支/盒
-                </view>
-                <view>
-                  X1
-                </view>
+                <view>已选择：{{item.productSpecif}}</view>
+                <view>X1</view>
               </view>
               <view class="drugSpec">
-                无法送货到当前收获地址
+                <text v-for="(itemInfo,itemIndex) in item.reasons" :key="itemIndex">{{itemInfo}}</text>
               </view>
             </view>
           </view>
         </view>
       </view>
       <view class="footer">
-        <button type="primary">我知道了</button>
+        <button type="primary" @click="goBack">我知道了</button>
       </view>
     </view>
   </modal>
 </template>
 <script>
-import modal from '@/components/modal.vue';
+import modal from "@/components/modal.vue";
 export default {
+  props: ["efficacyInfo"],
   components: {
     // commidityItem
     modal
   },
-}
+  data() {
+    return {
+      modal: true
+    };
+  },
+  methods: {
+    goBack() {
+      uni.navigateBack({
+        delta: 1
+      });
+      this.modal = false;
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
 .purchasefailed {

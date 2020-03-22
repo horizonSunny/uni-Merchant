@@ -1,10 +1,6 @@
 <template>
   <body-wrap>
-    <tob-bar
-      slot="topBar"
-      :styleInfo="{ backgroundColor: '#fff' }"
-      jumpButton=""
-    >
+    <tob-bar slot="topBar" :styleInfo="{ backgroundColor: '#fff' }" jumpButton>
       <text slot="title" style="color:#000">购物车</text>
     </tob-bar>
     <view slot="content" class="content">
@@ -12,14 +8,12 @@
       <view v-show="true" class="classify">
         <view class="classifyTitle">
           <text class="title">
-            <img src="static/shoppingCart/shopping cart-business.svg" alt="" />
+            <img src="static/shoppingCart/shopping cart-business.svg" alt />
             商家名称
           </text>
           <view class="medicineOperate">
-            <img src="static/shoppingCart/shopping cart-coupon.svg" alt="" />
-            <text @click="reverseEditor">
-              {{ editor ? "编辑" : "完成" }}
-            </text>
+            <img src="static/shoppingCart/shopping cart-coupon.svg" alt />
+            <text @click="reverseEditor">{{ editor ? "编辑" : "完成" }}</text>
           </view>
         </view>
         <view class="classifyDetails">
@@ -29,7 +23,7 @@
       <!-- 假如购物车没东西 -->
       <view v-show="false" class="noGoods">
         <view class="imgInfo">
-          <img src="/static/shoppingCart/shopping cart-bitmap_sc.svg" alt="" />
+          <img src="/static/shoppingCart/shopping cart-bitmap_sc.svg" alt />
         </view>
         <view class="reminInfo">购物车里空空如也～</view>
       </view>
@@ -44,24 +38,24 @@ export default {
   components: {
     commidityItem
   },
-  data () {
+  data() {
     return {
       editor: true
-    }
+    };
   },
-  onLoad () {
-    this.getShopCartInfo()
+  onShow() {
+    this.getShopCartInfo();
   },
   computed: {
     ...mapGetters(["getShopCartList"])
   },
   methods: {
     ...mapActions({
-      getShopCartInfo: "GetShopCartInfo",
+      getShopCartInfo: "GetShopCartInfo"
     }),
     // 改变当前是编辑状态还是完成状态
-    reverseEditor () {
-      this.editor = !this.editor
+    reverseEditor() {
+      this.editor = !this.editor;
     }
   }
 };
