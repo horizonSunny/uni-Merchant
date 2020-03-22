@@ -108,7 +108,6 @@ export default {
         this.activeAddressIds = undefined;
       }
       this.getAddressInfo();
-      // console.log("this.addressInfo_", option);
     }
   }
 };
