@@ -86,7 +86,7 @@
             商品总价
             <view class="home_right">¥{{getOrderDetails.totalPrice}}</view>
           </view>
-          <view class="logistics" @click="openModal">
+          <view class="logistics">
             <view>
               配送方式
               <text class="marginLeft home_right">普通快递</text>
@@ -119,37 +119,37 @@
         <view class="separate logisticsInfo">
           <view class="logistics">
             <view class="indentOperate" @click.stop>
-              <view class="pray">删除订单</view>
-              <!-- <view class="pray">取消订单</view> -->
-              <view class="active">重新购买</view>
-              <view class="active" @click="toComment">评价</view>
-              <!-- <view class="active">查看物流</view>
-                    
-              <view class="active">付款</view>-->
+              <view
+                class="pray"
+                v-if="
+                        getOrderDetails.orderStatus === 5 ||
+                          getOrderDetails.orderStatus === 4
+                      "
+              >删除订单</view>
+              <view class="pray" v-if="getOrderDetails.orderStatus === 0">取消订单</view>
+              <view
+                class="active"
+                v-if="getOrderDetails.orderStatus === 5"
+                @click="repurchase()"
+              >重新购买</view>
+              <view class="active" v-if="getOrderDetails.orderStatus === 3">查看物流</view>
+              <view
+                class="active"
+                v-if="getOrderDetails.orderStatus === 4"
+                @click="jumpInfo(indentItem, getOrderDetails.orderStatus)"
+              >评价</view>
+              <view class="active" v-if="getOrderDetails.orderStatus === 0">付款</view>
             </view>
           </view>
         </view>
       </view>
-      <!-- <purchasefailed></purchasefailed> -->
-      <!-- <distribution ref="distribution"></distribution>
-      <invoice ref="invoice"></invoice>-->
     </view>
-    <!-- <tab-bar slot="tabBar"></tab-bar> -->
   </body-wrap>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-// import commidityItem from "./commidityItem";
-// import purchasefailed from './purchasefailed';
-// import distribution from './distribution';
-// import invoice from './invoice';
 export default {
-  components: {
-    // commidityItem
-    // purchasefailed,
-    // distribution,
-    // invoice
-  },
+  components: {},
   data() {
     return {
       editor: true,
@@ -235,10 +235,6 @@ export default {
   },
   methods: {
     ...mapActions({}),
-    // 改变当前是编辑状态还是完成状态
-    reverseEditor() {
-      this.editor = !this.editor;
-    },
     // 获取当前页面位置
     prescription() {
       this.$navTo(
@@ -246,23 +242,12 @@ export default {
         this.getOrderDetails.prescribInfo
       );
     },
-    // 打开快递配送
-    openModal() {
-      this.$refs.distribution.openModal();
-    },
-    // 去收货地址
-    toDeliveryAddr() {
-      this.$navTo("../deliveryAddr/index");
-      // this.$navTo("../deliveryAddr/newAddr");
-    },
-    // 打开发票弹窗
-    showInvoice() {
-      this.$refs.invoice.openModal();
-    },
     // toComment去评论页面
     toComment() {
       this.$navTo("../myIndent/comment");
-    }
+    },
+    // 重新购买
+    repurchase() {}
   }
 };
 </script>
