@@ -79,5 +79,6 @@ const getters = {
   getIndentInfo: state => {
     return state.business.myIndentInfo;
   }
+  // 依据商户id和地址id获取运费模版信息
 };
 export default getters;

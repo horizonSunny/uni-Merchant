@@ -161,6 +161,7 @@ import { mapActions, mapGetters } from "vuex";
 import purchasefailed from "./purchasefailed";
 import distribution from "./distribution";
 import invoice from "./invoice";
+import { confirmOrder } from "@/service/index";
 export default {
   components: {
     // commidityItem
@@ -177,11 +178,20 @@ export default {
       correctUrl: "/static/shoppingCart/shopping cart-bitmap2.svg"
     };
   },
-  onLoad(option) {
+  onLoad(option) {},
+  onShow() {
     console.log("getDefaultAddress_", this.getDefaultAddress);
     console.log("newIndentClassification_", this.newIndentClassification);
     this.haveRx = this.newIndentClassification.activeIndent.some(item => {
       return item.isMp === 2;
+    });
+    let shopCartId = this.newIndentClassification.activeIndent.map(item => {
+      return item.cartId;
+    });
+    console.log("shopCartId_", shopCartId);
+
+    confirmOrder(shopCartId).then(res => {
+      // console.log("res_", res.data);
     });
   },
   computed: {

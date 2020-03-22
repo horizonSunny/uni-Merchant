@@ -23,8 +23,6 @@ import {
   deleteProductVisitAll
 } from "./productVisit";
 
-import { confirmOrder, cancelOrder, generateOrder } from "./indent";
-
 import { userDetails, getStatisticData } from "./mine";
 
 import {
@@ -35,10 +33,10 @@ import {
 
 import {
   getOrderList,
-  alipay
-  // cancelOrder,
-  // confirmOrder,
-  // generateOrder
+  alipay,
+  cancelOrder,
+  confirmOrder,
+  generateOrder
 } from "./orderList";
 
 // 获取药品分类信息
