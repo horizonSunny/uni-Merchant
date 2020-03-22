@@ -190,6 +190,11 @@ export default {
     this.tabCurrentIndex = Number(option.orderStatus);
     this.loadTabbars();
   },
+  onShow() {
+    // console.log("option.id_", option.orderStatus); //打印出上个页面传递的参数。
+    // this.tabCurrentIndex = Number(option.orderStatus);
+    this.loadTabbars();
+  },
   data() {
     return {
       tabCurrentIndex: 0,
