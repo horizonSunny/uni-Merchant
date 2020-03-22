@@ -354,6 +354,7 @@ export default {
     },
     // 跳转商品详情页面
     goDetails(item) {
+      this.$store.commit("SET_ORDER_DETAILS", item);
       this.$navTo("../myIndent/indentDetails");
     },
     // 跳转页面

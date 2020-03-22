@@ -101,6 +101,10 @@ const getters = {
   // 拉取保存的订单信息
   getIndentInfo: state => {
     return state.business.myIndentInfo;
+  },
+  // 订单列表页面点击订单获取的订单详情
+  getOrderDetails: state => {
+    return state.order.orderDetails;
   }
   // 依据商户id和地址id获取运费模版信息
 };
