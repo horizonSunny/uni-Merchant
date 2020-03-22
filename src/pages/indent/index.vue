@@ -219,7 +219,12 @@ export default {
     });
   },
   computed: {
-    ...mapGetters(["getDefaultAddress", "newIndentClassification", "tenant"]),
+    ...mapGetters([
+      "getDefaultAddress",
+      "newIndentClassification",
+      "tenant",
+      "getNewIndent"
+    ]),
     caculateTotal() {
       let totalNum = 0,
         totalPrice = 0;
@@ -240,15 +245,6 @@ export default {
       } else {
         return this.getDefaultAddress(this.addressIds);
       }
-    },
-    //付款
-    pay() {
-      // 先生成订单，看有没有问题
-      console.log("addressId_", this.selectAddress);
-      console.log("invoice_prescribInfo_", this.newIndentClassification);
-      console.log("shipperSelected_", this.shipperSelected);
-      // prescribInfo
-      // generateOrder();
     }
   },
   methods: {
@@ -292,6 +288,15 @@ export default {
       } else {
         this.pickUp = false;
       }
+    },
+    //付款
+    pay() {
+      // 先生成订单，看有没有问题
+      console.log("addressId_", this.selectAddress);
+      console.log("invoice_prescribInfo_", this.getNewIndent);
+      console.log("shipperSelected_", this.shipperSelected);
+      // prescribInfo
+      // generateOrder();
     }
   }
 };

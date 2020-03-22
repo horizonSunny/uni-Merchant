@@ -7,10 +7,6 @@ const shopCartModule = {
   mutations: {
     SET_SHOPCART: (state, data) => {
       state.shopCartInfo = data;
-    },
-    // 代表订单里面的所有信息
-    NEW_INDENT: (state, data) => {
-      state.newIndent = data;
     }
   },
   actions: {
