@@ -112,45 +112,20 @@ export default {
             this.getProductVisit.splice(indexInfo, 1);
           }
           console.log("index", index);
-          // 删除一个必须要添加一个,这边其实可以要求后端做一个数据跳过的逻辑，告诉他查多少条后的数据
-          productVisit({
-            pageNumber: this.pageNumber - 1,
-            pageSize: this.pageSize
-          }).then(res => {
-            const data = res.data.historyRecord;
-            if (res.data.lastPage) {
-              return;
-            }
-            const info = data[data.length - 1];
-            const item = info.productVisits.splice(
-              0,
-              info.productVisits.length - 1
-            );
-            console.log("res_", data);
-            console.log("info_", info);
-            console.log("res_", info.productVisits);
-            // 删除一个加一个
-            this.$store.commit("SET_PRODUCT_VISIT", [info]);
-          });
         }
       );
     },
     // 滚动到底部
     scrolltolower() {
-      console.log("scrolltolower");
-      if (!this.historyFull) {
-        this.getHistory({
-          pageNumber: this.pageNumber,
-          pageSize: this.pageSize
-        }).then(res => {
-          console.log("res_", res);
-          // if (res.length === 0) {
-          //   this.historyFull = true
-          // }
-          this.pageNumber++;
-        });
-      }
-      // this.productInfo = this.productInfo.concat(browsingHistory)
+      console.log("scrolltolower_", this.getProductVisit);
+      let data = this.getProductVisit;
+      let lastTime = data[data.length - 1];
+      let lastProductVisits = lastTime.productVisits;
+      let lastProductVisitId = lastProductVisits[lastProductVisits.length - 1];
+      this.getHistory({
+        productVisitId: lastProductVisitId.productVisitId,
+        pageSize: this.pageSize
+      }).then(res => {});
     }
   },
   onLoad() {
@@ -158,9 +133,10 @@ export default {
     this.getHistory({
       pageSize: this.pageSize
     }).then(res => {
-      let data = res.data;
-      let lastTime = data[data.length - 1];
-      let lastProductVisits = lastTime.productVisits;
+      // let data = res.data;
+      // let lastTime = data[data.length - 1];
+      // let lastProductVisits = lastTime.productVisits;
+      // let lastProductVisitId = lastProductVisits[lastProductVisits.length - 1];
     });
     // getProductVisit
   },
