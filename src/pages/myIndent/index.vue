@@ -98,6 +98,7 @@
                         indentItem.orderStatus === 5 ||
                           indentItem.orderStatus === 4
                       "
+                      @click="deleteOrder(indentItem,tabItem.newsList,indentIndex)"
                     >删除订单</view>
                     <view class="pray" v-if="indentItem.orderStatus === 0">取消订单</view>
                     <view
@@ -133,7 +134,7 @@ import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-re
 import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
 import * as json from "@/config/json";
 // import { myIndent } from '@/config/test'
-import { getOrderList, buyAgain } from "@/service/index";
+import { getOrderList, buyAgain, deleteOrder } from "@/service/index";
 let windowWidth = 0,
   scrollTimer = false,
   tabBar;
@@ -386,6 +387,13 @@ export default {
         this.$navTo("../shoppingCart/index", {
           productIds: res.data.productIds
         });
+      });
+    },
+    //删除订单
+    deleteOrder(indentItem, tabItem, index) {
+      deleteOrder({ orderNo: indentItem.orderNo }).then(res => {
+        console.log("res_", res);
+        tabItem.splice(index, 1);
       });
     }
   }

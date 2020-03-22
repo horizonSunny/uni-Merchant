@@ -121,6 +121,7 @@
             <view class="indentOperate" @click.stop>
               <view
                 class="pray"
+                @click="deleteOrder(getOrderDetails)"
                 v-if="
                         getOrderDetails.orderStatus === 5 ||
                           getOrderDetails.orderStatus === 4
@@ -136,7 +137,7 @@
               <view
                 class="active"
                 v-if="getOrderDetails.orderStatus === 4"
-                @click="jumpInfo(indentItem, getOrderDetails.orderStatus)"
+                @click="jumpInfo(getOrderDetails, getOrderDetails.orderStatus)"
               >评价</view>
               <view class="active" v-if="getOrderDetails.orderStatus === 0">付款</view>
             </view>
@@ -148,7 +149,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-import { buyAgain } from "@/service/index";
+import { buyAgain, deleteOrder } from "@/service/index";
 export default {
   components: {},
   data() {
@@ -255,6 +256,26 @@ export default {
         this.$navTo("../shoppingCart/index", {
           productIds: res.data.productIds
         });
+      });
+    },
+    jumpInfo(info, key) {
+      // console.log('info_', info);
+      this.$store.commit("SET_INDENT_INFO", info);
+      switch (key) {
+        case 4:
+          this.$navTo("../myIndent/comment", {});
+          break;
+
+        default:
+          break;
+      }
+    },
+    //删除订单
+    deleteOrder(indentItem) {
+      deleteOrder({ orderNo: indentItem.orderNo }).then(res => {
+        uni.navigateBack();
+        // console.log("res_", res);
+        // tabItem.splice(index, 1);
       });
     }
   }

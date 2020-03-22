@@ -42,7 +42,8 @@ import {
   alipay,
   cancelOrder,
   confirmOrder,
-  generateOrder
+  generateOrder,
+  deleteOrder
 } from "./orderList";
 
 // 获取药品分类信息
@@ -131,7 +132,7 @@ export {
   deleteProductVisitAll
 };
 // 生成订单页面
-export { confirmOrder, cancelOrder, generateOrder };
+export { confirmOrder, cancelOrder, generateOrder, deleteOrder };
 
 // 用药人信息
 export {
