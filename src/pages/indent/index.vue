@@ -98,7 +98,9 @@
           </view>
           <view class="logistics">
             共{{caculateTotal.totalNum}}件商品 应付金额（含运费）
-            <view class="home_right">¥{{caculateTotal.totalPrice+".00"}}</view>
+            <view
+              class="home_right"
+            >¥{{caculateTotal.totalPrice+shipperSelected['shipperAmount']+".00"}}</view>
           </view>
         </view>
         <view class="separate logisticsInfo">
@@ -151,7 +153,7 @@
       <view class="payment">
         <view class="amount">
           合记
-          <text>¥464</text>
+          <text>¥{{caculateTotal.totalPrice+shipperSelected['shipperAmount']+".00"}}</text>
         </view>
         <view class="operate">去支付</view>
       </view>
