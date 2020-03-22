@@ -6,13 +6,16 @@
     <view slot="content" class="content">
       <view class="indent">
         <view class="userInfo">
-          <view v-if="getDefaultAddress(addressIds)">
+          <view
+            @click="gotoNextPage('../deliveryAddr/index', {activeAddressIds:addressIds})"
+            v-if="selectAddress"
+          >
             <view class="user">
               <img src="static/icon/merchantsIntr/location.svg" alt />
-              <view class="userName">{{ getDefaultAddress(addressIds).fullName }}</view>
-              <view class="phone">{{ getDefaultAddress(addressIds).phone }}</view>
+              <view class="userName">{{ selectAddress.fullName }}</view>
+              <view class="phone">{{ selectAddress.phone }}</view>
             </view>
-            <view class="address">{{ getDefaultAddress(addressIds).address }}</view>
+            <view class="address">{{ selectAddress.address }}</view>
           </view>
           <view v-else @click="gotoNextPage('../deliveryAddr/newAddr', {})" class="noAddress">
             <img src="/static/myIndent/Add address.svg" alt />
@@ -190,7 +193,9 @@ export default {
       // 可配送地址id
       addressIds: [],
       shipperType: [],
-      shipperSelected: null
+      shipperSelected: null,
+      // 由下一个页面选择过来
+      selectAddressInfo: null
     };
   },
   onLoad(option) {},
@@ -228,6 +233,13 @@ export default {
         totalNum,
         totalPrice
       };
+    },
+    selectAddress() {
+      if (this.selectAddressInfo) {
+        return this.selectAddressInfo;
+      } else {
+        return this.getDefaultAddress(this.addressIds);
+      }
     }
   },
   methods: {

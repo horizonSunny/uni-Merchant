@@ -72,6 +72,7 @@ const getters = {
     const filterAddress = getters.getAddress.filter(item => {
       return activeAddressIds.indexOf(item.addressId) !== -1;
     });
+    console.log("filterAddress_", filterAddress);
     let item =
       filterAddress.length !== 0 &&
       filterAddress.find(item => {
