@@ -13,13 +13,13 @@
           <img :src="orderStatus(getOrderDetails.orderStatus).iconPath" alt />
         </view>
         <view class="userInfo">
-          <view @click="toDeliveryAddr">
+          <view>
             <view class="user">
               <img src="static/icon/merchantsIntr/location.svg" alt />
-              <view class="userName">王慧</view>
-              <view class="phone">13890876778</view>
+              <view class="userName">{{getOrderDetails.deliveryAddress.fullName}}</view>
+              <view class="phone">{{getOrderDetails.deliveryAddress.phone}}</view>
             </view>
-            <view class="address">长泰广场E座 长泰广场E座 长泰广场E座</view>
+            <view class="address">{{getOrderDetails.deliveryAddress.address}}</view>
           </view>
           <view class="pickUp" v-show="true">
             <view class="user">
@@ -44,26 +44,33 @@
         </view>
         <view class="effectiveGoods">
           <view class="title">商家名称</view>
-          <view class="commidityInfo" v-for="(item, index) in [1, 2]" :key="index">
+          <view
+            class="commidityInfo"
+            v-for="(item, index) in getOrderDetails.orderItems"
+            :key="index"
+          >
             <view class="productImg">
-              <img src="/static/img/home.png" alt width="60" height="60" />
+              <img :src="item.productImage[0]" alt width="60" height="60" />
               <!-- <view class="model">已下架</view> -->
             </view>
             <view class="drugsInfo">
               <view class="drugName">
                 <view>
-                  <text class="mark">OTC</text>
-                  <!-- <text class="mark" v-show="item.isMp === 0">OTC</text>
-                  <text class="mark" v-show="item.isMp === 1"   style="color:red;border: 1px solid green;">OTC</text>
+                  <text class="mark" v-show="item.isMp === 0">OTC</text>
+                  <text
+                    class="mark"
+                    v-show="item.isMp === 1"
+                    style="color:red;border: 1px solid green;"
+                  >OTC</text>
                   <text class="mark" v-show="item.isMp === 2">RX</text>
-                  <text class="mark" v-show="item.isMp === 3">其他</text>-->
-                  <text>爱康国宾 疾病 宾 疾病疾病 宾 疾病疾病 宾 疾病</text>
+                  <text class="mark" v-show="item.isMp === 3">其他</text>
+                  <text>{{item.productName}}</text>
                 </view>
-                <view class="drugPrice">¥ 123</view>
+                <view class="drugPrice">¥ {{item.price}}</view>
               </view>
               <view class="drugSpec">
-                <view>已选择：20mlX48支/盒</view>
-                <view>X1</view>
+                <view>已选择：{{item.productSpecif}}</view>
+                <view>X{{item.cartNum}}</view>
               </view>
             </view>
           </view>
@@ -71,11 +78,13 @@
         <view class="separate logisticsInfo indentInfo">
           <view class="logistics">
             发票信息
-            <view class="home_right">无需发票</view>
+            <view
+              class="home_right"
+            >{{getOrderDetails.invoice&& getOrderDetails.invoice.invoiceType=== 2 ? '个人发票 ':'无需发票'}}</view>
           </view>
           <view class="logistics">
             商品总价
-            <view class="home_right">¥464.00</view>
+            <view class="home_right">¥{{getOrderDetails.totalPrice}}</view>
           </view>
           <view class="logistics" @click="openModal">
             <view>
@@ -88,17 +97,17 @@
         <view class="separate logisticsInfo indentInfo">
           <view class="indentTotal">
             <text>订单总价</text>
-            <text>¥464</text>
+            <text>¥{{getOrderDetails.totalPrice}}</text>
           </view>
         </view>
         <view class="separate logisticsInfo">
           <view class="logistics">
             订单编号
-            <view class="home_right">092373273278783</view>
+            <view class="home_right">{{getOrderDetails.orderNo}}</view>
           </view>
           <view class="logistics">
             下单时间
-            <view class="home_right">2020-01-08 12:09:35</view>
+            <view class="home_right">{{getOrderDetails.createTime}}</view>
           </view>
         </view>
         <view class="separate logisticsInfo">
@@ -276,7 +285,7 @@ export default {
       );
       padding: 25px 37px;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
       img {
         width: 50px;
@@ -446,6 +455,7 @@ export default {
             justify-content: space-between;
           }
           .drugPrice {
+            text-align: right;
             height: 25px;
             width: 60px;
             font-family: PingFangSC-Semibold, PingFang SC;
