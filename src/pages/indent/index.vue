@@ -195,7 +195,6 @@ export default {
         totalPrice += element.cartNum * element.price;
       });
       console.log("totalNum_", totalNum, "_totalPrice_", totalPrice);
-
       return {
         totalNum,
         totalPrice

@@ -88,17 +88,24 @@ export default {
           name: "idCard",
           required: true,
           type: "identityCard",
-          errmsg: "请填写用药人正确身份证号码"
+          errmsg: "请填写用户正确身份证号码"
         }
       ];
       let valLoginRes = validate.validate(this.userInfo, formRules);
-      if (!valLoginRes.isOk) {
+      if (!valLoginRes.isOk && this.currentIndex === 1) {
         uni.showToast({
           icon: "none",
           title: valLoginRes.errmsg
         });
         return false;
       }
+      this.$store.commit("ADD_INDENT", {
+        invoice: {
+          invoice: this.currentIndex, // 0 代表无需发票
+          invoiceUserInfo: this.userInfo
+        }
+      });
+      uni.navigateBack();
     }
   }
 };
