@@ -14,15 +14,10 @@
               v-for="(item, index) in items"
               :key="item.value"
             >
-              <view
-                class="selectInfo"
-                :class="index === current ? 'active' : ''"
-              >
+              <view class="selectInfo" :class="index === current ? 'active' : ''">
+                <view>{{item.name}}</view>
                 <view>
-                  普通快递
-                </view>
-                <view>
-                  ¥12.00
+                  ¥{{item.price}}
                   <radio :value="item.value" :checked="index === current" />
                 </view>
               </view>
@@ -34,33 +29,36 @@
   </modal>
 </template>
 <script>
-import modal from '@/components/modal.vue';
+import modal from "@/components/modal.vue";
 export default {
   components: {
     modal
   },
-  data () {
+  data() {
     return {
-      items: [{
-        value: 'USA',
-        name: '美国'
-      },
-      {
-        value: 'CHN',
-        name: '中国',
-        checked: 'true'
-      },
-      {
-        value: 'BRA',
-        name: '巴西'
-      }
+      items: [
+        {
+          value: "0",
+          price: 12,
+          name: "普通快递"
+        },
+        {
+          value: "1",
+          price: 24,
+          name: "加急快递"
+        },
+        {
+          value: "2",
+          price: 0,
+          name: "到店自提"
+        }
       ],
       current: 0,
       modal: false
-    }
+    };
   },
   methods: {
-    radioChange: function (evt) {
+    radioChange: function(evt) {
       for (let i = 0; i < this.items.length; i++) {
         if (this.items[i].value === evt.target.value) {
           this.current = i;
@@ -68,14 +66,14 @@ export default {
         }
       }
     },
-    closeModal () {
+    closeModal() {
       this.modal = false;
     },
-    openModal () {
+    openModal() {
       this.modal = true;
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .distribution {

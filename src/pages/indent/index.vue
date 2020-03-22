@@ -91,7 +91,7 @@
           </view>
           <view class="logistics">
             共{{caculateTotal.totalNum}}件商品 应付金额（含运费）
-            <view class="home_right">¥{{caculateTotal.totalPrice}}</view>
+            <view class="home_right">¥{{caculateTotal.totalPrice+".00"}}</view>
           </view>
         </view>
         <view class="separate logisticsInfo">
