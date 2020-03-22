@@ -37,7 +37,10 @@ export default {
   },
   data() {
     return {
-      current: this.hasSelected ? this.hasSelected : 1,
+      current:
+        this.hasSelected && this.hasSelected["shipperTypeId"]
+          ? this.hasSelected["shipperTypeId"]
+          : 1,
       modal: false
     };
   },

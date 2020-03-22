@@ -81,8 +81,12 @@
               <text class="marginLeft">8.00元起</text>
             </view>
             <view class="home_right">
-              ¥12.00
-              <img class="marginLeft" src="static/icon/main/home_right-2.svg" alt />
+              ¥{{shipperSelected['shipperAmount']}}.00
+              <img
+                class="marginLeft"
+                src="static/icon/main/home_right-2.svg"
+                alt
+              />
             </view>
           </view>
           <view class="logistics">
@@ -187,7 +191,7 @@ export default {
       // 可配送地址id
       addressIds: [],
       shipperType: [],
-      shipperSelected: 1
+      shipperSelected: null
     };
   },
   onLoad(option) {},
@@ -207,6 +211,7 @@ export default {
       console.log("confirmOrder_", res.data);
       // 配送模版
       this.shipperType = res.data.shipperType;
+      this.shipperSelected = this.shipperType[0];
       this.addressIds = res.data.addressIds;
     });
   },
@@ -258,10 +263,10 @@ export default {
     shipperChange(e) {
       console.log("shipperSelected_", e);
       const shipper = e;
-      this.shipperSelected = e;
       const select = this.shipperType.find(item => {
         return item.shipperTypeId == e;
       });
+      this.shipperSelected = select;
       console.log("select_", select);
       if (select.shipperName === "到店自提") {
         this.pickUp = true;
