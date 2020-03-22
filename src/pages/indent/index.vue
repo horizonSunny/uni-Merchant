@@ -24,11 +24,11 @@
           <view class="pickUp" v-if="pickUp">
             <view class="user">
               <img src="static/shoppingCart/shopping cart-business.svg" alt />
-              <view class="userName">门店自提点：xxx大药房</view>
+              <view class="userName">门店自提点：{{this.tenant.tenantName}}</view>
             </view>
             <view class="address">
-              地址：上海市 浦东新区 海科路100号 23号楼
-              <br />营业时间：每个公族日 9:00-22:00
+              地址：{{this.tenant.province}} {{this.tenant.city}} {{this.tenant.area}} {{this.tenant.address}}
+              <br />营业时间：每个工作日 9:00-22:00
             </view>
           </view>
           <!-- <view class="pickUp"> </view> -->
@@ -198,8 +198,7 @@ export default {
   },
   onLoad(option) {},
   onShow() {
-    console.log("getDefaultAddress_", this.getDefaultAddress);
-    console.log("newIndentClassification_", this.newIndentClassification);
+    console.log("tenant_", this.tenant);
     this.haveRx = this.newIndentClassification.activeIndent.some(item => {
       return item.isMp === 2;
     });
@@ -218,7 +217,7 @@ export default {
     });
   },
   computed: {
-    ...mapGetters(["getDefaultAddress", "newIndentClassification"]),
+    ...mapGetters(["getDefaultAddress", "newIndentClassification", "tenant"]),
     caculateTotal() {
       let totalNum = 0,
         totalPrice = 0;
@@ -324,7 +323,7 @@ export default {
       }
       .address {
         margin: 4px 0px 0px 21px;
-        height: 20px;
+        height: auto;
         font-size: 14px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
