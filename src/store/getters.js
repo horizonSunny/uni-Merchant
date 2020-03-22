@@ -48,16 +48,18 @@ const getters = {
   },
   // 获取患者地址信息 和获取默认地址
   getAddress: state => state.patientAddress.addressInfo,
-  getDefaultAddress: (state, getters) => {
-    console.log("getters_", getters);
-
+  getDefaultAddress: (state, getters) => activeAddressIds => {
+    console.log("activeAddressIds_", activeAddressIds);
+    const filterAddress = getters.getAddress.filter(item => {
+      return activeAddressIds.indexOf(item.addressId) !== -1;
+    });
     let item =
-      getters.getAddress.length !== 0 &&
-      getters.getAddress.find(item => {
+      filterAddress.length !== 0 &&
+      filterAddress.find(item => {
         return item.isDefault === 1;
       });
     if (item === undefined) {
-      return getters.getAddress[0];
+      return filterAddress[0];
     }
     console.log("item_", item);
     return item;

@@ -9,10 +9,10 @@
           <view @click="gotoNextPage('../deliveryAddr/index', {})" v-if="getDefaultAddress">
             <view class="user">
               <img src="static/icon/merchantsIntr/location.svg" alt />
-              <view class="userName">{{ getDefaultAddress.fullName }}</view>
-              <view class="phone">{{ getDefaultAddress.phone }}</view>
+              <view class="userName">{{ getDefaultAddress(this.addressIds).fullName }}</view>
+              <view class="phone">{{ getDefaultAddress(this.addressIds).phone }}</view>
             </view>
-            <view class="address">{{ getDefaultAddress.address }}</view>
+            <view class="address">{{ getDefaultAddress(this.addressIds).address }}</view>
           </view>
           <view v-else @click="gotoNextPage('../deliveryAddr/newAddr', {})" class="noAddress">
             <img src="/static/myIndent/Add address.svg" alt />
@@ -175,7 +175,9 @@ export default {
       // 选择自提时候，改变为true
       pickUp: false,
       haveRx: false,
-      correctUrl: "/static/shoppingCart/shopping cart-bitmap2.svg"
+      correctUrl: "/static/shoppingCart/shopping cart-bitmap2.svg",
+      // 可配送地址id
+      addressIds: []
     };
   },
   onLoad(option) {},
@@ -189,9 +191,10 @@ export default {
       return item.cartId;
     });
     console.log("shopCartId_", shopCartId);
-
-    confirmOrder(shopCartId).then(res => {
+    // 依据购物车信息确认可配送订单信息
+    confirmOrder({ shopCartIds: shopCartId }).then(res => {
       // console.log("res_", res.data);
+      this.addressIds = res.data.addressIds;
     });
   },
   computed: {
