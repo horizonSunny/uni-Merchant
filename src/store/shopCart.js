@@ -25,6 +25,7 @@ const shopCartModule = {
   actions: {
     GetShopCartInfo({ commit, getters }) {
       return shopCart().then(res => {
+        console.log("SET_SHOPCART", res.data);
         commit("SET_SHOPCART", res.data);
         return res.data;
       });

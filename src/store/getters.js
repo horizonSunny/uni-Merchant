@@ -22,7 +22,6 @@ const getters = {
    */
   // 获取购物车列表
   getShopCartList: state => {
-    console.log("cartList_", state.shopCart.shopCartInfo);
     let cartList = state.shopCart.shopCartInfo.map(item => {
       item.checked = false;
       // value就是购物车id
