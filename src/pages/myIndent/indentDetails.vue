@@ -241,7 +241,10 @@ export default {
     },
     // 获取当前页面位置
     prescription() {
-      this.$navTo("../prescription/index");
+      this.$navTo(
+        "../myIndent/prescribingInformation",
+        this.getOrderDetails.prescribInfo
+      );
     },
     // 打开快递配送
     openModal() {
