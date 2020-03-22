@@ -155,7 +155,7 @@
           合记
           <text>¥{{caculateTotal.totalPrice+shipperSelected['shipperAmount']+".00"}}</text>
         </view>
-        <view class="operate">去支付</view>
+        <view class="operate" @click="pay">去支付</view>
       </view>
       <!-- <purchasefailed></purchasefailed> -->
       <distribution
@@ -175,7 +175,7 @@ import { mapActions, mapGetters } from "vuex";
 import purchasefailed from "./purchasefailed";
 import distribution from "./distribution";
 import invoice from "./invoice";
-import { confirmOrder } from "@/service/index";
+import { confirmOrder, generateOrder } from "@/service/index";
 export default {
   components: {
     // commidityItem
@@ -240,6 +240,15 @@ export default {
       } else {
         return this.getDefaultAddress(this.addressIds);
       }
+    },
+    //付款
+    pay() {
+      // 先生成订单，看有没有问题
+      console.log("addressId_", this.selectAddress);
+      console.log("invoice_prescribInfo_", this.newIndentClassification);
+      console.log("shipperSelected_", this.shipperSelected);
+      // prescribInfo
+      // generateOrder();
     }
   },
   methods: {
