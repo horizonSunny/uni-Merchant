@@ -7,10 +7,10 @@
       <view class="indent">
         <view class="titleInfo">
           <view class="remindInfo">
-            <view class="status">等待审核</view>
-            <view class="statusDetails">耐性等待，商家正在审核中哦～</view>
+            <view class="status">{{orderStatus(getOrderDetails.orderStatus).title}}</view>
+            <view class="statusDetails">{{orderStatus(getOrderDetails.orderStatus).msg}}</view>
           </view>
-          <img src="static/myIndent/my order-To examine.svg" alt />
+          <img :src="orderStatus(getOrderDetails.orderStatus).iconPath" alt />
         </view>
         <view class="userInfo">
           <view @click="toDeliveryAddr">
@@ -155,7 +155,74 @@ export default {
     console.log("indentDetails_", this.getOrderDetails);
   },
   computed: {
-    ...mapGetters(["getOrderDetails"])
+    ...mapGetters(["getOrderDetails"]),
+    orderStatus() {
+      return function(status) {
+        switch (status) {
+          case -1:
+            return {
+              title: "退款中",
+              msg: "商家正在处理",
+              iconPath: "/static/order/my order_refund.svg"
+            };
+            break;
+          // case -2:
+          //   return "已退款";
+          //   break;
+          case -2:
+            return {
+              title: "交易失败",
+              msg: "",
+              iconPath: "/static/order/my order_transaction failure.svg"
+            };
+            break;
+          case 0:
+            return {
+              title: "等待付款",
+              msg: "请及时付款哦～",
+              iconPath: "/static/order/my order_pending payment.svg"
+            };
+            break;
+          case 1:
+            return {
+              title: "等待审核",
+              msg: "耐心等待，商家正在审核中哦～",
+              iconPath: "/static/order/my order-To examine.svg"
+            };
+            break;
+          case 2:
+            return {
+              title: "等待发货",
+              msg: "商家承诺24小时内发货～",
+              iconPath: "/static/order/my order_to be shipped.svg"
+            };
+            break;
+          case 3:
+            return {
+              title: "等待收货",
+              msg: "",
+              iconPath: "/static/order/my order_goods to be received.svg"
+            };
+            break;
+          case 4:
+            return {
+              title: "交易成功",
+              msg: "",
+              iconPath: "/static/order/my order_successful trade.svg"
+            };
+            break;
+          case 5:
+            return {
+              title: "交易取消",
+              msg: "",
+              iconPath: "/static/order/my order_Cancel transaction.svg"
+            };
+            break;
+          default:
+            break;
+        }
+      };
+    }
   },
   methods: {
     ...mapActions({}),
