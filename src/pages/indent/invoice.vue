@@ -7,28 +7,24 @@
       </view>
       <view class="content">
         发票类型
-        <view class="contentSelect ">
+        <view class="contentSelect">
           <view
             class="invoiceInfo"
             v-for="(item, index) in ['无需发票', '电子发票']"
             :key="index"
             :class="currentIndex === index ? 'active' : ''"
             @click="chooseInvoice(index)"
-          >
-            {{ item }}
-          </view>
+          >{{ item }}</view>
         </view>
       </view>
-      <view class="content">
+      <view class="content" v-if="currentIndex === 1 ">
         发票抬头
-        <view class="contentSelect ">
-          <view class="invoiceInfo active">
-            个人
-          </view>
+        <view class="contentSelect">
+          <view class="invoiceInfo active">个人</view>
         </view>
       </view>
       <!-- 收票人信息 -->
-      <view class="content">
+      <view class="content" v-if="currentIndex === 1 ">
         收票人信息
         <view class="userInfo">
           <view class="infoItem">
@@ -45,19 +41,19 @@
   </modal>
 </template>
 <script>
-import modal from '@/components/modal.vue';
+import modal from "@/components/modal.vue";
 export default {
   components: {
     modal
   },
-  data () {
+  data() {
     return {
       currentIndex: 0,
       modal: false
-    }
+    };
   },
   methods: {
-    radioChange: function (evt) {
+    radioChange: function(evt) {
       for (let i = 0; i < this.items.length; i++) {
         if (this.items[i].value === evt.target.value) {
           this.current = i;
@@ -65,17 +61,17 @@ export default {
         }
       }
     },
-    closeModal () {
+    closeModal() {
       this.modal = false;
     },
-    openModal () {
+    openModal() {
       this.modal = true;
     },
-    chooseInvoice (index) {
+    chooseInvoice(index) {
       this.currentIndex = index;
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .distribution {

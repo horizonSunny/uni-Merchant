@@ -1,83 +1,53 @@
 <template>
   <body-wrap>
-    <tob-bar
-      slot="topBar"
-      :styleInfo="{ backgroundColor: '#fff' }"
-      jumpButton=""
-    >
+    <tob-bar slot="topBar" :styleInfo="{ backgroundColor: '#fff' }" jumpButton>
       <text slot="title" style="color:#000">订单结算</text>
     </tob-bar>
     <view slot="content" class="content">
       <view class="indent">
         <view class="userInfo">
-          <view
-            @click="gotoNextPage('../deliveryAddr/index', {})"
-            v-if="getDefaultAddress"
-          >
+          <view @click="gotoNextPage('../deliveryAddr/index', {})" v-if="getDefaultAddress">
             <view class="user">
-              <img src="static/icon/merchantsIntr/location.svg" alt="" />
+              <img src="static/icon/merchantsIntr/location.svg" alt />
               <view class="userName">{{ getDefaultAddress.fullName }}</view>
               <view class="phone">{{ getDefaultAddress.phone }}</view>
             </view>
-            <view class="address">
-              {{ getDefaultAddress.address }}
-            </view>
+            <view class="address">{{ getDefaultAddress.address }}</view>
           </view>
-          <view
-            v-else
-            @click="gotoNextPage('../deliveryAddr/newAddr', {})"
-            class="noAddress"
-          >
-            <img src="/static/myIndent/Add address.svg" alt="" />
-            <view>
-              添加收货地址
-            </view>
+          <view v-else @click="gotoNextPage('../deliveryAddr/newAddr', {})" class="noAddress">
+            <img src="/static/myIndent/Add address.svg" alt />
+            <view>添加收货地址</view>
           </view>
           <view class="pickUp" v-if="pickUp">
             <view class="user">
-              <img
-                src="static/shoppingCart/shopping cart-business.svg"
-                alt=""
-              />
+              <img src="static/shoppingCart/shopping cart-business.svg" alt />
               <view class="userName">门店自提点：xxx大药房</view>
             </view>
             <view class="address">
               地址：上海市 浦东新区 海科路100号 23号楼
-              <br />
-              营业时间：每个公族日 9:00-22:00
+              <br />营业时间：每个公族日 9:00-22:00
             </view>
           </view>
           <!-- <view class="pickUp"> </view> -->
         </view>
         <view class="prescription" @click="prescription" v-if="haveRx">
           <view class="title">
-            <img
-              src="static/shoppingCart/shopping cart-prescription.svg"
-              alt=""
-            />
+            <img src="static/shoppingCart/shopping cart-prescription.svg" alt />
             处方信息
           </view>
           <view class="home_right">
-            <img src="static/icon/main/home_right-2.svg" alt="" />
+            <img src="static/icon/main/home_right-2.svg" alt />
           </view>
         </view>
         <view class="effectiveGoods">
-          <view class="title">
-            商家名称
-          </view>
+          <view class="title">商家名称</view>
           <view
             class="commidityInfo"
             v-for="(item, index) in newIndentClassification.activeIndent"
             :key="index"
           >
             <view class="productImg">
-              <img
-                :src="item.productImage"
-                @error="imageError(item)"
-                alt=""
-                width="60"
-                height="60"
-              />
+              <img :src="item.productImage" @error="imageError(item)" alt width="60" height="60" />
             </view>
             <view class="drugsInfo">
               <view class="drugName">
@@ -87,17 +57,16 @@
                     class="mark"
                     v-show="item.isMp === 1"
                     style="color:red;border: 1px solid green;"
-                    >OTC</text
-                  >
+                  >OTC</text>
                   <text class="mark" v-show="item.isMp === 2">RX</text>
                   <text class="mark" v-show="item.isMp === 3">其他</text>
                   <text>{{ item.productName }}</text>
                 </view>
-                <view class="drugPrice"> ¥ {{ item.price }} </view>
+                <view class="drugPrice">¥ {{ item.price }}</view>
               </view>
               <view class="drugSpec">
-                <view> 已选择：{{ item.productSpecif }} </view>
-                <view> X{{ item.cartNum }} </view>
+                <view>已选择：{{ item.productSpecif }}</view>
+                <view>X{{ item.cartNum }}</view>
               </view>
             </view>
           </view>
@@ -106,63 +75,40 @@
           <view class="logistics" @click="openModal">
             <view>
               运费
-              <text class="marginLeft"> 8.00元起</text>
+              <text class="marginLeft">8.00元起</text>
             </view>
             <view class="home_right">
               ¥12.00
-              <img
-                class="marginLeft"
-                src="static/icon/main/home_right-2.svg"
-                alt=""
-              />
+              <img class="marginLeft" src="static/icon/main/home_right-2.svg" alt />
             </view>
           </view>
           <view class="logistics">
             优惠券
             <view class="home_right">
-              ¥12.00
-              <img
-                class="marginLeft"
-                src="static/icon/main/home_right-2.svg"
-                alt=""
-              />
+              ¥0.00
+              <img class="marginLeft" src="static/icon/main/home_right-2.svg" alt />
             </view>
           </view>
           <view class="logistics">
-            共x件商品 应付金额（含运费）
-            <view class="home_right">
-              ¥464.00
-            </view>
+            共{{caculateTotal.totalNum}}件商品 应付金额（含运费）
+            <view class="home_right">¥{{caculateTotal.totalPrice}}</view>
           </view>
         </view>
         <view class="separate logisticsInfo">
           <view class="logistics">
             付款方式
-            <view class="home_right">
-              在线支付
-            </view>
+            <view class="home_right">在线支付</view>
           </view>
           <view class="logistics" @click="showInvoice">
-            <view>
-              发票信息
-            </view>
+            <view>发票信息</view>
             <view class="home_right">
               请选择
-              <img
-                class="marginLeft"
-                src="static/icon/main/home_right-2.svg"
-                alt=""
-              />
+              <img class="marginLeft" src="static/icon/main/home_right-2.svg" alt />
             </view>
           </view>
         </view>
-        <view
-          class="effectiveGoods"
-          v-if="newIndentClassification.invalidIndent.length !== 0"
-        >
-          <view class="title">
-            失效商品
-          </view>
+        <view class="effectiveGoods" v-if="newIndentClassification.invalidIndent.length !== 0">
+          <view class="title">失效商品</view>
           <view
             class="commidityInfo"
             v-for="(item, index) in newIndentClassification.invalidIndent"
@@ -170,13 +116,7 @@
           >
             <view class="failure">失效</view>
             <view class="productImg">
-              <img
-                :src="item.productImage"
-                @error="imageError(item)"
-                alt=""
-                width="60"
-                height="60"
-              />
+              <img :src="item.productImage" @error="imageError(item)" alt width="60" height="60" />
             </view>
             <view class="drugsInfo">
               <view class="failureInfo">
@@ -185,30 +125,28 @@
                   class="mark"
                   v-show="item.isMp === 1"
                   style="color:red;border: 1px solid green;"
-                  >OTC</text
-                >
+                >OTC</text>
                 <text class="mark" v-show="item.isMp === 2">RX</text>
                 <text class="mark" v-show="item.isMp === 3">其他</text>
                 <text>{{ item.productName }}</text>
               </view>
 
               <view class="drugSpec">
-                <view> 已选择：{{ item.productSpecif }} </view>
-                <view> X{{ item.cartNum }} </view>
+                <view>已选择：{{ item.productSpecif }}</view>
+                <view>X{{ item.cartNum }}</view>
               </view>
-              <view class="drugSpec">
-                {{ item.reasons }}
-              </view>
+              <view class="drugSpec">{{ item.reasons }}</view>
             </view>
           </view>
         </view>
         <view style="width:100%;height:50px"></view>
       </view>
       <view class="payment">
-        <view class="amount"> 合记 <text>¥464</text> </view>
-        <view class="operate">
-          去支付
+        <view class="amount">
+          合记
+          <text>¥464</text>
         </view>
+        <view class="operate">去支付</view>
       </view>
       <!-- <purchasefailed></purchasefailed> -->
       <distribution ref="distribution"></distribution>
@@ -218,11 +156,11 @@
   </body-wrap>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from "vuex";
 // import commidityItem from "./commidityItem";
-import purchasefailed from './purchasefailed'
-import distribution from './distribution'
-import invoice from './invoice'
+import purchasefailed from "./purchasefailed";
+import distribution from "./distribution";
+import invoice from "./invoice";
 export default {
   components: {
     // commidityItem
@@ -230,55 +168,69 @@ export default {
     distribution,
     invoice
   },
-  data () {
+  data() {
     return {
       editor: true,
       // 选择自提时候，改变为true
       pickUp: false,
       haveRx: false,
-      correctUrl: '/static/shoppingCart/shopping cart-bitmap2.svg',
-    }
+      correctUrl: "/static/shoppingCart/shopping cart-bitmap2.svg"
+    };
   },
-  onLoad (option) {
-    console.log('getDefaultAddress_', this.getDefaultAddress)
-    console.log('newIndentClassification_', this.newIndentClassification)
-    this.haveRx = this.newIndentClassification.activeIndent.some((item) => {
-      return item.isMp === 2
-    })
-
+  onLoad(option) {
+    console.log("getDefaultAddress_", this.getDefaultAddress);
+    console.log("newIndentClassification_", this.newIndentClassification);
+    this.haveRx = this.newIndentClassification.activeIndent.some(item => {
+      return item.isMp === 2;
+    });
   },
   computed: {
-    ...mapGetters(['getDefaultAddress', 'newIndentClassification'])
+    ...mapGetters(["getDefaultAddress", "newIndentClassification"]),
+    caculateTotal() {
+      let totalNum = 0,
+        totalPrice = 0;
+      this.newIndentClassification.activeIndent.forEach(element => {
+        console.log("element_", element);
+        totalNum += element.cartNum;
+        totalPrice += element.cartNum * element.price;
+      });
+      console.log("totalNum_", totalNum, "_totalPrice_", totalPrice);
+
+      return {
+        totalNum,
+        totalPrice
+      };
+    }
   },
   methods: {
     ...mapActions({}),
     // 改变当前是编辑状态还是完成状态
-    reverseEditor () {
-      this.editor = !this.editor
+    reverseEditor() {
+      this.editor = !this.editor;
     },
     // 获取当前页面位置
-    prescription () {
-      this.$navTo('../prescription/index')
+    prescription() {
+      this.$navTo("../prescription/index");
     },
     // 打开快递配送
-    openModal () {
-      this.$refs.distribution.openModal()
+    openModal() {
+      this.$refs.distribution.openModal();
     },
     // 跳转页面
-    gotoNextPage (url, parameters) {
+    gotoNextPage(url, parameters) {
       this.$navTo(url, parameters);
     },
     // 打开发票弹窗
-    showInvoice () {
-      this.$refs.invoice.openModal()
+    showInvoice() {
+      this.$refs.invoice.openModal();
     },
     // 图片加载失败
-    imageError (item) {
-      console.log('imageError_', item)
-      item.productImage = this.correctUrl
-    },
+    imageError(item) {
+      console.log("imageError_", item);
+      item.productImage = this.correctUrl;
+    }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .content {
