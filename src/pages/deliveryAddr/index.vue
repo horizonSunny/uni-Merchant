@@ -1,27 +1,21 @@
 <template>
   <body-wrap>
-    <tob-bar
-      slot="topBar"
-      :styleInfo="{ backgroundColor: '#fff' }"
-      jumpButton=""
-    >
+    <tob-bar slot="topBar" :styleInfo="{ backgroundColor: '#fff' }" jumpButton>
       <text slot="title" style="color:#000">收货地址</text>
     </tob-bar>
     <view slot="content" class="content">
       <scroll-view scroll-y class="scrollView">
         <view
           class="addressItem"
-          v-for="(item, index) in getAddress"
+          :class="item.disabled?'disabledAddress':''"
+          v-for="(item, index) in addressInfo(activeAddressIds,getAddress,getAddressClassify)"
           :key="index"
           @click="selectAddress(item)"
         >
           <view class="userInfo">
             <view class="userAddress">
-              <img
-                :src="labelInfo(item['isDefault'], item['addressLabel'])"
-                alt=""
-              />
-              <text>{{ item['address'] }} </text>
+              <img :src="labelInfo(item['isDefault'], item['addressLabel'])" alt />
+              <text>{{ item['address'] }}</text>
             </view>
             <view class="userInfoItem">
               <text>{{ item['fullName'] }}</text>
@@ -29,39 +23,55 @@
               <text>{{ item['phone'] }}</text>
             </view>
           </view>
-          <view class="editor" @click.stop="gotoDetail('edit', item.addressId)">
-            <img
-              src="static/deliveryAddr/shopping cart-edit address.svg"
-              alt=""
-            />
+          <view
+            v-if="!item.disabled"
+            class="editor"
+            @click.stop="gotoDetail('edit', item.addressId)"
+          >
+            <img src="static/deliveryAddr/shopping cart-edit address.svg" alt />
+          </view>
+          <view v-if="item.disabled" class="editor">
+            <text style="font-size:4px">不可配送</text>
           </view>
         </view>
       </scroll-view>
       <view class="newAddress">
-        <button type="primary" @click.stop="gotoDetail('new')">
-          新增收货地址
-        </button>
+        <button type="primary" @click.stop="gotoDetail('new')">新增收货地址</button>
       </view>
     </view>
   </body-wrap>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
-    return {}
+    return {
+      activeAddressIds: []
+    };
   },
   computed: {
-    ...mapGetters(['getAddress'])
+    ...mapGetters(["getAddress", "getAddressClassify"]),
+    addressInfo: () => {
+      return (activeAddressIds, getAddress, getAddressClassify) => {
+        if (activeAddressIds !== undefined) {
+          return getAddressClassify([21]);
+        } else {
+          return getAddress;
+        }
+      };
+    }
   },
   methods: {
+    ...mapActions({
+      getAddressInfo: "GetAddressInfo"
+    }),
     gotoDetail(operate, addressInfo = null) {
       if (!addressInfo) {
-        this.$navTo('../deliveryAddr/newAddr')
+        this.$navTo("../deliveryAddr/newAddr");
       } else {
-        this.$navTo('../deliveryAddr/newAddr', {
+        this.$navTo("../deliveryAddr/newAddr", {
           addressId: addressInfo
-        })
+        });
       }
     },
     selectAddress(item) {
@@ -71,24 +81,37 @@ export default {
     },
     labelInfo(isDefault, addressLabel) {
       if (isDefault === 1) {
-        return 'static/deliveryAddr/address_company.svg'
+        return "static/deliveryAddr/address_company.svg";
       }
       switch (addressLabel) {
-        case '家':
-          return 'static/deliveryAddr/address_home.svg'
-          break
-        case '公司':
-          return 'static/deliveryAddr/address_company.svg'
-          break
-        case '学校':
-          return 'static/deliveryAddr/address_school.svg'
-          break
+        case "家":
+          return "static/deliveryAddr/address_home.svg";
+          break;
+        case "公司":
+          return "static/deliveryAddr/address_company.svg";
+          break;
+        case "学校":
+          return "static/deliveryAddr/address_school.svg";
+          break;
         default:
-          break
+          break;
       }
+    },
+    onLoad(option) {
+      // 假如options有传参，说明要对地址做一个过滤，如果没有就不用过滤、
+      // console.log("option_", option.activeAddressIds);
+      console.log("this.addressInfo_", option.activeAddressIds);
+      // this.activeAddressIds = option.activeAddressIds;
+      if (option.activeAddressIds !== undefined) {
+        this.activeAddressIds = option.activeAddressIds;
+      } else {
+        this.activeAddressIds = undefined;
+      }
+      this.getAddressInfo();
+      // console.log("this.addressInfo_", option);
     }
   }
-}
+};
 </script>
 <style lang="scss">
 .content {
@@ -138,6 +161,9 @@ export default {
         height: 40px;
         line-height: 40px;
       }
+    }
+    .disabledAddress {
+      background: #e5e5e5;
     }
   }
   .newAddress {

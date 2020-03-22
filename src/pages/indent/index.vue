@@ -7,15 +7,15 @@
       <view class="indent">
         <view class="userInfo">
           <view
-            @click="gotoNextPage('../deliveryAddr/index', {})"
-            v-if="getDefaultAddress(this.addressIds)"
+            @click="gotoNextPage('../deliveryAddr/index', {activeAddressIds:addressIds})"
+            v-if="getDefaultAddress(addressIds)"
           >
             <view class="user">
               <img src="static/icon/merchantsIntr/location.svg" alt />
-              <view class="userName">{{ getDefaultAddress(this.addressIds).fullName }}</view>
-              <view class="phone">{{ getDefaultAddress(this.addressIds).phone }}</view>
+              <view class="userName">{{ getDefaultAddress(addressIds).fullName }}</view>
+              <view class="phone">{{ getDefaultAddress(addressIds).phone }}</view>
             </view>
-            <view class="address">{{ getDefaultAddress(this.addressIds).address }}</view>
+            <view class="address">{{ getDefaultAddress(addressIds).address }}</view>
           </view>
           <view v-else @click="gotoNextPage('../deliveryAddr/newAddr', {})" class="noAddress">
             <img src="/static/myIndent/Add address.svg" alt />
@@ -197,6 +197,8 @@ export default {
     // 依据购物车信息确认可配送订单信息
     confirmOrder({ shopCartIds: shopCartId }).then(res => {
       // console.log("res_", res.data);
+      console.log("res.data.addressId_", res.data.addressIds);
+
       this.addressIds = res.data.addressIds;
     });
   },

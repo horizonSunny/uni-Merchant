@@ -48,6 +48,25 @@ const getters = {
   },
   // 获取患者地址信息 和获取默认地址
   getAddress: state => state.patientAddress.addressInfo,
+  // 获取因为订单页面过来的地址可用和不可用的区分
+  getAddressClassify: (state, getters) => activeAddressIds => {
+    let activeAddress = [];
+    let deactiveAddress = [];
+    console.log(" getters.getAddress_", activeAddressIds);
+
+    getters.getAddress.forEach(item => {
+      if (activeAddressIds.indexOf(item.addressId) !== -1) {
+        activeAddress.push(item);
+        item.disabled = false;
+      } else {
+        item.disabled = true;
+        deactiveAddress.push(item);
+      }
+    });
+    console.log("activeAddress_", activeAddress);
+    console.log("deactiveAddress_", deactiveAddress);
+    return [...activeAddress, ...deactiveAddress];
+  },
   getDefaultAddress: (state, getters) => activeAddressIds => {
     console.log("activeAddressIds_", activeAddressIds);
     const filterAddress = getters.getAddress.filter(item => {
