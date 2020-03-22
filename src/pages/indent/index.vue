@@ -223,7 +223,8 @@ export default {
       "getDefaultAddress",
       "newIndentClassification",
       "tenant",
-      "getNewIndent"
+      "getNewIndent",
+      "getMedicineMan"
     ]),
     caculateTotal() {
       let totalNum = 0,
@@ -294,6 +295,7 @@ export default {
       // 先生成订单，看有没有问题
       console.log("addressId_", this.selectAddress);
       console.log("invoice_prescribInfo_", this.getNewIndent);
+      console.log("invoice_user_", this.getMedicineMan[0]);
       console.log("shipperSelected_", this.shipperSelected);
       // prescribInfo
       // generateOrder();

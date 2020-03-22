@@ -117,7 +117,7 @@ export default {
   onShow() {
     console.log(213);
     console.log("invoice_prescribInfo_", this.getNewIndent);
-    this.getMedicineManInfo();
+    // this.getMedicineManInfo();
     this.preUpLoadImg = this.preUpLoadImgActive();
   }
 };
