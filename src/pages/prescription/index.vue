@@ -40,7 +40,7 @@
           <text>上传处方信息</text>
         </view>
         <view class="contentWrap">
-          <up-img @change="imgChange($event)" :upload_count="3"></up-img>
+          <up-img @change="imgChange($event)" :upload_count="3" :upimg_preview="preUpLoadImg"></up-img>
         </view>
         <view class="reminder">
           <text>药店药师审核，请上传正规处方（仅可上传3张）</text>
@@ -60,7 +60,8 @@ export default {
   data() {
     return {
       currentPatient: 0,
-      prescriptionImg: []
+      prescriptionImg: [],
+      preUpLoadImg: []
     };
   },
   computed: {
@@ -96,12 +97,28 @@ export default {
         }
       });
       uni.navigateBack();
+    },
+    // 生成之前上传的图片
+    preUpLoadImgActive() {
+      let preUpLoadImgInfo = [];
+      if (
+        this.getNewIndent.prescription &&
+        this.getNewIndent.prescription.length !== 0
+      ) {
+        this.getNewIndent.prescription.prescriptionImg.forEach(element => {
+          preUpLoadImgInfo.push({
+            path: element
+          });
+        });
+      }
+      return preUpLoadImgInfo;
     }
   },
   onShow() {
     console.log(213);
     console.log("invoice_prescribInfo_", this.getNewIndent);
     this.getMedicineManInfo();
+    this.preUpLoadImg = this.preUpLoadImgActive();
   }
 };
 </script>

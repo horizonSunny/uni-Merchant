@@ -109,11 +109,11 @@ export default {
       this.upload_len = this.upload_before_list.length;
       this.upimg_preview.map(item => {
         // step2.这里修改服务器返回字段 ！！！
-        // console.log("upload_cache_list_", item);
-        // this.upload_cache_list.push(item.path);
+        console.log("upload_cache_list_", item);
+        this.upload_cache_list.push(item.path);
       });
       this.emit();
-    }, this.upimg_delaytime);
+    }, 0);
   },
   methods: {
     upImage(paths, header) {
