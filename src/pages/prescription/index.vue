@@ -120,6 +120,9 @@ export default {
     // this.getMedicineManInfo();
     this.preUpLoadImg = this.preUpLoadImgActive();
   }
+  // onLoad() {
+  //   this.getMedicineManInfo();
+  // }
 };
 </script>
 <style lang="scss">

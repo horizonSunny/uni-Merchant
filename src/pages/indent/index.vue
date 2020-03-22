@@ -195,10 +195,14 @@ export default {
       shipperType: [],
       shipperSelected: null,
       // 由下一个页面选择过来
-      selectAddressInfo: null
+      selectAddressInfo: null,
+      shopCartId: ""
     };
   },
-  onLoad(option) {},
+  onLoad(option) {
+    // 因为要用到用药人
+    this.getMedicineManInfo();
+  },
   onShow() {
     console.log("tenant_", this.tenant);
     this.haveRx = this.newIndentClassification.activeIndent.some(item => {
@@ -207,6 +211,7 @@ export default {
     let shopCartId = this.newIndentClassification.activeIndent.map(item => {
       return item.cartId;
     });
+    this.shopCartId = shopCartId;
     console.log("shopCartId_", shopCartId);
     // 依据购物车信息确认可配送订单信息
     confirmOrder({ shopCartIds: shopCartId }).then(res => {
@@ -249,7 +254,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions({}),
+    ...mapActions({
+      getMedicineManInfo: "GetMedicineMan"
+    }),
     // 改变当前是编辑状态还是完成状态
     reverseEditor() {
       this.editor = !this.editor;
@@ -299,6 +306,22 @@ export default {
       console.log("shipperSelected_", this.shipperSelected);
       // prescribInfo
       // generateOrder();
+      let params = {
+        addressId: this.selectAddress.addressId,
+        prescribInfo: {
+          medicineUserId: this.getNewIndent.prescription.prescriptionMan
+            .medicineUserId,
+          prescribImg: this.getNewIndent.prescription.prescriptionImg
+        },
+        shipperTypeId: this.shipperSelected.shipperTypeId,
+        shipperAmount: this.shipperSelected.shipperAmount,
+        shopCartIds: this.shopCartId,
+        totalNum: this.caculateTotal.totalNum,
+        totalPrice:
+          this.caculateTotal.totalPrice + this.shipperSelected["shipperAmount"]
+      };
+      console.log("params_", params);
+      // generateOrder()
     }
   }
 };
