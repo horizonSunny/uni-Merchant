@@ -341,8 +341,18 @@ export default {
         //   prescribImg: this.getNewIndent.prescription.prescriptionImg
         // },
       }
+      if (this.getNewIndent.invoice) {
+        params.invoice = {
+          invoiceHeader: "个人",
+          invoiceIdCard: this.getNewIndent.invoice.invoiceUserInfo.idCard,
+          invoiceName: this.getNewIndent.invoice.invoiceUserInfo.fullName,
+          invoiceType: 2
+        };
+      }
       console.log("params_", params);
-      // generateOrder()
+      generateOrder(params).then(res => {
+        console.log("params_", params);
+      });
     }
   }
 };

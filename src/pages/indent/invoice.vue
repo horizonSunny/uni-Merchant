@@ -34,7 +34,7 @@
             </view>
             <view class="infoItem">
               <span>身份证信息</span>
-              <input type="text" v-model="userInfo['idCard']" />
+              <input type="text" v-model="userInfo['idCard']" maxlength="18" />
             </view>
           </view>
         </view>
