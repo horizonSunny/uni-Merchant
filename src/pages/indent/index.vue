@@ -308,11 +308,6 @@ export default {
       // generateOrder();
       let params = {
         addressId: this.selectAddress.addressId,
-        prescribInfo: {
-          medicineUserId: this.getNewIndent.prescription.prescriptionMan
-            .medicineUserId,
-          prescribImg: this.getNewIndent.prescription.prescriptionImg
-        },
         shipperTypeId: this.shipperSelected.shipperTypeId,
         shipperAmount: this.shipperSelected.shipperAmount,
         shopCartIds: this.shopCartId,
@@ -320,6 +315,32 @@ export default {
         totalPrice:
           this.caculateTotal.totalPrice + this.shipperSelected["shipperAmount"]
       };
+      if (this.haveRx) {
+        if (!this.getNewIndent.prescription) {
+          uni.showToast({
+            icon: "none",
+            title: "请添加处方信息"
+          });
+          return;
+        }
+        if (this.getNewIndent.prescription.prescriptionImg.length === 0) {
+          uni.showToast({
+            icon: "none",
+            title: "请上传处方图片"
+          });
+          return;
+        }
+        params.prescribInfo = {
+          medicineUserId: this.getNewIndent.prescription.prescriptionMan
+            .medicineUserId,
+          prescribImg: this.getNewIndent.prescription.prescriptionImg
+        };
+        //   prescribInfo: {
+        //   medicineUserId: this.getNewIndent.prescription.prescriptionMan
+        //     .medicineUserId,
+        //   prescribImg: this.getNewIndent.prescription.prescriptionImg
+        // },
+      }
       console.log("params_", params);
       // generateOrder()
     }
