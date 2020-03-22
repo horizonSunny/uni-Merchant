@@ -63,6 +63,7 @@ const getters = {
     }
     console.log("item_", item);
     return item;
+    // return undefined;
   },
   // 获取浏览记录等
   getProductVisit: state => state.user.productVisit,
