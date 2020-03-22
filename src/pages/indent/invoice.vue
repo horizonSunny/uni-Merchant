@@ -24,24 +24,30 @@
         </view>
       </view>
       <!-- 收票人信息 -->
-      <view class="content" v-if="currentIndex === 1 ">
-        收票人信息
-        <view class="userInfo">
-          <view class="infoItem">
-            <span>收票人姓名</span>
-            <input type="text" />
-          </view>
-          <view class="infoItem">
-            <span>身份证信息</span>
-            <input type="text" />
+      <form class="form">
+        <view class="content" v-if="currentIndex === 1 ">
+          收票人信息
+          <view class="userInfo">
+            <view class="infoItem">
+              <span>收票人姓名</span>
+              <input type="text" v-model="userInfo['fullName']" />
+            </view>
+            <view class="infoItem">
+              <span>身份证信息</span>
+              <input type="text" v-model="userInfo['idCard']" />
+            </view>
           </view>
         </view>
-      </view>
+        <view class="confirm">
+          <button type="primary" @click="submit">完成</button>
+        </view>
+      </form>
     </view>
   </modal>
 </template>
 <script>
 import modal from "@/components/modal.vue";
+import validate from "@/utils/validate";
 export default {
   components: {
     modal
@@ -49,7 +55,11 @@ export default {
   data() {
     return {
       currentIndex: 0,
-      modal: false
+      modal: false,
+      userInfo: {
+        fullName: "",
+        idCard: ""
+      }
     };
   },
   methods: {
@@ -69,6 +79,26 @@ export default {
     },
     chooseInvoice(index) {
       this.currentIndex = index;
+    },
+    submit() {
+      console.log("this.userInfo_", this.userInfo);
+      let formRules = [
+        { name: "fullName", type: "required", errmsg: "请填写用户名" },
+        {
+          name: "idCard",
+          required: true,
+          type: "identityCard",
+          errmsg: "请填写用药人正确身份证号码"
+        }
+      ];
+      let valLoginRes = validate.validate(this.userInfo, formRules);
+      if (!valLoginRes.isOk) {
+        uni.showToast({
+          icon: "none",
+          title: valLoginRes.errmsg
+        });
+        return false;
+      }
     }
   }
 };
@@ -153,6 +183,13 @@ export default {
         }
       }
     }
+  }
+  .confirm {
+    position: absolute;
+    bottom: 20px;
+    width: 80%;
+    left: 50%;
+    margin-left: -40%;
   }
 }
 </style>
