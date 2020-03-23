@@ -4,7 +4,8 @@
       :class="{ 'uni-numbox--disabled': inputValue <= min || disabled }"
       class="uni-numbox__minus"
       @click="_calcValue('minus')"
-    >-</view>
+      >-</view
+    >
     <view
       :disabled="disabled"
       v-model="inputValue"
@@ -12,18 +13,25 @@
       type="number"
       @tap="ifShow(inputValue)"
       adjust-position="false"
-    >{{ inputValue }}</view>
+      >{{ inputValue }}</view
+    >
     <view
       :class="{ 'uni-numbox--disabled': inputValue >= max || disabled }"
       class="uni-numbox__plus"
       @click="_calcValue('plus')"
-    >+</view>
+      >+</view
+    >
     <view class="modelBox" v-if="showHide">
       <view class="shade" @tap="modelHide"></view>
       <view class="model">
         <view class="modelTitle">请输入您的内容</view>
         <view class="modelInput">
-          <input placeholder-class="inputStyle" v-model="modelValue" type="number" focus />
+          <input
+            placeholder-class="inputStyle"
+            v-model="modelValue"
+            type="number"
+            focus
+          />
         </view>
         <view class="modeBtnBox">
           <view class @tap="modelHide">取消</view>
@@ -57,9 +65,11 @@ export default {
     index: {
       type: [Number, String]
     },
-    item: {}
+    item: {
+      cartNum: [Number]
+    }
   },
-  data() {
+  data () {
     return {
       inputValue: 0,
       windowHeight: "",
@@ -68,10 +78,10 @@ export default {
     };
   },
   watch: {
-    value(val) {
+    value (val) {
       this.inputValue = +val;
     },
-    inputValue(newVal, oldVal) {
+    inputValue (newVal, oldVal) {
       if (+newVal !== +oldVal) {
         let a = null;
         if (this.index != undefined) {
@@ -81,16 +91,21 @@ export default {
         }
         this.$emit("change", a);
       }
+    },
+    item (newVal, oldVal) {
+      console.log('newVal_', newVal);
+      console.log('oldVal_', oldVal);
+      this.inputValue = newVal.cartNum;
     }
   },
-  created() {
-    console.log("this.item.cartNum_", this.item.cartNum);
+  created () {
+    console.log("this.item.cartNum_", this.item);
 
     this.inputValue = +this.item.cartNum;
   },
   methods: {
     // 要在这里设置一个http请求的加减函数
-    _calcValue(type) {
+    _calcValue (type) {
       if (this.disabled) {
         return;
       }
@@ -118,7 +133,7 @@ export default {
         });
       });
     },
-    _getDecimalScale() {
+    _getDecimalScale () {
       let scale = 1;
       // 浮点型
       if (~~this.step !== this.step) {
@@ -126,7 +141,7 @@ export default {
       }
       return scale;
     },
-    _onBlur(event) {
+    _onBlur (event) {
       let value = event.detail.value;
       console.log(value);
       return;
@@ -143,17 +158,17 @@ export default {
       this.inputValue = value;
     },
     // 显示model
-    ifShow(e) {
+    ifShow (e) {
       this.modelValue = e;
       console.log(this.modelValue);
       this.showHide = true;
     },
     //隐藏model
-    modelHide() {
+    modelHide () {
       this.showHide = false;
     },
     // 确定
-    confirm() {
+    confirm () {
       if (this.modelValue > this.max) {
         this.inputValue = this.max;
       } else {

@@ -17,7 +17,10 @@
           </view>
         </view>
         <view class="classifyDetails">
-          <commidityItem :editorStatus="editor" :selectedArr="selectArr"></commidityItem>
+          <commidityItem
+            :editorStatus="editor"
+            :selectedArr="selectArr"
+          ></commidityItem>
         </view>
       </view>
       <!-- 假如购物车没东西 -->
@@ -38,32 +41,32 @@ export default {
   components: {
     commidityItem
   },
-  data() {
+  data () {
     return {
       editor: true,
       selectArr: []
     };
   },
-  onLoad(option) {
+  onLoad (option) {
     if (option.productIds) {
       const selectArr = option.productIds.split(",");
       console.log("selectArr_", selectArr);
       this.selectArr = selectArr;
     }
   },
-  onShow() {
+  onShow () {
     // console.log("ONSHOW");
     this.getShopCartInfo();
   },
   computed: {
-    ...mapGetters(["getShopCartList"])
+    // ...mapGetters(["getShopCartList"])
   },
   methods: {
     ...mapActions({
       getShopCartInfo: "GetShopCartInfo"
     }),
     // 改变当前是编辑状态还是完成状态
-    reverseEditor() {
+    reverseEditor () {
       this.editor = !this.editor;
     }
   }
