@@ -121,6 +121,7 @@ export default {
     goPage (url) {
       console.log(url)
       this.$navTo(url)
+      this.jumpPageShow = false
     },
     showPage () {
       this.jumpPageShow = !this.jumpPageShow

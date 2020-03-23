@@ -198,24 +198,24 @@
         style="margin-bottom:0px;"
       >
         <view class="parameter skuText">
-          <text class="skuInfo questionTitle">顾客评论（126）</text>
+          <text class="skuInfo questionTitle"
+            >顾客评论（{{ comments.length }}）</text
+          >
         </view>
         <view class="parameter question">
           <text>查看全部</text>
           <img src="static/icon/main/home_right-2.svg" alt />
         </view>
       </view>
-      <view class="commentInfo">
+      <view class="commentInfo" v-for="(item, index) of comments" :key="index">
         <view class="commentTitle">
           <view class="userInfo">
             <img src="static/img/home.png" alt />
-            <text>张三</text>
+            <text>{{ item.nickname }}</text>
           </view>
-          <view class="commentTime">2019-12-13 12:00:12</view>
+          <view class="commentTime">{{ item.createTime }}</view>
         </view>
-        <view class="commentContent"
-          >评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</view
-        >
+        <view class="commentContent">{{ item.content }}</view>
       </view>
     </view>
     <!-- 基本信息 说明书 服务保障 -->
@@ -270,7 +270,7 @@ export default {
       console.log('commodityDetails_', res.data)
       this.product = res.data.product
       this.tenant = res.data.tenant
-      this.comments = res.data.comments
+      this.comments = res.data.comments.slice(0, 4)
       this.basicInfo = [
         {
           label: '通用名',
