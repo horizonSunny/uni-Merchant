@@ -1,6 +1,10 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar" :styleInfo="{ backgroundColor: '#fff' }" jumpButton="black">
+    <tob-bar
+      slot="topBar"
+      :styleInfo="{ backgroundColor: '#fff' }"
+      jumpButton="black"
+    >
       <text slot="title" style="color:#000">我的订单</text>
       <img
         src="static/icon/main/D_search.svg"
@@ -20,7 +24,8 @@
             :class="{ current: index === tabCurrentIndex }"
             :id="'tab' + index"
             @click="changeTab(index)"
-          >{{ item.name }}</view>
+            >{{ item.name }}</view
+          >
         </view>
         <!-- 下拉刷新组件 -->
         <mix-pulldown-refresh
@@ -62,25 +67,39 @@
                   >
                     <view class="productImg">
                       <!-- src="static/mine/Bitmap.png" -->
-                      <img :src="itemInfo['productImage'][0]" alt width="60" height="60" />
+                      <img
+                        :src="itemInfo['productImage'][0]"
+                        alt
+                        width="60"
+                        height="60"
+                      />
                     </view>
                     <view class="drugsInfo">
                       <view class="drugName">
                         <view class="prodcutDetails">
-                          <text class="mark" v-show="itemInfo.isMp === 0">OTC</text>
+                          <text class="mark" v-show="itemInfo.isMp === 0"
+                            >OTC</text
+                          >
                           <text
                             class="mark"
                             v-show="itemInfo.isMp === 1"
                             style="color:red;border: 1px solid green;"
-                          >OTC</text>
-                          <text class="mark" v-show="itemInfo.isMp === 2">RX</text>
-                          <text class="mark" v-show="itemInfo.isMp === 3">其他</text>
+                            >OTC</text
+                          >
+                          <text class="mark" v-show="itemInfo.isMp === 2"
+                            >RX</text
+                          >
+                          <text class="mark" v-show="itemInfo.isMp === 3"
+                            >其他</text
+                          >
                           <view class="name">{{ itemInfo.productName }}</view>
                           <view class="price">¥ {{ itemInfo["price"] }}</view>
                         </view>
                         <view class="drugSpec">
                           <text>{{ itemInfo.productSpecif }}</text>
-                          <text style="float:right">x{{ itemInfo.cartNum }}</text>
+                          <text style="float:right"
+                            >x{{ itemInfo.cartNum }}</text
+                          >
                         </view>
                         <!-- <text>{{ item.productName }}</text> -->
                       </view>
@@ -98,25 +117,35 @@
                         indentItem.orderStatus === 5 ||
                           indentItem.orderStatus === 4
                       "
-                      @click="deleteOrder(indentItem,tabItem.newsList,indentIndex)"
-                    >删除订单</view>
+                      @click="
+                        deleteOrder(indentItem, tabItem.newsList, indentIndex)
+                      "
+                      >删除订单</view
+                    >
                     <view
                       class="pray"
                       v-if="indentItem.orderStatus === 0"
                       @click="openModal(indentItem)"
-                    >取消订单</view>
+                      >取消订单</view
+                    >
                     <view
                       class="active"
                       v-if="indentItem.orderStatus === 5"
                       @click="repurchase(indentItem)"
-                    >重新购买</view>
-                    <view class="active" v-if="indentItem.orderStatus === 3">查看物流</view>
+                      >重新购买</view
+                    >
+                    <view class="active" v-if="indentItem.orderStatus === 3"
+                      >查看物流</view
+                    >
                     <view
                       class="active"
                       v-if="indentItem.orderStatus === 4"
                       @click="jumpInfo(indentItem, indentItem.orderStatus)"
-                    >评价</view>
-                    <view class="active" v-if="indentItem.orderStatus === 0">付款</view>
+                      >评价</view
+                    >
+                    <view class="active" v-if="indentItem.orderStatus === 0"
+                      >付款</view
+                    >
                   </view>
                 </view>
 
@@ -127,7 +156,11 @@
           </swiper>
         </mix-pulldown-refresh>
       </view>
-      <cancelOrder ref="cancelOrder" :currentOpeateOrder="currentOpeateOrder" :goBack="false"></cancelOrder>
+      <cancelOrder
+        ref="cancelOrder"
+        :currentOpeateOrder="currentOpeateOrder"
+        :goBack="false"
+      ></cancelOrder>
     </view>
   </body-wrap>
 </template>
@@ -152,8 +185,8 @@ export default {
   },
   computed: {
     ...mapGetters(["searchLibrary"]),
-    orderStatus() {
-      return function(status) {
+    orderStatus () {
+      return function (status) {
         switch (status) {
           case -1:
             return "申请退款";
@@ -185,17 +218,20 @@ export default {
       };
     }
   },
-  onLoad(option) {
-    console.log("option.id_", option.orderStatus); //打印出上个页面传递的参数。
+  onLoad (option) {
+    // console.log("option.id_", option.orderStatus); //打印出上个页面传递的参数。
     this.tabCurrentIndex = Number(option.orderStatus);
-    this.loadTabbars();
+    // this.loadTabbars();
   },
-  onShow() {
+  onShow () {
     // console.log("option.id_", option.orderStatus); //打印出上个页面传递的参数。
     // this.tabCurrentIndex = Number(option.orderStatus);
-    this.loadTabbars();
+    // this.loadTabbars();
+    setTimeout(() => {
+      this.loadTabbars();
+    }, 0);
   },
-  data() {
+  data () {
     return {
       tabCurrentIndex: 0,
       tabBars: [],
@@ -206,7 +242,7 @@ export default {
   },
   methods: {
     //获取分类
-    loadTabbars() {
+    loadTabbars () {
       let tabList = json.indentTabList;
       tabList.forEach(item => {
         item.newsList = [];
@@ -221,7 +257,7 @@ export default {
       this.loadNewsList("add");
     },
     //tab切换
-    async changeTab(e) {
+    async changeTab (e) {
       if (scrollTimer) {
         //多次切换只执行最后一次
         clearTimeout(scrollTimer);
@@ -278,7 +314,7 @@ export default {
       }, 100);
     },
     //加载数据
-    loadNewsList(type) {
+    loadNewsList (type) {
       let tabItem = this.tabBars[this.tabCurrentIndex];
       //type add 加载更多 refresh下拉刷新
       if (type === "add") {
@@ -341,21 +377,21 @@ export default {
       });
     },
     //下拉刷新
-    onPulldownReresh() {
+    onPulldownReresh () {
       this.loadNewsList("refresh");
     },
     //上滑加载
-    loadMore() {
+    loadMore () {
       this.loadNewsList("add");
     },
     //设置scroll-view是否允许滚动，在小程序里下拉刷新时避免列表可以滑动
-    setEnableScroll(enable) {
+    setEnableScroll (enable) {
       if (this.enableScroll !== enable) {
         this.enableScroll = enable;
       }
     },
     //获得元素的size
-    getElSize(id) {
+    getElSize (id) {
       return new Promise((res, rej) => {
         let el = uni.createSelectorQuery().select("#" + id);
         el.fields(
@@ -371,16 +407,16 @@ export default {
       });
     },
     // 跳转商品详情页面
-    goDetails(item) {
+    goDetails (item) {
       this.$store.commit("SET_ORDER_DETAILS", item);
       this.$navTo("../myIndent/indentDetails");
     },
     // 跳转页面
-    gotoNextPage(url, parameters) {
+    gotoNextPage (url, parameters) {
       this.$navTo(url, parameters);
     },
     // jumpInfo
-    jumpInfo(info, key) {
+    jumpInfo (info, key) {
       // console.log('info_', info);
       this.$store.commit("SET_INDENT_INFO", info);
       switch (key) {
@@ -393,7 +429,7 @@ export default {
       }
     },
     // 重新购买
-    repurchase(indentItem) {
+    repurchase (indentItem) {
       buyAgain({
         orderNo: indentItem.orderNo
       }).then(res => {
@@ -403,14 +439,14 @@ export default {
       });
     },
     //删除订单
-    deleteOrder(indentItem, tabItem, index) {
+    deleteOrder (indentItem, tabItem, index) {
       deleteOrder({ orderNo: indentItem.orderNo }).then(res => {
         console.log("res_", res);
         tabItem.splice(index, 1);
       });
     },
     // 取消订单
-    openModal(openModal) {
+    openModal (openModal) {
       this.currentOpeateOrder = openModal;
       this.$refs.cancelOrder.openModal();
     }
