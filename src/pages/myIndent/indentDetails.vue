@@ -327,8 +327,8 @@ export default {
       // uni.navigateBack();
     },
     // 付款
-    pay (orderId) {
-      alipay({ orderNo: orderId }).then(resInfo => {
+    pay (orderNo) {
+      alipay({ orderNo: orderNo }).then(resInfo => {
         console.log('alipay_', resInfo);
         const div = document.createElement('div')
         div.innerHTML = resInfo;
