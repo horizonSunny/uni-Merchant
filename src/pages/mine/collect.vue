@@ -25,6 +25,11 @@
             class="uni-list-cell uni-list-cell-pd"
             v-for="(item, index) in getCollectInfo"
             :key="index"
+            @click="
+              gotoNextPage('../commodityDetails/index', {
+                productId: item.productId
+              })
+            "
           >
             <uni-swipe-action>
               <uni-swipe-action-item
@@ -150,7 +155,15 @@ export default {
     // 编辑
     editor () {
       this.editorInfo = !this.editorInfo
-    }
+    },
+    // 跳转页面
+    gotoNextPage (url, parameters) {
+      if (this.editorInfo) {
+        return
+      }
+      console.log('parameters_', parameters);
+      this.$navTo(url, parameters);
+    },
   },
   onLoad () {
     this.getProductCollect({
