@@ -403,8 +403,8 @@ export default {
       console.log("params_", params);
       generateOrder(params).then(
         res => {
-          console.log("res_", res.data.orderId);
-          alipay({ orderNo: res.data.orderId }).then(resInfo => {
+          console.log("res_", res.data.orderNo);
+          alipay({ orderNo: res.data.orderNo }).then(resInfo => {
             console.log('alipay_', resInfo);
             const div = document.createElement('div')
             div.innerHTML = resInfo;

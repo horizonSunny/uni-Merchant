@@ -125,7 +125,9 @@
                     <view
                       class="pray"
                       v-if="indentItem.orderStatus === 0"
-                      @click="openModal(indentItem)"
+                      @click="
+                        openModal(indentItem, tabItem.newsList, indentIndex)
+                      "
                       >取消订单</view
                     >
                     <view
@@ -374,7 +376,7 @@ export default {
         console.log("tabItem.newsList_", tabItem.newsList);
         const orderProductList = tabItem.newsList;
         tabItem.lastOrderId =
-          orderProductList[orderProductList.length - 1].orderId;
+          orderProductList[orderProductList.length - 1] && orderProductList[orderProductList.length - 1].orderId;
         // console.log("tabItem.lastOrderId_", tabItem.lastOrderId);
         // tabItem.lastOrderId++;
       });
@@ -449,13 +451,13 @@ export default {
       });
     },
     // 取消订单
-    openModal (openModal) {
-      this.currentOpeateOrder = openModal;
+    openModal (indentItem, newList, indentIndex) {
+      this.currentOpeateOrder = indentItem;
       this.$refs.cancelOrder.openModal();
     },
     // 付款
-    pay (orderId) {
-      alipay({ orderNo: orderId }).then(resInfo => {
+    pay (orderNo) {
+      alipay({ orderNo: orderNo }).then(resInfo => {
         // console.log('alipay_', resInfo);
         // const div = document.createElement('div')
         // div.innerHTML = resInfo;
