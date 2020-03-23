@@ -143,7 +143,10 @@
                       @click="jumpInfo(indentItem, indentItem.orderStatus)"
                       >评价</view
                     >
-                    <view class="active" v-if="indentItem.orderStatus === 0"
+                    <view
+                      class="active"
+                      v-if="indentItem.orderStatus === 0"
+                      @click="pay(indentItem.orderNo)"
                       >付款</view
                     >
                   </view>
@@ -173,7 +176,7 @@ import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load
 import * as json from "@/config/json";
 import cancelOrder from "./cancelOrder";
 // import { myIndent } from '@/config/test'
-import { getOrderList, buyAgain, deleteOrder } from "@/service/index";
+import { getOrderList, buyAgain, deleteOrder, alipay } from "@/service/index";
 let windowWidth = 0,
   scrollTimer = false,
   tabBar;
@@ -449,6 +452,16 @@ export default {
     openModal (openModal) {
       this.currentOpeateOrder = openModal;
       this.$refs.cancelOrder.openModal();
+    },
+    // 付款
+    pay (orderId) {
+      alipay({ orderNo: orderId }).then(resInfo => {
+        // console.log('alipay_', resInfo);
+        // const div = document.createElement('div')
+        // div.innerHTML = resInfo;
+        // document.body.appendChild(div)
+        // document.forms[0].submit()
+      });
     }
   }
 };

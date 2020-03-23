@@ -1,14 +1,22 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar" :styleInfo="{ backgroundColor: '#fff' }" jumpButton="black">
+    <tob-bar
+      slot="topBar"
+      :styleInfo="{ backgroundColor: '#fff' }"
+      jumpButton="black"
+    >
       <text slot="title" style="color:#000">订单详情</text>
     </tob-bar>
     <view slot="content" class="content">
       <view class="indent">
         <view class="titleInfo">
           <view class="remindInfo">
-            <view class="status">{{orderStatus(getOrderDetails.orderStatus).title}}</view>
-            <view class="statusDetails">{{orderStatus(getOrderDetails.orderStatus).msg}}</view>
+            <view class="status">{{
+              orderStatus(getOrderDetails.orderStatus).title
+            }}</view>
+            <view class="statusDetails">{{
+              orderStatus(getOrderDetails.orderStatus).msg
+            }}</view>
           </view>
           <img :src="orderStatus(getOrderDetails.orderStatus).iconPath" alt />
         </view>
@@ -16,10 +24,16 @@
           <view>
             <view class="user">
               <img src="static/icon/merchantsIntr/location.svg" alt />
-              <view class="userName">{{getOrderDetails.deliveryAddress.fullName}}</view>
-              <view class="phone">{{getOrderDetails.deliveryAddress.phone}}</view>
+              <view class="userName">{{
+                getOrderDetails.deliveryAddress.fullName
+              }}</view>
+              <view class="phone">{{
+                getOrderDetails.deliveryAddress.phone
+              }}</view>
             </view>
-            <view class="address">{{getOrderDetails.deliveryAddress.address}}</view>
+            <view class="address">{{
+              getOrderDetails.deliveryAddress.address
+            }}</view>
           </view>
           <view class="pickUp" v-show="true">
             <view class="user">
@@ -61,16 +75,17 @@
                     class="mark"
                     v-show="item.isMp === 1"
                     style="color:red;border: 1px solid green;"
-                  >OTC</text>
+                    >OTC</text
+                  >
                   <text class="mark" v-show="item.isMp === 2">RX</text>
                   <text class="mark" v-show="item.isMp === 3">其他</text>
-                  <text>{{item.productName}}</text>
+                  <text>{{ item.productName }}</text>
                 </view>
-                <view class="drugPrice">¥ {{item.price}}</view>
+                <view class="drugPrice">¥ {{ item.price }}</view>
               </view>
               <view class="drugSpec">
-                <view>已选择：{{item.productSpecif}}</view>
-                <view>X{{item.cartNum}}</view>
+                <view>已选择：{{ item.productSpecif }}</view>
+                <view>X{{ item.cartNum }}</view>
               </view>
             </view>
           </view>
@@ -78,13 +93,16 @@
         <view class="separate logisticsInfo indentInfo">
           <view class="logistics">
             发票信息
-            <view
-              class="home_right"
-            >{{getOrderDetails.invoice&& getOrderDetails.invoice.invoiceType=== 2 ? '个人发票 ':'无需发票'}}</view>
+            <view class="home_right">{{
+              getOrderDetails.invoice &&
+              getOrderDetails.invoice.invoiceType === 2
+                ? "个人发票 "
+                : "无需发票"
+            }}</view>
           </view>
           <view class="logistics">
             商品总价
-            <view class="home_right">¥{{getOrderDetails.totalPrice}}</view>
+            <view class="home_right">¥{{ getOrderDetails.totalPrice }}</view>
           </view>
           <view class="logistics">
             <view>
@@ -97,17 +115,17 @@
         <view class="separate logisticsInfo indentInfo">
           <view class="indentTotal">
             <text>订单总价</text>
-            <text>¥{{getOrderDetails.totalPrice}}</text>
+            <text>¥{{ getOrderDetails.totalPrice }}</text>
           </view>
         </view>
         <view class="separate logisticsInfo">
           <view class="logistics">
             订单编号
-            <view class="home_right">{{getOrderDetails.orderNo}}</view>
+            <view class="home_right">{{ getOrderDetails.orderNo }}</view>
           </view>
           <view class="logistics">
             下单时间
-            <view class="home_right">{{getOrderDetails.createTime}}</view>
+            <view class="home_right">{{ getOrderDetails.createTime }}</view>
           </view>
         </view>
         <view class="separate logisticsInfo">
@@ -123,42 +141,57 @@
                 class="pray"
                 @click="deleteOrder(getOrderDetails)"
                 v-if="
-                        getOrderDetails.orderStatus === 5 ||
-                          getOrderDetails.orderStatus === 4
-                      "
-              >删除订单</view>
+                  getOrderDetails.orderStatus === 5 ||
+                    getOrderDetails.orderStatus === 4
+                "
+                >删除订单</view
+              >
               <view
                 class="pray"
                 v-if="getOrderDetails.orderStatus === 0"
                 @click="openModal(getOrderDetails)"
-              >取消订单</view>
+                >取消订单</view
+              >
               <view
                 class="active"
                 v-if="getOrderDetails.orderStatus === 5"
                 @click="repurchase()"
-              >重新购买</view>
-              <view class="active" v-if="getOrderDetails.orderStatus === 3">查看物流</view>
+                >重新购买</view
+              >
+              <view class="active" v-if="getOrderDetails.orderStatus === 3"
+                >查看物流</view
+              >
               <view
                 class="active"
                 v-if="getOrderDetails.orderStatus === 4"
                 @click="jumpInfo(getOrderDetails, getOrderDetails.orderStatus)"
-              >评价</view>
-              <view class="active" v-if="getOrderDetails.orderStatus === 0">付款</view>
+                >评价</view
+              >
+              <view
+                class="active"
+                v-if="getOrderDetails.orderStatus === 0"
+                @click="pay(getOrderDetails.orderNo)"
+                >付款</view
+              >
             </view>
           </view>
         </view>
       </view>
-      <cancelOrder ref="cancelOrder" :currentOpeateOrder="this.currentOpeateOrder" :goBack="true"></cancelOrder>
+      <cancelOrder
+        ref="cancelOrder"
+        :currentOpeateOrder="this.currentOpeateOrder"
+        :goBack="true"
+      ></cancelOrder>
     </view>
   </body-wrap>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-import { buyAgain, deleteOrder } from "@/service/index";
+import { buyAgain, deleteOrder, alipay } from "@/service/index";
 import cancelOrder from "./cancelOrder";
 export default {
   components: { cancelOrder },
-  data() {
+  data () {
     return {
       editor: true,
       // 选择自提时候，改变为true
@@ -166,16 +199,16 @@ export default {
       currentOpeateOrder: null
     };
   },
-  onLoad(option) {
+  onLoad (option) {
     console.log("indentDetails_", option);
   },
-  onShow() {
+  onShow () {
     console.log("indentDetails_", this.getOrderDetails);
   },
   computed: {
     ...mapGetters(["getOrderDetails"]),
-    orderStatus() {
-      return function(status) {
+    orderStatus () {
+      return function (status) {
         switch (status) {
           case -1:
             return {
@@ -245,18 +278,18 @@ export default {
   methods: {
     ...mapActions({}),
     // 获取当前页面位置
-    prescription() {
+    prescription () {
       this.$navTo(
         "../myIndent/prescribingInformation",
         this.getOrderDetails.prescribInfo
       );
     },
     // toComment去评论页面
-    toComment() {
+    toComment () {
       this.$navTo("../myIndent/comment");
     },
     // 重新购买
-    repurchase() {
+    repurchase () {
       buyAgain({
         orderNo: this.getOrderDetails.orderNo
       }).then(res => {
@@ -265,7 +298,7 @@ export default {
         });
       });
     },
-    jumpInfo(info, key) {
+    jumpInfo (info, key) {
       // console.log('info_', info);
       this.$store.commit("SET_INDENT_INFO", info);
       switch (key) {
@@ -278,7 +311,7 @@ export default {
       }
     },
     //删除订单
-    deleteOrder(indentItem) {
+    deleteOrder (indentItem) {
       deleteOrder({ orderNo: indentItem.orderNo }).then(res => {
         uni.navigateBack();
         // console.log("res_", res);
@@ -286,12 +319,22 @@ export default {
       });
     },
     // 取消订单
-    openModal(openModal) {
+    openModal (openModal) {
       this.currentOpeateOrder = openModal;
       console.log("openModal", this.currentOpeateOrder);
 
       this.$refs.cancelOrder.openModal();
       // uni.navigateBack();
+    },
+    // 付款
+    pay (orderId) {
+      alipay({ orderNo: orderId }).then(resInfo => {
+        console.log('alipay_', resInfo);
+        const div = document.createElement('div')
+        div.innerHTML = resInfo;
+        document.body.appendChild(div)
+        document.forms[0].submit()
+      });
     }
   }
 };
