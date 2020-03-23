@@ -12,7 +12,11 @@
         v-if="true"
       >
         <view class="clearBoth" @click="clearBoth">清空</view>
-        <view class="contentInfo" v-for="(item, index) in getProductVisit" :key="index">
+        <view
+          class="contentInfo"
+          v-for="(item, index) in getProductVisit"
+          :key="index"
+        >
           <view class="timeShow">{{ item.dataTime }}</view>
           <view
             v-for="(itemInfo, indexInfo) in item.productVisits"
@@ -20,11 +24,26 @@
             class="productInfo"
           >
             <uni-swipe-action>
-              <uni-swipe-action-item :options="options" @click="onClick($event, itemInfo, item)">
-                <view class="commidityInfo" @click.stop>
+              <uni-swipe-action-item
+                :options="options"
+                @click="onClick($event, itemInfo, item)"
+              >
+                <view
+                  class="commidityInfo"
+                  @click="
+                    gotoNextPage('../commodityDetails/index', {
+                      productId: itemInfo.productId
+                    })
+                  "
+                >
                   <view class="productImg">
                     <!-- :src="/static/img/home.png" -->
-                    <img :src="itemInfo.productImage[0]" alt width="60" height="60" />
+                    <img
+                      :src="itemInfo.productImage[0]"
+                      alt
+                      width="60"
+                      height="60"
+                    />
                   </view>
                   <view class="drugsInfo">
                     <view class="drugName">
@@ -67,7 +86,7 @@ export default {
     uniSwipeAction,
     uniSwipeActionItem
   },
-  data() {
+  data () {
     return {
       options: [
         {
@@ -91,13 +110,13 @@ export default {
       getHistory: "ProductVisit"
       // deleteProductVisit: 'DeleteProductVisit'
     }),
-    clearBoth() {
+    clearBoth () {
       // console.log('清空');
       deleteProductVisitAll().then(res => {
         this.$store.commit("CLEAR_PRODUCT_VISIT");
       });
     },
-    onClick(e, itemInfo, item) {
+    onClick (e, itemInfo, item) {
       deleteProductVisit({ productVisitId: itemInfo.productVisitId }).then(
         res => {
           const index = item.productVisits.findIndex(itemInfoDel => {
@@ -116,7 +135,7 @@ export default {
       );
     },
     // 滚动到底部
-    scrolltolower() {
+    scrolltolower () {
       console.log("scrolltolower_", this.getProductVisit);
       let data = this.getProductVisit;
       let lastTime = data[data.length - 1];
@@ -125,10 +144,15 @@ export default {
       this.getHistory({
         productVisitId: lastProductVisitId.productVisitId,
         pageSize: this.pageSize
-      }).then(res => {});
-    }
+      }).then(res => { });
+    },
+    // 跳转页面
+    gotoNextPage (url, parameters) {
+      console.log('parameters_', parameters);
+      this.$navTo(url, parameters);
+    },
   },
-  onLoad() {
+  onLoad () {
     // this.getMedicineMan()
     this.getHistory({
       pageSize: this.pageSize
@@ -140,7 +164,7 @@ export default {
     });
     // getProductVisit
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.$store.commit("CLEAR_PRODUCT_VISIT");
   }
 };

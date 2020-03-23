@@ -7,7 +7,11 @@
       <view class="indent">
         <view class="userInfo">
           <view
-            @click="gotoNextPage('../deliveryAddr/index', {activeAddressIds:addressIds})"
+            @click="
+              gotoNextPage('../deliveryAddr/index', {
+                activeAddressIds: addressIds
+              })
+            "
             v-if="selectAddress"
           >
             <view class="user">
@@ -17,17 +21,24 @@
             </view>
             <view class="address">{{ selectAddress.address }}</view>
           </view>
-          <view v-else @click="gotoNextPage('../deliveryAddr/newAddr', {})" class="noAddress">
+          <view
+            v-else
+            @click="gotoNextPage('../deliveryAddr/newAddr', {})"
+            class="noAddress"
+          >
             <img src="/static/myIndent/Add address.svg" alt />
             <view>添加收货地址</view>
           </view>
           <view class="pickUp" v-if="pickUp">
             <view class="user">
               <img src="static/shoppingCart/shopping cart-business.svg" alt />
-              <view class="userName">门店自提点：{{this.tenant.tenantName}}</view>
+              <view class="userName"
+                >门店自提点：{{ this.tenant.tenantName }}</view
+              >
             </view>
             <view class="address">
-              地址：{{this.tenant.province}} {{this.tenant.city}} {{this.tenant.area}} {{this.tenant.address}}
+              地址：{{ this.tenant.province }} {{ this.tenant.city }}
+              {{ this.tenant.area }} {{ this.tenant.address }}
               <br />营业时间：每个工作日 9:00-22:00
             </view>
           </view>
@@ -50,7 +61,13 @@
             :key="index"
           >
             <view class="productImg">
-              <img :src="item.productImage" @error="imageError(item)" alt width="60" height="60" />
+              <img
+                :src="item.productImage"
+                @error="imageError(item)"
+                alt
+                width="60"
+                height="60"
+              />
             </view>
             <view class="drugsInfo">
               <view class="drugName">
@@ -60,7 +77,8 @@
                     class="mark"
                     v-show="item.isMp === 1"
                     style="color:red;border: 1px solid green;"
-                  >OTC</text>
+                    >OTC</text
+                  >
                   <text class="mark" v-show="item.isMp === 2">RX</text>
                   <text class="mark" v-show="item.isMp === 3">其他</text>
                   <text>{{ item.productName }}</text>
@@ -81,7 +99,7 @@
               <text class="marginLeft">8.00元起</text>
             </view>
             <view class="home_right">
-              ¥{{shipperSelected['shipperAmount']}}.00
+              ¥{{ shipperSelected["shipperAmount"] }}.00
               <img
                 class="marginLeft"
                 src="static/icon/main/home_right-2.svg"
@@ -93,14 +111,22 @@
             优惠券
             <view class="home_right">
               ¥0.00
-              <img class="marginLeft" src="static/icon/main/home_right-2.svg" alt />
+              <img
+                class="marginLeft"
+                src="static/icon/main/home_right-2.svg"
+                alt
+              />
             </view>
           </view>
           <view class="logistics">
-            共{{caculateTotal.totalNum}}件商品 应付金额（含运费）
-            <view
-              class="home_right"
-            >¥{{caculateTotal.totalPrice+shipperSelected['shipperAmount']+".00"}}</view>
+            共{{ caculateTotal.totalNum }}件商品 应付金额（含运费）
+            <view class="home_right"
+              >¥{{
+                caculateTotal.totalPrice +
+                  shipperSelected["shipperAmount"] +
+                  ".00"
+              }}</view
+            >
           </view>
         </view>
         <view class="separate logisticsInfo">
@@ -112,11 +138,18 @@
             <view>发票信息</view>
             <view class="home_right">
               请选择
-              <img class="marginLeft" src="static/icon/main/home_right-2.svg" alt />
+              <img
+                class="marginLeft"
+                src="static/icon/main/home_right-2.svg"
+                alt
+              />
             </view>
           </view>
         </view>
-        <view class="effectiveGoods" v-if="newIndentClassification.invalidIndent.length !== 0">
+        <view
+          class="effectiveGoods"
+          v-if="newIndentClassification.invalidIndent.length !== 0"
+        >
           <view class="title">失效商品</view>
           <view
             class="commidityInfo"
@@ -125,7 +158,13 @@
           >
             <view class="failure">失效</view>
             <view class="productImg">
-              <img :src="item.productImage" @error="imageError(item)" alt width="60" height="60" />
+              <img
+                :src="item.productImage"
+                @error="imageError(item)"
+                alt
+                width="60"
+                height="60"
+              />
             </view>
             <view class="drugsInfo">
               <view class="failureInfo">
@@ -134,7 +173,8 @@
                   class="mark"
                   v-show="item.isMp === 1"
                   style="color:red;border: 1px solid green;"
-                >OTC</text>
+                  >OTC</text
+                >
                 <text class="mark" v-show="item.isMp === 2">RX</text>
                 <text class="mark" v-show="item.isMp === 3">其他</text>
                 <text>{{ item.productName }}</text>
@@ -153,11 +193,20 @@
       <view class="payment">
         <view class="amount">
           合记
-          <text>¥{{caculateTotal.totalPrice+shipperSelected['shipperAmount']+".00"}}</text>
+          <text
+            >¥{{
+              caculateTotal.totalPrice +
+                shipperSelected["shipperAmount"] +
+                ".00"
+            }}</text
+          >
         </view>
         <view class="operate" @click="pay">去支付</view>
       </view>
-      <purchasefailed v-if="efficacyInfo.length!==0" :efficacyInfo="efficacyInfo"></purchasefailed>
+      <purchasefailed
+        v-if="efficacyInfo.length !== 0"
+        :efficacyInfo="efficacyInfo"
+      ></purchasefailed>
       <distribution
         ref="distribution"
         :shipperType="shipperType"
@@ -183,7 +232,7 @@ export default {
     distribution,
     invoice
   },
-  data() {
+  data () {
     return {
       editor: true,
       // 选择自提时候，改变为true
@@ -201,11 +250,11 @@ export default {
       efficacyInfo: []
     };
   },
-  onLoad(option) {
+  onLoad (option) {
     // 因为要用到用药人
     this.getMedicineManInfo();
   },
-  onShow() {
+  onShow () {
     console.log("tenant_", this.tenant);
     this.haveRx = this.newIndentClassification.activeIndent.some(item => {
       return item.isMp === 2;
@@ -233,7 +282,7 @@ export default {
       "getNewIndent",
       "getMedicineMan"
     ]),
-    caculateTotal() {
+    caculateTotal () {
       let totalNum = 0,
         totalPrice = 0;
       this.newIndentClassification.activeIndent.forEach(element => {
@@ -247,7 +296,7 @@ export default {
         totalPrice
       };
     },
-    selectAddress() {
+    selectAddress () {
       if (this.selectAddressInfo) {
         return this.selectAddressInfo;
       } else {
@@ -260,32 +309,32 @@ export default {
       getMedicineManInfo: "GetMedicineMan"
     }),
     // 改变当前是编辑状态还是完成状态
-    reverseEditor() {
+    reverseEditor () {
       this.editor = !this.editor;
     },
     // 获取当前页面位置
-    prescription() {
+    prescription () {
       this.$navTo("../prescription/index");
     },
     // 打开快递配送
-    openModal() {
+    openModal () {
       this.$refs.distribution.openModal();
     },
     // 跳转页面
-    gotoNextPage(url, parameters) {
+    gotoNextPage (url, parameters) {
       this.$navTo(url, parameters);
     },
     // 打开发票弹窗
-    showInvoice() {
+    showInvoice () {
       this.$refs.invoice.openModal();
     },
     // 图片加载失败
-    imageError(item) {
+    imageError (item) {
       console.log("imageError_", item);
       item.productImage = this.correctUrl;
     },
     // 运费模版选择
-    shipperChange(e) {
+    shipperChange (e) {
       console.log("shipperSelected_", e);
       const shipper = e;
       const select = this.shipperType.find(item => {
@@ -300,7 +349,7 @@ export default {
       }
     },
     //付款
-    pay() {
+    pay () {
       // 先生成订单，看有没有问题
       console.log("addressId_", this.selectAddress);
       console.log("invoice_prescribInfo_", this.getNewIndent);
@@ -355,7 +404,13 @@ export default {
       generateOrder(params).then(
         res => {
           console.log("res_", res.data.orderId);
-          alipay({ orderNo: res.data.orderId });
+          alipay({ orderNo: res.data.orderId }).then(resInfo => {
+            console.log('alipay_', resInfo);
+            const div = document.createElement('div')
+            div.innerHTML = resInfo;
+            document.body.appendChild(div)
+            document.forms[0].submit()
+          });
         },
         error => {
           console.log("error_", error);
