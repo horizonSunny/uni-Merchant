@@ -6,7 +6,6 @@ export default {
   onLaunch: function () {
     this.getKeyWord()
     this.getMainInfo()
-    this.getAddress()
     this.getMedicineTemplate()
     console.log('App Launch')
   },
@@ -20,7 +19,6 @@ export default {
     ...mapActions({
       getMainInfo: 'GetMainInfo',
       getKeyWord: 'GetKeyWord',
-      getAddress: 'GetAddressInfo',
       getMedicineTemplate: 'GetMedicineTemplate'
     })
   }

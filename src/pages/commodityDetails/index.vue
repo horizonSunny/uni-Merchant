@@ -258,13 +258,20 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
+import { channelNo } from "@/config/global";
+import * as storage from "@/config/storage";
 import { getProductDetails, newCart, setProductVisit } from '@/service/index'
 export default {
-  computed: mapState(['forcedLogin', 'hasLogin', 'userName']),
+  computed: {
+    ...mapGetters(["getUserDetails", "getStatisticData"])
+  },
   onLoad (option) {
-    // 做页面埋点，添加浏览记录
-    setProductVisit({ productId: option.productId }).then(() => { })
+    // 做页面埋点，添加浏览记录，首先校验有无登陆记录
+    // console.log('getUserDetails_', this.getUserDetails);
+    if (storage.getSync("access_token") !== channelNo) {
+      setProductVisit({ productId: option.productId })
+    }
     // 获取商品信息
     getProductDetails({ productId: option.productId }).then(res => {
       console.log('commodityDetails_', res.data)
