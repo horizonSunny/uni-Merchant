@@ -6,18 +6,20 @@
     <view slot="content" class="content">
       <view class="contentInfo">
         <view class="title">
-          <text>请选择用药</text>
+          <text>请选择用药人</text>
           <text></text>
         </view>
         <view class="contentWrap">
           <scroll-view scroll-x="true" class="scrollView">
             <view class="patient active">
               <view class="editor">
-                <view>{{prescribingInformation.fullName}}</view>
+                <view>{{ prescribingInformation.fullName }}</view>
                 <img src="static/myIndent/shopping cart-editdu-sel.svg" alt />
               </view>
-              <view>{{prescribingInformation.sex === 1?'先生':'女士'}}</view>
-              <view>{{prescribingInformation.phone}}</view>
+              <view>{{
+                prescribingInformation.sex === 1 ? "先生" : "女士"
+              }}</view>
+              <view>{{ prescribingInformation.phone }}</view>
             </view>
           </scroll-view>
         </view>
@@ -31,7 +33,7 @@
         </view>
         <view class="contentWrap">
           <img
-            v-for="(item,index) in prescribingImg"
+            v-for="(item, index) in prescribingImg"
             :key="index"
             :src="item"
             alt
@@ -49,19 +51,19 @@
 import upImg from "@/components/sunui-upimg_v2.72/components/sunui-upimg/sunui-upimg.vue";
 import { mapActions, mapGetters } from "vuex";
 export default {
-  onLoad(option) {
+  onLoad (option) {
     console.log("option_", option);
     this.prescribingInformation = option;
     this.prescribingImg = this.prescribingInformation.prescribImg.split(",");
     console.log("prescribingImg_", this.prescribingImg);
   },
-  data() {
+  data () {
     return {
       prescribingInformation: "",
       prescribingImg: []
     };
   },
-  onShow() {}
+  onShow () { }
 };
 </script>
 <style lang="scss">

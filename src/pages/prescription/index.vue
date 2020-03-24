@@ -7,27 +7,33 @@
       <view class="contentInfo">
         <view class="title">
           <text>请选择用药</text>
-          <text @click="gotoNextPage('../prescription/newPatient', {})">添加</text>
+          <text @click="gotoNextPage('../prescription/newPatient', {})"
+            >添加</text
+          >
         </view>
         <view class="contentWrap">
           <scroll-view scroll-x="true" class="scrollView">
             <view
               class="patient"
-              :class="currentPatient === index?'active':''"
+              :class="currentPatient === index ? 'active' : ''"
               v-for="(item, index) in getMedicineMan"
               :key="index"
               @click="selectPatient(index)"
             >
               <view class="editor">
-                <view>{{item.fullName}}</view>
+                <view>{{ item.fullName }}</view>
                 <img
                   @click.stop="gotoNextPage('../prescription/newPatient', item)"
-                  :src="currentPatient === index?'static/myIndent/shopping cart-editdu-sel.svg':'static/myIndent/shopping cart-editdu-nl.svg'"
+                  :src="
+                    currentPatient === index
+                      ? 'static/myIndent/shopping cart-editdu-sel.svg'
+                      : 'static/myIndent/shopping cart-editdu-nl.svg'
+                  "
                   alt
                 />
               </view>
-              <view>{{item.sex === 1?'先生':'女士'}}</view>
-              <view>{{item.phone}}</view>
+              <view>{{ item.sex === 1 ? "先生" : "女士" }}</view>
+              <view>{{ item.phone }}</view>
             </view>
           </scroll-view>
         </view>
@@ -40,7 +46,11 @@
           <text>上传处方信息</text>
         </view>
         <view class="contentWrap">
-          <up-img @change="imgChange($event)" :upload_count="3" :upimg_preview="preUpLoadImg"></up-img>
+          <up-img
+            @change="imgChange($event)"
+            :upload_count="3"
+            :upimg_preview="preUpLoadImg"
+          ></up-img>
         </view>
         <view class="reminder">
           <text>药店药师审核，请上传正规处方（仅可上传3张）</text>
@@ -57,7 +67,7 @@ import upImg from "@/components/sunui-upimg_v2.72/components/sunui-upimg/sunui-u
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: { upImg },
-  data() {
+  data () {
     return {
       currentPatient: 0,
       prescriptionImg: [],
@@ -72,22 +82,22 @@ export default {
     ...mapActions({
       getMedicineManInfo: "GetMedicineMan"
     }),
-    toNewPatient() {
+    toNewPatient () {
       this.$navTo("/pages/prescription/newPatient");
     },
-    selectPatient(index) {
+    selectPatient (index) {
       this.$store.commit("REVERSE_MEDICINE_MAN", index);
     },
     // 跳转页面
-    gotoNextPage(url, parameters) {
+    gotoNextPage (url, parameters) {
       this.$store.commit("SET_CURRENT_MEDICINE_MAN", parameters);
       this.$navTo(url, parameters);
     },
-    imgChange(e) {
+    imgChange (e) {
       console.log("e_", e);
       this.prescriptionImg = e;
     },
-    confirm() {
+    confirm () {
       console.log("this.prescriptionImg_", this.prescriptionImg);
       // 处方填写完毕,收货人选择收货人列表第一个，只需要把处方图片传递当前订单 ADD_INDENT
       this.$store.commit("ADD_INDENT", {
@@ -99,7 +109,7 @@ export default {
       uni.navigateBack();
     },
     // 生成之前上传的图片
-    preUpLoadImgActive() {
+    preUpLoadImgActive () {
       let preUpLoadImgInfo = [];
       if (
         this.getNewIndent.prescription &&
@@ -114,10 +124,7 @@ export default {
       return preUpLoadImgInfo;
     }
   },
-  onShow() {
-    console.log(213);
-    console.log("invoice_prescribInfo_", this.getNewIndent);
-    // this.getMedicineManInfo();
+  onShow () {
     this.preUpLoadImg = this.preUpLoadImgActive();
   }
   // onLoad() {

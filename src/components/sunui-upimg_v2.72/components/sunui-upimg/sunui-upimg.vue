@@ -20,11 +20,13 @@
             class="sunui-img-removeicon right"
             @click.stop="removeImage(index)"
             v-show="upimg_move"
-          >×</view>
+            >×</view
+          >
           <view
             class="sunui-loader-filecontent"
             v-if="item.upload_percent < 100"
-          >{{ item.upload_percent }}%</view>
+            >{{ item.upload_percent }}%</view
+          >
         </view>
       </block>
       <view
@@ -35,7 +37,10 @@
         :style="upload_img_wh"
       >
         <view>
-          <text class="iconfont icon-mn_shangchuantupian" style="color: #666;"></text>
+          <text
+            class="iconfont icon-mn_shangchuantupian"
+            style="color: #666;"
+          ></text>
         </view>
       </view>
     </view>
@@ -45,7 +50,7 @@
 <script>
 import * as storage from "@/config/storage";
 export default {
-  data() {
+  data () {
     return {
       upload_len: 0,
       upload_cache: [],
@@ -100,12 +105,15 @@ export default {
       }
     }
   },
-  async created() {
+  async created () {
     let _self = this;
     setTimeout(() => {
+      console.log('this.upload_before_list_1', this.upload_before_list);
+
       this.upload_before_list = this.upload_before_list.concat(
         this.upimg_preview
       );
+      console.log('this.upload_before_list_2', this.upload_before_list);
       this.upload_len = this.upload_before_list.length;
       this.upimg_preview.map(item => {
         // step2.这里修改服务器返回字段 ！！！
@@ -116,9 +124,9 @@ export default {
     }, 0);
   },
   methods: {
-    upImage(paths, header) {
+    upImage (paths, header) {
       let _self = this;
-      const promises = paths.map(function(path) {
+      const promises = paths.map(function (path) {
         return promisify(upload)({
           url: _self.url,
           path: path,
@@ -133,24 +141,24 @@ export default {
       });
 
       Promise.all(promises)
-        .then(function(data) {
+        .then(function (data) {
           uni.hideLoading();
           console.log("all_promises_", data);
 
           // _self.upload_cache_list.push(...data);
           _self.emit();
         })
-        .catch(function(res) {
+        .catch(function (res) {
           uni.hideLoading();
         });
     },
-    chooseImage() {
+    chooseImage () {
       let _self = this;
       uni.chooseImage({
-        count: _self.upload_count - _self.upload_before_list.length,
+        count: 1,
         sizeType: ["compressed", "original"],
         sourceType: ["album", "camera"],
-        success: function(res) {
+        success: function (res) {
           for (let i = 0, len = res.tempFiles.length; i < len; i++) {
             res.tempFiles[i]["upload_percent"] = 0;
             _self.upload_before_list.push(res.tempFiles[i]);
@@ -158,18 +166,18 @@ export default {
           _self.upload_cache = res.tempFilePaths;
           _self.upload(_self.upload_auto);
         },
-        fail: function(err) {
+        fail: function (err) {
           console.log(err);
         }
       });
     },
-    async upload(upload_auto) {
+    async upload (upload_auto) {
       let _self = this;
       upload_auto
         ? await _self.upImage(_self.upload_cache, _self.header)
         : console.warn(`传输参数:this.$refs.xx.upload(true)才可上传,默认false`);
     },
-    previewImage(idx) {
+    previewImage (idx) {
       let _self = this;
       let preview = [];
       for (let i = 0, len = _self.upload_before_list.length; i < len; i++) {
@@ -181,14 +189,14 @@ export default {
         urls: preview
       });
     },
-    removeImage(idx) {
+    removeImage (idx) {
       let _self = this;
       _self.upload_before_list.splice(idx, 1);
       _self.upload_cache_list.splice(idx, 1);
       _self.upload_len = _self.upload_before_list.length;
       _self.emit();
     },
-    emit() {
+    emit () {
       let _self = this;
       _self.$emit("change", _self.upload_cache_list);
     }
@@ -196,8 +204,8 @@ export default {
 };
 
 const promisify = api => {
-  return function(options, ...params) {
-    return new Promise(function(resolve, reject) {
+  return function (options, ...params) {
+    return new Promise(function (resolve, reject) {
       api(
         Object.assign({}, options, {
           success: resolve,
@@ -209,7 +217,7 @@ const promisify = api => {
   };
 };
 
-const upload = function(options) {
+const upload = function (options) {
   let url = options.url,
     _self = options._self,
     path = options.path,
@@ -228,7 +236,7 @@ const upload = function(options) {
     header: {
       authorization: storage.getSync("access_token")
     },
-    success: function(res) {
+    success: function (res) {
       var data = res.data;
       console.warn(
         "sunui-upimg - 如发现没有获取到返回值请到源码191行修改后端返回图片路径以便正常使用插件",
@@ -256,14 +264,14 @@ const upload = function(options) {
         }
       }
     },
-    fail: function(res) {
+    fail: function (res) {
       console.log(res);
       if (fail) {
         fail(res);
       }
     }
   });
-  uploadTask.onProgressUpdate(async function(res) {
+  uploadTask.onProgressUpdate(async function (res) {
     for (let i = 0, len = _self.upload_before_list.length; i < len; i++) {
       _self.upload_before_list[i]["upload_percent"] = await res.progress;
     }
