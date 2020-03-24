@@ -49,7 +49,7 @@
       <div
         slot="rightIcon"
         v-if="searchFocusInfo"
-        style="font-size:16px;"
+        style="font-size:16px;position:relative;top:-4px;"
         @click="onSearchInputConfirmed"
       >
         搜索
@@ -208,10 +208,8 @@
                   class="drugsDetails"
                   @click="toProductDetails(itemInfo)"
                 >
-                  <img
-                    src="../../static/icon/main/Product-Bitmap@2x.png"
-                    alt=""
-                  />
+                  <!-- src="../../static/icon/main/Product-Bitmap@2x.png" -->
+                  <im :src="itemInfo['productImage'][0]" alt="" />
                   <view class="drugsInfo">
                     <view class="drugName">
                       <text class="mark" v-show="itemInfo.isMp === 0">OTC</text>
