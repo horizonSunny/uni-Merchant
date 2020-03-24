@@ -10,12 +10,12 @@ const getters = {
   // 获取搜索词库信息，返回函数，传参过滤
   // searchLibrary: state => state.business.searchKeyword
   searchLibrary: state => keyWord => {
-    console.log("state.business.searchKeyword_", state.business.searchKeyword);
+    console.log('state.business.searchKeyword_', state.business.searchKeyword)
     const keyInfo = state.business.searchKeyword.filter(item => {
-      return item.keyword.indexOf(keyWord) != -1;
-    });
-    console.log("keyInfo_", keyInfo);
-    return keyInfo;
+      return item.keyword.indexOf(keyWord) != -1
+    })
+    console.log('keyInfo_', keyInfo)
+    return keyInfo
   },
   /**
    * 二期购物车订单我的功能
@@ -23,65 +23,65 @@ const getters = {
   // 获取购物车列表
   getShopCartList: state => {
     let cartList = state.shopCart.shopCartInfo.map(item => {
-      item.checked = false;
+      item.checked = false
       // value就是购物车id
-      item.value = item.cartId + "";
-      return item;
-    });
-    console.log("cartList_", cartList);
-    return cartList;
+      item.value = item.cartId + ''
+      return item
+    })
+    console.log('cartList_', cartList)
+    return cartList
   },
   getNewIndent: state => state.shopCart.newIndent,
   // 对订单做一个区分
   newIndentClassification: (state, getters) => {
     let activeIndent = [],
-      invalidIndent = [];
-    getters.getNewIndent.selectedCart.forEach(element => {
+      invalidIndent = []
+    state.shopCart.newIndent.selectedCart.forEach(element => {
       if (element.isShelf === 1) {
-        activeIndent.push(element);
+        activeIndent.push(element)
       } else {
-        invalidIndent.push(element);
+        invalidIndent.push(element)
       }
-    });
-    return { activeIndent, invalidIndent };
+    })
+    return { activeIndent, invalidIndent }
   },
   // 获取患者地址信息 和获取默认地址
   getAddress: state => state.patientAddress.addressInfo,
   // 获取因为订单页面过来的地址可用和不可用的区分
   getAddressClassify: (state, getters) => activeAddressIds => {
-    let activeAddress = [];
-    let deactiveAddress = [];
-    console.log(" getters.getAddress_", activeAddressIds);
+    let activeAddress = []
+    let deactiveAddress = []
+    console.log(' getters.getAddress_', activeAddressIds)
 
     getters.getAddress.forEach(item => {
       if (activeAddressIds.indexOf(item.addressId) !== -1) {
-        activeAddress.push(item);
-        item.disabled = false;
+        activeAddress.push(item)
+        item.disabled = false
       } else {
-        item.disabled = true;
-        deactiveAddress.push(item);
+        item.disabled = true
+        deactiveAddress.push(item)
       }
-    });
-    console.log("activeAddress_", activeAddress);
-    console.log("deactiveAddress_", deactiveAddress);
-    return [...activeAddress, ...deactiveAddress];
+    })
+    console.log('activeAddress_', activeAddress)
+    console.log('deactiveAddress_', deactiveAddress)
+    return [...activeAddress, ...deactiveAddress]
   },
   getDefaultAddress: (state, getters) => activeAddressIds => {
-    console.log("activeAddressIds_", activeAddressIds);
+    console.log('activeAddressIds_', activeAddressIds)
     const filterAddress = getters.getAddress.filter(item => {
-      return activeAddressIds.indexOf(item.addressId) !== -1;
-    });
-    console.log("filterAddress_", filterAddress);
+      return activeAddressIds.indexOf(item.addressId) !== -1
+    })
+    console.log('filterAddress_', filterAddress)
     let item =
       filterAddress.length !== 0 &&
       filterAddress.find(item => {
-        return item.isDefault === 1;
-      });
+        return item.isDefault === 1
+      })
     if (item === undefined) {
-      return filterAddress[0];
+      return filterAddress[0]
     }
-    console.log("item_", item);
-    return item;
+    console.log('item_', item)
+    return item
     // return undefined;
   },
   // 获取浏览记录等
@@ -99,12 +99,12 @@ const getters = {
   getCollectInfo: state => state.user.collect,
   // 拉取保存的订单信息
   getIndentInfo: state => {
-    return state.business.myIndentInfo;
+    return state.business.myIndentInfo
   },
   // 订单列表页面点击订单获取的订单详情
   getOrderDetails: state => {
-    return state.order.orderDetails;
+    return state.order.orderDetails
   }
   // 依据商户id和地址id获取运费模版信息
-};
-export default getters;
+}
+export default getters

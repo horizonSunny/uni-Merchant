@@ -209,7 +209,10 @@
                   @click="toProductDetails(itemInfo)"
                 >
                   <!-- src="../../static/icon/main/Product-Bitmap@2x.png" -->
-                  <im :src="itemInfo['productImage'][0]" alt="" />
+                  <img :src="itemInfo.productImage[0]" alt="" />
+                  <!-- <div>
+                    {{ itemInfo.productImage[0] }}
+                  </div> -->
                   <view class="drugsInfo">
                     <view class="drugName">
                       <text class="mark" v-show="itemInfo.isMp === 0">OTC</text>
@@ -553,12 +556,7 @@ export default {
     },
     //监听原生标题栏搜索输入框搜索事件，用户点击软键盘上的“搜索”按钮时触发。
     onSearchInputConfirmed (item) {
-      // if (typeof (item) !== String) {
-      //   this.searchInfo = item.detail.value
-      // }
-      console.log('item_', item);
-
-      this.loadNewsList();
+      this.loadNewsList('refresh');
     },
   }
 };
