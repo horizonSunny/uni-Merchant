@@ -8,7 +8,7 @@
           style="background-color: transparent; width: 29px;text-aviewgn: left;"
         >
           <img
-            v-show="backInfo !== '' && this.pageStack.length > 1"
+            v-show="backInfo !== '' && backShow"
             :src="
               backInfo === 'white'
                 ? '/static/main/fanhui.svg'
@@ -69,17 +69,28 @@
   </uni-page-head>
 </template>
 <script>
+import noBackPage from '@/config/noBackPage'
 export default {
   // created(){
 
   // },
-  props: ['backInfo', 'styleInfo', 'jumpButton'],
-  created () {
-    this.pageStack = getCurrentPages()
-    setCurrentPages([])
-    console.log('this.pageStack_', this.pageStack);
+  computed: {
+    backShow() {
+      const currentPages = getCurrentPages()
+      const currentPage = currentPages[currentPages.length - 1]['route']
+      if (noBackPage.indexOf(currentPage) > -1) {
+        return false
+      } else {
+        return true
+      }
+    }
   },
-  data () {
+  props: ['backInfo', 'styleInfo', 'jumpButton'],
+  created() {
+    this.pageStack = getCurrentPages()
+    console.log('this.pageStack_', getCurrentPages()[0]['route'])
+  },
+  data() {
     return {
       // goBack: true
       page: [
@@ -114,18 +125,26 @@ export default {
     }
   },
   methods: {
-    goBack () {
-      console.log('goback')
-      uni.navigateBack({
-        delta: 1
-      })
+    goBack() {
+      if (getCurrentPages().length > 1) {
+        uni.navigateBack({
+          delta: 1
+        })
+        console.log('uni.navigateBack')
+      } else {
+        history.back()
+        console.log('history.back')
+      }
+      // uni.navigateBack({
+      //   delta: 1
+      // })
     },
-    goPage (url) {
+    goPage(url) {
       console.log(url)
       this.$navTo(url)
       this.jumpPageShow = false
     },
-    showPage () {
+    showPage() {
       this.jumpPageShow = !this.jumpPageShow
     }
   }

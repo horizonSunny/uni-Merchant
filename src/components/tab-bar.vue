@@ -100,35 +100,56 @@
 </template>
 <script>
 export default {
-  data () {
+  created() {
+    const currentPages = getCurrentPages()
+    const currentPage = currentPages[currentPages.length - 1]['route']
+    console.log('currentPage_', currentPage)
+    switch (currentPage) {
+      case 'pages/main/main':
+        this.currentSelected = 0
+        break
+      case 'pages/classify/classify':
+        this.currentSelected = 1
+        break
+      case 'pages/shoppingCart/index':
+        this.currentSelected = 2
+        break
+      case 'pages/mine/index':
+        this.currentSelected = 3
+        break
+      default:
+        break
+    }
+  },
+  data() {
     return {
       currentSelected: this.$store.state.currentTabBar
     }
   },
   methods: {
     // 因为重新渲染这个函数，所以药将this.currentSelected值保存到全局变量
-    selectActive (index) {
+    selectActive(index) {
       this.$store.commit('SET_CURRENT_BAR', index)
-      console.log(this.currentSelected);
+      console.log(this.currentSelected)
       switch (index) {
         case 0:
           uni.reLaunch({
-            url: "../main/main"
-          });
-          break;
+            url: '../main/main'
+          })
+          break
         case 1:
           uni.reLaunch({
-            url: "../classify/classify"
-          });
-          break;
+            url: '../classify/classify'
+          })
+          break
         case 2:
           uni.reLaunch({ url: '../shoppingCart/index' })
-          break;
+          break
         case 3:
           uni.reLaunch({ url: '../mine/index' })
-          break;
+          break
         default:
-          break;
+          break
       }
     }
   }
