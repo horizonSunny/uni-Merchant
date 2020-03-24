@@ -76,6 +76,8 @@ export default {
   props: ['backInfo', 'styleInfo', 'jumpButton'],
   created () {
     this.pageStack = getCurrentPages()
+    setCurrentPages([])
+    console.log('this.pageStack_', this.pageStack);
   },
   data () {
     return {
