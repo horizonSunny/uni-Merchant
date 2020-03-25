@@ -87,8 +87,9 @@ export default {
   },
   props: ['backInfo', 'styleInfo', 'jumpButton'],
   created() {
-    this.pageStack = getCurrentPages()
-    console.log('this.pageStack_', getCurrentPages()[0]['route'])
+    const currentPages = getCurrentPages()
+    this.pageStack = currentPages[currentPages.length - 1]['route']
+    console.log('this.pageStack_', this.pageStack)
   },
   data() {
     return {
@@ -126,14 +127,36 @@ export default {
   },
   methods: {
     goBack() {
+      // if (
+      //   this.pageStack === 'pages/login/login' &&
+      //   getCurrentPages().length > 1
+      // ) {
+      //   uni.navigateBack({
+      //     delta: 2
+      //   })
+      // }
       if (getCurrentPages().length > 1) {
-        uni.navigateBack({
-          delta: 1
-        })
-        console.log('uni.navigateBack')
+        if (this.pageStack === 'pages/login/login') {
+          history.back({
+            delta: 2
+          })
+          console.log('history.back 2', getCurrentPages())
+        } else {
+          uni.navigateBack({
+            delta: 1
+          })
+          console.log('uni.navigateBack delta 1')
+        }
       } else {
-        history.back()
-        console.log('history.back')
+        if (this.pageStack === 'pages/login/login') {
+          history.back({
+            delta: 2
+          })
+          console.log('history.back delta 3')
+        } else {
+          history.back()
+          console.log('history.back delta 1')
+        }
       }
       // uni.navigateBack({
       //   delta: 1
