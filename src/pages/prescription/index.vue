@@ -6,7 +6,7 @@
     <view slot="content" class="content">
       <view class="contentInfo">
         <view class="title">
-          <text>请选择用药</text>
+          <text>请选择用药人</text>
           <text @click="gotoNextPage('../prescription/newPatient', {})"
             >添加</text
           >
@@ -32,7 +32,7 @@
                   alt
                 />
               </view>
-              <view>{{ item.sex === 1 ? "先生" : "女士" }}</view>
+              <view>{{ item.sex === 1 ? '先生' : '女士' }}</view>
               <view>{{ item.phone }}</view>
             </view>
           </scroll-view>
@@ -63,54 +63,54 @@
   </body-wrap>
 </template>
 <script>
-import upImg from "@/components/sunui-upimg_v2.72/components/sunui-upimg/sunui-upimg.vue";
-import { mapActions, mapGetters } from "vuex";
+import upImg from '@/components/sunui-upimg_v2.72/components/sunui-upimg/sunui-upimg.vue'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   components: { upImg },
-  data () {
+  data() {
     return {
       currentPatient: 0,
       prescriptionImg: [],
       preUpLoadImg: []
-    };
+    }
   },
   computed: {
-    ...mapGetters(["getMedicineMan", "getNewIndent"])
+    ...mapGetters(['getMedicineMan', 'getNewIndent'])
   },
 
   methods: {
     ...mapActions({
-      getMedicineManInfo: "GetMedicineMan"
+      getMedicineManInfo: 'GetMedicineMan'
     }),
-    toNewPatient () {
-      this.$navTo("/pages/prescription/newPatient");
+    toNewPatient() {
+      this.$navTo('/pages/prescription/newPatient')
     },
-    selectPatient (index) {
-      this.$store.commit("REVERSE_MEDICINE_MAN", index);
+    selectPatient(index) {
+      this.$store.commit('REVERSE_MEDICINE_MAN', index)
     },
     // 跳转页面
-    gotoNextPage (url, parameters) {
-      this.$store.commit("SET_CURRENT_MEDICINE_MAN", parameters);
-      this.$navTo(url, parameters);
+    gotoNextPage(url, parameters) {
+      this.$store.commit('SET_CURRENT_MEDICINE_MAN', parameters)
+      this.$navTo(url, parameters)
     },
-    imgChange (e) {
-      console.log("e_", e);
-      this.prescriptionImg = e;
+    imgChange(e) {
+      console.log('e_', e)
+      this.prescriptionImg = e
     },
-    confirm () {
-      console.log("this.prescriptionImg_", this.prescriptionImg);
+    confirm() {
+      console.log('this.prescriptionImg_', this.prescriptionImg)
       // 处方填写完毕,收货人选择收货人列表第一个，只需要把处方图片传递当前订单 ADD_INDENT
-      this.$store.commit("ADD_INDENT", {
+      this.$store.commit('ADD_INDENT', {
         prescription: {
           prescriptionImg: this.prescriptionImg,
           prescriptionMan: this.getMedicineMan[0]
         }
-      });
-      uni.navigateBack();
+      })
+      uni.navigateBack()
     },
     // 生成之前上传的图片
-    preUpLoadImgActive () {
-      let preUpLoadImgInfo = [];
+    preUpLoadImgActive() {
+      let preUpLoadImgInfo = []
       if (
         this.getNewIndent.prescription &&
         this.getNewIndent.prescription.length !== 0
@@ -118,19 +118,19 @@ export default {
         this.getNewIndent.prescription.prescriptionImg.forEach(element => {
           preUpLoadImgInfo.push({
             path: element
-          });
-        });
+          })
+        })
       }
-      return preUpLoadImgInfo;
+      return preUpLoadImgInfo
     }
   },
-  onShow () {
-    this.preUpLoadImg = this.preUpLoadImgActive();
+  onShow() {
+    this.preUpLoadImg = this.preUpLoadImgActive()
   }
   // onLoad() {
   //   this.getMedicineManInfo();
   // }
-};
+}
 </script>
 <style lang="scss">
 .content {
