@@ -1,6 +1,11 @@
 <template>
   <body-wrap>
-    <tob-bar slot="topBar" backInfo="white" jumpButton :styleInfo="{ backgroundColor: '#3E79F5' }">
+    <tob-bar
+      slot="topBar"
+      backInfo="white"
+      jumpButton
+      :styleInfo="{ backgroundColor: '#3E79F5' }"
+    >
       <text slot="title">个人中心</text>
       <img src="static/main/home_messages.svg" alt slot="rightIcon" />
     </tob-bar>
@@ -18,7 +23,7 @@
           <view class="classifyItem" @click="goNextPage('浏览记录')">
             <view>
               {{
-              getStatisticData.visitCount ? getStatisticData.visitCount : 0
+                getStatisticData.visitCount ? getStatisticData.visitCount : 0
               }}
             </view>
             <view>浏览记录</view>
@@ -27,14 +32,20 @@
           <view class="classifyItem" @click="goNextPage('收藏')">
             <view>
               {{
-              getStatisticData.collectCount ? getStatisticData.collectCount : 0
+                getStatisticData.collectCount
+                  ? getStatisticData.collectCount
+                  : 0
               }}
             </view>
             <view>收藏</view>
           </view>
           <view class="separator"></view>
           <view class="classifyItem">
-            <view>{{ getStatisticData.waitGoodsCount ? getStatisticData.waitGoodsCount : 0 }}</view>
+            <view>{{
+              getStatisticData.waitGoodsCount
+                ? getStatisticData.waitGoodsCount
+                : 0
+            }}</view>
             <view>药店关注</view>
           </view>
         </view>
@@ -88,9 +99,9 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
-import tabBar from "@/components/tab-bar";
-import tobBar from "@/components/top-bar";
+import { mapState, mapActions, mapGetters } from 'vuex'
+import tabBar from '@/components/tab-bar'
+import tobBar from '@/components/top-bar'
 export default {
   // computed: mapState(["forcedLogin", "hasLogin", "userName"]),
   components: {
@@ -98,51 +109,51 @@ export default {
     tobBar
   },
   computed: {
-    ...mapGetters(["getUserDetails", "getStatisticData"])
+    ...mapGetters(['getUserDetails', 'getStatisticData'])
   },
   onShow() {
-    this.userDetails();
-    this.statisticData();
+    this.userDetails()
+    this.statisticData()
   },
   methods: {
     ...mapActions({
-      userDetails: "GetUserDetails",
-      statisticData: "GetStatisticData"
+      userDetails: 'GetUserDetails',
+      statisticData: 'GetStatisticData'
     }),
     // 跳转药品简介页面
     toDrugIntr() {
-      console.log("toDrugIntr_");
+      console.log('toDrugIntr_')
       uni.navigateTo({
-        url: "../merchantsIntr/merchantsIntr"
-      });
+        url: '../merchantsIntr/merchantsIntr'
+      })
     },
     goMyIndent(info) {
-      console.log("goMyIndent_");
-      this.$navTo("../myIndent/index", { orderStatus: info });
+      console.log('goMyIndent_')
+      this.$navTo('../myIndent/index', { orderStatus: info })
     },
     // 跳转下一个页面，依据判断
     goNextPage(info) {
       switch (info) {
-        case "浏览记录":
-          this.$navTo("../mine/browsingHistory");
-          break;
-        case "收藏":
-          this.$navTo("../mine/collect");
-          break;
-        case "用药人":
-          this.$navTo("../mine/medicineMan");
-          break;
-        case "收货地址":
-          this.$navTo("../deliveryAddr/index");
-          break;
+        case '浏览记录':
+          this.$navTo('../mine/browsingHistory')
+          break
+        case '收藏':
+          this.$navTo('../mine/collect')
+          break
+        case '用药人':
+          this.$navTo('../mine/medicineMan')
+          break
+        case '收货地址':
+          this.$navTo('../deliveryAddr/index')
+          break
         default:
-          break;
+          break
       }
     },
     // 图片加载失败
     imageError(item) {
-      console.log("imageError_", item);
-      item.productImage = this.correctUrl;
+      console.log('imageError_', item)
+      item.productImage = this.correctUrl
     }
   },
   data() {
@@ -151,10 +162,10 @@ export default {
       // autoplay: false,
       // interval: 2000,
       // duration: 500,
-      correctUrl: "/static/mine/mine_default head.svg"
-    };
+      correctUrl: '/static/mine/mine_default head.svg'
+    }
   }
-};
+}
 </script>
 
 <style lang="scss">
@@ -169,7 +180,7 @@ export default {
       width: 100%;
       height: 138px;
       padding: 27px 0px 0px 0px;
-      background: url("../../static/mine/mine_background.svg");
+      background: url('../../static/mine/mine_background.svg');
       font-size: 16px;
       font-family: PingFangSC-Semibold, PingFang SC;
       font-weight: 600;

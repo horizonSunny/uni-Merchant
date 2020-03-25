@@ -23,7 +23,7 @@
                   <img
                     :src="item.productImage"
                     @error="imageError(item)"
-                    alt
+                    alt="暂无图片"
                     width="60"
                     height="60"
                   />
