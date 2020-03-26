@@ -76,9 +76,12 @@ export default {
     }),
     gotoDetail (operate, addressInfo = null) {
       if (!addressInfo) {
-        this.$navTo("../deliveryAddr/newAddr");
+        this.$navTo("../deliveryAddr/newAddr", {
+          availableAddress: this.availableAddress ? this.availableAddress : false
+        });
       } else {
         this.$navTo("../deliveryAddr/newAddr", {
+          availableAddress: this.availableAddress ? this.availableAddress : false,
           addressId: addressInfo
         });
       }

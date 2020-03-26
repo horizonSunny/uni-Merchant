@@ -15,4 +15,14 @@ async function updateAddress(params) {
 async function newAddress(params) {
   return http.post('/patient/address', params)
 }
-export { patientAddress, addressDelete, updateAddress, newAddress }
+// 校验地址信息
+async function checkAddress(params) {
+  return http.post('/patient/address/checkAddress', params)
+}
+export {
+  patientAddress,
+  addressDelete,
+  updateAddress,
+  newAddress,
+  checkAddress
+}

@@ -165,7 +165,7 @@
 import wPicker from '@/components/w-picker_1.2.7/components/w-picker/w-picker.vue'
 import { mapActions, mapGetters } from 'vuex'
 import validate from '@/utils/validate'
-import { newAddress, updateAddress, addressDelete } from '@/service/index'
+import { newAddress, updateAddress, addressDelete, checkAddress } from '@/service/index'
 export default {
   components: {
     wPicker
@@ -193,7 +193,8 @@ export default {
         { value: '2', name: '女士' }
       ],
       currentLabel: '公司',
-      labelInfo: ['公司', '家', '学校']
+      labelInfo: ['公司', '家', '学校'],
+      availableAddress: false
     }
   },
   computed: {
@@ -243,14 +244,40 @@ export default {
           info['addressInfo']['addressId']
         )
       }
-      if (this.operate === 'add') {
-        newAddress(info['addressInfo']).then(res => {
-          uni.navigateBack()
+      // availableAddress 为true是订单过来的需要校验地址信息
+      console.log('this.availableAddress_', typeof (this.availableAddress));
+      if (this.availableAddress !== 'true') {
+        checkAddress({
+          city: this.userInfo.city,
+          province: this.userInfo.city
+        }).then(res => {
+          // uni.navigateBack()
+          console.log('res_data_', res.data.available);
+          // uni.showToast({
+          //   title: '该地址不在配送范围内,是否保存',
+          // });
+          uni.showModal({
+            title: '该地址不在配送范围内,是否保存',
+            success: (res) => {
+              if (res.confirm) {
+                this.availableAddress = 'true'
+                this.submit()
+              } else if (res.cancel) {
+                console.log('哈哈哈');
+              }
+            }
+          });
         })
-      } else if (this.operate = 'reset') {
-        updateAddress(info['addressInfo']).then(res => {
-          uni.navigateBack()
-        })
+      } else {
+        if (this.operate === 'add') {
+          newAddress(info['addressInfo']).then(res => {
+            uni.navigateBack()
+          })
+        } else if (this.operate = 'reset') {
+          updateAddress(info['addressInfo']).then(res => {
+            uni.navigateBack()
+          })
+        }
       }
     },
     // 删除收获地址
@@ -297,7 +324,7 @@ export default {
       return item.addressId == optionInfo.addressId
     })
     console.log('option_', option);
-
+    this.availableAddress = optionInfo.availableAddress
     if (JSON.stringify(option) !== '{}' && option) {
       this.operate = 'reset'
       //赋值

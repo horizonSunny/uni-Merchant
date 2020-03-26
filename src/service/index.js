@@ -11,7 +11,8 @@ import {
   patientAddress,
   addressDelete,
   updateAddress,
-  newAddress
+  newAddress,
+  checkAddress
 } from './patientAddress'
 
 import {
@@ -124,7 +125,13 @@ export {
 // 导出购物车接口
 export { shopCart, shopCartDelete, updateCart, newCart, buyAgain }
 // 用药人地址
-export { patientAddress, addressDelete, updateAddress, newAddress }
+export {
+  patientAddress,
+  addressDelete,
+  updateAddress,
+  newAddress,
+  checkAddress
+}
 // 浏览记录
 export {
   productVisit,
