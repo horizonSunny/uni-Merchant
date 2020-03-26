@@ -99,7 +99,7 @@
               <text class="marginLeft">8.00元起</text>
             </view>
             <view class="home_right">
-              ¥{{ shipperSelected["shipperAmount"] }}.00
+              ¥{{ shipperSelected['shipperAmount'] }}.00
               <img
                 class="marginLeft"
                 src="static/icon/main/home_right-2.svg"
@@ -123,8 +123,8 @@
             <view class="home_right"
               >¥{{
                 caculateTotal.totalPrice +
-                  shipperSelected["shipperAmount"] +
-                  ".00"
+                  shipperSelected['shipperAmount'] +
+                  '.00'
               }}</view
             >
           </view>
@@ -196,8 +196,8 @@
           <text
             >¥{{
               caculateTotal.totalPrice +
-                shipperSelected["shipperAmount"] +
-                ".00"
+                shipperSelected['shipperAmount'] +
+                '.00'
             }}</text
           >
         </view>
@@ -219,12 +219,12 @@
   </body-wrap>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex'
 // import commidityItem from "./commidityItem";
-import purchasefailed from "./purchasefailed";
-import distribution from "./distribution";
-import invoice from "./invoice";
-import { confirmOrder, generateOrder, alipay } from "@/service/index";
+import purchasefailed from './purchasefailed'
+import distribution from './distribution'
+import invoice from './invoice'
+import { confirmOrder, generateOrder, alipay } from '@/service/index'
 export default {
   components: {
     // commidityItem
@@ -232,129 +232,129 @@ export default {
     distribution,
     invoice
   },
-  data () {
+  data() {
     return {
       editor: true,
       // 选择自提时候，改变为true
       pickUp: false,
       haveRx: false,
-      correctUrl: "/static/shoppingCart/shopping cart-bitmap2.svg",
+      correctUrl: '/static/shoppingCart/shopping cart-bitmap2.svg',
       // 可配送地址id
       addressIds: [],
       shipperType: [],
       shipperSelected: null,
       // 由下一个页面选择过来
       selectAddressInfo: null,
-      shopCartId: "",
+      shopCartId: '',
       // 确认订单后出错信息
       efficacyInfo: []
-    };
+    }
   },
-  onLoad (option) {
+  onLoad(option) {
     // 因为要用到用药人
-    this.getMedicineManInfo();
+    this.getMedicineManInfo()
   },
-  onShow () {
-    console.log("tenant_", this.tenant);
+  onShow() {
+    console.log('tenant_', this.tenant)
     this.haveRx = this.newIndentClassification.activeIndent.some(item => {
-      return item.isMp === 2;
-    });
+      return item.isMp === 2
+    })
     let shopCartId = this.newIndentClassification.activeIndent.map(item => {
-      return item.cartId;
-    });
-    this.shopCartId = shopCartId;
-    console.log("shopCartId_", shopCartId);
+      return item.cartId
+    })
+    this.shopCartId = shopCartId
+    console.log('shopCartId_', shopCartId)
     // 依据购物车信息确认可配送订单信息
     confirmOrder({ shopCartIds: shopCartId }).then(res => {
       // console.log("res_", res.data);
-      console.log("confirmOrder_", res.data);
+      console.log('confirmOrder_', res.data)
       // 配送模版
-      this.shipperType = res.data.shipperType;
-      this.shipperSelected = this.shipperType[0];
-      this.addressIds = res.data.addressIds;
-    });
+      this.shipperType = res.data.shipperType
+      this.shipperSelected = this.shipperType[0]
+      this.addressIds = res.data.addressIds
+    })
   },
   computed: {
     ...mapGetters([
-      "getDefaultAddress",
-      "newIndentClassification",
-      "tenant",
-      "getNewIndent",
-      "getMedicineMan"
+      'getDefaultAddress',
+      'newIndentClassification',
+      'tenant',
+      'getNewIndent',
+      'getMedicineMan'
     ]),
-    caculateTotal () {
+    caculateTotal() {
       let totalNum = 0,
-        totalPrice = 0;
+        totalPrice = 0
       this.newIndentClassification.activeIndent.forEach(element => {
-        console.log("element_", element);
-        totalNum += element.cartNum;
-        totalPrice += element.cartNum * element.price;
-      });
-      console.log("totalNum_", totalNum, "_totalPrice_", totalPrice);
+        console.log('element_', element)
+        totalNum += element.cartNum
+        totalPrice += element.cartNum * element.price
+      })
+      console.log('totalNum_', totalNum, '_totalPrice_', totalPrice)
       return {
         totalNum,
         totalPrice
-      };
+      }
     },
-    selectAddress () {
+    selectAddress() {
       if (this.selectAddressInfo) {
-        return this.selectAddressInfo;
+        return this.selectAddressInfo
       } else {
-        return this.getDefaultAddress(this.addressIds);
+        return this.getDefaultAddress(this.addressIds)
       }
     }
   },
   methods: {
     ...mapActions({
-      getMedicineManInfo: "GetMedicineMan"
+      getMedicineManInfo: 'GetMedicineMan'
     }),
     // 改变当前是编辑状态还是完成状态
-    reverseEditor () {
-      this.editor = !this.editor;
+    reverseEditor() {
+      this.editor = !this.editor
     },
     // 获取当前页面位置
-    prescription () {
-      this.$navTo("../prescription/index");
+    prescription() {
+      this.$navTo('../prescription/index')
     },
     // 打开快递配送
-    openModal () {
-      this.$refs.distribution.openModal();
+    openModal() {
+      this.$refs.distribution.openModal()
     },
     // 跳转页面
-    gotoNextPage (url, parameters) {
-      this.$navTo(url, parameters);
+    gotoNextPage(url, parameters) {
+      this.$navTo(url, parameters)
     },
     // 打开发票弹窗
-    showInvoice () {
-      this.$refs.invoice.openModal();
+    showInvoice() {
+      this.$refs.invoice.openModal()
     },
     // 图片加载失败
-    imageError (item) {
-      console.log("imageError_", item);
-      item.productImage = this.correctUrl;
+    imageError(item) {
+      console.log('imageError_', item)
+      item.productImage = this.correctUrl
     },
     // 运费模版选择
-    shipperChange (e) {
-      console.log("shipperSelected_", e);
-      const shipper = e;
+    shipperChange(e) {
+      console.log('shipperSelected_', e)
+      const shipper = e
       const select = this.shipperType.find(item => {
-        return item.shipperTypeId == e;
-      });
-      this.shipperSelected = select;
-      console.log("select_", select);
-      if (select.shipperName === "到店自提") {
-        this.pickUp = true;
+        return item.shipperTypeId == e
+      })
+      this.shipperSelected = select
+      console.log('select_', select)
+      if (select.shipperName === '到店自提') {
+        this.pickUp = true
       } else {
-        this.pickUp = false;
+        this.pickUp = false
       }
     },
     //付款
-    pay () {
+    pay() {
       // 先生成订单，看有没有问题
-      console.log("addressId_", this.selectAddress);
-      console.log("invoice_prescribInfo_", this.getNewIndent);
-      console.log("invoice_user_", this.getMedicineMan[0]);
-      console.log("shipperSelected_", this.shipperSelected);
+      console.log('addressId_', this.selectAddress)
+      console.log('invoice_prescribInfo_', this.getNewIndent)
+      console.log('invoice_user_', this.getMedicineMan[0])
+      console.log('shipperSelected_', this.shipperSelected)
       // prescribInfo
       // generateOrder();
       let params = {
@@ -364,28 +364,28 @@ export default {
         shopCartIds: this.shopCartId,
         totalNum: this.caculateTotal.totalNum,
         totalPrice:
-          this.caculateTotal.totalPrice + this.shipperSelected["shipperAmount"]
-      };
+          this.caculateTotal.totalPrice + this.shipperSelected['shipperAmount']
+      }
       if (this.haveRx) {
         if (!this.getNewIndent.prescription) {
           uni.showToast({
-            icon: "none",
-            title: "请添加处方信息"
-          });
-          return;
+            icon: 'none',
+            title: '请添加处方信息'
+          })
+          return
         }
         if (this.getNewIndent.prescription.prescriptionImg.length === 0) {
           uni.showToast({
-            icon: "none",
-            title: "请上传处方图片"
-          });
-          return;
+            icon: 'none',
+            title: '请上传处方图片'
+          })
+          return
         }
         params.prescribInfo = {
           medicineUserId: this.getNewIndent.prescription.prescriptionMan
             .medicineUserId,
           prescribImg: this.getNewIndent.prescription.prescriptionImg
-        };
+        }
         //   prescribInfo: {
         //   medicineUserId: this.getNewIndent.prescription.prescriptionMan
         //     .medicineUserId,
@@ -394,46 +394,46 @@ export default {
       }
       if (this.getNewIndent.invoice) {
         params.invoice = {
-          invoiceHeader: "个人",
+          invoiceHeader: '个人',
           invoiceIdCard: this.getNewIndent.invoice.invoiceUserInfo.idCard,
           invoiceName: this.getNewIndent.invoice.invoiceUserInfo.fullName,
           invoiceType: 2
-        };
+        }
       }
-      console.log("params_", params);
+      console.log('params_', params)
       generateOrder(params).then(
         res => {
-          console.log("res_", res.data.orderNo);
+          console.log('res_', res.data.orderNo)
           alipay({ orderNo: res.data.orderNo }).then(resInfo => {
-            console.log('alipay_', resInfo);
+            console.log('alipay_', resInfo)
             const div = document.createElement('div')
-            div.innerHTML = resInfo;
+            div.innerHTML = resInfo
             document.body.appendChild(div)
             document.forms[0].submit()
-          });
+          })
         },
         error => {
-          console.log("error_", error);
-          let efficacyInfo = [];
-          const efficacyProduct = error.data;
-          console.log("this.getNewIndent_", this.getNewIndent);
+          console.log('error_', error)
+          let efficacyInfo = []
+          const efficacyProduct = error.data
+          console.log('this.getNewIndent_', this.getNewIndent)
           const efficacyProductId = this.getNewIndent.selectedCart.forEach(
             item => {
               efficacyProduct.forEach(errorItem => {
                 if (item.productId === errorItem.productId) {
-                  item.reasons = errorItem.reasons;
-                  efficacyInfo.push(item);
+                  item.reasons = errorItem.reasons
+                  efficacyInfo.push(item)
                 }
-              });
+              })
             }
-          );
-          console.log("efficacyInfo_", efficacyInfo);
-          this.efficacyInfo = efficacyInfo;
+          )
+          console.log('efficacyInfo_', efficacyInfo)
+          this.efficacyInfo = efficacyInfo
         }
-      );
+      )
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .content {

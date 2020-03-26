@@ -93,7 +93,7 @@
                             >其他</text
                           >
                           <view class="name">{{ itemInfo.productName }}</view>
-                          <view class="price">¥ {{ itemInfo["price"] }}</view>
+                          <view class="price">¥ {{ itemInfo['price'] }}</view>
                         </view>
                         <view class="drugSpec">
                           <text>{{ itemInfo.productSpecif }}</text>
@@ -171,17 +171,17 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
-import { debounce, throttle } from "@/utils/debounce";
-import mixPulldownRefresh from "@/components/mix-news/components/mix-pulldown-refresh/mix-pulldown-refresh";
-import mixLoadMore from "@/components/mix-news/components/mix-load-more/mix-load-more";
-import * as json from "@/config/json";
-import cancelOrder from "./cancelOrder";
+import { mapState, mapActions, mapGetters } from 'vuex'
+import { debounce, throttle } from '@/utils/debounce'
+import mixPulldownRefresh from '@/components/mix-news/components/mix-pulldown-refresh/mix-pulldown-refresh'
+import mixLoadMore from '@/components/mix-news/components/mix-load-more/mix-load-more'
+import * as json from '@/config/json'
+import cancelOrder from './cancelOrder'
 // import { myIndent } from '@/config/test'
-import { getOrderList, buyAgain, deleteOrder, alipay } from "@/service/index";
+import { getOrderList, buyAgain, deleteOrder, alipay } from '@/service/index'
 let windowWidth = 0,
   scrollTimer = false,
-  tabBar;
+  tabBar
 export default {
   components: {
     mixPulldownRefresh,
@@ -189,216 +189,217 @@ export default {
     cancelOrder
   },
   computed: {
-    ...mapGetters(["searchLibrary"]),
-    orderStatus () {
-      return function (status) {
+    ...mapGetters(['searchLibrary']),
+    orderStatus() {
+      return function(status) {
         switch (status) {
           case -1:
-            return "申请退款";
-            break;
+            return '申请退款'
+            break
           case -2:
-            return "已退款";
-            break;
+            return '已退款'
+            break
           case 0:
-            return "等待付款";
-            break;
+            return '等待付款'
+            break
           case 1:
-            return "待审核";
-            break;
+            return '待审核'
+            break
           case 2:
-            return "待发货";
-            break;
+            return '待发货'
+            break
           case 3:
-            return "待收货";
-            break;
+            return '待收货'
+            break
           case 4:
-            return "交易成功";
-            break;
+            return '交易成功'
+            break
           case 5:
-            return "交易取消";
-            break;
+            return '交易取消'
+            break
           default:
-            break;
+            break
         }
-      };
+      }
     }
   },
-  onLoad (option) {
+  onLoad(option) {
     // console.log("option.id_", option.orderStatus); //打印出上个页面传递的参数。
-    this.tabCurrentIndex = Number(option.orderStatus);
+    this.tabCurrentIndex = Number(option.orderStatus)
     // this.loadTabbars();
   },
-  onShow () {
+  onShow() {
     // console.log("option.id_", option.orderStatus); //打印出上个页面传递的参数。
     // this.tabCurrentIndex = Number(option.orderStatus);
     // this.loadTabbars();
     setTimeout(() => {
-      this.loadTabbars();
-    }, 0);
+      this.loadTabbars()
+    }, 0)
   },
-  data () {
+  data() {
     return {
       tabCurrentIndex: 0,
       tabBars: [],
       enableScroll: true,
       pageSize: 10,
       currentOpeateOrder: null
-    };
+    }
   },
   methods: {
     //获取分类
-    loadTabbars () {
-      let tabList = json.indentTabList;
+    loadTabbars() {
+      let tabList = json.indentTabList
       tabList.forEach(item => {
-        item.newsList = [];
-        item.loadMoreStatus = 0; //加载更多 0加载前，1加载中，2没有更多了
-        item.refreshing = 0;
+        item.newsList = []
+        item.loadMoreStatus = 0 //加载更多 0加载前，1加载中，2没有更多了
+        item.refreshing = 0
         // 最后一条订单的id，由此进行分页，查询id后十条
-        item.lastOrderId = 0;
-        item.loaded = false;
-      });
-      console.log("loadTabbars_", tabList);
-      this.tabBars = tabList;
-      this.loadNewsList("add");
+        item.lastOrderId = 0
+        item.loaded = false
+      })
+      console.log('loadTabbars_', tabList)
+      this.tabBars = tabList
+      this.loadNewsList('add')
     },
     //tab切换
-    async changeTab (e) {
+    async changeTab(e) {
       if (scrollTimer) {
         //多次切换只执行最后一次
-        clearTimeout(scrollTimer);
-        scrollTimer = false;
+        clearTimeout(scrollTimer)
+        scrollTimer = false
       }
-      let index = e;
+      let index = e
       //e=number为点击切换，e=object为swiper滑动切换
-      if (typeof e === "object") {
-        index = e.detail.current;
+      if (typeof e === 'object') {
+        index = e.detail.current
       }
-      if (typeof tabBar !== "object") {
-        tabBar = await this.getElSize("nav-bar");
+      if (typeof tabBar !== 'object') {
+        tabBar = await this.getElSize('nav-bar')
       }
       //计算宽度相关
-      let tabBarScrollLeft = tabBar.scrollLeft;
-      let width = 0;
-      let nowWidth = 0;
+      let tabBarScrollLeft = tabBar.scrollLeft
+      let width = 0
+      let nowWidth = 0
       //获取可滑动总宽度
       for (let i = 0; i <= index; i++) {
-        let result = await this.getElSize("tab" + i);
-        width += result.width;
+        let result = await this.getElSize('tab' + i)
+        width += result.width
         if (i === index) {
-          nowWidth = result.width;
+          nowWidth = result.width
         }
       }
-      if (typeof e === "number") {
+      if (typeof e === 'number') {
         //点击切换时先切换再滚动tabbar，避免同时切换视觉错位
-        this.tabCurrentIndex = index;
+        this.tabCurrentIndex = index
       }
       //延迟300ms,等待swiper动画结束再修改tabbar
       scrollTimer = setTimeout(() => {
         if (width - nowWidth / 2 > windowWidth / 2) {
           //如果当前项越过中心点，将其放在屏幕中心
-          this.scrollLeft = width - nowWidth / 2 - windowWidth / 2;
+          this.scrollLeft = width - nowWidth / 2 - windowWidth / 2
         } else {
-          this.scrollLeft = 0;
+          this.scrollLeft = 0
         }
-        if (typeof e === "object") {
-          this.tabCurrentIndex = index;
+        if (typeof e === 'object') {
+          this.tabCurrentIndex = index
         }
-        this.tabCurrentIndex = index;
+        this.tabCurrentIndex = index
 
         //第一次切换tab，动画结束后需要加载数据
-        let tabItem = this.tabBars[this.tabCurrentIndex];
+        let tabItem = this.tabBars[this.tabCurrentIndex]
         // 切换完就刷新数据
-        this.loadNewsList("refresh");
-        tabItem.loaded = true;
+        this.loadNewsList('refresh')
+        tabItem.loaded = true
         // if (this.tabCurrentIndex !== 0 && tabItem.loaded !== true) {
         //   console.log("in");
 
         //   this.loadNewsList("add");
         //   tabItem.loaded = true;
         // }
-      }, 100);
+      }, 100)
     },
     //加载数据
-    loadNewsList (type) {
-      let tabItem = this.tabBars[this.tabCurrentIndex];
+    loadNewsList(type) {
+      let tabItem = this.tabBars[this.tabCurrentIndex]
       //type add 加载更多 refresh下拉刷新
-      if (type === "add") {
+      if (type === 'add') {
         if (tabItem.loadMoreStatus === 2) {
-          return;
+          return
         }
-        tabItem.loadMoreStatus = 0;
-      } else if (type === "refresh") {
-        tabItem.lastOrderId = 0;
-        tabItem.refreshing = true;
+        tabItem.loadMoreStatus = 0
+      } else if (type === 'refresh') {
+        tabItem.lastOrderId = 0
+        tabItem.refreshing = true
       }
-      console.log("tabItem_", tabItem);
+      console.log('tabItem_', tabItem)
 
       const params = {
         // productType: this.confirmSelected.medicineType,
-        keyword: "",
+        keyword: '',
         status: Number(this.tabCurrentIndex) + 1,
         // productBrands: this.confirmSelected.selectBrands.toString(),
         // 只有当前页这一个是分开的
         orderId: tabItem.lastOrderId,
         pageSize: this.pageSize
-      };
+      }
 
       getOrderList(params).then(res => {
         // settimeout
-        let list = res.data;
-        console.log("res.data_", res.data);
-        if (type === "refresh") {
-          tabItem.newsList = []; //刷新前清空数组
+        let list = res.data
+        console.log('res.data_', res.data)
+        if (type === 'refresh') {
+          tabItem.newsList = [] //刷新前清空数组
         }
         list.forEach(item => {
-          item.id = parseInt(Math.random() * 10000);
-          tabItem.newsList.push(item);
-        });
+          item.id = parseInt(Math.random() * 10000)
+          tabItem.newsList.push(item)
+        })
         //下拉刷新 关闭刷新动画
-        if (type === "refresh") {
+        if (type === 'refresh') {
           this.$refs.mixPulldownRefresh &&
-            this.$refs.mixPulldownRefresh.endPulldownRefresh();
+            this.$refs.mixPulldownRefresh.endPulldownRefresh()
           // #ifdef APP-PLUS
-          tabItem.refreshing = false;
+          tabItem.refreshing = false
           // #endif
-          tabItem.loadMoreStatus = 0;
+          tabItem.loadMoreStatus = 0
         }
         //上滑加载 处理状态
-        if (type === "add") {
-          console.log("上滑加载 处理状态");
-          tabItem.loadMoreStatus = 0;
+        if (type === 'add') {
+          console.log('上滑加载 处理状态')
+          tabItem.loadMoreStatus = 0
         }
         // 假如不满十条，则显示加载完成
         if (list.length < 10) {
-          console.log("上滑加载 处理状态");
-          tabItem.loadMoreStatus = 2;
+          console.log('上滑加载 处理状态')
+          tabItem.loadMoreStatus = 2
         }
-        console.log("tabItem.newsList_", tabItem.newsList);
-        const orderProductList = tabItem.newsList;
+        console.log('tabItem.newsList_', tabItem.newsList)
+        const orderProductList = tabItem.newsList
         tabItem.lastOrderId =
-          orderProductList[orderProductList.length - 1] && orderProductList[orderProductList.length - 1].orderId;
+          orderProductList[orderProductList.length - 1] &&
+          orderProductList[orderProductList.length - 1].orderId
         // console.log("tabItem.lastOrderId_", tabItem.lastOrderId);
         // tabItem.lastOrderId++;
-      });
+      })
     },
     //下拉刷新
-    onPulldownReresh () {
-      this.loadNewsList("refresh");
+    onPulldownReresh() {
+      this.loadNewsList('refresh')
     },
     //上滑加载
-    loadMore () {
-      this.loadNewsList("add");
+    loadMore() {
+      this.loadNewsList('add')
     },
     //设置scroll-view是否允许滚动，在小程序里下拉刷新时避免列表可以滑动
-    setEnableScroll (enable) {
+    setEnableScroll(enable) {
       if (this.enableScroll !== enable) {
-        this.enableScroll = enable;
+        this.enableScroll = enable
       }
     },
     //获得元素的size
-    getElSize (id) {
+    getElSize(id) {
       return new Promise((res, rej) => {
-        let el = uni.createSelectorQuery().select("#" + id);
+        let el = uni.createSelectorQuery().select('#' + id)
         el.fields(
           {
             size: true,
@@ -406,67 +407,67 @@ export default {
             rect: true
           },
           data => {
-            res(data);
+            res(data)
           }
-        ).exec();
-      });
+        ).exec()
+      })
     },
     // 跳转商品详情页面
-    goDetails (item) {
-      this.$store.commit("SET_ORDER_DETAILS", item);
-      this.$navTo("../myIndent/indentDetails");
+    goDetails(item) {
+      this.$store.commit('SET_ORDER_DETAILS', item)
+      this.$navTo('../myIndent/indentDetails')
     },
     // 跳转页面
-    gotoNextPage (url, parameters) {
-      this.$navTo(url, parameters);
+    gotoNextPage(url, parameters) {
+      this.$navTo(url, parameters)
     },
     // jumpInfo
-    jumpInfo (info, key) {
+    jumpInfo(info, key) {
       // console.log('info_', info);
-      this.$store.commit("SET_INDENT_INFO", info);
+      this.$store.commit('SET_INDENT_INFO', info)
       switch (key) {
         case 4:
-          this.gotoNextPage("../myIndent/comment", {});
-          break;
+          this.gotoNextPage('../myIndent/comment', {})
+          break
 
         default:
-          break;
+          break
       }
     },
     // 重新购买
-    repurchase (indentItem) {
+    repurchase(indentItem) {
       buyAgain({
         orderNo: indentItem.orderNo
       }).then(res => {
-        this.$navTo("../shoppingCart/index", {
+        this.$navTo('../shoppingCart/index', {
           productIds: res.data.productIds
-        });
-      });
+        })
+      })
     },
     //删除订单
-    deleteOrder (indentItem, tabItem, index) {
+    deleteOrder(indentItem, tabItem, index) {
       deleteOrder({ orderNo: indentItem.orderNo }).then(res => {
-        console.log("res_", res);
-        tabItem.splice(index, 1);
-      });
+        console.log('res_', res)
+        tabItem.splice(index, 1)
+      })
     },
     // 取消订单
-    openModal (indentItem, newList, indentIndex) {
-      this.currentOpeateOrder = indentItem;
-      this.$refs.cancelOrder.openModal();
+    openModal(indentItem, newList, indentIndex) {
+      this.currentOpeateOrder = indentItem
+      this.$refs.cancelOrder.openModal()
     },
     // 付款
-    pay (orderNo) {
+    pay(orderNo) {
       alipay({ orderNo: orderNo }).then(resInfo => {
         // console.log('alipay_', resInfo);
         // const div = document.createElement('div')
         // div.innerHTML = resInfo;
         // document.body.appendChild(div)
         // document.forms[0].submit()
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
