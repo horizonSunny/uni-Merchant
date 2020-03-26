@@ -9,7 +9,7 @@
           <view
             @click="
               gotoNextPage('../deliveryAddr/index', {
-                activeAddressIds: addressIds
+                availableAddress: true
               })
             "
             v-if="selectAddress"
@@ -222,7 +222,7 @@ import { mapActions, mapGetters } from 'vuex'
 import purchasefailed from './purchasefailed'
 import distribution from './distribution'
 import invoice from './invoice'
-import { confirmOrder, generateOrder, alipay } from '@/service/index'
+import { generateOrder, alipay, calculateFreight } from '@/service/index'
 export default {
   components: {
     // commidityItem
@@ -238,14 +238,14 @@ export default {
       haveRx: false,
       correctUrl: '/static/shoppingCart/shopping cart-bitmap2.svg',
       // 可配送地址id
-      addressIds: [],
       shipperType: [],
       shipperSelected: null,
-      // 由下一个页面选择过来
-      selectAddressInfo: null,
       shopCartId: '',
       // 确认订单后出错信息
-      efficacyInfo: []
+      efficacyInfo: [],
+      // 是否是从下个页面选择回来
+      selectAddressInfo: null,
+      selectAddress: null
     }
   },
   onLoad (option) {
@@ -261,16 +261,30 @@ export default {
       return item.cartId
     })
     this.shopCartId = shopCartId
+    // const defaultAddress = this.getDefaultAddress
+    this.selectAddress = this.selectAddressInfo ? this.selectAddressInfo : this.getDefaultAddress
     console.log('shopCartId_', shopCartId)
-    // 依据购物车信息确认可配送订单信息
-    confirmOrder({ shopCartIds: shopCartId }).then(res => {
-      // console.log("res_", res.data);
-      console.log('confirmOrder_', res.data)
-      // 配送模版
-      this.shipperType = res.data.shipperType
+    // 依据购物车信息和可配送地址确认可配送订单模版
+    const defaultShipperType = {
+      shipperTypeId: 3,
+      shipperName: "到店自提",
+      shipperAmount: "0.00"
+    }
+    if (this.selectAddress) {
+      calculateFreight({ shopCartIds: shopCartId, addressId: this.selectAddress.addressId }).then(res => {
+        console.log('calculateFreight_', res.data)
+        // 配送模版
+        // debugger
+        this.shipperType = res.data.concat(defaultShipperType)
+        this.shipperSelected = this.shipperType[0]
+        console.log('this.shipperSelected_', this.shipperSelected);
+      })
+    } else {
+      this.shipperType = [
+        defaultShipperType
+      ]
       this.shipperSelected = this.shipperType[0]
-      this.addressIds = res.data.addressIds
-    })
+    }
   },
   computed: {
     ...mapGetters([
@@ -292,13 +306,6 @@ export default {
       return {
         totalNum,
         totalPrice
-      }
-    },
-    selectAddress () {
-      if (this.selectAddressInfo) {
-        return this.selectAddressInfo
-      } else {
-        return this.getDefaultAddress(this.addressIds)
       }
     }
   },

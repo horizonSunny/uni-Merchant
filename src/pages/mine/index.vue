@@ -111,7 +111,7 @@ export default {
   computed: {
     ...mapGetters(['getUserDetails', 'getStatisticData'])
   },
-  onShow() {
+  onShow () {
     this.userDetails()
     this.statisticData()
   },
@@ -121,18 +121,18 @@ export default {
       statisticData: 'GetStatisticData'
     }),
     // 跳转药品简介页面
-    toDrugIntr() {
+    toDrugIntr () {
       console.log('toDrugIntr_')
       uni.navigateTo({
         url: '../merchantsIntr/merchantsIntr'
       })
     },
-    goMyIndent(info) {
+    goMyIndent (info) {
       console.log('goMyIndent_')
       this.$navTo('../myIndent/index', { orderStatus: info })
     },
     // 跳转下一个页面，依据判断
-    goNextPage(info) {
+    goNextPage (info) {
       switch (info) {
         case '浏览记录':
           this.$navTo('../mine/browsingHistory')
@@ -151,12 +151,12 @@ export default {
       }
     },
     // 图片加载失败
-    imageError(item) {
+    imageError (item) {
       console.log('imageError_', item)
       item.productImage = this.correctUrl
     }
   },
-  data() {
+  data () {
     return {
       // indicatorDots: false,
       // autoplay: false,
@@ -180,7 +180,7 @@ export default {
       width: 100%;
       height: 138px;
       padding: 27px 0px 0px 0px;
-      background: url('../../static/mine/mine_background.svg');
+      background: url("../../static/mine/mine_background.svg");
       font-size: 16px;
       font-family: PingFangSC-Semibold, PingFang SC;
       font-weight: 600;

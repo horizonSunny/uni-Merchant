@@ -7,20 +7,27 @@
       <scroll-view scroll-y class="scrollView">
         <view
           class="addressItem"
-          :class="item.disabled?'disabledAddress':''"
-          v-for="(item, index) in addressInfo(activeAddressIds,getAddress,getAddressClassify)"
+          :class="item.disabled ? 'disabledAddress' : ''"
+          v-for="(item, index) in addressInfo(
+            availableAddress,
+            getAddress,
+            getAddressClassify
+          )"
           :key="index"
           @click="selectAddress(item)"
         >
           <view class="userInfo">
             <view class="userAddress">
-              <img :src="labelInfo(item['isDefault'], item['addressLabel'])" alt />
-              <text>{{ item['address'] }}</text>
+              <img
+                :src="labelInfo(item['isDefault'], item['addressLabel'])"
+                alt
+              />
+              <text>{{ item["address"] }}</text>
             </view>
             <view class="userInfoItem">
-              <text>{{ item['fullName'] }}</text>
-              <text>{{ item['sex'] === 1 ? '男士' : '女士' }}</text>
-              <text>{{ item['phone'] }}</text>
+              <text>{{ item["fullName"] }}</text>
+              <text>{{ item["sex"] === 1 ? "男士" : "女士" }}</text>
+              <text>{{ item["phone"] }}</text>
             </view>
           </view>
           <view
@@ -36,7 +43,9 @@
         </view>
       </scroll-view>
       <view class="newAddress">
-        <button type="primary" @click.stop="gotoDetail('new')">新增收货地址</button>
+        <button type="primary" @click.stop="gotoDetail('new')">
+          新增收货地址
+        </button>
       </view>
     </view>
   </body-wrap>
@@ -44,17 +53,17 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  data() {
+  data () {
     return {
-      activeAddressIds: []
+      availableAddress: []
     };
   },
   computed: {
     ...mapGetters(["getAddress", "getAddressClassify"]),
     addressInfo: () => {
-      return (activeAddressIds, getAddress, getAddressClassify) => {
-        if (activeAddressIds !== undefined) {
-          return getAddressClassify(activeAddressIds);
+      return (availableAddress, getAddress, getAddressClassify) => {
+        if (availableAddress !== undefined) {
+          return getAddressClassify;
         } else {
           return getAddress;
         }
@@ -65,7 +74,7 @@ export default {
     ...mapActions({
       getAddressInfo: "GetAddressInfo"
     }),
-    gotoDetail(operate, addressInfo = null) {
+    gotoDetail (operate, addressInfo = null) {
       if (!addressInfo) {
         this.$navTo("../deliveryAddr/newAddr");
       } else {
@@ -74,24 +83,19 @@ export default {
         });
       }
     },
-    selectAddress(item) {
-      console.log(item);
-
-      if (this.activeAddressIds !== undefined && item.disabled !== true) {
-        console.log("上一个页面是订单可点击");
+    selectAddress (item) {
+      if (this.availableAddress !== undefined && item.disabled !== true) {
+        console.log("上一个页面是订单可点击,这时候就要回返带选中地址而不是默认地址");
+        console.log('item_', item);
         let pages = getCurrentPages(); //获取所有页面栈实例列表
-        let nowPage = pages[pages.length - 1]; //当前页页面实例
-        let prevPage = pages[pages.length - 2]; //上一页页面实例
+        let prevPage = pages[pages.length - 2]; //上一页页面实例 订单详情页面
         prevPage.$vm.selectAddressInfo = item; //修改上一页data里面的searchVal参数值为1211
         uni.navigateBack({
           delta: 1
         });
       }
-      // this.$store.dispatch("setSelectedAddrss", item).then(() => {
-      //   uni.navigateBack();
-      // });
     },
-    labelInfo(isDefault, addressLabel) {
+    labelInfo (isDefault, addressLabel) {
       if (isDefault === 1) {
         return "static/deliveryAddr/address_company.svg";
       }
@@ -109,17 +113,14 @@ export default {
           break;
       }
     },
-    onLoad(option) {
-      // 假如options有传参，说明是从订单页面过来的,要对地址做一个过滤，如果没有就不用过滤
-      // console.log("option_", option.activeAddressIds);
-      console.log("this.addressInfo_", option.activeAddressIds);
-      // this.activeAddressIds = option.activeAddressIds;
-      if (option.activeAddressIds !== undefined) {
-        this.activeAddressIds = option.activeAddressIds;
+    onLoad (option) {
+      // 假如options有传参，说明是从订单页面过来的
+      if (option.availableAddress !== undefined) {
+        this.availableAddress = option.availableAddress;
       } else {
-        this.activeAddressIds = undefined;
+        this.availableAddress = undefined;
       }
-      this.getAddressInfo().then(() => {});
+      this.getAddressInfo()
     }
   }
 };
