@@ -119,7 +119,7 @@ export default {
   props: ['editorStatus', 'selectedArr'],
   computed: {
     ...mapGetters(['getShopCartList']),
-    calculateTotal() {
+    calculateTotal () {
       const selectCart = this.getShopCartList.filter(cartItem => {
         return this.checkedArr.indexOf(cartItem.value) > -1
       })
@@ -138,7 +138,7 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     console.log('this.selectedArr_', this.selectedArr)
 
     // this.checkedArr = this.selectedArr;
@@ -155,7 +155,7 @@ export default {
     // console.log("shopCart_", shopCart);
     // console.log("getShopCartList_", this.getShopCartList);
   },
-  data() {
+  data () {
     return {
       correctUrl: '/static/shoppingCart/shopping cart-bitmap2.svg',
       options: [
@@ -188,7 +188,7 @@ export default {
     ...mapActions({
       getShopCartInfo: 'GetShopCartInfo'
     }),
-    checkboxChange: function(e) {
+    checkboxChange: function (e) {
       this.checkedArr = e.detail.value
       console.log('this.checkedArr_', this.checkedArr)
 
@@ -203,7 +203,7 @@ export default {
       }
     },
     // 全选事件
-    allChoose(e) {
+    allChoose (e) {
       console.log('this.props.editorStatus_', this.editorStatus)
 
       let chooseItem = e.detail.value
@@ -224,7 +224,7 @@ export default {
         this.checkedArr = []
       }
     },
-    onClick(e, cart) {
+    onClick (e, cart) {
       console.log('cart_', cart)
       switch (e.index) {
         case 0:
@@ -239,7 +239,7 @@ export default {
       // console.log('cart_', cart)
     },
     // 结算
-    settlement() {
+    settlement () {
       if (this.checkedArr.length === 0) {
         uni.showToast({
           icon: 'none',
@@ -254,18 +254,18 @@ export default {
       }
     },
     // 图片加载失败
-    imageError(item) {
+    imageError (item) {
       // console.log("imageError_", item);
       item.productImage = this.correctUrl
     },
     // 获取每一个购物车加减的参数
-    getCartNum(info) {
+    getCartNum (info) {
       console.log('num_', info)
       const { index, value } = info
       this.getShopCartList[index].cartNum = value
     },
     // 移入收藏夹
-    moveToFavorites(itemInfo) {
+    moveToFavorites (itemInfo) {
       console.log('itemInfo_', itemInfo)
       console.log('this.getShopCartList_', this.getShopCartList)
       console.log('this.collectArr_', this.checkedArr)
@@ -288,7 +288,7 @@ export default {
       })
     },
     // 删除购物车
-    cartDelete(itemInfo) {
+    cartDelete (itemInfo) {
       console.log('this.checkedArr_', this.checkedArr)
       console.log('itemInfo_', itemInfo)
       const params = {
@@ -328,7 +328,7 @@ export default {
     .price {
       margin-left: 9px;
       .priceInfo {
-        width: 69px;
+        // width: 69px;
         height: 22px;
         font-size: 16px;
         font-family: PingFangSC-Semibold, PingFang SC;

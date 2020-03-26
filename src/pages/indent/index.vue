@@ -99,7 +99,7 @@
               <text class="marginLeft">8.00元起</text>
             </view>
             <view class="home_right">
-              ¥{{ shipperSelected['shipperAmount'] }}.00
+              ¥{{ shipperSelected["shipperAmount"] }}
               <img
                 class="marginLeft"
                 src="static/icon/main/home_right-2.svg"
@@ -122,9 +122,8 @@
             共{{ caculateTotal.totalNum }}件商品 应付金额（含运费）
             <view class="home_right"
               >¥{{
-                caculateTotal.totalPrice +
-                  shipperSelected['shipperAmount'] +
-                  '.00'
+                Number(caculateTotal.totalPrice) +
+                  Number(shipperSelected["shipperAmount"])
               }}</view
             >
           </view>
@@ -195,9 +194,8 @@
           合记
           <text
             >¥{{
-              caculateTotal.totalPrice +
-                shipperSelected['shipperAmount'] +
-                '.00'
+              Number(caculateTotal.totalPrice) +
+                Number(shipperSelected["shipperAmount"])
             }}</text
           >
         </view>
@@ -232,7 +230,7 @@ export default {
     distribution,
     invoice
   },
-  data() {
+  data () {
     return {
       editor: true,
       // 选择自提时候，改变为true
@@ -250,11 +248,11 @@ export default {
       efficacyInfo: []
     }
   },
-  onLoad(option) {
+  onLoad (option) {
     // 因为要用到用药人
     this.getMedicineManInfo()
   },
-  onShow() {
+  onShow () {
     console.log('tenant_', this.tenant)
     this.haveRx = this.newIndentClassification.activeIndent.some(item => {
       return item.isMp === 2
@@ -282,7 +280,7 @@ export default {
       'getNewIndent',
       'getMedicineMan'
     ]),
-    caculateTotal() {
+    caculateTotal () {
       let totalNum = 0,
         totalPrice = 0
       this.newIndentClassification.activeIndent.forEach(element => {
@@ -296,7 +294,7 @@ export default {
         totalPrice
       }
     },
-    selectAddress() {
+    selectAddress () {
       if (this.selectAddressInfo) {
         return this.selectAddressInfo
       } else {
@@ -309,32 +307,32 @@ export default {
       getMedicineManInfo: 'GetMedicineMan'
     }),
     // 改变当前是编辑状态还是完成状态
-    reverseEditor() {
+    reverseEditor () {
       this.editor = !this.editor
     },
     // 获取当前页面位置
-    prescription() {
+    prescription () {
       this.$navTo('../prescription/index')
     },
     // 打开快递配送
-    openModal() {
+    openModal () {
       this.$refs.distribution.openModal()
     },
     // 跳转页面
-    gotoNextPage(url, parameters) {
+    gotoNextPage (url, parameters) {
       this.$navTo(url, parameters)
     },
     // 打开发票弹窗
-    showInvoice() {
+    showInvoice () {
       this.$refs.invoice.openModal()
     },
     // 图片加载失败
-    imageError(item) {
+    imageError (item) {
       console.log('imageError_', item)
       item.productImage = this.correctUrl
     },
     // 运费模版选择
-    shipperChange(e) {
+    shipperChange (e) {
       console.log('shipperSelected_', e)
       const shipper = e
       const select = this.shipperType.find(item => {
@@ -349,7 +347,7 @@ export default {
       }
     },
     //付款
-    pay() {
+    pay () {
       // 先生成订单，看有没有问题
       console.log('addressId_', this.selectAddress)
       console.log('invoice_prescribInfo_', this.getNewIndent)
@@ -616,7 +614,7 @@ export default {
           }
           .drugPrice {
             height: 25px;
-            width: 60px;
+            width: 120px;
             font-family: PingFangSC-Semibold, PingFang SC;
             font-weight: 600;
             color: rgba(250, 73, 73, 1);
