@@ -132,7 +132,7 @@
         >有效期至
         <text
           >剩余有效期至>{{
-            product.productExpire ? product.productExpire : '暂无'
+            product.productExpire ? product.productExpire : "暂无"
           }}</text
         >
       </view>
@@ -159,7 +159,7 @@
         <view class="logistics">
           有效期
           <text>{{
-            product.productExpire ? product.productExpire : '暂无'
+            product.productExpire ? product.productExpire : "暂无"
           }}</text>
         </view>
         <view class="warning">
@@ -266,7 +266,7 @@ export default {
   computed: {
     ...mapGetters(['getUserDetails', 'getStatisticData'])
   },
-  onLoad(option) {
+  onLoad (option) {
     // 做页面埋点，添加浏览记录，首先校验有无登陆记录
     // console.log('getUserDetails_', this.getUserDetails);
     if (storage.getSync('access_token') !== channelNo) {
@@ -315,7 +315,7 @@ export default {
     })
   },
   methods: {
-    scroll(e) {
+    scroll (e) {
       // console.log('e.detail.scrollTop_', e.detail.scrollTop);
       if (e.detail.scrollTop > 200) {
         this.topBar = true
@@ -332,7 +332,7 @@ export default {
         this.scrollLocation = 2
       }
     },
-    goBack() {
+    goBack () {
       if (getCurrentPages().length > 1) {
         uni.navigateBack({
           delta: 1
@@ -343,17 +343,17 @@ export default {
         console.log('history.back')
       }
     },
-    swiperslc(index) {
+    swiperslc (index) {
       console.log('index_', index)
       this.swiperslcInfo = index
     },
-    toMain() {
+    toMain () {
       uni.switchTab({
         url: '../main/main'
       })
     },
     // 点击上面tabar滚动
-    srcollLact(index) {
+    srcollLact (index) {
       switch (index) {
         case 0:
           this.tabScrollTop = 0
@@ -370,21 +370,22 @@ export default {
       console.log(index)
     },
     // 立即购买
-    buyImmd() {
-      uni.navigateTo({
-        url: '../login/login'
-      })
+    buyImmd () {
+      // this.$store.commit('NEW_INDENT', {
+      //   selectedCart: this.selectedCart
+      // })
+      // this.$navTo('../indent/index')
     },
     // more
-    showPage() {
+    showPage () {
       this.jumpPageShow = !this.jumpPageShow
     },
-    goPage(url) {
+    goPage (url) {
       console.log(url)
       this.$navTo(url)
     },
     // 加入购物车,判断一下，如果
-    addShoppingCart() {
+    addShoppingCart () {
       newCart({
         productId: this.product.productId,
         cartNum: 1
@@ -393,7 +394,7 @@ export default {
       })
     }
   },
-  data() {
+  data () {
     return {
       indicatorDots: false,
       autoplay: false,

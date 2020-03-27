@@ -31,6 +31,7 @@ const getters = {
     console.log('cartList_', cartList)
     return cartList
   },
+  // 虽然命名是shopcart，但也又是立即购买放入购物车
   getNewIndent: state => state.shopCart.newIndent,
   // 对订单做一个区分
   newIndentClassification: (state, getters) => {

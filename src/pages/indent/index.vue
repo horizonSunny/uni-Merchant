@@ -288,8 +288,6 @@ export default {
       this.shipperSelected = this.shipperType[0]
     }
   },
-  onShow () {
-  },
   computed: {
     ...mapGetters([
       'getDefaultAddress',
