@@ -248,17 +248,21 @@ export default {
         shipperAmount: 0
       }],
       shipperSelected: null,
-      shopCartId: '',
+      productId: '',
       // 确认订单后出错信息
       efficacyInfo: [],
       // 是否是从下个页面选择回来
       selectAddressInfo: null,
+      isFromCart: 1
     }
   },
   onLoad (option) {
     // 因为要用到用药人
     this.getMedicineManInfo()
     // 这边是初始化时候计算
+    if (option.isFromCart) {
+      this.isFromCart = 2
+    }
     const defaultShipperType = {
       shipperTypeId: 3,
       shipperName: "到店自提",
@@ -268,12 +272,12 @@ export default {
     this.haveRx = this.newIndentClassification.activeIndent.some(item => {
       return item.isMp === 2
     })
-    let shopCartId = this.newIndentClassification.activeIndent.map(item => {
-      return item.cartId
+    let productId = this.newIndentClassification.activeIndent.map(item => {
+      return item.productId
     })
-    this.shopCartId = shopCartId
+    this.productId = productId
     if (this.selectAddress) {
-      calculateFreight({ shopCartIds: this.shopCartId, addressId: this.selectAddress.addressId }).then(res => {
+      calculateFreight({ productIds: this.productId, addressId: this.selectAddress.addressId }).then(res => {
         console.log('calculateFreight_', res.data)
         // 配送模版
         // debugger
@@ -328,7 +332,7 @@ export default {
       }
       // 生成运费模版
       if (this.selectAddress) {
-        calculateFreight({ shopCartIds: this.shopCartId, addressId: this.selectAddress.addressId }).then(res => {
+        calculateFreight({ productIds: this.productId, addressId: this.selectAddress.addressId }).then(res => {
           console.log('calculateFreight_', res.data)
           // 配送模版
           // debugger
@@ -402,10 +406,10 @@ export default {
         addressId: this.selectAddress.addressId,
         shipperTypeId: this.shipperSelected.shipperTypeId,
         shipperAmount: this.shipperSelected.shipperAmount,
-        shopCartIds: this.shopCartId,
+        productIds: this.productId,
         totalNum: this.caculateTotal.totalNum,
         totalPrice:
-          this.caculateTotal.totalPrice + this.shipperSelected['shipperAmount']
+          this.caculateTotal.totalPrice + this.shipperSelected['shipperAmount'],
       }
       if (this.haveRx) {
         if (!this.getNewIndent.prescription) {
@@ -441,6 +445,7 @@ export default {
           invoiceType: 2
         }
       }
+      params.isFromCart = this.isFromCart
       console.log('params_', params)
       generateOrder(params).then(
         res => {

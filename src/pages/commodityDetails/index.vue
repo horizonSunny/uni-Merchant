@@ -78,8 +78,10 @@
           </view>
         </view>
         <view class="button">
-          <button type="primary" @click="addShoppingCart">加入购物车</button>
-          <button type="warn" @click="buyImmd">立即购买</button>
+          <button type="primary" @click="showAddCommodity(0)">
+            加入购物车
+          </button>
+          <button type="warn" @click="showAddCommodity(1)">立即购买</button>
         </view>
       </view>
       <!-- 轮播图 -->
@@ -190,7 +192,7 @@
           选择
           <text class="skuInfo">选择单品</text>
         </view>
-        <view class="parameter" @click="showAddCommodity">
+        <view class="parameter" @click="showAddCommodity(0)">
           <img src="static/icon/main/home_right-2.svg" alt />
         </view>
       </view>
@@ -254,10 +256,6 @@
       </view>
       <view class="detailsInfo" v-else-if="swiperslcInfo === 1">
         <view class="specification">
-          <!-- <view class="label">【产品名称】</view>
-        <view class="content"
-          >说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说</view
-        > -->
           {{ product.productDesc }}
         </view>
       </view>
@@ -270,7 +268,11 @@
         </view>
       </view>
     </scroll-view>
-    <addCommodity ref="addCommodity"></addCommodity>
+    <addCommodity
+      ref="addCommodity"
+      :item="product"
+      :operate="operate"
+    ></addCommodity>
   </view>
 </template>
 
@@ -405,17 +407,9 @@ export default {
       console.log(url)
       this.$navTo(url)
     },
-    // 加入购物车,判断一下，如果
-    addShoppingCart () {
-      newCart({
-        productId: this.product.productId,
-        cartNum: 1
-      }).then(res => {
-        this.$navTo('../shoppingCart/index')
-      })
-    },
     // 打开新增商品弹窗
-    showAddCommodity () {
+    showAddCommodity (operate) {
+      this.operate = operate
       this.$refs.addCommodity.openModal()
     },
   },
@@ -463,7 +457,8 @@ export default {
           name: '我的',
           img: '/static/icon/main/D_my.svg'
         }
-      ]
+      ],
+      operate: 0
     }
   }
 }
