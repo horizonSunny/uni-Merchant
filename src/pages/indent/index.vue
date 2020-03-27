@@ -245,7 +245,7 @@ export default {
       shipperType: [{
         shipperTypeId: 3,
         shipperName: "到店自提",
-        shipperAmount: "0.00"
+        shipperAmount: 0
       }],
       shipperSelected: null,
       shopCartId: '',
@@ -258,8 +258,13 @@ export default {
   onLoad (option) {
     // 因为要用到用药人
     this.getMedicineManInfo()
-  },
-  onShow () {
+    // 这边是初始化时候计算
+    const defaultShipperType = {
+      shipperTypeId: 3,
+      shipperName: "到店自提",
+      shipperAmount: 0
+    }
+    // 生成运费模版
     this.haveRx = this.newIndentClassification.activeIndent.some(item => {
       return item.isMp === 2
     })
@@ -267,7 +272,23 @@ export default {
       return item.cartId
     })
     this.shopCartId = shopCartId
-    this.shipperSelected = this.shipperType[0]
+    if (this.selectAddress) {
+      calculateFreight({ shopCartIds: this.shopCartId, addressId: this.selectAddress.addressId }).then(res => {
+        console.log('calculateFreight_', res.data)
+        // 配送模版
+        // debugger
+        this.shipperType = res.data.concat(defaultShipperType)
+        this.shipperSelected = this.shipperType[0]
+        console.log('this.shipperSelected_1,2,3', this.shipperSelected);
+      })
+    } else {
+      this.shipperType = [
+        defaultShipperType
+      ]
+      this.shipperSelected = this.shipperType[0]
+    }
+  },
+  onShow () {
   },
   computed: {
     ...mapGetters([
@@ -301,10 +322,11 @@ export default {
   },
   watch: {
     selectAddress (val) {
+      console.log('selectAddressChange');
       const defaultShipperType = {
         shipperTypeId: 3,
         shipperName: "到店自提",
-        shipperAmount: "0.00"
+        shipperAmount: 0
       }
       // 生成运费模版
       if (this.selectAddress) {
@@ -314,7 +336,7 @@ export default {
           // debugger
           this.shipperType = res.data.concat(defaultShipperType)
           this.shipperSelected = this.shipperType[0]
-          console.log('this.shipperSelected_', this.shipperSelected);
+          console.log('this.shipperSelected_1,2,3', this.shipperSelected);
         })
       } else {
         this.shipperType = [

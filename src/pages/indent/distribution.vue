@@ -14,11 +14,17 @@
               v-for="(item, index) in shipperType"
               :key="index"
             >
-              <view class="selectInfo" :class="item.shipperTypeId == current ? 'active' : ''">
-                <view>{{item.shipperName}}</view>
+              <view
+                class="selectInfo"
+                :class="item.shipperTypeId == current ? 'active' : ''"
+              >
+                <view>{{ item.shipperName }}</view>
                 <view>
-                  ¥{{item.shipperAmount}}
-                  <radio :value="item.shipperTypeId +''" :checked="item.shipperTypeId == current" />
+                  ¥{{ item.shipperAmount }}
+                  <radio
+                    :value="item.shipperTypeId + ''"
+                    :checked="item.shipperTypeId == current"
+                  />
                 </view>
               </view>
             </label>
@@ -35,17 +41,22 @@ export default {
   components: {
     modal
   },
-  data() {
+  data () {
     return {
-      current:
-        this.hasSelected && this.hasSelected["shipperTypeId"]
-          ? this.hasSelected["shipperTypeId"]
-          : 1,
+      current: this.hasSelected && this.hasSelected["shipperTypeId"]
+        ? this.hasSelected["shipperTypeId"]
+        : 1,
       modal: false
     };
   },
+  watch: {
+    hasSelected (value) {
+      console.log('props_hasSelected');
+      this.current = value.shipperTypeId
+    }
+  },
   methods: {
-    radioChange: function(evt) {
+    radioChange: function (evt) {
       console.log("this.shipperType_", this.shipperType);
 
       for (let i = 0; i < this.shipperType.length; i++) {
@@ -57,16 +68,16 @@ export default {
       this.$emit("shipperSelected", evt.detail.value);
       this.closeModal();
     },
-    closeModal() {
+    closeModal () {
       this.modal = false;
     },
-    openModal() {
+    openModal () {
       this.modal = true;
     }
+  },
+  created () {
+    console.log("this.hasSelected_", this.hasSelected);
   }
-  // created() {
-  //   console.log("this.hasSelected_", this.hasSelected);
-  // }
 };
 </script>
 <style lang="scss" scoped>
