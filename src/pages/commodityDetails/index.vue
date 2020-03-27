@@ -1,92 +1,100 @@
 <template>
-  <scroll-view
-    class="main"
-    scroll-y
-    :upper-threshold="50"
-    :scroll-top="tabScrollTop"
-    @scroll="scroll"
+  <view
+    style=" display: flex;
+    width: 100%;
+    flex-direction: column;"
   >
-    <!-- <view v-if="hasLogin" class="hello"> -->
-    <view class="customBar" :style="{ background: topBar ? '#fff' : '' }">
-      <img
-        src="static/icon/commodityDetails/reback.svg"
-        alt
-        class="reback"
-        @click="goBack"
-      />
-      <view class="scrollLocation" v-show="scrollLocationShow">
-        <text
-          :class="scrollLocation === index ? 'active' : ''"
-          v-for="(item, index) in ['商品', '评价', '详情']"
-          :key="index"
-          @click="srcollLact(index)"
-          >{{ item }}</text
-        >
-      </view>
-      <img
-        src="static/icon/commodityDetails/more.svg"
-        alt
-        class="more"
-        @click="showPage"
-      />
-      <img
-        src="static/icon/commodityDetails/shopCar.svg"
-        alt
-        class="shopCar"
-        @click="goPage('../shoppingCart/index')"
-      />
-    </view>
-    <view class="jumpPage" v-show="jumpPageShow">
-      <view class="angle"></view>
-      <view
-        class="pageItem"
-        v-for="(item, index) in page"
-        :key="index"
-        @click="goPage(item.url)"
-      >
-        <img :src="item.img" alt="" />
-        <view>
-          {{ item.name }}
-        </view>
-      </view>
-    </view>
-    <!-- bottomBar -->
-    <view class="bottomBar">
-      <view class="operate">
-        <view class="viewInfo" @click="toMain()">
-          <img src="static/icon/commodityDetails/PDJ_home.svg" alt="" />
-          <view>首页</view>
-        </view>
-        <view class="viewInfo">
-          <img src="static/icon/commodityDetails/PDJ_Consultation.svg" alt="" />
-          <view>咨询</view>
-        </view>
-        <view class="viewInfo">
-          <img
-            src="static/icon/commodityDetails/PDJ_nl_Collection.svg"
-            alt=""
-          />
-          <view>收藏</view>
-        </view>
-      </view>
-      <view class="button">
-        <button type="primary" @click="addShoppingCart">加入购物车</button>
-        <button type="warn" @click="buyImmd">立即购买</button>
-      </view>
-    </view>
-    <!-- 轮播图 -->
-    <view class="carousel">
-      <view class="carouselContain">
-        <swiper>
-          <swiper-item
-            v-for="(item, index) in product.productImage"
+    <scroll-view
+      class="main"
+      scroll-y
+      :upper-threshold="50"
+      :scroll-top="tabScrollTop"
+      @scroll="scroll"
+    >
+      <!-- <view v-if="hasLogin" class="hello"> -->
+      <view class="customBar" :style="{ background: topBar ? '#fff' : '' }">
+        <img
+          src="static/icon/commodityDetails/reback.svg"
+          alt
+          class="reback"
+          @click="goBack"
+        />
+        <view class="scrollLocation" v-show="scrollLocationShow">
+          <text
+            :class="scrollLocation === index ? 'active' : ''"
+            v-for="(item, index) in ['商品', '评价', '详情']"
             :key="index"
+            @click="srcollLact(index)"
+            >{{ item }}</text
           >
-            <view class="swiper-item uni-bg-red">
-              <img :src="item" alt class="merchantIcon" />
-            </view>
-          </swiper-item>
-          <!-- <swiper-item>
+        </view>
+        <img
+          src="static/icon/commodityDetails/more.svg"
+          alt
+          class="more"
+          @click="showPage"
+        />
+        <img
+          src="static/icon/commodityDetails/shopCar.svg"
+          alt
+          class="shopCar"
+          @click="goPage('../shoppingCart/index')"
+        />
+      </view>
+      <view class="jumpPage" v-show="jumpPageShow">
+        <view class="angle"></view>
+        <view
+          class="pageItem"
+          v-for="(item, index) in page"
+          :key="index"
+          @click="goPage(item.url)"
+        >
+          <img :src="item.img" alt="" />
+          <view>
+            {{ item.name }}
+          </view>
+        </view>
+      </view>
+      <!-- bottomBar -->
+      <view class="bottomBar">
+        <view class="operate">
+          <view class="viewInfo" @click="toMain()">
+            <img src="static/icon/commodityDetails/PDJ_home.svg" alt="" />
+            <view>首页</view>
+          </view>
+          <view class="viewInfo">
+            <img
+              src="static/icon/commodityDetails/PDJ_Consultation.svg"
+              alt=""
+            />
+            <view>咨询</view>
+          </view>
+          <view class="viewInfo">
+            <img
+              src="static/icon/commodityDetails/PDJ_nl_Collection.svg"
+              alt=""
+            />
+            <view>收藏</view>
+          </view>
+        </view>
+        <view class="button">
+          <button type="primary" @click="addShoppingCart">加入购物车</button>
+          <button type="warn" @click="buyImmd">立即购买</button>
+        </view>
+      </view>
+      <!-- 轮播图 -->
+      <view class="carousel">
+        <view class="carouselContain">
+          <swiper>
+            <swiper-item
+              v-for="(item, index) in product.productImage"
+              :key="index"
+            >
+              <view class="swiper-item uni-bg-red">
+                <img :src="item" alt class="merchantIcon" />
+              </view>
+            </swiper-item>
+            <!-- <swiper-item>
             <view class="swiper-item uni-bg-green">
               <img
                 src="static/img/home_banner@2x.png"
@@ -95,174 +103,187 @@
               />
             </view>
           </swiper-item> -->
-        </swiper>
+          </swiper>
+        </view>
       </view>
-    </view>
-    <view class="serviceInfo">
-      <text>
-        <img src="@/static/icon/commodityDetails/selected.svg" alt />24小时发货
-      </text>
-      <text>
-        <img src="@/static/icon/commodityDetails/selected.svg" alt />品质保障
-      </text>
-      <text>
-        <img src="@/static/icon/commodityDetails/selected.svg" alt />提供发票
-      </text>
-    </view>
-    <view class="separate productIntr">
-      <view class="productPrice">¥ {{ product.price }}</view>
-      <view class="productName">{{ product.productName }}</view>
-      <view class="productIntro">{{ product.productName }}</view>
-    </view>
-    <view class="separate logisticsInfo">
-      <view class="logistics">
-        配送
-        <text>福建厦门</text>至
-        <text>上海浦东新区</text>
-      </view>
-      <view class="logistics">
-        运费
-        <text>8.00元起</text>
-      </view>
-      <view class="logistics">
-        库存
+      <view class="serviceInfo">
         <text>
-          {{ product.stock }}
-          <text class="limitation">(限购3件)</text> </text
-        >有效期至
-        <text
-          >剩余有效期至>{{
-            product.productExpire ? product.productExpire : "暂无"
-          }}</text
-        >
+          <img
+            src="@/static/icon/commodityDetails/selected.svg"
+            alt
+          />24小时发货
+        </text>
+        <text>
+          <img src="@/static/icon/commodityDetails/selected.svg" alt />品质保障
+        </text>
+        <text>
+          <img src="@/static/icon/commodityDetails/selected.svg" alt />提供发票
+        </text>
       </view>
-    </view>
-    <view class="separate logisticsInfo parameters">
-      <view class="parameter">参数</view>
-      <view class="logistics">
+      <view class="separate productIntr">
+        <view class="productPrice">¥ {{ product.price }}</view>
+        <view class="productName">{{ product.productName }}</view>
+        <view class="productIntro">{{ product.productName }}</view>
+      </view>
+      <view class="separate logisticsInfo">
         <view class="logistics">
-          批准文号
-          <text>{{ product.approvalNumber }}</text>
-        </view>
-        <view class="logistics">
-          包装规格
-          <text>{{ product.productSpecif }}</text>
-        </view>
-        <view class="logistics">
-          剂型/型号
-          <text>{{ product.productModel }}</text>
+          配送
+          <text>福建厦门</text>至
+          <text>上海浦东新区</text>
         </view>
         <view class="logistics">
-          生产企业
-          <text>{{ product.manufacturer }}</text>
+          运费
+          <text>8.00元起</text>
         </view>
         <view class="logistics">
-          有效期
-          <text>{{
-            product.productExpire ? product.productExpire : "暂无"
-          }}</text>
-        </view>
-        <view class="warning">
-          <view class="logistics">
-            <img src="static/icon/commodityDetails/remind.svg" alt />
-            处方药需凭处方在执业医师指导下购买和使用
-          </view>
-          <view class="logistics">
-            <img src="static/icon/commodityDetails/remind.svg" alt />
-            请仔细阅读药品使用说明书并按说明使用或在药师指导下购买和使用
-          </view>
-        </view>
-      </view>
-    </view>
-    <view class="separate logisticsInfo parameters sku">
-      <view class="parameter skuText">
-        选择
-        <text class="skuInfo">选择单品</text>
-      </view>
-      <view class="parameter">
-        <img src="static/icon/main/home_right-2.svg" alt />
-      </view>
-    </view>
-    <view class="separate logisticsInfo parameters sku">
-      <view class="parameter skuText">
-        <text class="skuInfo questionTitle">常见问题（126）</text>
-      </view>
-      <view class="parameter question">
-        <text>查看全部</text>
-        <img src="static/icon/main/home_right-2.svg" alt />
-      </view>
-    </view>
-    <view class="comment">
-      <view
-        class="separate logisticsInfo parameters sku"
-        style="margin-bottom:0px;"
-      >
-        <view class="parameter skuText">
-          <text class="skuInfo questionTitle"
-            >顾客评论（{{ comments.length }}）</text
+          库存
+          <text>
+            {{ product.stock }}
+            <text class="limitation">(限购3件)</text> </text
+          >有效期至
+          <text
+            >剩余有效期至>{{
+              product.productExpire ? product.productExpire : "暂无"
+            }}</text
           >
+        </view>
+      </view>
+      <view class="separate logisticsInfo parameters">
+        <view class="parameter">参数</view>
+        <view class="logistics">
+          <view class="logistics">
+            批准文号
+            <text>{{ product.approvalNumber }}</text>
+          </view>
+          <view class="logistics">
+            包装规格
+            <text>{{ product.productSpecif }}</text>
+          </view>
+          <view class="logistics">
+            剂型/型号
+            <text>{{ product.productModel }}</text>
+          </view>
+          <view class="logistics">
+            生产企业
+            <text>{{ product.manufacturer }}</text>
+          </view>
+          <view class="logistics">
+            有效期
+            <text>{{
+              product.productExpire ? product.productExpire : "暂无"
+            }}</text>
+          </view>
+          <view class="warning">
+            <view class="logistics">
+              <img src="static/icon/commodityDetails/remind.svg" alt />
+              处方药需凭处方在执业医师指导下购买和使用
+            </view>
+            <view class="logistics">
+              <img src="static/icon/commodityDetails/remind.svg" alt />
+              请仔细阅读药品使用说明书并按说明使用或在药师指导下购买和使用
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="separate logisticsInfo parameters sku">
+        <view class="parameter skuText">
+          选择
+          <text class="skuInfo">选择单品</text>
+        </view>
+        <view class="parameter" @click="showAddCommodity">
+          <img src="static/icon/main/home_right-2.svg" alt />
+        </view>
+      </view>
+      <view class="separate logisticsInfo parameters sku">
+        <view class="parameter skuText">
+          <text class="skuInfo questionTitle">常见问题（126）</text>
         </view>
         <view class="parameter question">
           <text>查看全部</text>
           <img src="static/icon/main/home_right-2.svg" alt />
         </view>
       </view>
-      <view class="commentInfo" v-for="(item, index) of comments" :key="index">
-        <view class="commentTitle">
-          <view class="userInfo">
-            <img src="static/img/home.png" alt />
-            <text>{{ item.nickname }}</text>
+      <view class="comment">
+        <view
+          class="separate logisticsInfo parameters sku"
+          style="margin-bottom:0px;"
+        >
+          <view class="parameter skuText">
+            <text class="skuInfo questionTitle"
+              >顾客评论（{{ comments.length }}）</text
+            >
           </view>
-          <view class="commentTime">{{ item.createTime }}</view>
+          <view class="parameter question">
+            <text>查看全部</text>
+            <img src="static/icon/main/home_right-2.svg" alt />
+          </view>
         </view>
-        <view class="commentContent">{{ item.content }}</view>
+        <view
+          class="commentInfo"
+          v-for="(item, index) of comments"
+          :key="index"
+        >
+          <view class="commentTitle">
+            <view class="userInfo">
+              <img src="static/img/home.png" alt />
+              <text>{{ item.nickname }}</text>
+            </view>
+            <view class="commentTime">{{ item.createTime }}</view>
+          </view>
+          <view class="commentContent">{{ item.content }}</view>
+        </view>
       </view>
-    </view>
-    <!-- 基本信息 说明书 服务保障 -->
-    <view class="details">
-      <text
-        v-for="(item, index) in ['基本信息', '说明书', '服务保障']"
-        :key="index"
-        :style="{ 'border-right': index === 2 ? '0px' : '1px solid #eeeeee' }"
-        @click="swiperslc(index)"
-        >{{ item }}</text
-      >
-    </view>
-    <view class="remind">
-      温馨提示：商品包装因厂家更换频繁，如有不符请以实物为准
-    </view>
-    <view class="detailsInfo" v-if="swiperslcInfo === 0">
-      <view class="basicInfo" v-for="(item, index) in basicInfo" :key="index">
-        <text class="label">{{ item.label }}</text>
-        <text>{{ item.info }}</text>
+      <!-- 基本信息 说明书 服务保障 -->
+      <view class="details">
+        <text
+          v-for="(item, index) in ['基本信息', '说明书', '服务保障']"
+          :key="index"
+          :style="{ 'border-right': index === 2 ? '0px' : '1px solid #eeeeee' }"
+          @click="swiperslc(index)"
+          >{{ item }}</text
+        >
       </view>
-    </view>
-    <view class="detailsInfo" v-else-if="swiperslcInfo === 1">
-      <view class="specification">
-        <!-- <view class="label">【产品名称】</view>
+      <view class="remind">
+        温馨提示：商品包装因厂家更换频繁，如有不符请以实物为准
+      </view>
+      <view class="detailsInfo" v-if="swiperslcInfo === 0">
+        <view class="basicInfo" v-for="(item, index) in basicInfo" :key="index">
+          <text class="label">{{ item.label }}</text>
+          <text>{{ item.info }}</text>
+        </view>
+      </view>
+      <view class="detailsInfo" v-else-if="swiperslcInfo === 1">
+        <view class="specification">
+          <!-- <view class="label">【产品名称】</view>
         <view class="content"
           >说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说</view
         > -->
-        {{ product.productDesc }}
+          {{ product.productDesc }}
+        </view>
       </view>
-    </view>
-    <view class="detailsInfo" v-else>
-      <view class="specification"> </view>
-    </view>
-    <view class="productImg">
-      <view v-for="(item, index) in product.productImage" :key="index">
-        <img :src="item" alt />
+      <view class="detailsInfo" v-else>
+        <view class="specification"> </view>
       </view>
-    </view>
-  </scroll-view>
+      <view class="productImg">
+        <view v-for="(item, index) in product.productImage" :key="index">
+          <img :src="item" alt />
+        </view>
+      </view>
+    </scroll-view>
+    <addCommodity ref="addCommodity"></addCommodity>
+  </view>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
 import { channelNo } from '@/config/global'
 import * as storage from '@/config/storage'
+import addCommodity from './addCommodity'
 import { getProductDetails, newCart, setProductVisit } from '@/service/index'
 export default {
+  components: {
+    addCommodity
+  },
   computed: {
     ...mapGetters(['getUserDetails', 'getStatisticData'])
   },
@@ -392,7 +413,11 @@ export default {
       }).then(res => {
         this.$navTo('../shoppingCart/index')
       })
-    }
+    },
+    // 打开新增商品弹窗
+    showAddCommodity () {
+      this.$refs.addCommodity.openModal()
+    },
   },
   data () {
     return {
@@ -507,7 +532,7 @@ uni-page-body {
     height: 50px;
     background: rgba(255, 255, 255, 1);
     position: fixed;
-    z-index: 999;
+    z-index: 99;
     width: 100%;
     bottom: -1px;
     display: flex;

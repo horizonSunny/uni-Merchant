@@ -3,21 +3,21 @@ import { mapState, mapActions, mapGetters } from 'vuex'
 import pageAnimation from '@/components/Michael-pageAnimationPlus'
 export default {
   mixins: [pageAnimation],
-  onLaunch: function() {
+  onLaunch: function () {
     this.getKeyWord()
     this.getMainInfo()
     this.getMedicineTemplate()
     console.log('App Launch')
   },
-  onShow: function() {
+  onShow: function () {
     console.log('App Show')
   },
-  onHide: function() {
+  onHide: function () {
     console.log('App Hide')
   },
-  created() {
+  created () {
     //在页面加载时读取sessionStorage里的状态信息
-    document.body.ontouchstart = function(event) {
+    document.body.ontouchstart = function (event) {
       event.preventDefault()
     }
     if (sessionStorage.getItem('store')) {
@@ -47,13 +47,11 @@ export default {
 
 <style lang="scss">
 /* 头条小程序需要把 iconfont 样式放到组件外 */
-@import 'components/m-icon/m-icon.css';
+@import "components/m-icon/m-icon.css";
 
 /*每个页面公共css */
-html,
-body {
-  max-width: 100%;
-  overflow-x: hidden;
+* {
+  touch-action: none;
 }
 page {
   min-height: 100%;
@@ -122,7 +120,7 @@ m-input {
   top: 0;
   left: 0;
   height: 1px;
-  content: '';
+  content: "";
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   background-color: #c8c7cc;
@@ -134,7 +132,7 @@ m-input {
   bottom: 0;
   left: 0;
   height: 1px;
-  content: '';
+  content: "";
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   background-color: #c8c7cc;
@@ -159,7 +157,7 @@ m-input {
   bottom: 0;
   left: 8px;
   height: 1px;
-  content: '';
+  content: "";
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   background-color: #c8c7cc;
