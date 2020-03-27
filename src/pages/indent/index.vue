@@ -23,7 +23,11 @@
           </view>
           <view
             v-else
-            @click="gotoNextPage('../deliveryAddr/newAddr', {})"
+            @click="
+              gotoNextPage('../deliveryAddr/newAddr', {
+                availableAddress: true
+              })
+            "
             class="noAddress"
           >
             <img src="/static/myIndent/Add address.svg" alt />
@@ -238,14 +242,17 @@ export default {
       haveRx: false,
       correctUrl: '/static/shoppingCart/shopping cart-bitmap2.svg',
       // 可配送地址id
-      shipperType: [],
+      shipperType: [{
+        shipperTypeId: 3,
+        shipperName: "到店自提",
+        shipperAmount: "0.00"
+      }],
       shipperSelected: null,
       shopCartId: '',
       // 确认订单后出错信息
       efficacyInfo: [],
       // 是否是从下个页面选择回来
       selectAddressInfo: null,
-      selectAddress: null
     }
   },
   onLoad (option) {
@@ -253,7 +260,6 @@ export default {
     this.getMedicineManInfo()
   },
   onShow () {
-    console.log('tenant_', this.tenant)
     this.haveRx = this.newIndentClassification.activeIndent.some(item => {
       return item.isMp === 2
     })
@@ -261,30 +267,7 @@ export default {
       return item.cartId
     })
     this.shopCartId = shopCartId
-    // const defaultAddress = this.getDefaultAddress
-    this.selectAddress = this.selectAddressInfo ? this.selectAddressInfo : this.getDefaultAddress
-    console.log('shopCartId_', shopCartId)
-    // 依据购物车信息和可配送地址确认可配送订单模版
-    const defaultShipperType = {
-      shipperTypeId: 3,
-      shipperName: "到店自提",
-      shipperAmount: "0.00"
-    }
-    if (this.selectAddress) {
-      calculateFreight({ shopCartIds: shopCartId, addressId: this.selectAddress.addressId }).then(res => {
-        console.log('calculateFreight_', res.data)
-        // 配送模版
-        // debugger
-        this.shipperType = res.data.concat(defaultShipperType)
-        this.shipperSelected = this.shipperType[0]
-        console.log('this.shipperSelected_', this.shipperSelected);
-      })
-    } else {
-      this.shipperType = [
-        defaultShipperType
-      ]
-      this.shipperSelected = this.shipperType[0]
-    }
+    this.shipperSelected = this.shipperType[0]
   },
   computed: {
     ...mapGetters([
@@ -307,11 +290,44 @@ export default {
         totalNum,
         totalPrice
       }
+    },
+    selectAddress () {
+      if (this.selectAddressInfo) {
+        return this.selectAddressInfo
+      } else {
+        return this.getDefaultAddress
+      }
+    }
+  },
+  watch: {
+    selectAddress (val) {
+      const defaultShipperType = {
+        shipperTypeId: 3,
+        shipperName: "到店自提",
+        shipperAmount: "0.00"
+      }
+      // 生成运费模版
+      if (this.selectAddress) {
+        calculateFreight({ shopCartIds: this.shopCartId, addressId: this.selectAddress.addressId }).then(res => {
+          console.log('calculateFreight_', res.data)
+          // 配送模版
+          // debugger
+          this.shipperType = res.data.concat(defaultShipperType)
+          this.shipperSelected = this.shipperType[0]
+          console.log('this.shipperSelected_', this.shipperSelected);
+        })
+      } else {
+        this.shipperType = [
+          defaultShipperType
+        ]
+        this.shipperSelected = this.shipperType[0]
+      }
     }
   },
   methods: {
     ...mapActions({
-      getMedicineManInfo: 'GetMedicineMan'
+      getMedicineManInfo: 'GetMedicineMan',
+      getAddressInfo: 'GetAddressInfo'
     }),
     // 改变当前是编辑状态还是完成状态
     reverseEditor () {

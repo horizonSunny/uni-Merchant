@@ -246,7 +246,7 @@ export default {
       }
       // availableAddress 为true是订单过来的需要校验地址信息
       console.log('this.availableAddress_', typeof (this.availableAddress));
-      if (this.availableAddress !== 'true') {
+      if (this.availableAddress === 'true') {
         checkAddress({
           city: this.userInfo.city,
           province: this.userInfo.city
@@ -256,17 +256,22 @@ export default {
           // uni.showToast({
           //   title: '该地址不在配送范围内,是否保存',
           // });
-          uni.showModal({
-            title: '该地址不在配送范围内,是否保存',
-            success: (res) => {
-              if (res.confirm) {
-                this.availableAddress = 'true'
-                this.submit()
-              } else if (res.cancel) {
-                console.log('哈哈哈');
+          if (res.data.available) {
+            this.availableAddress = 'false'
+            this.submit()
+          } else {
+            uni.showModal({
+              title: '该地址不在配送范围内,是否保存',
+              success: (res) => {
+                if (res.confirm) {
+                  this.availableAddress = 'false'
+                  this.submit()
+                } else if (res.cancel) {
+                  console.log('哈哈哈');
+                }
               }
-            }
-          });
+            });
+          }
         })
       } else {
         if (this.operate === 'add') {
@@ -348,7 +353,9 @@ export default {
     }
   },
   beforeDestroy: function (optionInfo) {
-    this.getAddressInfo()
+    this.getAddressInfo().then((res) => {
+      console.log('hahaha');
+    })
   }
 }
 </script>
