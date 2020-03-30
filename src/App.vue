@@ -50,9 +50,9 @@ export default {
 @import "components/m-icon/m-icon.css";
 
 /*每个页面公共css */
-* {
-  touch-action: none;
-}
+// * {
+//   touch-action: none;
+// }
 page {
   min-height: 100%;
   display: flex;
