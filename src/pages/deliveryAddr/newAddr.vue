@@ -249,7 +249,7 @@ export default {
       if (this.availableAddress === 'true') {
         checkAddress({
           city: this.userInfo.city,
-          province: this.userInfo.city
+          province: this.userInfo.province
         }).then(res => {
           // uni.navigateBack()
           console.log('res_data_', res.data.available);
