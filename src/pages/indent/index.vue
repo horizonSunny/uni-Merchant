@@ -124,12 +124,7 @@
           </view>
           <view class="logistics">
             共{{ caculateTotal.totalNum }}件商品 应付金额（含运费）
-            <view class="home_right"
-              >¥{{
-                Number(caculateTotal.totalPrice) +
-                  Number(shipperSelected["shipperAmount"])
-              }}</view
-            >
+            <view class="home_right">¥{{ totalPriceInfo }}</view>
           </view>
         </view>
         <view class="separate logisticsInfo">
@@ -196,12 +191,7 @@
       <view class="payment">
         <view class="amount">
           合记
-          <text
-            >¥{{
-              Number(caculateTotal.totalPrice) +
-                Number(shipperSelected["shipperAmount"])
-            }}</text
-          >
+          <text>¥{{ totalPriceInfo }}</text>
         </view>
         <view class="operate" @click="pay">去支付</view>
       </view>
@@ -227,6 +217,7 @@ import purchasefailed from './purchasefailed'
 import distribution from './distribution'
 import invoice from './invoice'
 import { generateOrder, alipay, calculateFreight } from '@/service/index'
+import { add, sub, mul } from '@/utils/floatMix'
 export default {
   components: {
     // commidityItem
@@ -292,6 +283,7 @@ export default {
       this.shipperSelected = this.shipperType[0]
     }
   },
+
   computed: {
     ...mapGetters([
       'getDefaultAddress',
@@ -306,7 +298,8 @@ export default {
       this.newIndentClassification.activeIndent.forEach(element => {
         console.log('element_', element)
         totalNum += element.cartNum
-        totalPrice += element.cartNum * element.price
+        // totalPrice += element.cartNum * element.price
+        totalPrice += mul(element.price, element.cartNum)
       })
       console.log('totalNum_', totalNum, '_totalPrice_', totalPrice)
       return {
@@ -320,6 +313,13 @@ export default {
       } else {
         return this.getDefaultAddress
       }
+    },
+    totalPriceInfo () {
+      let totalPrice = Number(this.caculateTotal.totalPrice)
+      let shipperAmount = Number(this.shipperSelected.shipperAmount)
+      debugger;
+      let all = add(totalPrice, shipperAmount)
+      return all
     }
   },
   watch: {

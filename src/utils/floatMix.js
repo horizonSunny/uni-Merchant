@@ -2,6 +2,7 @@
  ** 加
  **/
 let add = function(arg1, arg2) {
+  debugger
   var r1, r2, m, c
   try {
     r1 = arg1.toString().split('.')[1].length
@@ -70,25 +71,4 @@ let mul = function(arg1, arg2) {
   )
 }
 
-/**
- ** 除
- **/
-let div = function(arg1, arg2) {
-  var t1 = 0,
-    t2 = 0,
-    r1,
-    r2
-  try {
-    t1 = arg1.toString().split('.')[1].length
-  } catch (e) {}
-  try {
-    t2 = arg2.toString().split('.')[1].length
-  } catch (e) {}
-  with (Math) {
-    r1 = Number(arg1.toString().replace('.', ''))
-    r2 = Number(arg2.toString().replace('.', ''))
-    return (r1 / r2) * pow(10, t2 - t1)
-  }
-}
-
-export { add, sub, mul, div }
+export { add, sub, mul }

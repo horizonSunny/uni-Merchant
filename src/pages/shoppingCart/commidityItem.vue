@@ -48,7 +48,7 @@
                     <text>¥ {{ item.price }}</text>
                     <yp-number-box
                       :min="1"
-                      :max="9"
+                      :max="1000"
                       :index="index"
                       :item="item"
                       @send-price="getCartNum"
@@ -110,6 +110,7 @@ import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-act
 import ypNumberBox from '@/components/yp-number-box/yp-number-box.vue'
 import { mapActions, mapGetters } from 'vuex'
 import { setProductCollect, shopCartDelete } from '@/service/index'
+import { add, sub, mul } from '@/utils/floatMix'
 export default {
   components: {
     uniSwipeAction,
@@ -132,7 +133,8 @@ export default {
         this.selectedCart = selectCart
         selectCart.forEach(element => {
           this.totalNum += element.cartNum
-          totalPrice += element.price * element.cartNum
+          totalPrice += mul(element.price, element.cartNum)
+          // totalPrice += element.price * element.cartNum
         })
         return totalPrice
       }
