@@ -556,6 +556,10 @@ export default {
     },
     //监听原生标题栏搜索输入框搜索事件，用户点击软键盘上的“搜索”按钮时触发。
     onSearchInputConfirmed (item) {
+      console.log('item_', item.keyword);
+      if (item.keyword) {
+        this.searchInfo = item.keyword
+      }
       this.loadNewsList('refresh');
     },
   }
