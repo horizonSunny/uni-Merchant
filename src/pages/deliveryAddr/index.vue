@@ -100,7 +100,7 @@ export default {
     },
     labelInfo (isDefault, addressLabel) {
       if (isDefault === 1) {
-        return "static/deliveryAddr/address_company.svg";
+        return "static/deliveryAddr/address_def.svg";
       }
       switch (addressLabel) {
         case "家":
@@ -159,7 +159,7 @@ export default {
           img {
             margin-right: 10px;
             position: relative;
-            top: 4px;
+            // top: 4px;
           }
           .addressInfo {
             width: 150px;
