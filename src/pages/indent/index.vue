@@ -317,7 +317,6 @@ export default {
     totalPriceInfo () {
       let totalPrice = Number(this.caculateTotal.totalPrice)
       let shipperAmount = Number(this.shipperSelected.shipperAmount)
-      debugger;
       let all = add(totalPrice, shipperAmount)
       return all
     }

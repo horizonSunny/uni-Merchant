@@ -2,7 +2,6 @@
  ** 加
  **/
 let add = function(arg1, arg2) {
-  debugger
   var r1, r2, m, c
   try {
     r1 = arg1.toString().split('.')[1].length
