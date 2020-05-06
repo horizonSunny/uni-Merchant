@@ -4,11 +4,15 @@
       <view class="title">购买失败</view>
       <view class="content">
         <view class="effectiveGoods">
-          <view class="commidityInfo" v-for="(item, index) in efficacyInfo" :key="index">
+          <view
+            class="commidityInfo"
+            v-for="(item, index) in efficacyInfo"
+            :key="index"
+          >
             <view class="failure">失效</view>
             <view class="productImg">
               <img src="/static/img/home.png" alt width="60" height="60" />
-              <view class="model">已下架</view>
+              <view class="model">{{ item.reasons[0] }}</view>
             </view>
             <view class="drugsInfo">
               <view class="failureInfo">
@@ -17,18 +21,23 @@
                   class="mark"
                   v-show="item.isMp === 1"
                   style="color:red;border: 1px solid green;"
-                >OTC</text>
+                  >OTC</text
+                >
                 <text class="mark" v-show="item.isMp === 2">RX</text>
                 <text class="mark" v-show="item.isMp === 3">其他</text>
-                <text>{{item.productName}}</text>
+                <text>{{ item.productName }}</text>
               </view>
 
               <view class="drugSpec">
-                <view>已选择：{{item.productSpecif}}</view>
+                <view>已选择：{{ item.productSpecif }}</view>
                 <view>X1</view>
               </view>
               <view class="drugSpec">
-                <text v-for="(itemInfo,itemIndex) in item.reasons" :key="itemIndex">{{itemInfo}}</text>
+                <text
+                  v-for="(itemInfo, itemIndex) in item.reasons"
+                  :key="itemIndex"
+                  >{{ itemInfo }}</text
+                >
               </view>
             </view>
           </view>
@@ -48,13 +57,13 @@ export default {
     // commidityItem
     modal
   },
-  data() {
+  data () {
     return {
       modal: true
     };
   },
   methods: {
-    goBack() {
+    goBack () {
       uni.navigateBack({
         delta: 1
       });

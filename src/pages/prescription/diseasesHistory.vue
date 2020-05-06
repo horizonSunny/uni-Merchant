@@ -47,7 +47,10 @@
                 >x</view
               >
             </view>
-            <view class="diseasesItem diseasesAdd" @click="addDiseases(item)"
+            <view
+              v-show="item.diseases.length < 10"
+              class="diseasesItem diseasesAdd"
+              @click="addDiseases(item)"
               >+</view
             >
           </view>

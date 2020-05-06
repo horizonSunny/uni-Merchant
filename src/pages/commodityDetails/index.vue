@@ -371,7 +371,7 @@ export default {
       this.swiperslcInfo = index
     },
     toMain () {
-      uni.switchTab({
+      uni.navigateTo({
         url: '../main/main'
       })
     },

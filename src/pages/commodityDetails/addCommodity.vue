@@ -50,7 +50,11 @@
       <view class="content">
         <view class="caculate">
           <text>数量</text>
-          <yp-number-box :min="1" :max="9" @change="numChange"></yp-number-box>
+          <yp-number-box
+            :min="1"
+            :max="item.stock"
+            @change="numChange"
+          ></yp-number-box>
         </view>
         <view
           ><text style="color:#898989;margin-right:10px">库存</text>
