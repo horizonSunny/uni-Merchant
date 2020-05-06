@@ -685,10 +685,10 @@ export default {
                 font-size: 14px;
                 font-family: PingFangSC-Medium, PingFang SC;
                 font-weight: 500;
-                width: 45px;
+                width: auto;
                 color: rgba(250, 73, 73, 1);
                 line-height: 20px;
-                margin-left: 50px;
+                margin-left: 45px;
               }
             }
           }
