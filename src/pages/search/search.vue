@@ -765,6 +765,10 @@ export default {
           font-weight: 400;
           color: rgba(27, 27, 27, 1);
           line-height: 20px;
+          width: 90%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
           .mark {
             position: relative;
             display: inline-block;
