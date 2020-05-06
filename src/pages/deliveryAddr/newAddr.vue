@@ -18,6 +18,7 @@
               name="fullName"
               type="text"
               placeholder="请填写真实姓名"
+              maxlength="5"
               v-model="userInfo['fullName']"
             />
           </view>

@@ -22,7 +22,7 @@
                 :src="labelInfo(item['isDefault'], item['addressLabel'])"
                 alt
               />
-              <text>{{ item["address"] }}</text>
+              <text class="addressInfo">{{ item["address"] }}</text>
             </view>
             <view class="userInfoItem">
               <text>{{ item["fullName"] }}</text>
@@ -160,6 +160,13 @@ export default {
             margin-right: 10px;
             position: relative;
             top: 4px;
+          }
+          .addressInfo {
+            width: 150px;
+            display: inline-block;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
           }
         }
         .userInfoItem {
