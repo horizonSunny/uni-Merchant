@@ -6,7 +6,7 @@
       jumpButton=""
     >
       <text slot="title" style="color:#000">{{
-        this.operate === "reset" ? "编辑收货地址" : "新增收货地址"
+        this.operate === "reset" ? "更新地址" : "新增收货地址"
       }}</text>
     </tob-bar>
     <view slot="content" class="content">
