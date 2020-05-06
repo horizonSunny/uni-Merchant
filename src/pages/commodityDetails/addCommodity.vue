@@ -113,6 +113,10 @@ export default {
         cartNum: this.cartNum
       }).then(res => {
         this.closeModal();
+        uni.showToast({
+          title: '加入购物车成功',
+          duration: 1000
+        })
       })
     },
     numChange (val) {
