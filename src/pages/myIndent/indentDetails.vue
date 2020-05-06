@@ -25,17 +25,23 @@
             <view class="user">
               <img src="static/icon/merchantsIntr/location.svg" alt />
               <view class="userName">{{
-                getOrderDetails.deliveryAddress.fullName
+                getOrderDetails.deliveryAddress
+                  ? getOrderDetails.deliveryAddress.fullName
+                  : "暂无姓名"
               }}</view>
               <view class="phone">{{
-                getOrderDetails.deliveryAddress.phone
+                getOrderDetails.deliveryAddress
+                  ? getOrderDetails.deliveryAddress.phone
+                  : "暂无手机号"
               }}</view>
             </view>
             <view class="address">{{
-              getOrderDetails.deliveryAddress.address
+              getOrderDetails.deliveryAddress
+                ? getOrderDetails.deliveryAddress.address
+                : "暂无详细地址"
             }}</view>
           </view>
-          <view class="pickUp" v-show="true">
+          <view class="pickUp">
             <view class="user">
               <img src="static/shoppingCart/shopping cart-business.svg" alt />
               <view class="userName">门店自提点：xxx大药房</view>
@@ -407,7 +413,6 @@ export default {
       }
       .address {
         margin: 4px 0px 0px 21px;
-        height: 20px;
         font-size: 14px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
