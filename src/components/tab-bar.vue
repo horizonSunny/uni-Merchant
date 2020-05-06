@@ -100,7 +100,7 @@
 </template>
 <script>
 export default {
-  created() {
+  created () {
     const currentPages = getCurrentPages()
     const currentPage = currentPages[currentPages.length - 1]['route']
     console.log('currentPage_', currentPage)
@@ -121,32 +121,32 @@ export default {
         break
     }
   },
-  data() {
+  data () {
     return {
       currentSelected: this.$store.state.currentTabBar
     }
   },
   methods: {
     // 因为重新渲染这个函数，所以药将this.currentSelected值保存到全局变量
-    selectActive(index) {
+    selectActive (index) {
       this.$store.commit('SET_CURRENT_BAR', index)
       console.log(this.currentSelected)
       switch (index) {
         case 0:
-          uni.reLaunch({
+          uni.navigateTo({
             url: '../main/main'
           })
           break
         case 1:
-          uni.reLaunch({
+          uni.navigateTo({
             url: '../classify/classify'
           })
           break
         case 2:
-          uni.reLaunch({ url: '../shoppingCart/index' })
+          uni.navigateTo({ url: '../shoppingCart/index' })
           break
         case 3:
-          uni.reLaunch({ url: '../mine/index' })
+          uni.navigateTo({ url: '../mine/index' })
           break
         default:
           break

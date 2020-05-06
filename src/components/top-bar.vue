@@ -7,6 +7,7 @@
           class="uni-page-head-btn"
           style="background-color: transparent; width: 29px;text-aviewgn: left;"
         >
+          <!-- 不同头部颜色下的返回图标 -->
           <img
             v-show="backInfo !== '' && backShow"
             :src="
@@ -22,7 +23,6 @@
       </view>
       <view class="uni-page-head-bd">
         <view class="uni-page-head__title" style="font-size: 16px; opacity: 1;">
-          <!---->
           <!-- 全部药品 -->
           <slot name="title"></slot>
         </view>
@@ -75,7 +75,7 @@ export default {
 
   // },
   computed: {
-    backShow() {
+    backShow () {
       const currentPages = getCurrentPages()
       const currentPage = currentPages[currentPages.length - 1]['route']
       if (noBackPage.indexOf(currentPage) > -1) {
@@ -86,12 +86,12 @@ export default {
     }
   },
   props: ['backInfo', 'styleInfo', 'jumpButton'],
-  created() {
+  created () {
     const currentPages = getCurrentPages()
     this.pageStack = currentPages[currentPages.length - 1]['route']
     console.log('this.pageStack_', this.pageStack)
   },
-  data() {
+  data () {
     return {
       // goBack: true
       page: [
@@ -126,7 +126,7 @@ export default {
     }
   },
   methods: {
-    goBack() {
+    goBack () {
       // if (
       //   this.pageStack === 'pages/login/login' &&
       //   getCurrentPages().length > 1
@@ -135,9 +135,10 @@ export default {
       //     delta: 2
       //   })
       // }
+      // debugger;
       if (getCurrentPages().length > 1) {
         if (this.pageStack === 'pages/login/login') {
-          history.back({
+          uni.navigateBack({
             delta: 2
           })
           console.log('history.back 2', getCurrentPages())
@@ -148,26 +149,29 @@ export default {
           console.log('uni.navigateBack delta 1')
         }
       } else {
-        if (this.pageStack === 'pages/login/login') {
-          history.back({
-            delta: 2
-          })
-          console.log('history.back delta 3')
-        } else {
-          history.back()
-          console.log('history.back delta 1')
-        }
+        uni.reLaunch({
+          url: '../main/main'
+        })
+        // if (this.pageStack === 'pages/login/login') {
+        //   history.back({
+        //     delta: 2
+        //   })
+        //   console.log('history.back delta 3')
+        // } else {
+        //   history.back()
+        //   console.log('history.back delta 1')
+        // }
       }
       // uni.navigateBack({
       //   delta: 1
       // })
     },
-    goPage(url) {
+    goPage (url) {
       console.log(url)
       this.$navTo(url)
       this.jumpPageShow = false
     },
-    showPage() {
+    showPage () {
       this.jumpPageShow = !this.jumpPageShow
     }
   }
