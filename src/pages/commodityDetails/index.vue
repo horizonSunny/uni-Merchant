@@ -403,8 +403,11 @@ export default {
     productCollect (product, productCollect) {
       // console.log('product_', product);
       if (productCollect) {
+        let collectInfo = this.getCollectInfo.find((item) => {
+          return item.productId == product.productId
+        })
         deleteProductCollect({
-          productCollectId: [product.productId]
+          productCollectId: [collectInfo.productCollectId]
         }).then(res => {
           // console.log('res_', res);
           this.getProductCollect(
