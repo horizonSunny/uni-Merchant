@@ -99,8 +99,10 @@
         <view class="separate logisticsInfo">
           <view class="logistics" @click="openModal">
             <view>
-              运费
-              <text class="marginLeft">8.00元起</text>
+              配送方式
+              <text class="marginLeft">{{
+                shipperSelected["shipperName"]
+              }}</text>
             </view>
             <view class="home_right">
               ¥{{ shipperSelected["shipperAmount"] }}
