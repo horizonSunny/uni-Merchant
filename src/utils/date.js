@@ -1,13 +1,15 @@
 function getDate(strDate) {
-  var date = eval(
-    'new Date(' +
-      strDate
-        .replace(/\d+(?=-[^-]+$)/, function(a) {
-          return parseInt(a, 10) - 1
-        })
-        .match(/\d+/g) +
-      ')'
-  )
+  // var date = eval(
+  //   'new Date(' +
+  //     strDate
+  //       .replace(/\d+(?=-[^-]+$)/, function(a) {
+  //         return parseInt(a, 10) - 1
+  //       })
+  //       .match(/\d+/g) +
+  //     ')'
+  // )
+  let startTime = strDate.replace(new RegExp('-', 'gm'), '/')
+  let date = new Date(startTime).getTime()
   return date
 }
 //时间戳转化为时间格式

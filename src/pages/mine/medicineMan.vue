@@ -5,23 +5,34 @@
     </tob-bar>
     <view slot="content" class="content">
       <view class="userWrap">
-        <view class="userInfo" v-for="(item, index) in getMedicineMan" :key="index">
+        <view
+          class="userInfo"
+          v-for="(item, index) in getMedicineMan"
+          :key="index"
+        >
           <view class="userMessage">
             <text class="name">{{ item.fullName }}</text>
             <text class="sex">{{ item.sex === 1 ? "先生" : "女士" }}</text>
             <text class="sex">{{ calculateAge(item.birthday) }}</text>
             <text class="sex">{{ item.phone }}</text>
             <text class="label" v-if="item.isDefault === 1">
-              {{
-              item.isDefault === 1 ? "默认" : ""
-              }}
+              {{ item.isDefault === 1 ? "默认" : "" }}
             </text>
           </view>
-          <view class="editor" @click="gotoNextPage('../prescription/newPatient', item)">编辑</view>
+          <view
+            class="editor"
+            @click="gotoNextPage('../prescription/newPatient', item)"
+            >编辑</view
+          >
         </view>
       </view>
       <view class="newMan">
-        <button type="primary" @click="gotoNextPage('../prescription/newPatient', {})">新增用药人</button>
+        <button
+          type="primary"
+          @click="gotoNextPage('../prescription/newPatient', {})"
+        >
+          新增用药人
+        </button>
       </view>
     </view>
   </body-wrap>
@@ -30,19 +41,21 @@
 import { mapActions, mapGetters } from "vuex";
 import { getDate, timeChangetype, formatDate } from "@/utils/date";
 export default {
-  data() {
+  data () {
     return {
       userInfo: [{}, {}]
     };
   },
   computed: {
     ...mapGetters(["getMedicineMan"]),
-    calculateAge: function() {
-      return function(birthday) {
+    calculateAge: function () {
+      return function (birthday) {
         console.log("birthday_", birthday);
         const info = getDate(birthday);
+        console.log('info_', info);
         const time = Date.parse(new Date()) - timeChangetype(info);
         const age = time / (365 * 24 * 60 * 60 * 1000);
+        console.log('age_', age);
         return parseInt(age) + "岁";
       };
     }
@@ -52,12 +65,12 @@ export default {
       getMedicineManInfo: "GetMedicineMan"
     }),
     // 跳转页面
-    gotoNextPage(url, parameters) {
+    gotoNextPage (url, parameters) {
       this.$store.commit("SET_CURRENT_MEDICINE_MAN", parameters);
       this.$navTo(url);
     }
   },
-  onLoad(option) {
+  onLoad (option) {
     this.getMedicineManInfo();
     setTimeout(() => {
       console.log("this.getMedicineMan_", this.getMedicineMan);

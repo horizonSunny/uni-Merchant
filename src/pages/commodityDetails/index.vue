@@ -69,7 +69,7 @@
             />
             <view>咨询</view>
           </view>
-          <view class="viewInfo">
+          <view class="viewInfo" @click="productCollect(product)">
             <img
               src="static/icon/commodityDetails/PDJ_nl_Collection.svg"
               alt=""
@@ -277,11 +277,11 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
 import { channelNo } from '@/config/global'
 import * as storage from '@/config/storage'
 import addCommodity from './addCommodity'
-import { getProductDetails, newCart, setProductVisit } from '@/service/index'
+import { getProductDetails, newCart, setProductCollect, setProductVisit } from '@/service/index'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   components: {
     addCommodity
@@ -338,6 +338,9 @@ export default {
     })
   },
   methods: {
+    // ...mapActions({
+    //   getClassify: 'GetClassify'
+    // }),
     scroll (e) {
       // console.log('e.detail.scrollTop_', e.detail.scrollTop);
       if (e.detail.scrollTop > 200) {
@@ -374,6 +377,14 @@ export default {
       uni.navigateTo({
         url: '../main/main'
       })
+    },
+    productCollect (product) {
+      // console.log('product_', product);
+      // setProductCollect({
+      //   productIds: [product.productId]
+      // }).then(res => {
+      //   console.log('res_', res);
+      // })
     },
     // 点击上面tabar滚动
     srcollLact (index) {
