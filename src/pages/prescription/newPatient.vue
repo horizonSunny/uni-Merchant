@@ -200,13 +200,21 @@ export default {
       console.log('patientInfo____', info);
       console.log('this.preTemplateInfo_', this.preTemplateInfo);
       const medicineInfo = this.preTemplateInfo.map((item) => {
-        const judge = Number(item.status) === 1 && item.diseases.length !== 0
-        if (judge) {
+        if (['过往病史', '过敏史', '家族病史'].indexOf(item.medicineName) > -1) {
+          const judge = Number(item.status) === 1 && item.diseases.length !== 0
+          if (judge) {
+            return {
+              id: item.id,
+              labels: item.diseases
+            }
+          }
+        } else {
           return {
             id: item.id,
-            labels: item.diseases
+            labels: []
           }
         }
+
       })
       const medicine = medicineInfo.filter(item => item !== undefined)
       console.log('medicineInfo_', medicine);

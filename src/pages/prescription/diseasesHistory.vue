@@ -35,7 +35,14 @@
               </view>
             </radio-group>
           </view>
-          <view v-if="item.status == 1" class="diseases">
+          <view
+            v-if="
+              item.status == 1 &&
+                ['过往病史', '过敏史', '家族病史'].indexOf(item.medicineName) >
+                  -1
+            "
+            class="diseases"
+          >
             <view
               class="diseasesItem"
               v-for="(diseasesInfo, diseasesIndex) in item.diseases"
