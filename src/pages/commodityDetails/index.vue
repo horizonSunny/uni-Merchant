@@ -69,12 +69,21 @@
             />
             <view>咨询</view>
           </view>
-          <view class="viewInfo" @click="productCollect(product)">
+          <view class="viewInfo" @click="productCollect(product, isCollect)">
+            <img
+              src="static/icon/commodityDetails/PDJ_sel_Collection.svg"
+              alt=""
+              PDJ_sel_Collection.svg
+              v-if="isCollect"
+            />
             <img
               src="static/icon/commodityDetails/PDJ_nl_Collection.svg"
               alt=""
+              PDJ_sel_Collection.svg
+              v-if="!isCollect"
             />
-            <view>收藏</view>
+            <view>{{ isCollect ? "收藏" : "未收藏" }}</view>
+            <!-- <view>{{ isCollect(product) }}</view> -->
           </view>
         </view>
         <view class="button">
@@ -125,7 +134,7 @@
       <view class="separate productIntr">
         <view class="productPrice">¥ {{ product.price }}</view>
         <view class="productName">{{ product.productName }}</view>
-        <view class="productIntro">{{ product.productName }}</view>
+        <view class="productIntro">{{ product.productDesc }}</view>
       </view>
       <view class="separate logisticsInfo">
         <view class="logistics">
@@ -280,14 +289,23 @@
 import { channelNo } from '@/config/global'
 import * as storage from '@/config/storage'
 import addCommodity from './addCommodity'
-import { getProductDetails, newCart, setProductCollect, setProductVisit } from '@/service/index'
+import { getProductDetails, newCart, setProductCollect, deleteProductCollect, setProductVisit } from '@/service/index'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   components: {
     addCommodity
   },
   computed: {
-    ...mapGetters(['getUserDetails', 'getStatisticData'])
+    ...mapGetters(['getUserDetails', 'getStatisticData', 'getCollectInfo']),
+    isCollect (product) {
+      const isCollect = this.getCollectInfo.some((item) => {
+        console.log('isCollect_item.productId_', item.productId);
+        console.log('isCollect_this.product.productId_', this.productIdInfo);
+        return item.productId == this.productIdInfo
+      })
+      // console.log('isCollect_', isCollect);
+      return isCollect
+    }
   },
   onLoad (option) {
     // 做页面埋点，添加浏览记录，首先校验有无登陆记录
@@ -296,8 +314,12 @@ export default {
       setProductVisit({ productId: option.productId })
     }
     // 获取商品信息
+    this.productIdInfo = option.productId
+    // const a = this.isCollect
+    // console.log('this.productIdInfo _', this.productIdInfo); 
+
     getProductDetails({ productId: option.productId }).then(res => {
-      console.log('commodityDetails_', res.data)
+      // console.log('commodityDetails_', res.data)
       this.product = res.data.product
       this.tenant = res.data.tenant
       this.comments = res.data.comments.slice(0, 4)
@@ -338,9 +360,9 @@ export default {
     })
   },
   methods: {
-    // ...mapActions({
-    //   getClassify: 'GetClassify'
-    // }),
+    ...mapActions({
+      getProductCollect: 'GetProductCollect'
+    }),
     scroll (e) {
       // console.log('e.detail.scrollTop_', e.detail.scrollTop);
       if (e.detail.scrollTop > 200) {
@@ -378,13 +400,33 @@ export default {
         url: '../main/main'
       })
     },
-    productCollect (product) {
+    productCollect (product, productCollect) {
       // console.log('product_', product);
-      // setProductCollect({
-      //   productIds: [product.productId]
-      // }).then(res => {
-      //   console.log('res_', res);
-      // })
+      if (productCollect) {
+        deleteProductCollect({
+          productCollectId: [product.productId]
+        }).then(res => {
+          // console.log('res_', res);
+          this.getProductCollect(
+            {
+              pageNumber: 0,
+              pageSize: 100000
+            }
+          )
+        })
+      } else {
+        setProductCollect({
+          productIds: [product.productId]
+        }).then(res => {
+          // console.log('res_', res);
+          this.getProductCollect(
+            {
+              pageNumber: 0,
+              pageSize: 100000
+            }
+          )
+        })
+      }
     },
     // 点击上面tabar滚动
     srcollLact (index) {
