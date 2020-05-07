@@ -3,7 +3,7 @@ const shopCartModule = {
   state: {
     shopCartInfo: [],
     // 由购物车或者立即购买生成的订单信息
-    newIndent: ''
+    newIndent: '',
   },
   getters: {},
   mutations: {
@@ -21,16 +21,19 @@ const shopCartModule = {
       console.log(data)
       Object.assign(state.newIndent, data)
       console.log('ADD_INDENT_', state.newIndent)
-    }
+    },
   },
   actions: {
     GetShopCartInfo({ commit, getters }) {
-      return shopCart().then(res => {
+      return shopCart().then((res) => {
         console.log('SET_SHOPCART', res.data)
+        res.data.map((item) => {
+          item.productImage = item.productImage.split(';')[0]
+        })
         commit('SET_SHOPCART', res.data)
         return res.data
       })
-    }
-  }
+    },
+  },
 }
 export default shopCartModule
