@@ -44,11 +44,14 @@
           <view class="pickUp">
             <view class="user">
               <img src="static/shoppingCart/shopping cart-business.svg" alt />
-              <view class="userName">门店自提点：xxx大药房</view>
+              <view class="userName"
+                >门店自提点：{{ this.tenant.tenantName }}</view
+              >
             </view>
             <view class="address">
-              地址：上海市 浦东新区 海科路100号 23号楼
-              <br />营业时间：每个公族日 9:00-22:00
+              地址：{{ this.tenant.address }} <br />营业时间：{{
+                this.tenant.businessHours
+              }}
             </view>
           </view>
           <!-- <view class="pickUp"> </view> -->
@@ -212,7 +215,7 @@ export default {
     console.log("indentDetails_", this.getOrderDetails);
   },
   computed: {
-    ...mapGetters(["getOrderDetails"]),
+    ...mapGetters(["getOrderDetails", 'tenant',]),
     orderStatus () {
       return function (status) {
         switch (status) {
