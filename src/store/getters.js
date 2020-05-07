@@ -1,3 +1,4 @@
+import deepCopy from '@/utils/deepCopy'
 const getters = {
   //   sidebar: state => state.app.sidebar,
   // 药品分类处理
@@ -52,7 +53,8 @@ const getters = {
   getAddressClassify: (state, getters) => {
     let activeAddress = []
     let deactiveAddress = []
-    getters.getAddress.forEach((item) => {
+    let getAddress = deepCopy(state.patientAddress.addressInfo)
+    getAddress.forEach((item) => {
       if (item.available) {
         activeAddress.push(item)
         item.disabled = false
