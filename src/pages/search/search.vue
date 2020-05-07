@@ -13,6 +13,7 @@
       >
         <div
           class="uni-page-head-search-placeholder uni-page-head-search-placeholder-center searchClass"
+          style="width: 100%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"
           v-if="!searchFocusInfo"
         >
           请输入商品名、通用名、批准文号
@@ -308,6 +309,7 @@ export default {
       // jumpButtonInfo
       jumpButtonInfo: 'white',
       searchFocusInfo: false,
+      // searchFocus: true,
       searchValue: ''
     };
   },
