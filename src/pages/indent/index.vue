@@ -334,7 +334,6 @@ export default {
         calculateFreight({ productIds: this.productId, addressId: this.selectAddress.addressId }).then(res => {
           console.log('calculateFreight_', res.data)
           // 配送模版
-          // debugger
           this.shipperType = res.data.concat(defaultShipperType)
           this.shipperSelected = this.shipperType[0]
           console.log('this.shipperSelected_1,2,3', this.shipperSelected);
