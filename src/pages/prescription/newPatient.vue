@@ -13,32 +13,43 @@
       <view>
         <form class="form">
           <view class="labelInfo">
-            <span>用药人姓名</span>
+            <span :style="{ color: disabledInfo ? '#898989' : '' }"
+              >用药人姓名</span
+            >
             <input
+              :style="{ color: disabledInfo ? '#898989' : '' }"
               name="fullName"
               type="text"
+              :disabled="disabledInfo"
               placeholder="请填写用药人真实姓名"
               v-model="userInfo['fullName']"
             />
           </view>
           <view class="labelInfo">
-            <span>身份证号</span>
+            <span :style="{ color: disabledInfo ? '#898989' : '' }"
+              >身份证号</span
+            >
             <input
+              :style="{ color: disabledInfo ? '#898989' : '' }"
               name="idCard"
               type="text"
+              :disabled="disabledInfo"
               placeholder="请输入用药人身份证号码"
               v-model="userInfo['idCard']"
               maxlength="18"
             />
           </view>
           <view class="labelInfo">
-            <span>出生年月</span>
+            <span :style="{ color: disabledInfo ? '#898989' : '' }"
+              >出生年月</span
+            >
             <input
+              :style="{ color: disabledInfo ? '#898989' : '' }"
               type="text"
               name="birthday"
+              :disabled="disabledInfo"
               placeholder="选择出生年月"
               placeholder-class="placeholder-class"
-              disabled
               :value="userInfo['birthday']"
               @click="selectArea"
             />
@@ -168,6 +179,9 @@ export default {
   },
   computed: {
     ...mapGetters(["medicineTemplate", 'getCurrentMedicineMan']),
+    disabledInfo () {
+      return this.operate === "reset"
+    }
   },
   methods: {
     ...mapActions({
@@ -235,7 +249,10 @@ export default {
       })
     },
     selectArea () {
-      this.$refs['date'].show();
+      if (!this.disabledInfo) {
+        this.$refs['date'].show();
+      }
+
     },
     inputAreaDetail (event) {
       setTimeout(() => { this.userInfo.detailAddress = event.detail.value }, 0)
