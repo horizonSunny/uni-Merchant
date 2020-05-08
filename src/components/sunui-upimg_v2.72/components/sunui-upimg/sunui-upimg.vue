@@ -49,6 +49,7 @@
 
 <script>
 import * as storage from "@/config/storage";
+import { baseUrl } from "@/config/global";
 export default {
   data () {
     return {
@@ -63,7 +64,7 @@ export default {
     // 服务器url
     url: {
       type: String,
-      default: "http://47.103.158.133:8088/admin/v1/uploadFile"
+      default: baseUrl + "/admin/v1/uploadFile"
     },
     // 上传样式宽高
     upload_img_wh: {
@@ -135,21 +136,14 @@ export default {
           _self: _self
         });
       });
-
-      uni.showLoading({
-        title: `正在上传...`
-      });
-
       Promise.all(promises)
         .then(function (data) {
-          uni.hideLoading();
           console.log("all_promises_", data);
 
           // _self.upload_cache_list.push(...data);
           _self.emit();
         })
         .catch(function (res) {
-          uni.hideLoading();
         });
     },
     chooseImage () {
@@ -265,7 +259,11 @@ const upload = function (options) {
       }
     },
     fail: function (res) {
-      console.log(res);
+      console.log('图片上传失败');
+      uni.showToast({
+        icon: "none",
+        title: '图片上传失败'
+      });
       if (fail) {
         fail(res);
       }

@@ -55,16 +55,18 @@
             />
           </view>
           <view class="labelInfo">
-            <span>性别</span>
-            <radio-group @change="sexChange">
+            <span :style="{ color: disabledInfo ? '#898989' : '' }">性别</span>
+            <radio-group @change="sexChange" :disabled="disabledInfo">
               <view class="sexSel">
                 <label
                   v-for="(item, index) in items"
                   :key="item.value"
                   style="margin-right:20px;"
+                  :disabled="disabledInfo"
                 >
                   <view>
                     <radio
+                      :disabled="disabledInfo"
                       :value="item.value"
                       :checked="item.value === currentSex"
                     />{{ item.name }}

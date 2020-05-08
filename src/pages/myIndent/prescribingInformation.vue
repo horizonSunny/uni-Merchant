@@ -48,7 +48,6 @@
   </body-wrap>
 </template>
 <script>
-import upImg from "@/components/sunui-upimg_v2.72/components/sunui-upimg/sunui-upimg.vue";
 import { mapActions, mapGetters } from "vuex";
 export default {
   onLoad (option) {
