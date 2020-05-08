@@ -75,7 +75,12 @@
             </view>
             <view class="drugsInfo">
               <view class="drugName">
-                <view>
+                <view
+                  style="display: flex;
+                  width: 30px;
+                  justify-items: center;
+                  align-items: baseline;"
+                >
                   <text class="mark" v-show="item.isMp === 0">OTC</text>
                   <text
                     class="mark"
@@ -85,7 +90,8 @@
                   >
                   <text class="mark" v-show="item.isMp === 2">RX</text>
                   <text class="mark" v-show="item.isMp === 3">其他</text>
-                  <text>{{ item.productName }}</text>
+                  <!-- <text>{{ item.productName }}</text> -->
+                  {{ item.productName }}
                 </view>
                 <view class="drugPrice">¥ {{ item.price }}</view>
               </view>
