@@ -108,7 +108,11 @@
                   </view>
                   <view class="totalPrice">
                     <view>共{{ indentItem.totalNum }}件商品 总价</view>
-                    <view class="price">¥{{ indentItem.totalPrice }}</view>
+                    <view
+                      class="price"
+                      style="display:inline-block;text-align:right"
+                      >¥{{ indentItem.totalPrice }}</view
+                    >
                   </view>
                   <view class="indentOperate" @click.stop>
                     <view

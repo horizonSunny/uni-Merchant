@@ -626,7 +626,7 @@ export default {
           margin-top: 7px;
           font-size: 13px;
           font-weight: 400;
-          width: 52px;
+          // width: 52px;
           height: 18px;
           line-height: 18px;
         }
