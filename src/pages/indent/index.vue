@@ -66,7 +66,11 @@
           >
             <view class="productImg">
               <img
-                :src="item.productImage"
+                :src="
+                  Array.isArray(item.productImage)
+                    ? item.productImage[0]
+                    : item.productImage
+                "
                 @error="imageError(item)"
                 alt
                 width="60"
