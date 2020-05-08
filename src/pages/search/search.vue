@@ -34,6 +34,7 @@
                 type="search"
                 class="uni-input-input"
                 @focus="searchFocus"
+                focus="true"
                 @blur="searchBlur"
                 @input="onSearchInputChanged"
                 @confirm="onSearchInputConfirmed"
@@ -41,12 +42,6 @@
             </form></div
         ></uni-input>
       </div>
-      <!-- <img
-        src="static/main/home_messages.svg"
-        alt=""
-        slot="rightIcon"
-        v-if="searchFocusInfo"
-      /> -->
       <div
         slot="rightIcon"
         v-if="searchFocusInfo"
@@ -308,7 +303,7 @@ export default {
       enableScroll: true,
       // jumpButtonInfo
       jumpButtonInfo: 'white',
-      searchFocusInfo: false,
+      searchFocusInfo: true,
       // searchFocus: true,
       searchValue: ''
     };
