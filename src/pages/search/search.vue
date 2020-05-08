@@ -32,6 +32,7 @@
                 step=""
                 autocomplete="off"
                 type="search"
+                :value="searchInfo"
                 class="uni-input-input"
                 @focus="searchFocus"
                 focus="true"
