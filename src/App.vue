@@ -11,9 +11,17 @@ export default {
   },
   onShow: function () {
     console.log('App Show')
+    let lastRouterInfo = sessionStorage.getItem('lastRouterInfo')
+    // 有可能是订单支付跳往支付宝，然后类似于刷新，这边加上一个，订单支付后回跳到订单列表页面
+    if (lastRouterInfo === "pages/indent/index") {
+      uni.reLaunch({
+        url: 'pages/myIndent/index?orderStatus=0'
+      })
+    }
   },
   onHide: function () {
-    console.log('App Hide')
+    // console.log('App Hide')
+
   },
   created () {
     //在页面加载时读取sessionStorage里的状态信息
@@ -33,6 +41,9 @@ export default {
     //在页面刷新时将vuex里的信息保存到sessionStorage里
     window.addEventListener('beforeunload', () => {
       sessionStorage.setItem('store', JSON.stringify(this.$store.state))
+      const currentPages = getCurrentPages()
+      const currentPage = currentPages[currentPages.length - 1]['route']
+      sessionStorage.setItem('lastRouterInfo', currentPage)
     })
   },
   methods: {

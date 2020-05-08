@@ -227,6 +227,7 @@ import distribution from './distribution'
 import invoice from './invoice'
 import { generateOrder, alipay, calculateFreight } from '@/service/index'
 import { add, sub, mul } from '@/utils/floatMix'
+import { baseUrl } from "../../config/global";
 export default {
   components: {
     // commidityItem
@@ -238,7 +239,7 @@ export default {
     return {
       editor: true,
       // 选择自提时候，改变为true
-      pickUp: false,
+      pickUp: true,
       haveRx: false,
       correctUrl: '/static/shoppingCart/shopping cart-bitmap2.svg',
       // 可配送地址id
@@ -347,6 +348,7 @@ export default {
         if (this.isFromCart === 2) {
           params.num = this.caculateTotal.totalNum
         }
+        this.pickUp = false
         calculateFreight(params).then(res => {
           console.log('calculateFreight_', res.data)
           // 配送模版
@@ -355,6 +357,7 @@ export default {
           console.log('this.shipperSelected_1,2,3', this.shipperSelected);
         })
       } else {
+        this.pickUp = true
         this.shipperType = [
           defaultShipperType
         ]
@@ -465,15 +468,15 @@ export default {
         res => {
           console.log('res_', res.data.orderNo)
           alipay({ orderNo: res.data.orderNo }).then(resInfo => {
-
+            // setTimeout(() => {
+            //   console.log('../myIndent/index');
+            // uni.reLaunch('../myIndent/index', { orderStatus: 0 })
+            // }, 0)
+            // history.replaceState({http://localhost:8080/#/pages/myIndent/index?orderStatus=0})
             const div = document.createElement('div')
             div.innerHTML = resInfo
             document.body.appendChild(div)
             document.forms[0].submit()
-            let _this = this
-            setTimeout(() => {
-              _this.$navTo('../myIndent/index', { orderStatus: 0 })
-            }, 2000)
           }, error => {
             console.log('error_', error);
           })

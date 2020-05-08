@@ -63,10 +63,8 @@ export default {
     addressInfo: () => {
       return (availableAddress, getAddress, getAddressClassify) => {
         if (availableAddress !== undefined) {
-          debugger;
           return getAddressClassify;
         } else {
-          debugger;
           return getAddress;
         }
       };
