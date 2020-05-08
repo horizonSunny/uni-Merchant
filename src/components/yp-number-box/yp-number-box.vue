@@ -11,7 +11,6 @@
       v-model="inputValue"
       class="uni-numbox__value"
       type="number"
-      @tap="ifShow(inputValue)"
       adjust-position="false"
       >{{ inputValue }}</view
     >
