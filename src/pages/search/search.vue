@@ -151,7 +151,10 @@
                   品牌
                 </text>
               </view>
-              <view class="classifyDetails filtrateDetails">
+              <view
+                class="classifyDetails filtrateDetails"
+                style="max-height: 150px;overflow-y: scroll;"
+              >
                 <view
                   class="classifyItem"
                   :class="selectBrands.indexOf(item) > -1 ? 'selected' : ''"
@@ -161,6 +164,15 @@
                 >
                   <text>{{ item }}</text>
                 </view>
+                <!-- <view
+                  class="classifyItem"
+                  :class="selectBrands.indexOf(item) > -1 ? 'selected' : ''"
+                  v-for="(item, index) in productBrands"
+                  :key="index"
+                  @click="selectedInfo(selectBrands, item)"
+                >
+                  <text>{{ item }}</text>
+                </view> -->
               </view>
             </view>
             <view class="filtrateOpearte">
