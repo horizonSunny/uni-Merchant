@@ -77,7 +77,6 @@
               <view class="drugName">
                 <view
                   style="display: flex;
-                  width: 30px;
                   justify-items: center;
                   align-items: baseline;"
                 >
@@ -132,7 +131,9 @@
           </view>
           <view class="logistics">
             共{{ caculateTotal.totalNum }}件商品 应付金额（含运费）
-            <view class="home_right">¥{{ totalPriceInfo }}</view>
+            <view class="home_right" style="margin-right:20px"
+              >¥{{ totalPriceInfo }}</view
+            >
           </view>
         </view>
         <view class="separate logisticsInfo">
@@ -258,7 +259,7 @@ export default {
   onLoad (option) {
     // 因为要用到用药人
     this.getMedicineManInfo()
-    // 这边是初始化时候计算
+    // 这边是初始化时候计算,为true的时候代表立即购买
     if (option.isFromCart) {
       this.isFromCart = 2
     }
@@ -276,10 +277,13 @@ export default {
     })
     this.productId = productId
     if (this.selectAddress) {
-      calculateFreight({ productIds: this.productId, addressId: this.selectAddress.addressId }).then(res => {
+      let params = { productIds: this.productId, addressId: this.selectAddress.addressId }
+      if (this.isFromCart === 2) {
+        params.num = this.caculateTotal.totalNum
+      }
+      calculateFreight(params).then(res => {
         console.log('calculateFreight_', res.data)
         // 配送模版
-        // debugger
         this.shipperType = res.data.concat(defaultShipperType)
         this.shipperSelected = this.shipperType[0]
         console.log('this.shipperSelected_1,2,3', this.shipperSelected);
@@ -339,7 +343,11 @@ export default {
       }
       // 生成运费模版
       if (this.selectAddress) {
-        calculateFreight({ productIds: this.productId, addressId: this.selectAddress.addressId }).then(res => {
+        let params = { productIds: this.productId, addressId: this.selectAddress.addressId }
+        if (this.isFromCart === 2) {
+          params.num = this.caculateTotal.totalNum
+        }
+        calculateFreight(params).then(res => {
           console.log('calculateFreight_', res.data)
           // 配送模版
           this.shipperType = res.data.concat(defaultShipperType)
