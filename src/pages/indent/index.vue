@@ -79,11 +79,7 @@
             </view>
             <view class="drugsInfo">
               <view class="drugName">
-                <view
-                  style="display: flex;
-                  justify-items: center;
-                  align-items: baseline;"
-                >
+                <view style="word-break: break-all;">
                   <text class="mark" v-show="item.isMp === 0">OTC</text>
                   <text
                     class="mark"
@@ -93,8 +89,8 @@
                   >
                   <text class="mark" v-show="item.isMp === 2">RX</text>
                   <text class="mark" v-show="item.isMp === 3">其他</text>
-                  <!-- <text>{{ item.productName }}</text> -->
-                  {{ item.productName }}
+                  <text>{{ item.productName }}</text>
+                  <!-- {{ item.productName }} -->
                 </view>
                 <view class="drugPrice">¥ {{ item.price }}</view>
               </view>
@@ -469,11 +465,17 @@ export default {
         res => {
           console.log('res_', res.data.orderNo)
           alipay({ orderNo: res.data.orderNo }).then(resInfo => {
-            console.log('alipay_', resInfo)
+
             const div = document.createElement('div')
             div.innerHTML = resInfo
             document.body.appendChild(div)
             document.forms[0].submit()
+            let _this = this
+            setTimeout(() => {
+              _this.$navTo('../myIndent/index', { orderStatus: 0 })
+            }, 2000)
+          }, error => {
+            console.log('error_', error);
           })
         },
         error => {
