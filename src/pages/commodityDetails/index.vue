@@ -615,7 +615,10 @@ uni-page-body {
       display: flex;
       button {
         width: 50%;
+        height: 50px;
+        line-height: 50px;
         border-radius: 0px;
+        font-size: 15px;
       }
     }
   }
