@@ -293,7 +293,7 @@ export default {
     this.templateInfo = template.map((item) => {
       item.status = 0
       item.diseases = []
-      this.medicineInfo.length !== 0 && this.medicineInfo.forEach((medicineInfo) => {
+      this.medicineInfo && this.medicineInfo.length !== 0 && this.medicineInfo.forEach((medicineInfo) => {
         if (medicineInfo.id === item.id) {
           item.status = 1
           item.diseases = medicineInfo.labels
