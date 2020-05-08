@@ -69,7 +69,10 @@
                       :disabled="disabledInfo"
                       :value="item.value"
                       :checked="item.value === currentSex"
-                    />{{ item.name }}
+                    />
+                    <text :style="{ color: disabledInfo ? '#898989' : '' }">
+                      {{ item.name }}
+                    </text>
                   </view>
                 </label>
               </view>
