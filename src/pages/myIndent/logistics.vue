@@ -4,13 +4,15 @@
       <text slot="title" style="color:#000">物流信息</text>
     </tob-bar>
     <view slot="content" class="content">
-      <view>
+      <view class="tracesTitle">
         <view>{{ getTracesStatus }}</view>
-        <view>承运公司：{{ getTracesShipper }}</view>
-        <view>运单编号：{{ getTraces.logisticCode }}</view>
-        <view>发货时间：{{ deliveryTime }}</view>
+        <view class="tracesTitleInfo">承运公司：{{ getTracesShipper }}</view>
+        <view class="tracesTitleInfo"
+          >运单编号：{{ getTraces.logisticCode }}</view
+        >
+        <view class="tracesTitleInfo">发货时间：{{ deliveryTime }}</view>
       </view>
-      <view style="overflow:scroll">
+      <view class="tracesSteps">
         <evan-steps>
           <evan-step
             v-for="(item, index) in getTracesInfo"
@@ -94,7 +96,32 @@ export default {
   padding: 0px 10px;
   background: #f3f3f5;
   display: flex;
-  overflow: hidden;
   flex-direction: column;
+  overflow: scroll;
+  .tracesTitle {
+    width: auto;
+    height: 120px;
+    padding: 15px 11px;
+    background: #fff;
+    border-radius: 8px;
+    margin-top: 15px;
+    .tracesTitleInfo {
+      height: 17px;
+      font-size: 12px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(137, 137, 137, 1);
+      line-height: 17px;
+      margin-top: 3px;
+    }
+  }
+  .tracesSteps {
+    width: auto;
+    padding: 15px 11px;
+    background: #fff;
+    border-radius: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
 </style>
