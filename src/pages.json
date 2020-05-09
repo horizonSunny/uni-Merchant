@@ -164,6 +164,13 @@
         "navigationStyle": "custom",
         "navigationBarBackgroundColor": "#3A74F1"
       }
+    },
+    {
+      "path": "pages/myIndent/logistics",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarBackgroundColor": "#3A74F1"
+      }
     }
   ],
   "globalStyle": {

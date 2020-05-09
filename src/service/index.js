@@ -4,7 +4,7 @@ import {
   shopCartDelete,
   updateCart,
   newCart,
-  buyAgain
+  buyAgain,
 } from './shoppingCart'
 
 import {
@@ -12,7 +12,7 @@ import {
   addressDelete,
   updateAddress,
   newAddress,
-  checkAddress
+  checkAddress,
 } from './patientAddress'
 
 import {
@@ -20,14 +20,14 @@ import {
   getMedicineTemplate,
   medicineManDelete,
   updateMedicineMan,
-  newMedicineMan
+  newMedicineMan,
 } from './medicineMan'
 
 import {
   productVisit,
   setProductVisit,
   deleteProductVisit,
-  deleteProductVisitAll
+  deleteProductVisitAll,
 } from './productVisit'
 
 import { userDetails, getStatisticData } from './mine'
@@ -35,7 +35,7 @@ import { userDetails, getStatisticData } from './mine'
 import {
   productCollect,
   setProductCollect,
-  deleteProductCollect
+  deleteProductCollect,
 } from './collect'
 
 import {
@@ -45,13 +45,15 @@ import {
   confirmOrder,
   generateOrder,
   deleteOrder,
-  calculateFreight
+  calculateFreight,
+  shipper,
+  traces,
 } from './orderList'
 
 // 获取药品分类信息
 async function getClassify(params) {
   return http.get('/admin/v1/category/getCategorys', {
-    params: { status: 1 }
+    params: { status: 1 },
   })
 }
 
@@ -71,27 +73,27 @@ async function searchKeyword(params) {
 async function searchProductList(params) {
   console.log('in getMainInfo')
   return http.get('/admin/v1/searchProductList', {
-    params: params
+    params: params,
   })
 }
 // 根据分类信息获取产品数据
 async function getCategoryProducts(params) {
   console.log('in getCategoryProducts')
   return http.get('/admin/v1/getCategoryProducts', {
-    params: params
+    params: params,
   })
 }
 // 根据快速分类找药
 async function getQuickCategoryProducts(params) {
   console.log('in getQuickCategoryProducts')
   return http.get('/admin/v1/getQuickCategoryProducts', {
-    params: params
+    params: params,
   })
 }
 // 查看商品详情页面
 async function getProductDetails(params) {
   return http.get('/admin/v1/getProductDetails', {
-    params: params
+    params: params,
   })
 }
 // 获取手机验证码
@@ -120,7 +122,7 @@ export {
   getProductDetails,
   getSms,
   getUserInfo,
-  productComment
+  productComment,
 }
 // 导出购物车接口
 export { shopCart, shopCartDelete, updateCart, newCart, buyAgain }
@@ -130,14 +132,14 @@ export {
   addressDelete,
   updateAddress,
   newAddress,
-  checkAddress
+  checkAddress,
 }
 // 浏览记录
 export {
   productVisit,
   setProductVisit,
   deleteProductVisit,
-  deleteProductVisitAll
+  deleteProductVisitAll,
 }
 // 生成订单页面
 export {
@@ -145,7 +147,7 @@ export {
   cancelOrder,
   generateOrder,
   deleteOrder,
-  calculateFreight
+  calculateFreight,
 }
 
 // 用药人信息
@@ -154,7 +156,7 @@ export {
   getMedicineTemplate,
   medicineManDelete,
   updateMedicineMan,
-  newMedicineMan
+  newMedicineMan,
 }
 // 获取统计数据及用户详情
 export { userDetails, getStatisticData }
@@ -163,4 +165,4 @@ export { userDetails, getStatisticData }
 export { productCollect, setProductCollect, deleteProductCollect }
 
 // 订单列表页
-export { getOrderList, alipay }
+export { getOrderList, alipay, shipper, traces }

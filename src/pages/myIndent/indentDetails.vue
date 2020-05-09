@@ -56,7 +56,7 @@
           </view>
           <!-- <view class="pickUp"> </view> -->
         </view>
-        <view class="prescription" @click="prescription">
+        <view class="prescription" @click="prescription" v-if="haveRx">
           <view class="title">
             <img src="static/shoppingCart/shopping cart-prescription.svg" alt />
             处方信息
@@ -137,6 +137,15 @@
             <view class="home_right">{{ getOrderDetails.createTime }}</view>
           </view>
         </view>
+        <view class="prescription" @click="openTel()">
+          <view class="title">
+            <img src="static/myIndent/cs-telephone.svg" alt />
+            客服电话
+          </view>
+          <view class="home_right">
+            <img src="static/icon/main/home_right-2.svg" alt />
+          </view>
+        </view>
         <view class="separate logisticsInfo">
           <view class="logistics" style="display:block">
             请按照
@@ -167,7 +176,10 @@
                 @click="repurchase()"
                 >重新购买</view
               >
-              <view class="active" v-if="getOrderDetails.orderStatus === 3"
+              <view
+                class="active"
+                v-if="getOrderDetails.orderStatus === 3"
+                @click="toLogistics()"
                 >查看物流</view
               >
               <view
@@ -184,8 +196,8 @@
               >
               <view
                 class="pray"
-                v-if="getOrderDetails.orderStatus === 0"
-                @click="pay(getOrderDetails.orderNo)"
+                v-if="[1, 2, 3].indexOf(getOrderDetails.orderStatus) !== -1"
+                @click="openTel()"
                 >申请退款</view
               >
             </view>
@@ -288,6 +300,11 @@ export default {
             break;
         }
       };
+    },
+    haveRx () {
+      this.getOrderDetails.orderItems.some((item) => {
+        return item.isMp === 2
+      })
     }
   },
   methods: {
@@ -350,6 +367,18 @@ export default {
         document.body.appendChild(div)
         document.forms[0].submit()
       });
+    },
+    // 打电话
+    openTel () {
+      uni.makePhoneCall({
+        phoneNumber: this.tenant.adminTel
+      })
+    },
+    // 查看物流
+    toLogistics () {
+      // 保存物流信息,跳转物流页面
+      debugger;
+      this.$navTo("../myIndent/logistics");
     }
   }
 };

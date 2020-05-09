@@ -11,7 +11,7 @@ async function alipay(params) {
 //删除
 async function deleteOrder(params) {
   return http.delete('/order/order/delete', {
-    params
+    params,
   })
 }
 // 取消订单
@@ -30,6 +30,14 @@ async function generateOrder(params) {
 async function calculateFreight(params) {
   return http.post('/order/order/calculateFreight', params)
 }
+// 获取物流公司接口
+async function shipper() {
+  return http.get('/admin/v1/shipper')
+}
+// 依据快递单号查询物流轨迹
+async function traces() {
+  return http.get('/admin/v1/shipper/traces')
+}
 export {
   getOrderList,
   alipay,
@@ -37,5 +45,7 @@ export {
   confirmOrder,
   generateOrder,
   deleteOrder,
-  calculateFreight
+  calculateFreight,
+  shipper,
+  traces,
 }

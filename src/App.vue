@@ -7,6 +7,7 @@ export default {
     this.getKeyWord()
     this.getMainInfo()
     this.getMedicineTemplate()
+    this.getShipper()
     console.log('App Launch')
   },
   onShow: function () {
@@ -50,7 +51,8 @@ export default {
     ...mapActions({
       getMainInfo: 'GetMainInfo',
       getKeyWord: 'GetKeyWord',
-      getMedicineTemplate: 'GetMedicineTemplate'
+      getMedicineTemplate: 'GetMedicineTemplate',
+      getShipper: 'GetShipper'
     })
   }
 }

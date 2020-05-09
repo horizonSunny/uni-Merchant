@@ -140,7 +140,10 @@
                       @click="repurchase(indentItem)"
                       >重新购买</view
                     >
-                    <view class="active" v-if="indentItem.orderStatus === 3"
+                    <view
+                      class="active"
+                      v-if="indentItem.orderStatus === 3"
+                      @click="toLogistics"
                       >查看物流</view
                     >
                     <view
@@ -469,6 +472,11 @@ export default {
         document.body.appendChild(div)
         document.forms[0].submit()
       })
+    },
+    // 查看物流
+    toLogistics () {
+      // 保存物流信息,跳转物流页面
+      this.$navTo("../myIndent/logistics");
     }
   }
 }
