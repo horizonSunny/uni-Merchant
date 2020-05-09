@@ -182,6 +182,12 @@
                 @click="pay(getOrderDetails.orderNo)"
                 >付款</view
               >
+              <view
+                class="pray"
+                v-if="getOrderDetails.orderStatus === 0"
+                @click="pay(getOrderDetails.orderNo)"
+                >申请退款</view
+              >
             </view>
           </view>
         </view>

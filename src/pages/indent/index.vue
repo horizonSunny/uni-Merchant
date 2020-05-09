@@ -287,6 +287,7 @@ export default {
         // 配送模版
         this.shipperType = res.data.concat(defaultShipperType)
         this.shipperSelected = this.shipperType[0]
+        this.pickUp = false
         console.log('this.shipperSelected_1,2,3', this.shipperSelected);
       })
     } else {
