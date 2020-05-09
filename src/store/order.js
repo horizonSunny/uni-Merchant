@@ -33,12 +33,12 @@ const shopCartModule = {
     },
     GetTraces({ commit, getters }, params) {
       // 测试用
-      let testInfo = {
-        logisticCode: '75340139495421',
-        shipperCode: 'ZTO',
-      }
+      // let testInfo = {
+      //   logisticCode: '75340139495421',
+      //   shipperCode: 'ZTO',
+      // }
       // deliveryTime
-      return traces(testInfo).then((res) => {
+      return traces(params).then((res) => {
         commit('SET_TRACE', res.data)
         commit('SET_deliveryTime', params.deliveryTime)
         console.log('SET_TRACE', res.data)

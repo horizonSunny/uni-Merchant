@@ -13,7 +13,7 @@
         <view class="tracesTitleInfo">发货时间：{{ deliveryTime }}</view>
       </view>
       <view class="tracesSteps">
-        <evan-steps>
+        <evan-steps v-if="getTracesInfo.length !== 0">
           <evan-step
             v-for="(item, index) in getTracesInfo"
             :key="index"
@@ -22,6 +22,9 @@
             :description="item['acceptTime']"
           ></evan-step>
         </evan-steps>
+        <view v-else class="tracesTitleInfo">
+          暂无物流信息
+        </view>
       </view>
     </view>
   </body-wrap>
@@ -105,15 +108,15 @@ export default {
     background: #fff;
     border-radius: 8px;
     margin-top: 15px;
-    .tracesTitleInfo {
-      height: 17px;
-      font-size: 12px;
-      font-family: PingFangSC-Regular, PingFang SC;
-      font-weight: 400;
-      color: rgba(137, 137, 137, 1);
-      line-height: 17px;
-      margin-top: 3px;
-    }
+  }
+  .tracesTitleInfo {
+    height: 17px;
+    font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(137, 137, 137, 1);
+    line-height: 17px;
+    margin-top: 3px;
   }
   .tracesSteps {
     width: auto;

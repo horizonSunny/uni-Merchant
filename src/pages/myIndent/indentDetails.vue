@@ -179,7 +179,7 @@
               <view
                 class="active"
                 v-if="getOrderDetails.orderStatus === 3"
-                @click="toLogistics()"
+                @click="toLogistics(getOrderDetails)"
                 >查看物流</view
               >
               <view
@@ -308,7 +308,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions({}),
+    ...mapActions({
+      getTraces: 'GetTraces'
+    }),
     // 获取当前页面位置
     prescription () {
       this.$navTo(
@@ -375,10 +377,16 @@ export default {
       })
     },
     // 查看物流
-    toLogistics () {
+    toLogistics (indent) {
       // 保存物流信息,跳转物流页面
-      debugger;
-      this.$navTo("../myIndent/logistics");
+      let params = {
+        logisticCode: indent.logisticCode,
+        shipperCode: indent.shipperCode,
+        deliveryTime: indent.deliveryTime
+      }
+      this.getTraces(params).then((res) => {
+        this.$navTo("../myIndent/logistics");
+      })
     }
   }
 };
