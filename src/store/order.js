@@ -6,6 +6,7 @@ const shopCartModule = {
     shipper: [],
     // 物流信息
     traces: null,
+    deliveryTime: '暂无',
   },
   getters: {},
   mutations: {
@@ -18,6 +19,9 @@ const shopCartModule = {
     SET_TRACE: (state, data) => {
       state.traces = data
     },
+    SET_deliveryTime: (state, data) => {
+      state.deliveryTime = data
+    },
   },
   actions: {
     GetShipper({ commit, getters }) {
@@ -28,8 +32,15 @@ const shopCartModule = {
       })
     },
     GetTraces({ commit, getters }, params) {
-      return traces(params).then((res) => {
+      // 测试用
+      let testInfo = {
+        logisticCode: '75340139495421',
+        shipperCode: 'ZTO',
+      }
+      // deliveryTime
+      return traces(testInfo).then((res) => {
         commit('SET_TRACE', res.data)
+        commit('SET_deliveryTime', params.deliveryTime)
         console.log('SET_TRACE', res.data)
         return res.data
       })

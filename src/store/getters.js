@@ -106,5 +106,17 @@ const getters = {
     return state.order.orderDetails
   },
   // 依据商户id和地址id获取运费模版信息
+  // 获取物流公司的数组信息
+  getShipper: (state) => {
+    return state.order.shipper
+  },
+  // 获取物流信息
+  getTraces: (state) => {
+    return state.order.traces
+  },
+  // 发货时间
+  deliveryTime: (state) => {
+    return state.order.deliveryTime
+  },
 }
 export default getters

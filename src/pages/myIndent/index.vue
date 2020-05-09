@@ -481,11 +481,12 @@ export default {
       // 保存物流信息,跳转物流页面
       let params = {
         logisticCode: indent.logisticCode,
-        shipperCode: indent.shipperCode
+        shipperCode: indent.shipperCode,
+        deliveryTime: indent.deliveryTime
       }
-      debugger;
-      this.getTraces(params)
-      this.$navTo("../myIndent/logistics");
+      this.getTraces(params).then((res) => {
+        this.$navTo("../myIndent/logistics");
+      })
     }
   }
 }
