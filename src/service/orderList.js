@@ -35,8 +35,8 @@ async function shipper() {
   return http.get('/admin/v1/shipper')
 }
 // 依据快递单号查询物流轨迹
-async function traces() {
-  return http.get('/admin/v1/shipper/traces')
+async function traces(params) {
+  return http.get('/admin/v1/shipper/traces', { params })
 }
 export {
   getOrderList,

@@ -143,7 +143,7 @@
                     <view
                       class="active"
                       v-if="indentItem.orderStatus === 3"
-                      @click="toLogistics"
+                      @click="toLogistics(indentItem)"
                       >查看物流</view
                     >
                     <view
@@ -253,6 +253,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      getTraces: 'GetTraces'
+    }),
     //获取分类
     loadTabbars () {
       let tabList = json.indentTabList
@@ -474,8 +477,14 @@ export default {
       })
     },
     // 查看物流
-    toLogistics () {
+    toLogistics (indent) {
       // 保存物流信息,跳转物流页面
+      let params = {
+        logisticCode: indent.logisticCode,
+        shipperCode: indent.shipperCode
+      }
+      debugger;
+      this.getTraces(params)
       this.$navTo("../myIndent/logistics");
     }
   }
