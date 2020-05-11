@@ -88,18 +88,28 @@
               maxlength="11"
             />
           </view>
-          <view class="labelInfo">
+          <view class="labelInfo" style="height:auto;">
             <span>疾病史</span>
+            <view
+              v-if="templateDiseaseInfo && templateDiseaseInfo.length > 0"
+              style="width:70%;line-height:20px;padding:15px 0px"
+            >
+              <view v-for="(item, index) of templateDiseaseInfo" :key="index"
+                >{{ item.medicineName }}:{{ item.diseases }}
+              </view>
+            </view>
             <input
               name="phone"
               type="text"
               disabled="true"
               placeholder="无肝肾异常、过敏史、妊娠"
               maxlength="11"
+              v-else
             />
             <img
               src="static/icon/main/home_right-2.svg"
               alt=""
+              style="margin-top:22px;height:13px"
               @click="showTemplate"
             />
           </view>
@@ -186,6 +196,25 @@ export default {
     ...mapGetters(["medicineTemplate", 'getCurrentMedicineMan']),
     disabledInfo () {
       return this.operate === "reset"
+    },
+    templateDiseaseInfo () {
+      let template = []
+      this.preTemplateInfo.forEach((item) => {
+        if (item.status == 1 && [1, 2, 3].indexOf(item.id) > -1) {
+          template.push({
+            medicineName: item.medicineName,
+            diseases: item.diseases.toString()
+          })
+        }
+        if (item.status == 1 && [4, 5, 6].indexOf(item.id) > -1) {
+          template.push({
+            medicineName: item.medicineName,
+            diseases: '有'
+          })
+        }
+      })
+      console.log('template___', template);
+      return template
     }
   },
   methods: {
@@ -289,6 +318,8 @@ export default {
     //diseasesConfirm
     diseasesConfirm () {
       this.preTemplateInfo = deepCopy(this.templateInfo)
+      console.log('this.preTemplateInfo_', this.preTemplateInfo);
+      console.log('this.preTemplateInfo_', this.templateInfo);
     }
   },
   created () {
