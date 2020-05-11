@@ -39,6 +39,7 @@
                 :focus="focusInit"
                 @input="onSearchInputChanged"
                 @confirm="onSearchInputConfirmed"
+                ref="searchInput"
               />
             </form>
           </div>
@@ -47,6 +48,8 @@
           src="static/icon/search/close.svg"
           alt=""
           style="font-size:13px;width:20px;margin-right:15px"
+          @click.prevent="clearSearchInfo"
+          v-if="this.searchInfo.length !== 0"
         />
       </div>
       <div
@@ -617,12 +620,9 @@ export default {
     },
     // clearSearchInfo
     clearSearchInfo () {
+      // console.log('this.$refs.searchInput_', this.$refs.searchInput);
+      // this.$refs.searchInput.focus = true
       this.searchInfo = ''
-
-      // setTimeout(() => {
-      //   this.focusInit = true
-      // }, 0);
-      // this.searchFocusInfo = false
     }
   }
 };
