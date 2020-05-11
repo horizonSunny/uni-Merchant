@@ -12,6 +12,7 @@
       class="uni-numbox__value"
       type="number"
       adjust-position="false"
+      @tap="ifShow"
       >{{ inputValue }}</view
     >
     <view
@@ -171,9 +172,20 @@ export default {
       if (this.modelValue > this.max) {
         this.inputValue = this.max;
       } else {
-        this.inputValue = this.modelValue;
+        this.inputValue = parseInt(this.modelValue)
       }
-      this.showHide = false;
+      updateCart({
+        cartId: this.item.cartId,
+        productId: this.item.productId,
+        cartNum: this.inputValue,
+      }).then(res => {
+        console.log("updateCart_", updateCart);
+        this.$emit("send-price", {
+          value: this.inputValue,
+          index: this.index
+        });
+        this.showHide = false;
+      });
     }
   }
 };
