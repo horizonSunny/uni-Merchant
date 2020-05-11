@@ -30,8 +30,9 @@
               <input
                 maxlength="140"
                 step=""
+                style="width:85%"
                 autocomplete="off"
-                type="search"
+                confirm-type="search"
                 :value="searchInfo"
                 class="uni-input-input"
                 @focus="searchFocus"
@@ -65,17 +66,29 @@
             <text class="title">
               历史记录
             </text>
-            <view class="medicineOperate">
+            <view class="medicineOperate" @click="clearSearchHistory()">
               <img src="static/icon/search/Search_delete.svg" alt="" />
             </view>
           </view>
           <view class="classifyDetails">
             <view
               class="classifyItem"
-              v-for="(item, index) in medicineClassify"
+              v-for="(item, index) in searchHistory"
               :key="index"
             >
-              <text>{{ item.name }}</text>
+              <text
+                @click="
+                  onSearchInputConfirmed({
+                    keyword: item
+                  })
+                "
+                style="display:block;
+                  max-width:200px;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;"
+                >{{ item }}</text
+              >
             </view>
           </view>
         </view>
@@ -271,10 +284,11 @@ export default {
     mixLoadMore
   },
   computed: {
-    ...mapGetters(["searchLibrary"])
+    ...mapGetters(["searchLibrary"]),
   },
   async onLoad () {
     this.loadTabbars();
+    this.searchHistory = JSON.parse(localStorage.getItem('searchHistory'))
   },
   data () {
     return {
@@ -318,7 +332,9 @@ export default {
       jumpButtonInfo: 'white',
       searchFocusInfo: true,
       // searchFocus: true,
-      searchValue: ''
+      searchValue: '',
+      // 历史记录
+      searchHistory: []
     };
   },
   methods: {
@@ -534,6 +550,7 @@ export default {
     searchFocus () {
       this.searchFocusInfo = true
       this.jumpButtonInfo = ''
+      this.searchInfo = ''
     },
     // 失去焦点时候判断内容是否为空
     searchBlur (e) {
@@ -566,12 +583,34 @@ export default {
     },
     //监听原生标题栏搜索输入框搜索事件，用户点击软键盘上的“搜索”按钮时触发。
     onSearchInputConfirmed (item) {
-      console.log('item_', item.keyword);
+      console.log('this.searchInfo_', this.searchInfo);
+      this.searchFocusInfo = true
       if (item.keyword) {
         this.searchInfo = item.keyword
       }
+      let searchHistory = JSON.parse(localStorage.getItem('searchHistory'))
+      // console.log('searchHistory_', searchHistory);
+      if (searchHistory) {
+        if (searchHistory.length < 50) {
+          searchHistory.indexOf(this.searchInfo) === -1 && searchHistory.push(this.searchInfo)
+          localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
+        } else {
+          searchHistory.indexOf(this.searchInfo) === -1 && searchHistory.shift()
+          searchHistory.indexOf(this.searchInfo) === -1 && searchHistory.push(this.searchInfo)
+          localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
+        }
+        this.searchHistory = searchHistory
+      } else {
+        localStorage.setItem('searchHistory', JSON.stringify([this.searchInfo]))
+        this.searchHistory = [this.searchInfo]
+      }
       this.loadNewsList('refresh');
     },
+    // 删除浏览记录
+    clearSearchHistory () {
+      localStorage.setItem('searchHistory', JSON.stringify([]))
+      this.searchHistory = []
+    }
   }
 };
 </script>
@@ -639,7 +678,7 @@ export default {
           margin-top: 7px;
           font-size: 13px;
           font-weight: 400;
-          // width: 52px;
+          max-width: 52px;
           height: 18px;
           line-height: 18px;
         }
