@@ -623,8 +623,8 @@ export default {
       // console.log('this.$refs.searchInput_', this.$refs.searchInput);
       // this.$refs.searchInput.focus = true
       this.searchInfo = ''
-      // this.focusInit = false
-      // // this.focusInit = true
+      this.focusInit = false
+      // this.focusInit = true
       // let _this = this
       // setTimeout(() => {
       //   _this.focusInit = true
