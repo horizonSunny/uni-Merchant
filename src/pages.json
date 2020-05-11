@@ -104,7 +104,10 @@
       "path": "pages/prescription/newPatient",
       "style": {
         "navigationStyle": "custom",
-        "navigationBarBackgroundColor": "#3A74F1"
+        "navigationBarBackgroundColor": "#3A74F1",
+        "app-plus": {
+          "softinputMode": "adjustPan"
+        }
       }
     },
     // 我的页面

@@ -40,37 +40,37 @@
             />
           </view>
           <view class="labelInfo">
-            <span :style="{ color: disabledInfo ? '#898989' : '' }"
-              >出生年月</span
-            >
+            <span style="color:#898989">出生年月</span>
+            <!-- <span>
+              {{ birthDate }}
+            </span> -->
             <input
-              :style="{ color: disabledInfo ? '#898989' : '' }"
+              style="color:#898989"
               type="text"
               name="birthday"
-              :disabled="disabledInfo"
+              disabled="true"
               placeholder="选择出生年月"
               placeholder-class="placeholder-class"
-              :value="userInfo['birthday']"
-              @click="selectArea"
+              :value="birthDate"
             />
           </view>
           <view class="labelInfo">
-            <span :style="{ color: disabledInfo ? '#898989' : '' }">性别</span>
+            <span style="color:#898989">性别</span>
             <radio-group @change="sexChange" :disabled="disabledInfo">
               <view class="sexSel">
                 <label
                   v-for="(item, index) in items"
                   :key="item.value"
                   style="margin-right:20px;"
-                  :disabled="disabledInfo"
+                  disabled="true"
                 >
                   <view>
                     <radio
-                      :disabled="disabledInfo"
+                      disabled="true"
                       :value="item.value"
-                      :checked="item.value === currentSex"
+                      :checked="item.value == sexInfo"
                     />
-                    <text :style="{ color: disabledInfo ? '#898989' : '' }">
+                    <text style="color:#898989">
                       {{ item.name }}
                     </text>
                   </view>
@@ -94,8 +94,14 @@
               v-if="templateDiseaseInfo && templateDiseaseInfo.length > 0"
               style="width:70%;line-height:20px;padding:15px 0px"
             >
-              <view v-for="(item, index) of templateDiseaseInfo" :key="index"
-                >{{ item.medicineName }}:{{ item.diseases }}
+              <view
+                v-for="(item, index) of templateDiseaseInfo"
+                :key="index"
+                style=" 
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;"
+                >{{ item.medicineName }}: {{ item.diseases }}
               </view>
             </view>
             <input
@@ -201,7 +207,7 @@ export default {
       let template = []
       this.preTemplateInfo.forEach((item) => {
         if (item.status == 1 && [1, 2, 3].indexOf(item.id) > -1) {
-          template.push({
+          item.diseases.length > 0 && template.push({
             medicineName: item.medicineName,
             diseases: item.diseases.toString()
           })
@@ -215,6 +221,27 @@ export default {
       })
       console.log('template___', template);
       return template
+    },
+    birthDate () {
+      if (this.userInfo['idCard'].length === 18) {
+        let tmpStr = this.userInfo['idCard'].substring(6, 14);
+        tmpStr = tmpStr.substring(0, 4) + "-" + tmpStr.substring(4, 6) + "-" + tmpStr.substring(6)
+        this.userInfo['birthday'] = tmpStr
+        return tmpStr;
+      }
+    },
+    sexInfo () {
+      if (this.userInfo['idCard'].length === 18) {
+        if ((this.userInfo['idCard'].substring(16, 1)) % 2 == 1) {
+          this.currentSex = 1
+        } else {
+          this.currentSex = 2
+        }
+        debugger;
+        return this.currentSex
+      } else {
+        return 1
+      }
     }
   },
   methods: {

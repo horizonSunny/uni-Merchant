@@ -1,6 +1,6 @@
 <template>
   <modal v-if="modal">
-    <view class="diseasesHistory">
+    <view class="diseasesHistory" v-show="!diseasesAdd">
       <view class="title">
         <view class="titleInfo">疾病史</view>
         <view class="close" @click="closeModal">X</view>
@@ -70,7 +70,7 @@
       </view>
     </view>
     <!-- 为病史添加药物 -->
-    <view class="diseasesHistory" v-show="diseasesAdd">
+    <view class="diseasesHistory" style="height:270px;" v-show="diseasesAdd">
       <view class="title">
         <view class="titleInfo">添加疾病</view>
         <view class="close" @click="closeAdd">X</view>
@@ -293,7 +293,7 @@ export default {
   }
   .addDiseases {
     position: absolute;
-    bottom: 100px;
+    bottom: 70px;
     width: 200px;
     left: 50%;
     margin-left: -110px;
