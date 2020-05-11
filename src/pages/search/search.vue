@@ -30,19 +30,24 @@
               <input
                 maxlength="140"
                 step=""
-                style="width:85%"
+                style="width:95%"
                 autocomplete="off"
                 confirm-type="search"
                 :value="searchInfo"
                 class="uni-input-input"
                 @focus="searchFocus"
-                focus="true"
-                @blur="searchBlur"
+                :focus="focusInit"
                 @input="onSearchInputChanged"
                 @confirm="onSearchInputConfirmed"
               />
-            </form></div
-        ></uni-input>
+            </form>
+          </div>
+        </uni-input>
+        <img
+          src="static/icon/search/close.svg"
+          alt=""
+          style="font-size:13px;width:20px;margin-right:15px"
+        />
       </div>
       <div
         slot="rightIcon"
@@ -292,6 +297,7 @@ export default {
   },
   data () {
     return {
+      focusInit: true,
       historySearch: true,
       searchKeyWord: false,
       productListShow: false,
@@ -550,12 +556,10 @@ export default {
     searchFocus () {
       this.searchFocusInfo = true
       this.jumpButtonInfo = ''
-      this.searchInfo = ''
     },
     // 失去焦点时候判断内容是否为空
     searchBlur (e) {
       console.log('e.detail_', e.detail);
-
       if (e.detail.value === '') {
         this.jumpButtonInfo = 'white'
         this.searchFocusInfo = false
@@ -610,6 +614,15 @@ export default {
     clearSearchHistory () {
       localStorage.setItem('searchHistory', JSON.stringify([]))
       this.searchHistory = []
+    },
+    // clearSearchInfo
+    clearSearchInfo () {
+      this.searchInfo = ''
+
+      // setTimeout(() => {
+      //   this.focusInit = true
+      // }, 0);
+      // this.searchFocusInfo = false
     }
   }
 };
