@@ -47,7 +47,7 @@
         <img
           src="static/icon/search/close.svg"
           alt=""
-          style="font-size:13px;width:20px;margin-right:15px"
+          style="font-size:13px;width:20px;margin-right:15px;touch-action: none;"
           @click.prevent="clearSearchInfo"
           v-if="this.searchInfo.length !== 0"
         />
@@ -623,6 +623,12 @@ export default {
       // console.log('this.$refs.searchInput_', this.$refs.searchInput);
       // this.$refs.searchInput.focus = true
       this.searchInfo = ''
+      // this.focusInit = false
+      // // this.focusInit = true
+      // let _this = this
+      // setTimeout(() => {
+      //   _this.focusInit = true
+      // }, 0);
     }
   }
 };
