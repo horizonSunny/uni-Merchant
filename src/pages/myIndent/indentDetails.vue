@@ -363,11 +363,12 @@ export default {
     // 付款
     pay (orderNo) {
       alipay({ orderNo: orderNo }).then(resInfo => {
-        console.log('alipay_', resInfo);
-        const div = document.createElement('div')
-        div.innerHTML = resInfo;
-        document.body.appendChild(div)
-        document.forms[0].submit()
+        // console.log('alipay_', resInfo);
+        // const div = document.createElement('div')
+        // div.innerHTML = resInfo;
+        // document.body.appendChild(div)
+        // document.forms[0].submit()
+        this.$navTo('../myIndent/index?orderStatus=0')
       });
     },
     // 打电话

@@ -474,10 +474,11 @@ export default {
             // uni.reLaunch('../myIndent/index', { orderStatus: 0 })
             // }, 0)
             // history.replaceState({http://localhost:8080/#/pages/myIndent/index?orderStatus=0})
-            const div = document.createElement('div')
-            div.innerHTML = resInfo
-            document.body.appendChild(div)
-            document.forms[0].submit()
+            // const div = document.createElement('div')
+            // div.innerHTML = resInfo
+            // document.body.appendChild(div)
+            // document.forms[0].submit()
+            this.$navTo('../myIndent/index?orderStatus=0')
           }, error => {
             console.log('error_', error);
           })

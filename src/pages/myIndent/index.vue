@@ -470,10 +470,11 @@ export default {
     pay (orderNo) {
       alipay({ orderNo: orderNo }).then(resInfo => {
         // console.log('alipay_', resInfo);
-        const div = document.createElement('div')
-        div.innerHTML = resInfo;
-        document.body.appendChild(div)
-        document.forms[0].submit()
+        // const div = document.createElement('div')
+        // div.innerHTML = resInfo;
+        // document.body.appendChild(div)
+        // document.forms[0].submit()
+        this.$navTo('../myIndent/index?orderStatus=0')
       })
     },
     // 查看物流
