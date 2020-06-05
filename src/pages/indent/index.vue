@@ -6,44 +6,67 @@
     <view slot="content" class="content">
       <view class="indent">
         <view class="userInfo">
-          <view
-            @click="
-              gotoNextPage('../deliveryAddr/index', {
-                availableAddress: true
-              })
-            "
-            v-if="selectAddress"
-          >
+          <view v-if="pickUp">
             <view class="user">
-              <img src="static/icon/merchantsIntr/location.svg" alt />
-              <view class="userName">{{ selectAddress.fullName }}</view>
-              <view class="phone">{{ selectAddress.phone }}</view>
+              <img src="static/icon/merchantsIntr/user.svg" alt />
+              <!-- <view class="userName">{{ selectAddress.fullName }}</view>
+              <view class="phone">{{ selectAddress.phone }}</view> -->
+              <input
+                style="width:20%;margin:0px 10px;border:1px solid #ddd;border-radius:2px;padding-left:2px"
+                type="text"
+                :value="selectAddress['fullName']"
+                maxlength="5"
+                @input="setConsignee($event, 'conigeName')"
+              />
+              <input
+                style="border:1px solid #ddd;padding-left:2px"
+                type="text"
+                :value="selectAddress['phone']"
+                maxlength="11"
+                @input="setConsignee($event, 'conigePhone')"
+              />
             </view>
-            <view class="address">{{ selectAddress.address }}</view>
-          </view>
-          <view
-            v-else
-            @click="
-              gotoNextPage('../deliveryAddr/newAddr', {
-                availableAddress: true
-              })
-            "
-            class="noAddress"
-          >
-            <img src="/static/myIndent/Add address.svg" alt />
-            <view>添加收货地址</view>
-          </view>
-          <view class="pickUp" v-if="pickUp">
-            <view class="user">
-              <img src="static/shoppingCart/shopping cart-business.svg" alt />
-              <view class="userName"
-                >门店自提点：{{ this.tenant.tenantName }}</view
-              >
+            <view class="pickUp">
+              <view class="user">
+                <img src="static/shoppingCart/shopping cart-business.svg" alt />
+                <view class="userName"
+                  >门店自提点：{{ this.tenant.tenantName }}</view
+                >
+              </view>
+              <view class="address">
+                地址：{{ this.tenant.province }} {{ this.tenant.city }}
+                {{ this.tenant.area }} {{ this.tenant.address }}
+                <br />营业时间：每个工作日 9:00-22:00
+              </view>
             </view>
-            <view class="address">
-              地址：{{ this.tenant.province }} {{ this.tenant.city }}
-              {{ this.tenant.area }} {{ this.tenant.address }}
-              <br />营业时间：每个工作日 9:00-22:00
+          </view>
+          <view v-else>
+            <view
+              @click="
+                gotoNextPage('../deliveryAddr/index', {
+                  availableAddress: true
+                })
+              "
+              v-if="selectAddress"
+            >
+              <view class="user">
+                <img src="static/icon/merchantsIntr/location.svg" alt />
+                <view class="userName">{{ selectAddress.fullName }}</view>
+                <view class="phone">{{ selectAddress.phone }}</view>
+              </view>
+              <view class="address">{{ selectAddress.address }}</view>
+            </view>
+            <view
+              v-else
+              @click="
+                gotoNextPage('../deliveryAddr/newAddr', {
+                  availableAddress: true
+                })
+              "
+              class="noAddress"
+            >
+              <img src="/static/myIndent/Add address.svg" alt />
+              <view>添加收货地址</view>
             </view>
           </view>
           <!-- <view class="pickUp"> </view> -->
@@ -227,7 +250,17 @@ import distribution from './distribution'
 import invoice from './invoice'
 import { generateOrder, alipay, calculateFreight } from '@/service/index'
 import { add, sub, mul } from '@/utils/floatMix'
+import { checkMobile } from 'utils/validator'
 import { baseUrl } from "../../config/global";
+const defaultShipperType = [{
+  shipperTypeId: 1,
+  shipperName: "普通配送",
+  shipperAmount: 0
+}, {
+  shipperTypeId: 3,
+  shipperName: "到店自提",
+  shipperAmount: 0
+}]
 export default {
   components: {
     // commidityItem
@@ -239,7 +272,7 @@ export default {
     return {
       editor: true,
       // 选择自提时候，改变为true
-      pickUp: true,
+      pickUp: false,
       haveRx: false,
       correctUrl: '/static/shoppingCart/shopping cart-bitmap2.svg',
       // 可配送地址id
@@ -254,7 +287,10 @@ export default {
       efficacyInfo: [],
       // 是否是从下个页面选择回来
       selectAddressInfo: null,
-      isFromCart: 1
+      isFromCart: 1,
+      // 自提人相关信息
+      conigeName: '',
+      conigePhone: ''
     }
   },
   onLoad (option) {
@@ -263,11 +299,6 @@ export default {
     // 这边是初始化时候计算,为true的时候代表立即购买
     if (option.isFromCart) {
       this.isFromCart = 2
-    }
-    const defaultShipperType = {
-      shipperTypeId: 3,
-      shipperName: "到店自提",
-      shipperAmount: 0
     }
     // 生成运费模版
     this.haveRx = this.newIndentClassification.activeIndent.some(item => {
@@ -285,15 +316,13 @@ export default {
       calculateFreight(params).then(res => {
         console.log('calculateFreight_', res.data)
         // 配送模版
-        this.shipperType = res.data.concat(defaultShipperType)
+        this.shipperType = res.data.concat(defaultShipperType[1])
         this.shipperSelected = this.shipperType[0]
         this.pickUp = false
         console.log('this.shipperSelected_1,2,3', this.shipperSelected);
       })
     } else {
-      this.shipperType = [
-        defaultShipperType
-      ]
+      this.shipperType = defaultShipperType
       this.shipperSelected = this.shipperType[0]
     }
   },
@@ -338,11 +367,6 @@ export default {
   watch: {
     selectAddress (val) {
       console.log('selectAddressChange');
-      const defaultShipperType = {
-        shipperTypeId: 3,
-        shipperName: "到店自提",
-        shipperAmount: 0
-      }
       // 生成运费模版
       if (this.selectAddress) {
         let params = { productIds: this.productId, addressId: this.selectAddress.addressId }
@@ -353,15 +377,12 @@ export default {
         calculateFreight(params).then(res => {
           console.log('calculateFreight_', res.data)
           // 配送模版
-          this.shipperType = res.data.concat(defaultShipperType)
+          this.shipperType = res.data.concat(defaultShipperType[1])
           this.shipperSelected = this.shipperType[0]
           console.log('this.shipperSelected_1,2,3', this.shipperSelected);
         })
       } else {
-        this.pickUp = true
-        this.shipperType = [
-          defaultShipperType
-        ]
+        this.shipperType = defaultShipperType
         this.shipperSelected = this.shipperType[0]
       }
     }
@@ -407,6 +428,8 @@ export default {
       console.log('select_', select)
       if (select.shipperName === '到店自提') {
         this.pickUp = true
+        this.conigeName = this.selectAddress['fullName']
+        this.conigePhone = this.selectAddress['phone']
       } else {
         this.pickUp = false
       }
@@ -414,10 +437,9 @@ export default {
     //付款
     pay () {
       // 先生成订单，看有没有问题
-      console.log('addressId_', this.selectAddress)
-      console.log('invoice_prescribInfo_', this.getNewIndent)
-      console.log('invoice_user_', this.getMedicineMan[0])
-      console.log('shipperSelected_', this.shipperSelected)
+
+      console.log('conigeName_', this.conigeName);
+      console.log('conigePhone_', this.conigePhone);
       // prescribInfo
       // generateOrder();
       let params = {
@@ -428,6 +450,29 @@ export default {
         totalNum: this.caculateTotal.totalNum,
         totalPrice:
           this.caculateTotal.totalPrice + this.shipperSelected['shipperAmount'],
+      }
+      if (this.shipperSelected.shipperTypeId === 3) {
+        if (this.conigeName === '' || this.conigePhone === '') {
+          uni.showToast({
+            icon: 'none',
+            title: '提货人姓名/手机号不能为空'
+          })
+          return
+        }
+        const validate = checkMobile(this.conigePhone)
+        if (!validate) {
+          uni.showToast({
+            icon: 'none',
+            title: '请填写正确的手机号格式'
+          })
+          return
+        }
+        // params.consignee.conigeName = this.conigeName
+        // params.consignee.conigePhone = this.conigePhone
+        params.consignee = {
+          conigeName: this.conigeName,
+          conigePhone: this.conigePhone
+        }
       }
       if (this.haveRx) {
         if (!this.getNewIndent.prescription) {
@@ -502,6 +547,12 @@ export default {
           this.efficacyInfo = efficacyInfo
         }
       )
+    },
+    // 设置自提人
+    setConsignee (info, operate) {
+      console.log('info_', info.detail.value);
+      console.log('operate_', operate);
+      this[operate] = info.detail.value
     }
   }
 }

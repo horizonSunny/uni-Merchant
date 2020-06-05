@@ -546,10 +546,10 @@ uni-page-body {
     width: 100%;
     .scrollLocation {
       display: inline-block;
-      width: 45%;
+      width: 49%;
       position: relative;
       top: -2px;
-      padding-left: 20%;
+      padding-left: 14%;
       text {
         font-size: 16px;
         font-family: PingFangSC-Regular, PingFang SC;
