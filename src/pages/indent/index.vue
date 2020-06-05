@@ -467,12 +467,12 @@ export default {
           })
           return
         }
-        // params.consignee.conigeName = this.conigeName
-        // params.consignee.conigePhone = this.conigePhone
-        params.consignee = {
-          conigeName: this.conigeName,
-          conigePhone: this.conigePhone
-        }
+        params.conigeName = this.conigeName
+        params.conigePhone = this.conigePhone
+        // params.consignee = {
+        //   conigeName: this.conigeName,
+        //   conigePhone: this.conigePhone
+        // }
       }
       if (this.haveRx) {
         if (!this.getNewIndent.prescription) {
